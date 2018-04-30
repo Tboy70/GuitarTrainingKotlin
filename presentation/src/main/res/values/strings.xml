@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- App -->
+    <string name="app_name">GuitarTraining-kotlin</string>
+
+    <!-- Generic toolbar -->
+    <string name="generic_toolbar_about_title">A propos</string>
+</resources>
