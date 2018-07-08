@@ -3,12 +3,15 @@ package thomas.example.com.interactor
 import rx.Observable
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
+import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class GetIdInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor, postExecutionThread: PostExecutionThread)
-    : UseCase<Void>(threadExecutor, postExecutionThread) {
+class GetIdInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor,
+                                             postExecutionThread: PostExecutionThread,
+                                             private var userRepository: UserRepository)
+    : UseCase<String, String>(threadExecutor, postExecutionThread) {
 
-    override fun buildUseCaseObservable(params: Void): Observable<Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun buildUseCaseObservable(params: String?): Observable<String> {
+       return userRepository.getIdUserInSharedPrefs()
     }
 }

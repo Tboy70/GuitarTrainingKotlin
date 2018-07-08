@@ -5,9 +5,11 @@ import android.content.Context
 import dagger.Binds
 import dagger.Module
 import thomas.example.com.data.executor.JobExecutor
+import thomas.example.com.data.repository.UserRepositoryImpl
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.guitarTrainingKotlin.executor.UIThread
+import thomas.example.com.repository.UserRepository
 import javax.inject.Singleton
 
 @Module
@@ -23,6 +25,10 @@ abstract class ApplicationModule {
 
     @Singleton
     @Binds
-    abstract fun providePostExecutionThread(uiThread: UIThread) : PostExecutionThread
+    abstract fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread
+
+    @Singleton
+    @Binds
+    abstract fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl) : UserRepository
 
 }

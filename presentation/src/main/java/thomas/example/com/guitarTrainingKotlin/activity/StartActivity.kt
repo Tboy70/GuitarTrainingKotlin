@@ -26,7 +26,7 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
 
     override fun onStart() {
         super.onStart()
-//        getUserPrefIsConnected()
+        getUserPrefIsConnected()
         setToolbar()
     }
 
