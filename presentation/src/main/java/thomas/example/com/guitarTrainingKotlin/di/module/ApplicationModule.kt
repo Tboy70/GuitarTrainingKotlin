@@ -7,16 +7,15 @@ import dagger.Module
 import thomas.example.com.data.executor.JobExecutor
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.guitarTrainingKotlin.GuitarTrainingApplication
 import thomas.example.com.guitarTrainingKotlin.executor.UIThread
 import javax.inject.Singleton
 
 @Module
-abstract class ApplicationModule(private var application: GuitarTrainingApplication) {
+abstract class ApplicationModule {
 
     @Singleton
     @Binds
-    abstract fun provideApplicationContext(application: Application): Context
+    abstract fun provideContext(application: Application): Context
 
     @Singleton
     @Binds
@@ -24,6 +23,6 @@ abstract class ApplicationModule(private var application: GuitarTrainingApplicat
 
     @Singleton
     @Binds
-    abstract fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread
+    abstract fun providePostExecutionThread(uiThread: UIThread) : PostExecutionThread
 
 }

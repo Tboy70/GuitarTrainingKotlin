@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
-import butterknife.ButterKnife
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.listener.StartNavigatorListener
 import thomas.example.com.guitarTrainingKotlin.navigator.StartNavigator
@@ -23,12 +22,11 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        ButterKnife.bind(this)
     }
 
     override fun onStart() {
         super.onStart()
-        getUserPrefIsConnected()
+//        getUserPrefIsConnected()
         setToolbar()
     }
 

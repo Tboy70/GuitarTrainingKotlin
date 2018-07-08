@@ -1,4 +1,4 @@
-package thomas.example.com
+package thomas.example.com.interactor
 
 import rx.Observable
 import rx.Subscriber

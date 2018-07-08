@@ -10,11 +10,16 @@ import javax.inject.Inject
 
 /**
  * Application class.
+ * Implements HasActivityInjector cause the Application class has activities.
+ * If has fragment, implements also from HasFragmentInjector !
  */
 class GuitarTrainingApplication : Application(), HasActivityInjector {
 
+    /**
+     * DispatchingAndroidInjector : What injects framework class (Activities, Fragments, Services ...)
+     * Call with AndroidInjection.inject(this)
+     */
     @Inject
-    private
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
 

@@ -12,38 +12,15 @@ import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, BaseNavigatorListener {
 
-//    private lateinit var activityComponent: ActivityComponent
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        initializeInjector()
-//    }
-//
-//    fun getActivityComponent(): ActivityComponent {
-//        return activityComponent
-//    }
-//
-//    fun getApplicationComponent() : ApplicationComponent {
-//        var app = GuitarTrainingApplication.application()
-//        return app.getApplicationComponent()
-//    }
-//
-//    fun getActivityModule() : ActivityModule {
-//        return ActivityModule(this)
-//    }
-//
-//    private fun initializeInjector() {
-//        activityComponent = DaggerActivityComponent.builder()
-//                .applicationComponent(getApplicationComponent())
-//                .activityModule(getActivityModule())
-//                .build()
-//    }
-
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        /** Call the DispatchingAndroidInjector in the Application class.
+         * When we want to inject in fragment --> AndroidSupportInjection.inject(this) in the fragment class.
+         **/
         AndroidInjection.inject(this)
+
         super.onCreate(savedInstanceState)
     }
 
