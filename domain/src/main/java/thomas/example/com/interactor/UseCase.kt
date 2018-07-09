@@ -1,28 +1,24 @@
 package thomas.example.com.interactor
 
-import rx.Observable
-import rx.schedulers.Schedulers
-import rx.subscriptions.Subscriptions
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 
 abstract class UseCase<ReturnType, Params> protected constructor(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
 
-    private var subscription = Subscriptions.empty()
+    private var disposable: Disposable? = null
 
-    /**
-     * Be careful --> Any ~= Object class in java --> Mandatory
-     */
-    fun execute(UseCaseSubscriber: rx.Subscriber<ReturnType>, params: Params?) {
-        this.subscription = this.buildUseCaseObservable(params)
+    fun execute(onComplete: (() -> Unit), onError: ((Throwable) -> Unit), onNext: ((ReturnType) -> Unit), params : Params) {
+        disposable = buildUseCaseObservable(params)
                 .subscribeOn(Schedulers.from(threadExecutor))
-                .observeOn(postExecutionThread.getScheduler())
-                .subscribe(UseCaseSubscriber)
+                .subscribe(onNext, onError, onComplete)
     }
 
     fun unsubscribe() {
-        if (subscription.isUnsubscribed) {
-            subscription.unsubscribe()
+        if (disposable?.isDisposed == false) {
+            disposable?.dispose()
         }
     }
 

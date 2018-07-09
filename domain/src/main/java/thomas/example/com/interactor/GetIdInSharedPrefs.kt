@@ -1,6 +1,6 @@
 package thomas.example.com.interactor
 
-import rx.Observable
+import io.reactivex.Observable
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.repository.UserRepository

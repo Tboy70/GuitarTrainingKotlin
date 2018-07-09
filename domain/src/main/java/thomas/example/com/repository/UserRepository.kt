@@ -1,6 +1,6 @@
 package thomas.example.com.repository
 
-import rx.Observable
+import io.reactivex.Observable
 
 interface UserRepository {
 

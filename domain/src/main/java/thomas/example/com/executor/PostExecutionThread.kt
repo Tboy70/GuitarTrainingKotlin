@@ -1,6 +1,6 @@
 package thomas.example.com.executor
 
-import rx.Scheduler
+import io.reactivex.Scheduler
 
 interface PostExecutionThread {
 

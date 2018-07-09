@@ -1,18 +1,18 @@
 package thomas.example.com.data.repository
 
-import rx.Observable
+import io.reactivex.Observable
 import thomas.example.com.repository.UserRepository
-import javax.inject.Singleton
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor() : UserRepository {
 
     override fun getIdUserInSharedPrefs(): Observable<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Observable.defer { Observable.just("2") }
     }
 
     override fun setIdUserInSharedPrefs(idUser: String): Observable<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Observable.defer { Observable.just(true) }
     }
 }

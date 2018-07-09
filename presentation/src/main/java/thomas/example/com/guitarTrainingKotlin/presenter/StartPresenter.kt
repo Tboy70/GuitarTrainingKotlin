@@ -1,7 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.presenter
 
 import android.util.Log
-import rx.Subscriber
 import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.guitarTrainingKotlin.activity.listener.BaseNavigatorListener
@@ -25,20 +24,15 @@ class StartPresenter @Inject constructor(baseNavigatorListener: BaseNavigatorLis
     }
 
     fun getUserPrefIsConnected() {
-        getIdInSharedPrefs.execute(GetSharedPrefsId(), null)
-    }
+        getIdInSharedPrefs.execute(
+                onComplete = {
 
-    private inner class GetSharedPrefsId : Subscriber<String>() {
-        override fun onCompleted() {
-
-        }
-
-        override fun onError(e: Throwable?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        }
-
-        override fun onNext(sharedPrefsId: String?) {
-            Log.e("TEST", "id : $sharedPrefsId")
-        }
+                },
+                onError = {
+                    Log.e("TEST", "error : $it")
+                },
+                onNext = {
+                    Log.e("TEST", "id : $it")
+                }, params = "test")
     }
 }
