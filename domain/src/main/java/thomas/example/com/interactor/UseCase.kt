@@ -3,10 +3,9 @@ package thomas.example.com.interactor
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 
-abstract class UseCase<ReturnType, Params> protected constructor(private val threadExecutor: ThreadExecutor, private val postExecutionThread: PostExecutionThread) {
+abstract class UseCase<ReturnType, Params> protected constructor(private val threadExecutor: ThreadExecutor) {
 
     private var disposable: Disposable? = null
 

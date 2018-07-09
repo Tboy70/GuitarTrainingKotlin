@@ -1,7 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.presenter
 
 import android.util.Log
-import thomas.example.com.executor.PostExecutionThread
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.guitarTrainingKotlin.activity.listener.BaseNavigatorListener
 import thomas.example.com.guitarTrainingKotlin.activity.listener.StartNavigatorListener
@@ -12,8 +11,7 @@ import javax.inject.Inject
 @PerActivity
 class StartPresenter @Inject constructor(baseNavigatorListener: BaseNavigatorListener,
                                          private var getIdInSharedPrefs: GetIdInSharedPrefs,
-                                         threadExecutor: ThreadExecutor,
-                                         postExecutionThread: PostExecutionThread) {
+                                         threadExecutor: ThreadExecutor) {
 
     private lateinit var startNavigatorListener: StartNavigatorListener
 
