@@ -21,6 +21,9 @@ class StartPresenter @Inject constructor(baseNavigatorListener: BaseNavigatorLis
         }
     }
 
+    /**
+     * Using of lambdas !
+     */
     fun getUserPrefIsConnected() {
         getIdInSharedPrefs.execute(
                 onComplete = {
