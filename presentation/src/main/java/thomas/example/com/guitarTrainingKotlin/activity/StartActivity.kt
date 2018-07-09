@@ -1,20 +1,23 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_start.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.listener.StartNavigatorListener
 import thomas.example.com.guitarTrainingKotlin.navigator.StartNavigator
-import thomas.example.com.guitarTrainingKotlin.presenter.StartPresenter
+import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_start.*
 
 class StartActivity : BaseActivity(), StartNavigatorListener {
 
     @Inject
-    lateinit var startPresenter: StartPresenter
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private var startViewModel: StartViewModel? = null
 
     @Inject
     lateinit var startNavigator: StartNavigator
@@ -22,6 +25,8 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
+
+        startViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartViewModel::class.java)
     }
 
     override fun onStart() {
@@ -45,7 +50,7 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
     }
 
     private fun getUserPrefIsConnected() {
-        startPresenter.getUserPrefIsConnected()
+        startViewModel?.getUserPrefIsConnected()
     }
 
     private fun setToolbar() {

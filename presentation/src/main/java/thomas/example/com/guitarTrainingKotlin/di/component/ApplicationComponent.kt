@@ -7,6 +7,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import thomas.example.com.guitarTrainingKotlin.GuitarTrainingApplication
 import thomas.example.com.guitarTrainingKotlin.di.module.ActivityInjectorModule
 import thomas.example.com.guitarTrainingKotlin.di.module.ApplicationModule
+import thomas.example.com.guitarTrainingKotlin.di.module.viewmodel.ViewModelModule
 import javax.inject.Singleton
 
 /** We only have to implement one Dagger component -
@@ -26,7 +27,8 @@ import javax.inject.Singleton
 @Component(modules = [
     ApplicationModule::class,
     AndroidSupportInjectionModule::class,
-    ActivityInjectorModule::class
+    ActivityInjectorModule::class,
+    ViewModelModule::class
 ])
 interface ApplicationComponent {
 
