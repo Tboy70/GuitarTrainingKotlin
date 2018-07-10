@@ -1,9 +1,11 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_start.*
@@ -50,7 +52,9 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
     }
 
     private fun getUserPrefIsConnected() {
-        startViewModel?.getUserPrefIsConnected()
+        startViewModel?.getUserPrefIsConnected()?.observe(this, Observer<String> {
+            Log.e("TEST", "OKTM $it")
+        })
     }
 
     private fun setToolbar() {

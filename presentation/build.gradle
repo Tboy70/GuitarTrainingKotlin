@@ -46,14 +46,21 @@ dependencies {
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
 
-    // View model
+    // LiveData - View model
+    implementation "android.arch.lifecycle:runtime:1.1.1"
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
 
     // DAGGER
     kapt 'com.google.dagger:dagger-compiler:2.15'
     implementation 'com.google.dagger:dagger:2.15'
     implementation 'com.google.dagger:dagger-android-support:2.15'
+
+    // NavigationComponent
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha02'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha02'
+
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.0.5-beta'

@@ -1,5 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import thomas.example.com.executor.ThreadExecutor
@@ -9,32 +11,27 @@ import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.interactor.GetIdInSharedPrefs
 import javax.inject.Inject
 
-@PerActivity
-class StartViewModel @Inject constructor(baseNavigatorListener: BaseNavigatorListener,
-                                         private var getIdInSharedPrefs: GetIdInSharedPrefs,
-                                         threadExecutor: ThreadExecutor) : ViewModel() {
+class StartViewModel @Inject constructor(private var getIdInSharedPrefs: GetIdInSharedPrefs) : ViewModel() {
 
-    private lateinit var startNavigatorListener: StartNavigatorListener
-
-    init {
-        if (baseNavigatorListener is StartNavigatorListener) {
-            startNavigatorListener = baseNavigatorListener
-        }
-    }
+    private var idUserPref : MutableLiveData<String> = MutableLiveData()
 
     /**
      * Using of lambdas !
      */
-    fun getUserPrefIsConnected() {
+    fun getUserPrefIsConnected(): MutableLiveData<String> {
         getIdInSharedPrefs.execute(
                 onComplete = {
 
                 },
                 onError = {
                     Log.e("TEST", "error : $it")
+                    idUserPref.postValue("test")
                 },
                 onNext = {
                     Log.e("TEST", "id : $it")
+                    idUserPref.postValue(it)
                 }, params = "test")
+
+        return idUserPref
     }
 }
