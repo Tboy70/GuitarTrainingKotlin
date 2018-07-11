@@ -5,4 +5,7 @@
 
     <!-- Generic toolbar -->
     <string name="generic_toolbar_about_title">A propos</string>
+
+    <!-- Navigation -->
+    <string name="nav_login_home">Login Home</string>
 </resources>

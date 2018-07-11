@@ -9,6 +9,10 @@ class GetIdInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor,
                                              private var userRepository: UserRepository)
     : UseCase<String, String>(threadExecutor) {
 
+    companion object {
+        var ID_USER_DEFAULT = "ID_USER_DEFAULT"
+    }
+
     override fun buildUseCaseObservable(params: String?): Observable<String> {
        return userRepository.getIdUserInSharedPrefs()
     }
