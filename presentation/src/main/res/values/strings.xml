@@ -8,4 +8,10 @@
 
     <!-- Navigation -->
     <string name="nav_login_home">Login Home</string>
+    <string name="fragment_login_home_title">Renseigne tes informations de connexion</string>
+    <string name="fragment_login_home_hint_username">Nom d\'utilisateur</string>
+    <string name="fragment_login_home_hint_password">Mot de passe</string>
+    <string name="generic_button_validate">valider</string>
+    <string name="fragment_connection_forgot_password">Mot de passe oublié ?</string>
+    <string name="fragment_connection_create_account">Créer un compte</string>
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- GENERIC TEXT SIZE -->
+    <dimen name="text_default">12sp</dimen>
+    <dimen name="text_big">15sp</dimen>
+    <dimen name="text_very_big">18sp</dimen>
+    <dimen name="text_huge">22sp</dimen>
+    <dimen name="text_very_huge">24sp</dimen>
+
+    <!-- GENERIC BUTTON SIZE-->
+    <dimen name="button_width">250dp</dimen>
+    <dimen name="button_height">45dp</dimen>
+
+    <!-- GENERIC SPACE SIZE -->
+    <dimen name="space_small">5dp</dimen>
+    <dimen name="space_medium">15dp</dimen>
+
+</resources>
