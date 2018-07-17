@@ -2,17 +2,17 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import thomas.example.com.interactor.GetIdInSharedPrefs
+import thomas.example.com.interactor.sharedprefs.GetIdInSharedPrefs
 import javax.inject.Inject
 
 class StartViewModel @Inject constructor(private var getIdInSharedPrefs: GetIdInSharedPrefs) : ViewModel() {
 
-    private var idUserPref: MutableLiveData<String> = MutableLiveData()
+    val idUserPref: MutableLiveData<String> = MutableLiveData()
 
     /**
      * Using of lambdas !
      */
-    fun getUserPrefIsConnected(): MutableLiveData<String> {
+    fun getUserPrefIsConnected() {
         getIdInSharedPrefs.execute(
                 onComplete = {
 
@@ -23,7 +23,5 @@ class StartViewModel @Inject constructor(private var getIdInSharedPrefs: GetIdIn
                 onNext = {
                     idUserPref.postValue(it)
                 }, params = "")
-
-        return idUserPref
     }
 }

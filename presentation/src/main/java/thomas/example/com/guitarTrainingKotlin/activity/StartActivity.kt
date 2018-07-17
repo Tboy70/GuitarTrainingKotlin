@@ -9,14 +9,14 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.listener.StartNavigatorListener
 import thomas.example.com.guitarTrainingKotlin.navigator.StartNavigator
 import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
-import thomas.example.com.interactor.GetIdInSharedPrefs
+import thomas.example.com.interactor.sharedprefs.GetIdInSharedPrefs
 import javax.inject.Inject
 
 class StartActivity : BaseActivity(), StartNavigatorListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private var startViewModel: StartViewModel? = null
+    private lateinit var startViewModel: StartViewModel
 
     @Inject
     lateinit var startNavigator: StartNavigator
@@ -26,6 +26,14 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
         setContentView(R.layout.activity_start)
 
         startViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartViewModel::class.java)
+
+        startViewModel.idUserPref.observe(this, Observer<String> {
+            if (it.equals(GetIdInSharedPrefs.ID_USER_DEFAULT)) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     override fun onStart() {
@@ -34,13 +42,7 @@ class StartActivity : BaseActivity(), StartNavigatorListener {
     }
 
     private fun getUserPrefIsConnected() {
-        startViewModel?.getUserPrefIsConnected()?.observe(this, Observer<String> {
-            if (it.equals(GetIdInSharedPrefs.ID_USER_DEFAULT)) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        })
+        startViewModel.getUserPrefIsConnected()
     }
 
 }

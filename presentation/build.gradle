@@ -31,7 +31,10 @@ dependencies {
 
     // DESIGN
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation 'com.android.support:support-v13:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
 
     //DAGGER
     kapt 'com.google.dagger:dagger-compiler:2.15'
@@ -58,8 +61,8 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.15'
 
     // NavigationComponent
-    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha02'
-    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha02'
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha03'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha03'
 
 
     testImplementation 'junit:junit:4.12'

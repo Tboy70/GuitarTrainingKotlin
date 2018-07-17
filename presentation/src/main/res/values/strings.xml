@@ -6,6 +6,10 @@
     <!-- Generic toolbar -->
     <string name="generic_toolbar_about_title">A propos</string>
 
+    <!-- Dialog-->
+    <string name="dialog_connection_title">Connexion en cours</string>
+    <string name="dialog_connection_content">Veuillez patienter</string>
+
     <!-- Navigation -->
     <string name="nav_login_home">Login Home</string>
     <string name="fragment_login_home_title">Renseigne tes informations de connexion</string>
@@ -14,4 +18,5 @@
     <string name="generic_button_validate">valider</string>
     <string name="fragment_connection_forgot_password">Mot de passe oublié ?</string>
     <string name="fragment_connection_create_account">Créer un compte</string>
+
 </resources>
