@@ -15,6 +15,6 @@ class GetIdInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor,
     }
 
     override fun buildUseCaseObservable(params: String): Observable<String> {
-       return userRepository.getIdUserInSharedPrefs()
+        return userRepository.getIdUserInSharedPrefs()
     }
 }

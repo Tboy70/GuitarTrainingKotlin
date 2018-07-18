@@ -17,10 +17,10 @@ import javax.inject.Singleton
 
 @Singleton
 class ApiModuleImpl @Inject constructor() : ApiModule {
-
-    private var apiService: APIServiceInterface
+    var apiService: APIServiceInterface
 
     companion object {
+//        const val BASE_URL = "http://192.168.1.30/guitar_api/public/" // BOX
         const val BASE_URL = "http://192.168.1.30/guitar_api/public/" // BOX
         //        val BASE_URL = "http://192.168.43.235/guitar_api/public/" // 4G
     }

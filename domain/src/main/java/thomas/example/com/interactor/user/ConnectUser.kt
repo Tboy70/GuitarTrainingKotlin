@@ -12,7 +12,7 @@ class ConnectUser @Inject constructor(threadExecutor: ThreadExecutor,
     : UseCase<User, ConnectUser.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<User> {
-        return userRepository.connectUser(params)
+        return userRepository.connectUser(params.user)
     }
 
     class Params(val user: User) {

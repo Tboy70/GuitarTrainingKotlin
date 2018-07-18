@@ -42,7 +42,8 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun launchConnectionScreen() {
-        val host: NavHostFragment = supportFragmentManager.findFragmentById(R.id.login_nav_host_fragment) as NavHostFragment? ?: return
+        val host: NavHostFragment = supportFragmentManager.findFragmentById(R.id.login_nav_host_fragment) as NavHostFragment?
+                ?: return
         NavHostFragment.findNavController(host).navigate(R.id.launcher_login)
     }
 }

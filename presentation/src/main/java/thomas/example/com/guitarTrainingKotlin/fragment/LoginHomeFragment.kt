@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.LoginHomeViewModel
-import kotlinx.android.synthetic.main.fragment_login_home.*
 import javax.inject.Inject
 
 class LoginHomeFragment : BaseFragment() {
@@ -22,14 +22,6 @@ class LoginHomeFragment : BaseFragment() {
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
-
-    companion object {
-
-        //Todo : Is new instance really useful as we have the navigation view now ?
-        fun newInstance(): LoginHomeFragment {
-            return LoginHomeFragment()
-        }
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login_home, container, false)

@@ -17,6 +17,7 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
                 .content(content)
                 .progress(true, 0)
                 .widgetColorRes(color)
+                .canceledOnTouchOutside(false)
                 .show()
     }
 

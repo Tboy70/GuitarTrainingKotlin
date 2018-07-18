@@ -4,7 +4,6 @@ import io.reactivex.Observable
 import thomas.example.com.data.mapper.UserEntityDataMapper
 import thomas.example.com.data.repository.client.APIClient
 import thomas.example.com.data.repository.client.ContentClient
-import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
@@ -26,12 +25,9 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
         return Observable.defer { Observable.just(true) }
     }
 
-    override fun connectUser(params: ConnectUser.Params): Observable<User> {
-
-//        val user = User()
-//        return Observable.defer { Observable.just(user).delay(2000, TimeUnit.MILLISECONDS) }
+    override fun connectUser(user: User): Observable<User> {
         return Observable.defer {
-            apiClient.connectUser(userEntityDataMapper.transformModelToEntity(params.user))?.map {
+            apiClient.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
                 userEntityDataMapper.transformEntityToModel(it)
             }?.doOnNext {
                 contentClient.setIdInSharedPrefs(it.idUser)
