@@ -2,12 +2,13 @@ package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.UserEntity
 import thomas.example.com.model.User
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserEntityDataMapper {
+class UserEntityDataMapper @Inject constructor() {
 
-    fun transformUserEntityToUserModel(userEntity: UserEntity): User {
+    fun transformEntityToModel(userEntity: UserEntity): User {
         val user = User()
         user.idUser = userEntity.idUser
         user.pseudoUser = userEntity.pseudoUser
@@ -15,16 +16,16 @@ class UserEntityDataMapper {
         return user
     }
 
-    fun transformListUserEntitiesToUserModels(userEntityList: List<UserEntity>): List<User> {
+    fun transformListEntitiesToListModels(userEntityList: List<UserEntity>): List<User> {
         val userList: MutableList<User> = mutableListOf()
 
         for (userEntity: UserEntity in userEntityList) {
-            userList.add(transformUserEntityToUserModel(userEntity))
+            userList.add(transformEntityToModel(userEntity))
         }
         return userList
     }
 
-    fun transformUserToUserEntity(user: User): UserEntity {
+    fun transformModelToEntity(user: User): UserEntity {
         val userEntity = UserEntity()
         userEntity.idUser = user.idUser
         userEntity.pseudoUser = user.pseudoUser
@@ -32,11 +33,11 @@ class UserEntityDataMapper {
         return userEntity
     }
 
-    fun transformListUsersToUserEntities(userList: List<User>): List<UserEntity> {
+    fun transformListModelsToListEntities(userList: List<User>): List<UserEntity> {
         val userEntityList: MutableList<UserEntity> = mutableListOf()
 
         for (user: User in userList) {
-            userEntityList.add(transformUserToUserEntity(user))
+            userEntityList.add(transformModelToEntity(user))
         }
         return userEntityList
     }

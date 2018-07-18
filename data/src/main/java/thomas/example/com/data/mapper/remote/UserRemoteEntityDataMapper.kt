@@ -2,12 +2,13 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.UserEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRemoteEntityDataMapper {
+class UserRemoteEntityDataMapper @Inject constructor() {
 
-    fun transformUserRemoteEntityToUserEntity(userRemoteEntity: UserRemoteEntity): UserEntity {
+    fun transformRemoteEntityToEntity(userRemoteEntity: UserRemoteEntity): UserEntity {
         val userEntity = UserEntity()
         userEntity.idUser = userRemoteEntity.idUser
         userEntity.pseudoUser = userRemoteEntity.pseudoUser
@@ -15,16 +16,16 @@ class UserRemoteEntityDataMapper {
         return userEntity
     }
 
-    fun transformListUserRemoteEntitiesToUserEntities(userRemoteEntityList: List<UserRemoteEntity>): List<UserEntity> {
+    fun transformListRemoteEntitiesToListEntities(userRemoteEntityList: List<UserRemoteEntity>): List<UserEntity> {
         val userEntityList: MutableList<UserEntity> = mutableListOf()
 
         for (userRemoteEntity: UserRemoteEntity in userRemoteEntityList) {
-            userEntityList.add(transformUserRemoteEntityToUserEntity(userRemoteEntity))
+            userEntityList.add(transformRemoteEntityToEntity(userRemoteEntity))
         }
         return userEntityList
     }
 
-    fun transformUserEntityToUserRemoteEntity(userEntity: UserEntity): UserRemoteEntity {
+    fun transformEntityToRemoteEntity(userEntity: UserEntity): UserRemoteEntity {
         val userRemoteEntity = UserRemoteEntity()
         userRemoteEntity.idUser = userEntity.idUser
         userRemoteEntity.pseudoUser = userEntity.pseudoUser
@@ -32,11 +33,11 @@ class UserRemoteEntityDataMapper {
         return userRemoteEntity
     }
 
-    fun transformListUserEntitiesToUserRemoteEntities(userEntityList: List<UserEntity>): List<UserRemoteEntity> {
+    fun transformListEntitiesToListRemoteEntities(userEntityList: List<UserEntity>): List<UserRemoteEntity> {
         val userRemoteEntityList: MutableList<UserRemoteEntity> = mutableListOf()
 
         for (userEntity: UserEntity in userEntityList) {
-            userRemoteEntityList.add(transformUserEntityToUserRemoteEntity(userEntity))
+            userRemoteEntityList.add(transformEntityToRemoteEntity(userEntity))
         }
         return userRemoteEntityList
     }

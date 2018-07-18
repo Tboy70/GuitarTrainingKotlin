@@ -24,5 +24,5 @@ abstract class UseCase<ReturnType, Params> protected constructor(private val thr
         }
     }
 
-    abstract fun buildUseCaseObservable(params: Params?): Observable<ReturnType>
+    abstract fun buildUseCaseObservable(params: Params): Observable<ReturnType>
 }

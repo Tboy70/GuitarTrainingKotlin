@@ -5,6 +5,8 @@ import android.content.Context
 import dagger.Binds
 import dagger.Module
 import thomas.example.com.data.executor.JobExecutor
+import thomas.example.com.data.module.ApiModule
+import thomas.example.com.data.module.ApiModuleImpl
 import thomas.example.com.data.repository.UserRepositoryImpl
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.repository.UserRepository
@@ -20,6 +22,10 @@ abstract class ApplicationModule {
     @Singleton
     @Binds
     abstract fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor
+
+    @Singleton
+    @Binds
+    abstract fun provideAPIModule(apiModuleImpl: ApiModuleImpl): ApiModule
 
     @Singleton
     @Binds

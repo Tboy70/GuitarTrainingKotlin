@@ -2,12 +2,13 @@ package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.ExerciseEntity
 import thomas.example.com.model.Exercise
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ExerciseEntityDataMapper {
+class ExerciseEntityDataMapper @Inject constructor() {
 
-    fun transformExerciseEntityToExerciseModel(exerciseEntity: ExerciseEntity): Exercise {
+    fun transformEntityToModel(exerciseEntity: ExerciseEntity): Exercise {
         val exercise = Exercise()
         exercise.idExercise = exerciseEntity.idExercise
         exercise.durationExercise = exerciseEntity.durationExercise
@@ -16,16 +17,16 @@ class ExerciseEntityDataMapper {
         return exercise
     }
 
-    fun transformListExerciseEntitiesToExerciseModels(exerciseEntityList: List<ExerciseEntity>): List<Exercise> {
+    fun transformListEntitiesToListModels(exerciseEntityList: List<ExerciseEntity>): List<Exercise> {
         val exerciseList: MutableList<Exercise> = mutableListOf()
 
         for (exerciseEntity: ExerciseEntity in exerciseEntityList) {
-            exerciseList.add(transformExerciseEntityToExerciseModel(exerciseEntity))
+            exerciseList.add(transformEntityToModel(exerciseEntity))
         }
         return exerciseList
     }
 
-    fun transformExerciseModelToExerciseEntity(exercise: Exercise): ExerciseEntity {
+    fun transformModelToEntity(exercise: Exercise): ExerciseEntity {
         val exerciseEntity = ExerciseEntity()
         exerciseEntity.idExercise = exercise.idExercise
         exerciseEntity.durationExercise = exercise.durationExercise
@@ -34,11 +35,11 @@ class ExerciseEntityDataMapper {
         return exerciseEntity
     }
 
-    fun transformListExerciseModelsToExerciseEntites(exerciseModelList: List<Exercise>): List<ExerciseEntity> {
+    fun transformListModelsToListEntities(exerciseModelList: List<Exercise>): List<ExerciseEntity> {
         val exerciseEntityList: MutableList<ExerciseEntity> = mutableListOf()
 
         for (exerciseModel: Exercise in exerciseModelList) {
-            exerciseEntityList.add(transformExerciseModelToExerciseEntity(exerciseModel))
+            exerciseEntityList.add(transformModelToEntity(exerciseModel))
         }
         return exerciseEntityList
     }

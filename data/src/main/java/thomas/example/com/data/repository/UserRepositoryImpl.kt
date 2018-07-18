@@ -1,17 +1,19 @@
 package thomas.example.com.data.repository
 
 import io.reactivex.Observable
-import io.reactivex.internal.operators.observable.ObservableJust
+import thomas.example.com.data.mapper.UserEntityDataMapper
+import thomas.example.com.data.repository.client.APIClient
 import thomas.example.com.data.repository.client.ContentClient
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl @Inject constructor(private var contentClient : ContentClient) : UserRepository {
+class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: UserEntityDataMapper,
+                                             private val contentClient: ContentClient,
+                                             private val apiClient: APIClient) : UserRepository {
 
     /**
      * No need of try / catch anymore !
@@ -20,12 +22,20 @@ class UserRepositoryImpl @Inject constructor(private var contentClient : Content
         return Observable.defer { contentClient.getIdInSharedPrefs() }
     }
 
-    override fun setIdUserInSharedPrefs(idUser: String): Observable<Boolean> {
+    override fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean> {
         return Observable.defer { Observable.just(true) }
     }
 
-    override fun connectUser(params: ConnectUser.Params?): Observable<User> {
-        val user = User()
-        return Observable.defer { Observable.just(user).delay(2000, TimeUnit.MILLISECONDS) }
+    override fun connectUser(params: ConnectUser.Params): Observable<User> {
+
+//        val user = User()
+//        return Observable.defer { Observable.just(user).delay(2000, TimeUnit.MILLISECONDS) }
+        return Observable.defer {
+            apiClient.connectUser(userEntityDataMapper.transformModelToEntity(params.user))?.map {
+                userEntityDataMapper.transformEntityToModel(it)
+            }?.doOnNext {
+                contentClient.setIdInSharedPrefs(it.idUser)
+            }
+        }
     }
 }

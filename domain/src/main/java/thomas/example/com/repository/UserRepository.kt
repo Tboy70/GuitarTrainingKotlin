@@ -8,7 +8,7 @@ interface UserRepository {
 
     fun getIdUserInSharedPrefs(): Observable<String>
 
-    fun setIdUserInSharedPrefs(idUser: String): Observable<Boolean>
+    fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean>
 
-    fun connectUser(params: ConnectUser.Params?): Observable<User>
+    fun connectUser(params: ConnectUser.Params): Observable<User>
 }

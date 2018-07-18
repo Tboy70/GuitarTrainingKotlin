@@ -11,7 +11,7 @@ class ConnectUser @Inject constructor(threadExecutor: ThreadExecutor,
                                       private var userRepository: UserRepository)
     : UseCase<User, ConnectUser.Params>(threadExecutor) {
 
-    override fun buildUseCaseObservable(params: Params?): Observable<User> {
+    override fun buildUseCaseObservable(params: Params): Observable<User> {
         return userRepository.connectUser(params)
     }
 

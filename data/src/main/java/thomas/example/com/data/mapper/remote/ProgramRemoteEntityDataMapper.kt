@@ -8,28 +8,28 @@ import javax.inject.Singleton
 @Singleton
 class ProgramRemoteEntityDataMapper @Inject constructor(private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper) {
 
-    fun transformProgramRemoteEntityToProgramEntity(programRemoteEntity: ProgramRemoteEntity): ProgramEntity {
+    fun transformRemoteEntityToEntity(programRemoteEntity: ProgramRemoteEntity): ProgramEntity {
         val programEntity = ProgramEntity()
         programEntity.idProgram = programRemoteEntity.idProgram
         programEntity.nameProgram = programRemoteEntity.nameProgram
         programEntity.descriptionProgram = programRemoteEntity.descriptionProgram
         programEntity.defaultProgram = programRemoteEntity.defaultProgram
         programEntity.idUser = programRemoteEntity.idUser
-        programEntity.exerciseEntities = exerciseRemoteEntityDataMapper.transformListExerciseRemoteEntitiesToListExerciseEntities(programRemoteEntity.exerciseRemoteEntities)
+        programEntity.exerciseEntities = exerciseRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(programRemoteEntity.exerciseRemoteEntities)
 
         return programEntity
     }
 
-    fun transformListProgramRemoteEntitiesToListProgramEntities(programRemoteEntitiesList: List<ProgramRemoteEntity>): List<ProgramEntity> {
+    fun transformListRemoteEntitiesToListEntities(programRemoteEntitiesList: List<ProgramRemoteEntity>): List<ProgramEntity> {
         val programEntitiesList: MutableList<ProgramEntity> = mutableListOf()
 
         for (programRemoteEntity: ProgramRemoteEntity in programRemoteEntitiesList) {
-            programEntitiesList.add(transformProgramRemoteEntityToProgramEntity(programRemoteEntity))
+            programEntitiesList.add(transformRemoteEntityToEntity(programRemoteEntity))
         }
         return programEntitiesList
     }
 
-    fun transformProgramEntityToProgramRemoteEntity(programEntity: ProgramEntity): ProgramRemoteEntity {
+    fun transformEntityToRemoteEntity(programEntity: ProgramEntity): ProgramRemoteEntity {
         val programRemoteEntity = ProgramRemoteEntity()
         programRemoteEntity.idProgram = programEntity.idProgram
         programRemoteEntity.nameProgram = programEntity.nameProgram
@@ -37,16 +37,16 @@ class ProgramRemoteEntityDataMapper @Inject constructor(private val exerciseRemo
         programRemoteEntity.defaultProgram = programEntity.defaultProgram
         programRemoteEntity.idUser = programEntity.idUser
         programRemoteEntity.exerciseRemoteEntities = exerciseRemoteEntityDataMapper
-                .transformListExerciseEntitiesToListExerciseRemoteEntities(programEntity.exerciseEntities)
+                .transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)
 
         return programRemoteEntity
     }
 
-    fun transformListProgramEntitiesToListProgramRemoteEntities(programEntitiesList: List<ProgramEntity>): List<ProgramRemoteEntity> {
+    fun transformListEntitiesToListRemoteEntities(programEntitiesList: List<ProgramEntity>): List<ProgramRemoteEntity> {
         val programRemoteEntitiesList: MutableList<ProgramRemoteEntity> = mutableListOf()
 
         for (programEntity: ProgramEntity in programEntitiesList) {
-            programRemoteEntitiesList.add(transformProgramEntityToProgramRemoteEntity(programEntity))
+            programRemoteEntitiesList.add(transformEntityToRemoteEntity(programEntity))
         }
         return programRemoteEntitiesList
     }
