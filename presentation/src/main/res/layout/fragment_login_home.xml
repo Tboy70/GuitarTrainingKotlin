@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="33"
         android:gravity="center"
-        android:text="@string/fragment_login_home_title"
+        android:text="@string/login_home_title"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_very_huge"
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_1"
@@ -42,14 +42,14 @@
             android:id="@+id/fragment_login_home_username"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_login_home_hint_username"
+            android:hint="@string/login_home_hint_username"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/fragment_login_home_password"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="@string/fragment_login_home_hint_password"
+            android:hint="@string/login_home_hint_password"
             android:inputType="textPassword" />
 
     </LinearLayout>
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginBottom="@dimen/space_small"
-            android:text="@string/fragment_connection_forgot_password"
+            android:text="@string/login_forgot_password"
             android:textColor="@color/colorPrimary" />
 
         <TextView
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/fragment_connection_create_account"
+            android:text="@string/login_create_account"
             android:textColor="@color/colorPrimary" />
 
     </LinearLayout>

@@ -9,6 +9,7 @@ import javax.inject.Inject
 class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUser) : ViewModel() {
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val connectSucceed: MutableLiveData<Boolean> = MutableLiveData()
 
     fun connectUser(username: String, password: String) {
 
@@ -23,6 +24,8 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
                 onError = {
                 },
                 onNext = {
+                    connectSucceed.postValue(true)
+
                 }, params = ConnectUser.Params.forLogin(user))
     }
 }

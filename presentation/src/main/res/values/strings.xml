@@ -1,22 +1,39 @@
 <resources>
 
-    <!-- App -->
+    <!-- APP -->
     <string name="app_name">GuitarTraining-kotlin</string>
 
-    <!-- Generic toolbar -->
+    <!-- TOOLBARS -->
     <string name="generic_toolbar_about_title">A propos</string>
 
-    <!-- Dialog-->
+    <!-- DIALOGS-->
     <string name="dialog_connection_title">Connexion en cours</string>
     <string name="dialog_connection_content">Veuillez patienter</string>
 
-    <!-- Navigation -->
+    <!-- GENERIC BUTTONS -->
+    <string name="generic_button_validate">Valider</string>
+
+    <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
-    <string name="fragment_login_home_title">Renseigne tes informations de connexion</string>
-    <string name="fragment_login_home_hint_username">Nom d\'utilisateur</string>
-    <string name="fragment_login_home_hint_password">Mot de passe</string>
-    <string name="generic_button_validate">valider</string>
-    <string name="fragment_connection_forgot_password">Mot de passe oublié ?</string>
-    <string name="fragment_connection_create_account">Créer un compte</string>
+    <string name="nav_user_panel_home">User Panel Home</string>
+
+    <!-- LOGIN -->
+    <string name="login_home_title">Renseigne tes informations de connexion</string>
+    <string name="login_home_hint_username">Nom d\'utilisateur</string>
+    <string name="login_home_hint_password">Mot de passe</string>
+    <string name="login_forgot_password">Mot de passe oublié ?</string>
+    <string name="login_create_account">Créer un compte</string>
+
+    <!-- USER PANEL -->
+    <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
+    <string name="user_panel_navigation_drawer_close">Close navigation drawer</string>
+    <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
+    <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
+
+    <!-- USER PROGRAMS LIST-->
+    <string name="user_programs_list_no_program_text">Aucun programme disponible</string>
+    <string name="user_programs_list_nb_exercises_text">Nombre d\\\'exercises : %s</string>
+    <string name="fragment_user_programs_list_total_duration_exercises_minutes_text">Durée totale du programme: %s minutes</string>
+    <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s heure(s) et %2$s minutes</string>
 
 </resources>

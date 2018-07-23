@@ -35,6 +35,7 @@ dependencies {
     implementation 'com.android.support:support-v13:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     //DAGGER
     kapt 'com.google.dagger:dagger-compiler:2.15'
@@ -72,6 +73,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
+
+androidExtensions {
+    experimental = true
+}
+
 repositories {
     mavenCentral()
 }

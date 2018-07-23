@@ -7,8 +7,10 @@ import dagger.Module
 import thomas.example.com.data.executor.JobExecutor
 import thomas.example.com.data.module.ApiModule
 import thomas.example.com.data.module.ApiModuleImpl
+import thomas.example.com.data.repository.ProgramRepositoryImpl
 import thomas.example.com.data.repository.UserRepositoryImpl
 import thomas.example.com.executor.ThreadExecutor
+import thomas.example.com.repository.ProgramRepository
 import thomas.example.com.repository.UserRepository
 import javax.inject.Singleton
 
@@ -30,5 +32,9 @@ abstract class ApplicationModule {
     @Singleton
     @Binds
     abstract fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideProgramRepository(programRepositoryImpl: ProgramRepositoryImpl): ProgramRepository
 
 }

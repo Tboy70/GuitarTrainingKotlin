@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
 import thomas.example.com.guitarTrainingKotlin.activity.StartActivity
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.module.activity.LoginActivityModule
 import thomas.example.com.guitarTrainingKotlin.di.module.activity.StartActivityModule
+import thomas.example.com.guitarTrainingKotlin.di.module.activity.UserPanelActivityModule
 
 @Module
 abstract class ActivityInjectorModule {
@@ -18,4 +20,8 @@ abstract class ActivityInjectorModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [LoginActivityModule::class])
     abstract fun loginActivityInjector(): LoginActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [UserPanelActivityModule::class])
+    abstract fun userPanelActivityInjector(): UserPanelActivity
 }

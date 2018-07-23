@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- GENERIC COLORS -->
     <color name="colorPrimary">#EF5350</color>
     <color name="colorPrimaryDark">#E53935</color>
     <color name="colorAccent">#EF5350</color>
+
+    <!-- USER PANEL COLORS -->
+    <color name="placeholder_text_color">#E0E0E0</color>
 </resources>

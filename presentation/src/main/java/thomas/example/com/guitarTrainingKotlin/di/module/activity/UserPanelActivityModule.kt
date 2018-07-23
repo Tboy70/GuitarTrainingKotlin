@@ -4,20 +4,19 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramListFragment
 
 @Module(includes = [BaseActivityModule::class])
-abstract class LoginActivityModule {
+abstract class UserPanelActivityModule {
 
     @PerActivity
     @Binds
-    abstract fun bindBaseActivity(loginActivity: LoginActivity): BaseActivity
+    abstract fun bindBaseActivity(userPanelActivity: UserPanelActivity): BaseActivity
 
     @PerFragment
     @ContributesAndroidInjector
-    abstract fun loginHomeFragmentInjector(): LoginHomeFragment
-
+    abstract fun userProgramListFragmentInjector(): UserProgramListFragment
 }
