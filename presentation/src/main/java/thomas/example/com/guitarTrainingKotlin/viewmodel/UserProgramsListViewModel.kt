@@ -10,16 +10,23 @@ import thomas.example.com.interactor.user.RetrieveProgramsListByUserId
 import thomas.example.com.model.Program
 import javax.inject.Inject
 
-class UserProgramListViewModel @Inject constructor(private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId) : ViewModel() {
+class UserProgramsListViewModel @Inject constructor(private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId) : ViewModel() {
 
-    lateinit var userPrograms: List<Program>
+    var userPrograms: List<Program> = ArrayList()
+
     val finishRetrievePrograms: MutableLiveData<Boolean> = MutableLiveData()
 
+    val refreshList: MutableLiveData<Boolean> = MutableLiveData()
+
     fun retrieveProgramsListByUserId(idUser: String) {
+        refreshList.postValue(true)
         retrieveProgramsListByUserId.execute(
                 onComplete = {
+                    refreshList.postValue(false)
                 },
                 onError = {
+                    refreshList.postValue(false)
+                    finishRetrievePrograms.postValue(true)
                 },
                 onNext = {
                     userPrograms = it

@@ -29,4 +29,9 @@
     <dimen name="user_programs_list_nb_exercises_padding_end_start">20dp</dimen>
     <dimen name="user_programs_list_icon_placeholder_padding_bottom">16dp</dimen>
 
+    <!-- USER SONGS LIST -->
+    <dimen name="user_songs_list_icon_placeholder_padding_bottom">16dp</dimen>
+    <dimen name="user_songs_list_icon_placeholder_height">200dp</dimen>
+    <dimen name="user_songs_list_icon_placeholder_width">200dp</dimen>
+
 </resources>

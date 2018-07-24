@@ -32,8 +32,11 @@
 
     <!-- USER PROGRAMS LIST-->
     <string name="user_programs_list_no_program_text">Aucun programme disponible</string>
-    <string name="user_programs_list_nb_exercises_text">Nombre d\\\'exercises : %s</string>
+    <string name="user_programs_list_nb_exercises_text">Nombre d\'exercises : %s</string>
     <string name="fragment_user_programs_list_total_duration_exercises_minutes_text">Durée totale du programme: %s minutes</string>
     <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s heure(s) et %2$s minutes</string>
+
+    <!-- USER SONGS LIST -->
+    <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
 
 </resources>

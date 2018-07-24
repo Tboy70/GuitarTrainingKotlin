@@ -4,14 +4,24 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
+import android.util.Log
 import android.view.MenuItem
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
 
 class UserPanelActivity : BaseActivity() {
 
     private lateinit var drawerToggle: ActionBarDrawerToggle
+
+    private lateinit var host: NavHostFragment
+
+    private val navBuilder = NavOptions.Builder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +33,13 @@ class UserPanelActivity : BaseActivity() {
                 onBackPressed()
             }
         }
+
+        host = supportFragmentManager.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("TEST", "OnResume")
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -61,8 +78,38 @@ class UserPanelActivity : BaseActivity() {
         }
     }
 
-    private fun selectDrawerItem(it: MenuItem): Boolean {
+    private fun selectDrawerItem(menuItem: MenuItem): Boolean {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        when (menuItem.itemId) {
+            R.id.menu_drawer_programs -> displayUserProgramsFragment()
+            R.id.menu_drawer_songs -> displayUserSongsFragment()
+            else -> displayUserProgramsFragment()
+        }
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.isChecked = true
+        // Set action bar title
+        title = menuItem.title
+        // Close the navigation drawer
+        activity_main_drawer_layout.closeDrawers()
+
         return true
+    }
+
+    private fun displayUserSongsFragment() {
+        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
+                != UserSongsListFragment::class.java.simpleName) {
+            val navOptions = navBuilder.setPopUpTo(R.id.launcher_user_programs_list, true).build()
+            NavHostFragment.findNavController(host).navigate(R.id.action_programs_list_to_songs_list, null, navOptions)
+        }
+    }
+
+    private fun displayUserProgramsFragment() {
+        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
+                != UserProgramsListFragment::class.java.simpleName) {
+            val navOptions = navBuilder.setPopUpTo(R.id.launcher_user_songs_list, true).build()
+            NavHostFragment.findNavController(host).navigate(R.id.action_songs_list_to_programs_list, null, navOptions)
+        }
     }
 
     private fun setupDrawerToggle(): ActionBarDrawerToggle {

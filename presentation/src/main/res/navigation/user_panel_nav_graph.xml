@@ -6,8 +6,20 @@
 
     <fragment
         android:id="@+id/launcher_user_programs_list"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramListFragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment"
         android:label="@string/nav_user_panel_home"
-        tools:layout="@layout/fragment_user_programs_list" />
+        tools:layout="@layout/fragment_user_programs_list">
+        <action
+            android:id="@+id/action_programs_list_to_songs_list"
+            app:destination="@+id/launcher_user_songs_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/launcher_user_songs_list"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment"
+        tools:layout="@layout/fragment_user_songs_list">
+        <action
+            android:id="@+id/action_songs_list_to_programs_list"
+            app:destination="@+id/launcher_user_programs_list" />
+    </fragment>
 
 </navigation>

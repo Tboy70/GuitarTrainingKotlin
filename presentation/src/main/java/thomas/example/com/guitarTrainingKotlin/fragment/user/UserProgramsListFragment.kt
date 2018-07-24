@@ -16,15 +16,15 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramListViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramsListViewModel
 import thomas.example.com.model.Program
 import javax.inject.Inject
 
-class UserProgramListFragment : BaseFragment(), UserProgramsListAdapterListener {
+class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userProgramListViewModel: UserProgramListViewModel
+    private lateinit var userProgramsListViewModel: UserProgramsListViewModel
 
     @Inject
     lateinit var userProgramsListAdapter: UserProgramsListAdapter
@@ -40,7 +40,7 @@ class UserProgramListFragment : BaseFragment(), UserProgramsListAdapterListener 
         recyclerView = rootView.findViewById(R.id.fragment_user_programs_list_recycler_view)
         swipeRefreshLayout = rootView.findViewById(R.id.fragment_user_programs_list_swipe_refresh_layout)
 
-        userProgramListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramListViewModel::class.java)
+        userProgramsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramsListViewModel::class.java)
 
         userProgramsListAdapter.setUserProgramsListAdapter(this)
 
@@ -52,11 +52,11 @@ class UserProgramListFragment : BaseFragment(), UserProgramsListAdapterListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.idUser = userProgramListViewModel.getIdUser(activity!!)
+        this.idUser = userProgramsListViewModel.getIdUser(activity!!)
 
-        userProgramListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
+        userProgramsListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
             if (it == true) {
-                val userPrograms: List<Program> = userProgramListViewModel.userPrograms
+                val userPrograms: List<Program> = userProgramsListViewModel.userPrograms
 
                 userProgramsListAdapter.updateProgramsList(userPrograms)
                 if (userPrograms.isEmpty()) {
@@ -68,11 +68,15 @@ class UserProgramListFragment : BaseFragment(), UserProgramsListAdapterListener 
                 }
             }
         })
+
+        userProgramsListViewModel.refreshList.observe(this, Observer<Boolean> {
+            swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
+        })
     }
 
     override fun onStart() {
         super.onStart()
-        userProgramListViewModel.retrieveProgramsListByUserId(idUser)
+        userProgramsListViewModel.retrieveProgramsListByUserId(idUser)
     }
 
     private fun initRecyclerView() {
@@ -82,7 +86,7 @@ class UserProgramListFragment : BaseFragment(), UserProgramsListAdapterListener 
         recyclerView.addItemDecoration(DividerItemDecoration(activity, layoutManager.orientation))
         recyclerView.adapter = userProgramsListAdapter
 
-        swipeRefreshLayout.setOnRefreshListener { userProgramListViewModel.retrieveProgramsListByUserId(idUser) }
+        swipeRefreshLayout.setOnRefreshListener { userProgramsListViewModel.retrieveProgramsListByUserId(idUser) }
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/fragment_user_programs_list_swipe_refresh_layout"
+        android:id="@+id/fragment_user_songs_list_swipe_refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,13 +15,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_user_programs_list_recycler_view"
+            android:id="@+id/fragment_user_songs_list_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:id="@+id/fragment_user_programs_list_no_program_placeholder"
+        android:id="@+id/fragment_user_songs_list_no_program_placeholder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -35,10 +35,10 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:layout_width="@dimen/user_programs_list_icon_placeholder_width"
-            android:layout_height="@dimen/user_programs_list_icon_placeholder_height"
+            android:layout_width="@dimen/user_songs_list_icon_placeholder_width"
+            android:layout_height="@dimen/user_songs_list_icon_placeholder_height"
             android:contentDescription="@null"
-            android:paddingBottom="@dimen/user_programs_list_icon_placeholder_padding_bottom"
+            android:paddingBottom="@dimen/user_songs_list_icon_placeholder_padding_bottom"
             android:src="@drawable/ic_program"
             android:tint="@color/placeholder_text_color" />
 
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/user_programs_list_no_program_text"
+            android:text="@string/user_songs_list_no_program_text"
             android:textAllCaps="true"
             android:textColor="@color/placeholder_text_color"
             android:textSize="@dimen/user_programs_list_placeholder_text_size"
@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fragment_user_programs_floating_action_button"
+        android:id="@+id/fragment_user_songs_floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
