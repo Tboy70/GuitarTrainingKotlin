@@ -14,10 +14,18 @@ class ProgramRepositoryImpl @Inject constructor(private val programClient: Progr
                                                 private val apiClient: APIClient,
                                                 private val programEntityDataMapper: ProgramEntityDataMapper) : ProgramRepository {
 
-    override fun retrieveProgramsListByUserId(userId: String): Observable<List<Program>> {
+    override fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>> {
         return Observable.defer {
-            apiClient.retrieveProgramsListByUserId(userId).map {
+            apiClient.retrieveProgramsListByUserId(idUser).map {
                 programEntityDataMapper.transformListEntitiesToListModels(it)
+            }
+        }
+    }
+
+    override fun retrieveProgramById(idProgram: String): Observable<Program> {
+        return Observable.defer {
+            apiClient.retrieveProgramFromId(idProgram).map {
+                programEntityDataMapper.transformEntityToModel(it)
             }
         }
     }

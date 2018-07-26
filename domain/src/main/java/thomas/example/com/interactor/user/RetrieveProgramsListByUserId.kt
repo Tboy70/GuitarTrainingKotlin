@@ -12,14 +12,14 @@ class RetrieveProgramsListByUserId @Inject constructor(threadExecutor: ThreadExe
     : UseCase<List<Program>, RetrieveProgramsListByUserId.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<List<Program>> {
-        return programRepository.retrieveProgramsListByUserId(params.userId)
+        return programRepository.retrieveProgramsListByUserId(params.idUser)
     }
 
-    class Params(val userId: String) {
+    class Params(val idUser: String) {
 
         companion object {
-            fun forList(userId: String): Params {
-                return Params(userId)
+            fun forList(idUser: String): Params {
+                return Params(idUser)
             }
         }
     }

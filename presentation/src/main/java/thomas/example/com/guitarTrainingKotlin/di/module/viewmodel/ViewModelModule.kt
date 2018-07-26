@@ -6,13 +6,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import thomas.example.com.guitarTrainingKotlin.di.ViewModelKey
-import thomas.example.com.guitarTrainingKotlin.viewmodel.LoginHomeViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramsListViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserSongsListViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.*
 
 @Module
 abstract class ViewModelModule {
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
@@ -35,5 +35,7 @@ abstract class ViewModelModule {
     abstract fun bindUserSongsListViewModel(userSongsListViewModel: UserSongsListViewModel): ViewModel
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    @IntoMap
+    @ViewModelKey(UserProgramDetailsViewModel::class)
+    abstract fun bindUserProgramDetailsViewModel(userProgramDetailsViewModel: UserProgramDetailsViewModel): ViewModel
 }

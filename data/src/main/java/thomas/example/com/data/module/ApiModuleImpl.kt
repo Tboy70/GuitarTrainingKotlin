@@ -13,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import thomas.example.com.data.entity.ProgramEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
 import javax.inject.Inject
@@ -48,8 +49,12 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         return apiService.connectUser(userRemoteEntity)
     }
 
-    override fun retrieveProgramsListByUserId(userId: String): Observable<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(userId)
+    override fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramRemoteEntity>> {
+        return apiService.retrieveProgramsListByUserId(idUser)
+    }
+
+    override fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity> {
+        return apiService.retrieveProgram(idProgram)
     }
 
     interface APIServiceInterface {
@@ -57,7 +62,11 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         @POST("connect")
         fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
 
-        @GET("programs/{userId}")
-        fun retrieveProgramsListByUserId(@Path("userId") userId: String): Observable<List<ProgramRemoteEntity>>
+        @GET("programs/{idUser}")
+        fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<List<ProgramRemoteEntity>>
+
+        @GET("program/{idProgram}")
+        fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<ProgramRemoteEntity>
+
     }
 }

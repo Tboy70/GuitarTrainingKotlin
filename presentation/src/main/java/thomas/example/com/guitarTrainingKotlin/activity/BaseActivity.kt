@@ -7,10 +7,9 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import thomas.example.com.guitarTrainingKotlin.activity.listener.BaseNavigatorListener
 import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector, BaseNavigatorListener {
+abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Fragment>

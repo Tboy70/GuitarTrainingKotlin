@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/launcher_user_program_details">
+
+    <fragment
+        android:id="@+id/launcher_user_program_details"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramDetailsFragment"
+        android:label="@string/nav_user_program_home"
+        tools:layout="@layout/fragment_user_program_details"/>
+
+</navigation>

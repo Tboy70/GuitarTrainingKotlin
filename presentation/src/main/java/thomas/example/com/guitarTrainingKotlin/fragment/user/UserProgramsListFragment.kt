@@ -3,6 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
@@ -91,6 +93,8 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     }
 
     override fun onProgramClick(idProgram: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(activity, UserProgramActivity::class.java)
+        intent.putExtra(UserProgramActivity.ID_PROGRAM, idProgram)
+        activity?.startActivity(intent)
     }
 }

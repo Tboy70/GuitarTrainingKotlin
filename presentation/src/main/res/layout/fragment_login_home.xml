@@ -8,7 +8,6 @@
         android:id="@+id/fragment_login_home_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="33"
         android:gravity="center"
         android:text="@string/login_home_title"
         android:textColor="@android:color/black"
@@ -75,8 +74,8 @@
             android:id="@+id/fragment_login_home_validate_button"
             android:layout_width="@dimen/button_width"
             android:layout_height="@dimen/button_height"
-            android:background="@drawable/button_drawable"
             android:layout_marginBottom="@dimen/space_medium"
+            android:background="@drawable/button_drawable"
             android:text="@string/generic_button_validate"
             android:textColor="@android:color/white" />
 
@@ -84,8 +83,8 @@
             android:id="@+id/fragment_login_home_forgot_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="@dimen/space_small"
+            android:gravity="center"
             android:text="@string/login_forgot_password"
             android:textColor="@color/colorPrimary" />
 

@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
-import android.util.Log
 import android.view.MenuItem
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
@@ -35,11 +34,6 @@ class UserPanelActivity : BaseActivity() {
         }
 
         host = supportFragmentManager.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.e("TEST", "OnResume")
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

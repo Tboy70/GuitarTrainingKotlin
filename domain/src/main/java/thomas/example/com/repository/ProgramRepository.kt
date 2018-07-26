@@ -5,5 +5,7 @@ import thomas.example.com.model.Program
 
 interface ProgramRepository {
 
-    fun retrieveProgramsListByUserId(userId: String): Observable<List<Program>>
+    fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>>
+
+    fun retrieveProgramById(idProgram: String): Observable<Program>
 }

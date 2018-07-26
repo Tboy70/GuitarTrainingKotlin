@@ -9,6 +9,8 @@
     <!-- DIALOGS-->
     <string name="dialog_connection_title">Connexion en cours</string>
     <string name="dialog_connection_content">Veuillez patienter</string>
+    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
+    <string name="dialog_loading_content">Accorde toi en attendant …</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -16,6 +18,7 @@
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
     <string name="nav_user_panel_home">User Panel Home</string>
+    <string name="nav_user_program_home">User Program Home</string>
 
     <!-- LOGIN -->
     <string name="login_home_title">Renseigne tes informations de connexion</string>
