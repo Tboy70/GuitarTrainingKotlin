@@ -9,9 +9,7 @@ class StartViewModel @Inject constructor(private var getIdInSharedPrefs: GetIdIn
 
     val idUserPref: MutableLiveData<String> = MutableLiveData()
 
-    /**
-     * Using of lambdas !
-     */
+     /** Using of lambdas ! **/
     fun getUserPrefIsConnected() {
         getIdInSharedPrefs.execute(
                 onComplete = {

@@ -16,11 +16,10 @@ import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragme
 
 class UserPanelActivity : BaseActivity() {
 
-    private lateinit var drawerToggle: ActionBarDrawerToggle
-
-    private lateinit var host: NavHostFragment
-
     private val navBuilder = NavOptions.Builder()
+
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var host: NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

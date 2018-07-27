@@ -1,5 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.login
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -42,9 +43,7 @@ class LoginHomeFragment : BaseFragment() {
 
         loginHomeViewModel.connectSucceed.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
-                val intent = Intent(activity, UserPanelActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
+                connectSuccess()
             }
         })
 
@@ -53,7 +52,13 @@ class LoginHomeFragment : BaseFragment() {
 
     private fun handleClickValidateLogin() {
         KeyboardUtils.hideKeyboard(this.activity!!)
-        materialDialogComponent.showProgressDialog(this.activity!!, getString(R.string.dialog_connection_title), getString(R.string.dialog_connection_content), R.color.colorPrimary)
+        materialDialogComponent.showProgressDialog(activity as Activity, getString(R.string.dialog_connection_title), getString(R.string.dialog_connection_content), R.color.colorPrimary)
         loginHomeViewModel.connectUser(fragment_login_home_username.text.toString(), fragment_login_home_password.text.toString())
+    }
+
+    private fun connectSuccess() {
+        val intent = Intent(activity, UserPanelActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
     }
 }

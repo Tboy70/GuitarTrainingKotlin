@@ -22,6 +22,7 @@ class StartActivity : BaseActivity() {
 
         startViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartViewModel::class.java)
 
+        /** Check the user ID in shared prefs to know what should be the right activity to launch. **/
         startViewModel.idUserPref.observe(this, Observer<String> {
             if (it.equals(GetIdInSharedPrefs.ID_USER_DEFAULT)) {
                 val intent = Intent(this, LoginActivity::class.java)
@@ -43,5 +44,4 @@ class StartActivity : BaseActivity() {
     private fun getUserPrefIsConnected() {
         startViewModel.getUserPrefIsConnected()
     }
-
 }

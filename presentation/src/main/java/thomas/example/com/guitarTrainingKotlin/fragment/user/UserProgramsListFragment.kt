@@ -18,6 +18,7 @@ import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramsListViewModel
 import thomas.example.com.model.Program
 import javax.inject.Inject
@@ -58,16 +59,7 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
         userProgramsListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
             if (it == true) {
-                val userPrograms: List<Program> = userProgramsListViewModel.userPrograms
-
-                userProgramsListAdapter.updateProgramsList(userPrograms)
-                if (userPrograms.isEmpty()) {
-                    fragment_user_programs_list_no_program_placeholder.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                } else {
-                    fragment_user_programs_list_no_program_placeholder.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                }
+                displayRetrievedPrograms(userProgramsListViewModel)
             }
         })
 
@@ -92,9 +84,22 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
     }
 
+    private fun displayRetrievedPrograms(userProgramsListViewModel: UserProgramsListViewModel) {
+        val userPrograms: List<Program> = userProgramsListViewModel.userPrograms
+
+        userProgramsListAdapter.updateProgramsList(userPrograms)
+        if (userPrograms.isEmpty()) {
+            fragment_user_programs_list_no_program_placeholder.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        } else {
+            fragment_user_programs_list_no_program_placeholder.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }
+    }
+
     override fun onProgramClick(idProgram: String) {
         val intent = Intent(activity, UserProgramActivity::class.java)
-        intent.putExtra(UserProgramActivity.ID_PROGRAM, idProgram)
+        intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
         activity?.startActivity(intent)
     }
 }

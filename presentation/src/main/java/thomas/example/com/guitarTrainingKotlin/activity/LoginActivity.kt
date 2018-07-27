@@ -1,7 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_login.*
@@ -35,7 +34,6 @@ class LoginActivity : BaseActivity() {
 
     private fun setToolbar() {
         activity_login_toolbar.title = getString(R.string.app_name)
-        activity_login_toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(activity_login_toolbar)
     }
 }

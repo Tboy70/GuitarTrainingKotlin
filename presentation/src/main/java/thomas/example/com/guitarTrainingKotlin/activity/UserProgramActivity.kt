@@ -6,10 +6,6 @@ import thomas.example.com.guitarTrainingKotlin.R
 
 class UserProgramActivity : BaseActivity() {
 
-    companion object {
-        const val ID_PROGRAM = "thomas.example.com.guitarTrainingKotlin.activity.ID_PROGRAM"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_program)

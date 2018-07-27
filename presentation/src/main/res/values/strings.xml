@@ -1,7 +1,7 @@
 <resources>
 
     <!-- APP -->
-    <string name="app_name">GuitarTraining-kotlin</string>
+    <string name="app_name">Guitar Training</string>
 
     <!-- TOOLBARS -->
     <string name="generic_toolbar_about_title">A propos</string>
@@ -19,6 +19,11 @@
     <string name="nav_login_home">Login Home</string>
     <string name="nav_user_panel_home">User Panel Home</string>
     <string name="nav_user_program_home">User Program Home</string>
+
+
+    <!-- ======================================================================================= -->
+    <!-- ===================================== USER ============================================ -->
+    <!-- ======================================================================================= -->
 
     <!-- LOGIN -->
     <string name="login_home_title">Renseigne tes informations de connexion</string>
@@ -41,5 +46,72 @@
 
     <!-- USER SONGS LIST -->
     <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
+
+    <!-- USER PROGRAM DETAILS -->
+    <string name="user_program_details_remove">Supprimer le programme</string>
+    <string name="user_program_details_update">Modifier le programme</string>
+    <string name="user_program_details_start">Démarrer le programme</string>
+    <string name="user_details_program_no_description">Pas de description</string>
+    <string name="user_details_program_exercises_text">Exercises</string>
+    <string name="user_details_duration_exercise_minutes_txt">%1$s minutes</string>
+    <string name="user_details_duration_exercise_hours_txt">%1$s heures %2$s minutes</string>
+
+
+    <!-- ======================================================================================= -->
+    <!-- ====================================== EXERCISES ====================================== -->
+    <!-- ======================================================================================= -->
+
+    <!-- SCALE EXERCISE -->
+    <string name="exercise_scale_note_text">Note</string>
+    <string name="exercise_scale_tone_text">Mode</string>
+    <string name="exercise_scale_title_text">Pratique des gammes</string>
+    <string name="exercise_scale_dialog_choice_mode_text">Choix du mode</string>
+    <string name="exercise_scale_dialog_choice_note_text">Choix de la note</string>
+    <string name="exercise_scale_description_text"><![CDATA[Entraine toi à improviser sur une gamme ! Choisi la gamme de ton choix ou sélectionne la aléatoirement à l\'aide des listes ci-dessous.]]></string>
+
+    <!-- MODE EXERCISE -->
+    <string name="exercise_mode_mode_text">Mode</string>
+    <string name="exercise_mode_title_text">Pratique des modes</string>
+    <string name="exercise_mode_dialog_choice_mode_text">Choix du mode</string>
+    <string name="exercise_mode_description_text">Entraîne toi à improviser avec un mode de ton choix ou choisi de manière aléatoire ! </string>
+
+    <!-- PULL OFF / HAMMER ON EXERCISE -->
+    <string name="exercise_pull_off_hammer_on_title_text">Pull off / Hammer on</string>
+    <string name="exercise_pull_off_hammer_on_description_text">Entraine toi aux hammer on et aux pull off ! </string>
+
+    <!-- BEND / SLIDE EXERCISE -->
+    <string name="exercise_bend_slide_title_text">Bend / Slide</string>
+    <string name="exercise_bend_slide_description_text">Entraine toi aux slides et aux bends !</string>
+
+    <!-- BACK FORTH EXERCISE -->
+    <string name="exercise_back_forth_title_text">Allers et retours</string>
+    <string name="exercise_back_forth_description_text">Entraine toi à faire des allers et retours à la main droite !</string>
+
+    <!-- PALM MUTE EXERCISE -->
+    <string name="exercise_palm_mute_title_text">Palm mute</string>
+    <string name="exercise_palm_mute_description_text">Entraine toi aux palm-mutes !</string>
+
+    <!-- SKIP STRING EXERCISE -->
+    <string name="exercise_skip_string_title_text">Muter une corde en accord</string>
+    <string name="exercise_skip_fragment_description_text">Entraine toi à jouer des accords en sautant une corde !</string>
+
+    <!-- TAPPING EXERCISE -->
+    <string name="exercise_tapping_title_text">Tapping</string>
+    <string name="exercise_speed_description_text">Entraine toi à jouer vite !</string>
+
+    <!-- SWEEP PICKING EXERCISE -->
+    <string name="exercise_sweep_picking_title_text">Sweep picking</string>
+    <string name="exercise_sweep_picking_description_text">Entraine toi au sweep picking !</string>
+
+    <!-- SPEED EXERCISE -->
+    <string name="exercise_speed_title_text">Vitesse</string>
+    <string name="exercise_tapping_description_text">Entraine toi au tapping !</string>
+
+
+    <!-- ======================================================================================= -->
+    <!-- ====================================== ERRORS ========================================= -->
+    <!-- ======================================================================================= -->
+
+    <string name="generic_error_title_text">Erreur …</string>
 
 </resources>

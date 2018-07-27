@@ -56,16 +56,7 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
 
         userSongsListViewModel.finishRetrieveSongs.observe(this, Observer<Boolean> {
             if (it == true) {
-                val userSongs: List<Song> = userSongsListViewModel.userSongs
-
-                userSongsListAdapter.updateSongsList(userSongs)
-                if (userSongs.isEmpty()) {
-                    fragment_user_songs_list_no_program_placeholder.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                } else {
-                    fragment_user_songs_list_no_program_placeholder.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                }
+                displayRetrievedSongs(userSongsListViewModel)
             }
         })
 
@@ -90,6 +81,19 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
             userSongsListViewModel.retrieveSongsListByUserId(idUser)
         }
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+    }
+
+    private fun displayRetrievedSongs(userSongsListViewModel: UserSongsListViewModel) {
+        val userSongs: List<Song> = userSongsListViewModel.userSongs
+
+        userSongsListAdapter.updateSongsList(userSongs)
+        if (userSongs.isEmpty()) {
+            fragment_user_songs_list_no_program_placeholder.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        } else {
+            fragment_user_songs_list_no_program_placeholder.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        }
     }
 
     override fun onSongClick(idSong: String) {

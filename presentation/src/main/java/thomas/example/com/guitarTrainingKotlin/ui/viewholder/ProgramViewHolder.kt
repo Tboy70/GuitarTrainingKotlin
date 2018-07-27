@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.view_user_programs_list_item.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import java.util.*
 
 class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHolder(itemView), LayoutContainer {
@@ -25,15 +26,15 @@ class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.Vie
         )
 
         val totalDurationProgram: Int = calculateTotalDurationProgram(programObjectWrapper)
-        if (totalDurationProgram < 60) {
+        if (totalDurationProgram < ConstValues.TIME_FACTOR) {
             view_user_programs_list_item_total_duration_exercises.text = String.format(
                     Locale.FRANCE,
                     context.getString(R.string.fragment_user_programs_list_total_duration_exercises_minutes_text),
                     totalDurationProgram
             )
         } else {
-            val hours: Int = totalDurationProgram / 60
-            val minutes: Int = totalDurationProgram % 60
+            val hours: Int = totalDurationProgram / ConstValues.TIME_FACTOR
+            val minutes: Int = totalDurationProgram % ConstValues.TIME_FACTOR
             view_user_programs_list_item_total_duration_exercises.text = String.format(
                     Locale.FRANCE,
                     context.getString(R.string.fragment_user_programs_list_total_duration_exercises_hours_text),
