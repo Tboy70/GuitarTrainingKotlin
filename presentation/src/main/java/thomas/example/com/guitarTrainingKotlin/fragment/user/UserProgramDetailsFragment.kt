@@ -4,6 +4,7 @@ import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
@@ -16,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -67,6 +69,10 @@ class UserProgramDetailsFragment : BaseFragment() {
                 materialDialogComponent.dismissDialog()
             }
         })
+
+        fragment_user_program_details_start_button.setOnClickListener {
+            startProgram()
+        }
     }
 
     override fun onStart() {
@@ -82,13 +88,14 @@ class UserProgramDetailsFragment : BaseFragment() {
             val constraintSet = ConstraintSet()
             constraintSet.clone(fragment_user_program_details_constraint_layout)
             constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
-            constraintSet.connect(R.id.fragment_user_program_details_start_button, ConstraintSet.BOTTOM, R.id.fragment_user_program_details_constraint_layout, ConstraintSet.BOTTOM, 8)
+            constraintSet.connect(R.id.fragment_user_program_details_start_button, ConstraintSet.BOTTOM, R.id.fragment_user_program_details_constraint_layout, ConstraintSet.BOTTOM, 24)
             constraintSet.applyTo(fragment_user_program_details_constraint_layout)
         }
     }
 
     @Suppress("DEPRECATION")
     private fun displayInformation(userProgramObjectWrapper: ProgramObjectWrapper) {
+
         fragment_user_program_details_name.text = userProgramObjectWrapper.program.nameProgram
         fragment_user_program_details_description.text = userProgramObjectWrapper.program.descriptionProgram
 
@@ -141,5 +148,12 @@ class UserProgramDetailsFragment : BaseFragment() {
         if (activity is UserProgramActivity) {
             (activity as UserProgramActivity).setToolbar(userProgramObjectWrapper.program.nameProgram)
         }
+    }
+
+    private fun startProgram() {
+        val intent = Intent(activity, ProgramActivity::class.java)
+        intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
+        startActivity(intent)
+        activity?.finish()
     }
 }

@@ -1,7 +1,6 @@
 package thomas.example.com.data.module
 
 import io.reactivex.Observable
-import thomas.example.com.data.entity.ProgramEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
 

@@ -2,15 +2,9 @@ package thomas.example.com.guitarTrainingKotlin.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
-import thomas.example.com.guitarTrainingKotlin.activity.StartActivity
-import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
-import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
+import thomas.example.com.guitarTrainingKotlin.activity.*
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
-import thomas.example.com.guitarTrainingKotlin.di.module.activity.LoginActivityModule
-import thomas.example.com.guitarTrainingKotlin.di.module.activity.StartActivityModule
-import thomas.example.com.guitarTrainingKotlin.di.module.activity.UserPanelActivityModule
-import thomas.example.com.guitarTrainingKotlin.di.module.activity.UserProgramActivityModule
+import thomas.example.com.guitarTrainingKotlin.di.module.activity.*
 
 @Module
 abstract class ActivityInjectorModule {
@@ -30,4 +24,8 @@ abstract class ActivityInjectorModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [UserProgramActivityModule::class])
     abstract fun userProgramActivityInjector(): UserProgramActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [ProgramActivityModule::class])
+    abstract fun programActivityInjector(): ProgramActivity
 }

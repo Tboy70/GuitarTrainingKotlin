@@ -19,6 +19,7 @@
     <string name="nav_login_home">Login Home</string>
     <string name="nav_user_panel_home">User Panel Home</string>
     <string name="nav_user_program_home">User Program Home</string>
+    <string name="nav_program_home">Program Home</string>
 
 
     <!-- ======================================================================================= -->

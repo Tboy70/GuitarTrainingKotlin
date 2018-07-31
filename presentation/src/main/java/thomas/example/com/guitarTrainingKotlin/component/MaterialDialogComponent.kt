@@ -2,7 +2,6 @@ package thomas.example.com.guitarTrainingKotlin.component
 
 import android.app.Activity
 import com.afollestad.materialdialogs.MaterialDialog
-import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import javax.inject.Inject
 

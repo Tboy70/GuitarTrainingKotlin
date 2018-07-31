@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/fragment_user_program_details_constraint_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_user_program_details_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/user_details_program_exercises_text"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 

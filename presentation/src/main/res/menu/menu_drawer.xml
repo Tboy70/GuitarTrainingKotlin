@@ -3,9 +3,9 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_drawer_programs"
+            android:checked="true"
             android:icon="@drawable/ic_program"
-            android:title="@string/user_panel_navigation_drawer_programs"
-            android:checked="true" />
+            android:title="@string/user_panel_navigation_drawer_programs" />
         <item
             android:id="@+id/menu_drawer_songs"
             android:icon="@drawable/ic_song"
