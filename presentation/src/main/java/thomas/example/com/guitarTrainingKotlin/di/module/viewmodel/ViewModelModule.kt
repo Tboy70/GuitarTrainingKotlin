@@ -21,6 +21,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ProgramViewModel::class)
+    abstract fun bindProgramViewModel(programViewModel: ProgramViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(LoginHomeViewModel::class)
     abstract fun bindLoginHomeViewModel(loginHomeViewModel: LoginHomeViewModel): ViewModel
 

@@ -22,5 +22,21 @@ class ExerciseUtils {
                 else -> activity.getString(R.string.generic_error_title_text)
             }
         }
+
+        fun convertTypeExerciseToIdFragment(typeExercise: Int): Int {
+            return when (typeExercise) {
+                ExercisesTypeValues.EXERCISE_SCALE -> R.id.launcher_scale_exercise_fragment
+                ExercisesTypeValues.EXERCISE_MODE -> R.id.launcher_mode_exercise_fragment
+                ExercisesTypeValues.EXERCISE_PULL_OFF_HAMMER_ON -> R.id.launcher_pull_off_hammer_on_exercise_fragment
+                ExercisesTypeValues.EXERCISE_BEND_SLIDE -> R.id.launcher_bend_slide_exercise_fragment
+                ExercisesTypeValues.EXERCISE_BACK_FORTH -> R.id.launcher_back_forth_exercise_fragment
+                ExercisesTypeValues.EXERCISE_PALM_MUTE -> R.id.launcher_palm_mute_exercise_fragment
+                ExercisesTypeValues.EXERCISE_SKIP_STRING -> R.id.launcher_skip_string_exercise_fragment
+                ExercisesTypeValues.EXERCISE_TAPPING -> R.id.launcher_tapping_exercise_fragment
+                ExercisesTypeValues.EXERCISE_SWEEP_PICKING -> R.id.launcher_sweep_picking_exercise_fragment
+                ExercisesTypeValues.EXERCISE_SPEED -> R.id.launcher_speed_exercise_fragment
+                else -> R.id.launcher_end_program_fragment
+            }
+        }
     }
 }
