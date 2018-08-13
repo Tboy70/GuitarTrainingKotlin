@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -50,10 +49,13 @@ class ProgramActivity : BaseActivity() {
     }
 
     fun startExercise(rankExercise: Int) {
+        this.rankExercise = rankExercise
         if (rankExercise < exercisesOfProgram.size) {
-            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(exercisesOfProgram[rankExercise].idExercise.toInt())
+            val rightExercise = exercisesOfProgram[rankExercise]
+            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.idExercise.toInt())
             val bundle = Bundle()
             bundle.putInt(ConstValues.RANK_EXERCISE, rankExercise)
+            bundle.putInt(ConstValues.DURATION_EXERCISE, rightExercise.durationExercise)
             NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, bundle, null)
         } else {
             NavHostFragment.findNavController(host).navigate(R.id.launcher_end_program_fragment, null, null)

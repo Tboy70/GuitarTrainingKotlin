@@ -62,6 +62,17 @@
     <!-- ====================================== EXERCISES ====================================== -->
     <!-- ======================================================================================= -->
 
+    <!-- GENERIC EXERCISE -->
+    <string name="generic_exercise_end_program_text">Terminer</string>
+    <string name="generic_exercise_end_title_text">FELICITATIONS !</string>
+    <string name="generic_exercise_start_program_text">Let\'s rock</string>
+    <string name="generic_exercise_next_exercise_text">Exercice suivant</string>
+    <string name="generic_exercise_start_button_text">Commencer l\'exercice</string>
+    <string name="generic_exercise_choice_creation_program">Choix de l\'exercise</string>
+    <string name="generic_exercise_duration_left_text"><![CDATA[<b>Temps restant :</b>]]> %1$s minutes.</string>
+    <string name="generic_exercise_duration_text"><![CDATA[<b>Durée de l\'exercice :</b>]]> %1$s minutes.</string>
+    <string name="generic_exercise_end_description_text">Vous êtes parvenu au bout du programme. A bientôt !</string>
+
     <!-- SCALE EXERCISE -->
     <string name="exercise_scale_note_text">Note</string>
     <string name="exercise_scale_tone_text">Mode</string>

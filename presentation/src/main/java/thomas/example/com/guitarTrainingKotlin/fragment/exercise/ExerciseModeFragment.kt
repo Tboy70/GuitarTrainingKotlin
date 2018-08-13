@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_exercise_scale.*
+import kotlinx.android.synthetic.main.fragment_exercise_mode.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -26,7 +26,7 @@ class ExerciseModeFragment : BaseFragment() {
             if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
                 (activity as ProgramActivity).startExercise(rankExercise + 1)
             } else {
-                TODO()
+                activity?.finish()
             }
         }
     }
