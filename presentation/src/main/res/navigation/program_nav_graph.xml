@@ -2,7 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/launcher_program">
+    app:startDestination="@+id/launcher_intro_program_fragment">
+
+    <fragment
+        android:id="@+id/launcher_intro_program_fragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.IntroProgramFragment"
+        tools:layout="@layout/fragment_intro_program"></fragment>
 
     <fragment
         android:id="@+id/launcher_scale_exercise_fragment"
@@ -56,7 +61,7 @@
 
     <fragment
         android:id="@+id/launcher_end_program_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.EndProgramFragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.EndProgramFragment"
         tools:layout="@layout/fragment_end_program"></fragment>
 
 

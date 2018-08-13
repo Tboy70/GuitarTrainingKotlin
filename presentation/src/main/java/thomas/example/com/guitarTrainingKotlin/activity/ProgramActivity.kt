@@ -19,7 +19,6 @@ class ProgramActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var programViewModel: ProgramViewModel
 
-    private val navBuilder = NavOptions.Builder()
     private lateinit var host: NavHostFragment
 
     private lateinit var exercisesOfProgram: List<Exercise>
@@ -45,18 +44,19 @@ class ProgramActivity : BaseActivity() {
             if (it == true) {
                 val userProgramObjectWrapper = programViewModel.userProgramObjectWrapper
                 exercisesOfProgram = userProgramObjectWrapper.program.exercises
+                startExercise(rankExercise)
             }
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        startExercise(rankExercise)
-    }
-
-    private fun startExercise(rankExercise: Int) {
-        val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(exercisesOfProgram[rankExercise].idExercise.toInt())
-        NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, null, null)
+    fun startExercise(rankExercise: Int) {
+        if (rankExercise < exercisesOfProgram.size) {
+            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(exercisesOfProgram[rankExercise].idExercise.toInt())
+            val bundle = Bundle()
+            bundle.putInt(ConstValues.RANK_EXERCISE, rankExercise)
+            NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, bundle, null)
+        } else {
+            NavHostFragment.findNavController(host).navigate(R.id.launcher_end_program_fragment, null, null)
+        }
     }
 }

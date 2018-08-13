@@ -9,6 +9,7 @@ import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.exercise.*
 import thomas.example.com.guitarTrainingKotlin.fragment.program.EndProgramFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.IntroProgramFragment
 
 @Module(includes = [BaseActivityModule::class])
 abstract class ProgramActivityModule {
@@ -55,6 +56,10 @@ abstract class ProgramActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun exerciseSpeedFragmentInjector(): ExerciseSpeedFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun introProgramFragmentInjector(): IntroProgramFragment
 
     @PerFragment
     @ContributesAndroidInjector
