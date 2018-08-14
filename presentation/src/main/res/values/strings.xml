@@ -5,6 +5,16 @@
 
     <!-- TOOLBARS -->
     <string name="generic_toolbar_about_title">A propos</string>
+    <string name="toolbar_title_exercise_mode">Modes</string>
+    <string name="toolbar_title_exercise_scale">Gammes</string>
+    <string name="toolbar_title_exercise_speed">Vitesse</string>
+    <string name="toolbar_title_exercise_tapping">Tapping</string>
+    <string name="toolbar_title_exercise_palm_mute">Palm mute</string>
+    <string name="toolbar_title_exercise_bend_slide">Bend / Slide</string>
+    <string name="toolbar_title_exercise_back_forth">Allers retours</string>
+    <string name="toolbar_title_exercise_skip_string">Mute une corde</string>
+    <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
+    <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
 
     <!-- DIALOGS-->
     <string name="dialog_connection_title">Connexion en cours</string>
@@ -125,5 +135,37 @@
     <!-- ======================================================================================= -->
 
     <string name="generic_error_title_text">Erreur …</string>
+
+    <!-- ======================================================================================= -->
+    <!-- ======================================= VALUES ======================================== -->
+    <!-- ======================================================================================= -->
+
+    <!-- Notes -->
+    <string name="note_C">C</string>
+    <string name="note_C_sharp">C# / Db</string>
+    <string name="note_D">D</string>
+    <string name="note_D_sharp">D# / Eb</string>
+    <string name="note_E">E</string>
+    <string name="note_F">F</string>
+    <string name="note_F_sharp">F# / Gb</string>
+    <string name="note_G">G</string>
+    <string name="note_G_sharp">G# / Ab</string>
+    <string name="note_A">A</string>
+    <string name="note_A_sharp">A# / Bb</string>
+    <string name="note_B">B</string>
+
+    <!-- Tones -->
+    <string name="tone_major">Majeur</string>
+    <string name="tone_minor">Mineur</string>
+    <string name="tone_pentatonic">Pentatonique</string>
+
+    <!-- Modes -->
+    <string name="mode_ionian">Ionien</string>
+    <string name="mode_dorian">Dorien</string>
+    <string name="mode_phrygian">Phrygien</string>
+    <string name="mode_lydian">Lydien</string>
+    <string name="mode_mixolydian">Mixolydien</string>
+    <string name="mode_aeolian">Aeolien</string>
+    <string name="mode_locrian">Locrien</string>
 
 </resources>

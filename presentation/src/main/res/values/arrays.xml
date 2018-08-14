@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="list_notes">
+        <item>@string/note_C</item>
+        <item>@string/note_C_sharp</item>
+        <item>@string/note_D</item>
+        <item>@string/note_D_sharp</item>
+        <item>@string/note_E</item>
+        <item>@string/note_F</item>
+        <item>@string/note_F_sharp</item>
+        <item>@string/note_G</item>
+        <item>@string/note_G_sharp</item>
+        <item>@string/note_A</item>
+        <item>@string/note_A_sharp</item>
+        <item>@string/note_B</item>
+    </string-array>
+
+    <string-array name="list_tones">
+        <item>@string/tone_pentatonic</item>
+        <item>@string/tone_major</item>
+        <item>@string/tone_minor</item>
+    </string-array>
+
+    <string-array name="list_modes">
+        <item>@string/mode_ionian</item>
+        <item>@string/mode_dorian</item>
+        <item>@string/mode_phrygian</item>
+        <item>@string/mode_lydian</item>
+        <item>@string/mode_mixolydian</item>
+        <item>@string/mode_aeolian</item>
+        <item>@string/mode_locrian</item>
+    </string-array>
+
+    <string-array name="list_exercises">
+        <item>@string/exercise_scale_title_text</item>
+        <item>@string/exercise_mode_title_text</item>
+        <item>@string/exercise_pull_off_hammer_on_title_text</item>
+        <item>@string/exercise_bend_slide_title_text</item>
+        <item>@string/exercise_back_forth_title_text</item>
+        <item>@string/exercise_palm_mute_title_text</item>
+        <item>@string/exercise_skip_string_title_text</item>
+        <item>@string/exercise_tapping_title_text</item>
+        <item>@string/exercise_sweep_picking_title_text</item>
+        <item>@string/exercise_speed_title_text</item>
+    </string-array>
+
+</resources>

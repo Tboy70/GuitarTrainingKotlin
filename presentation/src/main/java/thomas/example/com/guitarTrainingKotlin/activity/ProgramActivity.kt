@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.activity_program.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
@@ -59,6 +61,19 @@ class ProgramActivity : BaseActivity() {
             NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, bundle, null)
         } else {
             NavHostFragment.findNavController(host).navigate(R.id.launcher_end_program_fragment, null, null)
+        }
+    }
+
+    fun setProgramToolbar(toolbarTitle: String?) {
+        setSupportActionBar(activity_program_toolbar)
+        activity_program_toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        activity_program_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+        activity_program_toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
+        if (activity_program_toolbar != null) {
+            activity_program_toolbar.title = toolbarTitle
         }
     }
 }

@@ -43,4 +43,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserProgramDetailsViewModel::class)
     abstract fun bindUserProgramDetailsViewModel(userProgramDetailsViewModel: UserProgramDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseScaleViewModel::class)
+    abstract fun bindExerciseScaleViewModel(exerciseScaleViewModel: ExerciseScaleViewModel): ViewModel
 }

@@ -6,27 +6,28 @@ import android.widget.TextView
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.util.*
+import javax.inject.Inject
 
 @PerActivity
-class DurationComponent {
+class DurationComponent @Inject constructor() {
 
     @Suppress("DEPRECATION")
     fun setDuration(durationExercise: Int, durationLeft: Long, exerciseDuration: TextView,
-                    durationText: String, exerciseDurationLeft: TextView, durationTextLeft: String): Long {
+                    durationText: String?, exerciseDurationLeft: TextView, durationTextLeft: String?): Long {
 
         var mDurationLeft = durationLeft
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             exerciseDuration.text = Html.fromHtml(
                     String.format(Locale.FRANCE,
-                            durationText,
+                            durationText.toString(),
                             durationExercise.toString()
                     ), Html.FROM_HTML_MODE_COMPACT
             )
         } else {
             exerciseDuration.text = Html.fromHtml(
                     String.format(Locale.FRANCE,
-                            durationText,
+                            durationText.toString(),
                             durationExercise.toString()
                     ))
         }
@@ -36,7 +37,7 @@ class DurationComponent {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 exerciseDurationLeft.text = Html.fromHtml(
                         String.format(
-                                durationTextLeft,
+                                durationTextLeft.toString(),
                                 durationExercise.toString()
                         ), Html.FROM_HTML_MODE_COMPACT
                 )
@@ -44,7 +45,7 @@ class DurationComponent {
             } else {
                 exerciseDurationLeft.text = Html.fromHtml(
                         String.format(
-                                durationTextLeft,
+                                durationTextLeft.toString(),
                                 durationExercise.toString()
                         )
                 )
@@ -55,14 +56,14 @@ class DurationComponent {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 exerciseDurationLeft.text = Html.fromHtml(
                         String.format(
-                                durationTextLeft,
+                                durationTextLeft.toString(),
                                 DateTimeUtils.convertMillisecondsToTimeFormat(durationLeft)
                         ), Html.FROM_HTML_MODE_COMPACT
                 )
             } else {
                 exerciseDurationLeft.text = Html.fromHtml(
                         String.format(
-                                durationTextLeft,
+                                durationTextLeft.toString(),
                                 DateTimeUtils.convertMillisecondsToTimeFormat(durationLeft)
                         )
                 )

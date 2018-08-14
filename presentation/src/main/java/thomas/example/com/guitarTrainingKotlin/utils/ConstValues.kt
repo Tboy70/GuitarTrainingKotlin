@@ -11,5 +11,6 @@ class ConstValues {
         const val ID_PROGRAM = "thomas.example.com.guitarTrainingKotlin.activity.ID_PROGRAM"
         const val RANK_EXERCISE = "thomas.example.com.guitarTrainingKotlin.activity.RANK_EXERCISE"
         const val DURATION_EXERCISE = "thomas.example.com.guitarTrainingKotlin.activity.DURATION_EXERCISE"
+        const val EMPTY_STRING = ""
     }
 }
