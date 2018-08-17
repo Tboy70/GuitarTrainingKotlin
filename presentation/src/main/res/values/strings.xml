@@ -31,6 +31,11 @@
     <string name="nav_user_program_home">User Program Home</string>
     <string name="nav_program_home">Program Home</string>
 
+    <!-- COMPONENTS -->
+    <string name="timer_start_button">Démarrer</string>
+    <string name="timer_pause_button">Pause</string>
+    <string name="timer_title">C\'est parti !</string>
+
 
     <!-- ======================================================================================= -->
     <!-- ===================================== USER ============================================ -->

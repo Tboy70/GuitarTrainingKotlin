@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.DurationComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -22,21 +24,23 @@ import javax.inject.Inject
 class ExerciseScaleFragment : BaseFragment() {
 
     @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var exerciseScaleViewModel: ExerciseScaleViewModel
+
+    @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
+
+    @Inject
+    lateinit var dialogComponent: DialogComponent
 
     @Inject
     lateinit var durationComponent: DurationComponent
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var exerciseScaleViewModel: ExerciseScaleViewModel
-
+    private lateinit var items: List<String>
+    private var mSelectedItem: String? = null
     private var rankExercise = ConstValues.CONST_ERROR
     private var durationExercise = ConstValues.CONST_ERROR
     private var durationLeft = DateTimeUtils.DEFAULT_DURATION_LEFT
-
-    private lateinit var items: List<String>
-    private var mSelectedItem: String? = null
 
     companion object {
         const val SCALE_NOTE_SELECTION = 1
@@ -60,6 +64,7 @@ class ExerciseScaleFragment : BaseFragment() {
         handleClickNoteButton()
         handleClickModeButton()
         handleClickRandomButton()
+        handleClickStartButton()
         handleClickNextButton()
 
         setDurationUI()
@@ -91,6 +96,21 @@ class ExerciseScaleFragment : BaseFragment() {
     private fun handleClickRandomButton() {
         fragment_exercise_scale_random_selection.setOnClickListener {
             exerciseScaleViewModel.getRandomValue()
+        }
+    }
+
+    private fun handleClickStartButton() {
+        fragment_exercise_scale_button_start_exercise.setOnClickListener {
+            if (activity is ProgramActivity) {
+                dialogComponent.showTimerDialog(activity as ProgramActivity, durationLeft, object : OnTimerDialogDismiss {
+                    override fun onDismiss(timeCountInMilliseconds: Long) {
+                        durationLeft = durationComponent.setDurationLeft(
+                                fragment_exercise_scale_duration_left,
+                                getString(R.string.generic_exercise_duration_left_text),
+                                timeCountInMilliseconds)
+                    }
+                })
+            }
         }
     }
 
