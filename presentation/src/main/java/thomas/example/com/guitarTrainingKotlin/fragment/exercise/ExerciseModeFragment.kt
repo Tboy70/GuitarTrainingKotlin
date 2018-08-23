@@ -21,13 +21,5 @@ class ExerciseModeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rankExercise = arguments?.getInt(ConstValues.RANK_EXERCISE) ?: ConstValues.CONST_ERROR
-
-        continue_button.setOnClickListener {
-            if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
-                (activity as ProgramActivity).startExercise(rankExercise + 1)
-            } else {
-                activity?.finish()
-            }
-        }
     }
 }

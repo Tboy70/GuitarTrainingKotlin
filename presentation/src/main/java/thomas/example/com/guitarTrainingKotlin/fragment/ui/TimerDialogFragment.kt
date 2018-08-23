@@ -4,12 +4,14 @@ import android.app.DialogFragment
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.timer_dialog_layout.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
+import thomas.example.com.guitarTrainingKotlin.utils.ConstantTags
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 
 class TimerDialogFragment : DialogFragment() {
@@ -70,7 +72,11 @@ class TimerDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
-        countDownTimer.cancel()
+        try {
+            countDownTimer.cancel()
+        } catch (e: UninitializedPropertyAccessException) {
+            Log.e(ConstantTags.TIME_DIALOG_FRAGMENT.tag, activity.getString(R.string.error_count_down_not_initialized))
+        }
         timerDialogDismissListener.onDismiss(timeLeftToTheEndOfTimer)
     }
 
