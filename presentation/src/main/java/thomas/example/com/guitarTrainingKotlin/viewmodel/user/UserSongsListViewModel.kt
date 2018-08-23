@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.viewmodel
+package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -6,32 +6,32 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
-import thomas.example.com.interactor.user.RetrieveProgramsListByUserId
-import thomas.example.com.model.Program
+import thomas.example.com.interactor.user.RetrieveSongsListByUserId
+import thomas.example.com.model.Song
 import javax.inject.Inject
 
-class UserProgramsListViewModel @Inject constructor(private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId) : ViewModel() {
+class UserSongsListViewModel @Inject constructor(private val retrieveSongsListByUserId: RetrieveSongsListByUserId) : ViewModel() {
 
-    var userPrograms: List<Program> = ArrayList()
+    var userSongs: List<Song> = ArrayList()
 
-    val finishRetrievePrograms: MutableLiveData<Boolean> = MutableLiveData()
+    val finishRetrieveSongs: MutableLiveData<Boolean> = MutableLiveData()
 
     val refreshList: MutableLiveData<Boolean> = MutableLiveData()
 
-    fun retrieveProgramsListByUserId(idUser: String) {
+    fun retrieveSongsListByUserId(idUser: String) {
         refreshList.postValue(true)
-        retrieveProgramsListByUserId.execute(
+        retrieveSongsListByUserId.execute(
                 onComplete = {
                     refreshList.postValue(false)
                 },
                 onError = {
                     refreshList.postValue(false)
-                    finishRetrievePrograms.postValue(true)
+                    finishRetrieveSongs.postValue(true)
                 },
                 onNext = {
-                    userPrograms = it
-                    finishRetrievePrograms.postValue(true)
-                }, params = RetrieveProgramsListByUserId.Params.forList(idUser))
+                    finishRetrieveSongs.postValue(true)
+
+                }, params = RetrieveSongsListByUserId.Params.forList(idUser))
     }
 
     fun getIdUser(context: Context): String {

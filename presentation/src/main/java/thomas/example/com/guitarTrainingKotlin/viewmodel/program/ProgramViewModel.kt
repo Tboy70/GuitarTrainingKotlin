@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.viewmodel
+package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWra
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject
 
-class UserProgramDetailsViewModel @Inject constructor(private val retrieveProgramById: RetrieveProgramById) : ViewModel() {
+class ProgramViewModel @Inject constructor(private val retrieveProgramById: RetrieveProgramById) : ViewModel() {
 
     lateinit var userProgramObjectWrapper: ProgramObjectWrapper
 

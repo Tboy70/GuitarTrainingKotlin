@@ -10,37 +10,20 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
-import thomas.example.com.guitarTrainingKotlin.component.DialogComponent
-import thomas.example.com.guitarTrainingKotlin.component.DurationComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
-import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
-import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
-import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
-import thomas.example.com.guitarTrainingKotlin.viewmodel.ExerciseScaleViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
 import javax.inject.Inject
 
-class ExerciseScaleFragment : BaseFragment() {
+class ExerciseScaleFragment : AbstractExerciseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var exerciseScaleViewModel: ExerciseScaleViewModel
 
-    @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
-
-    @Inject
-    lateinit var dialogComponent: DialogComponent
-
-    @Inject
-    lateinit var durationComponent: DurationComponent
-
     private lateinit var items: List<String>
+
     private var mSelectedItem: String? = null
-    private var rankExercise = ConstValues.CONST_ERROR
-    private var durationExercise = ConstValues.CONST_ERROR
-    private var durationLeft = DateTimeUtils.DEFAULT_DURATION_LEFT
 
     companion object {
         const val SCALE_NOTE_SELECTION = 1
@@ -58,8 +41,8 @@ class ExerciseScaleFragment : BaseFragment() {
 
         exerciseScaleViewModel = ViewModelProviders.of(this, viewModelFactory).get(ExerciseScaleViewModel::class.java)
 
-        rankExercise = arguments?.getInt(ConstValues.RANK_EXERCISE) ?: ConstValues.CONST_ERROR
-        durationExercise = arguments?.getInt(ConstValues.DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
+        rankExercise = arguments?.getInt(AbstractExerciseFragment.RANK_EXERCISE) ?: ConstValues.CONST_ERROR
+        durationExercise = arguments?.getInt(AbstractExerciseFragment.DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
         handleClickNoteButton()
         handleClickModeButton()
@@ -67,8 +50,8 @@ class ExerciseScaleFragment : BaseFragment() {
         handleClickStartButton()
         handleClickNextButton()
 
-        setDurationUI()
-        setToolbar(activity?.getString(R.string.toolbar_title_exercise_scale))
+        setDurationUI(fragment_exercise_scale_duration, fragment_exercise_scale_duration_left)
+        setToolbar(R.string.toolbar_title_exercise_scale)
 
         exerciseScaleViewModel.finishRandom.observe(this, Observer<Boolean> {
             val notesArray = this.resources.getStringArray(R.array.list_notes)
@@ -101,16 +84,7 @@ class ExerciseScaleFragment : BaseFragment() {
 
     private fun handleClickStartButton() {
         fragment_exercise_scale_button_start_exercise.setOnClickListener {
-            if (activity is ProgramActivity) {
-                dialogComponent.showTimerDialog(activity as ProgramActivity, durationLeft, object : OnTimerDialogDismiss {
-                    override fun onDismiss(timeCountInMilliseconds: Long) {
-                        durationLeft = durationComponent.setDurationLeft(
-                                fragment_exercise_scale_duration_left,
-                                getString(R.string.generic_exercise_duration_left_text),
-                                timeCountInMilliseconds)
-                    }
-                })
-            }
+            launchTimer(fragment_exercise_scale_duration_left)
         }
     }
 
@@ -159,19 +133,6 @@ class ExerciseScaleFragment : BaseFragment() {
                 SCALE_NOTE_SELECTION -> fragment_exercise_scale_button_choice_note.text = selectedItem
                 SCALE_MODE_SELECTION -> fragment_exercise_scale_button_choice_mode.text = selectedItem
             }
-        }
-    }
-
-    private fun setDurationUI() {
-        durationLeft = durationComponent.setDuration(durationExercise, durationLeft, fragment_exercise_scale_duration,
-                activity?.getString(R.string.generic_exercise_duration_text), fragment_exercise_scale_duration_left,
-                activity?.getString(R.string.generic_exercise_duration_left_text)
-        )
-    }
-
-    private fun setToolbar(toolbarTitle: String?) {
-        if (activity is ProgramActivity) {
-            (activity as ProgramActivity).setProgramToolbar(toolbarTitle)
         }
     }
 }

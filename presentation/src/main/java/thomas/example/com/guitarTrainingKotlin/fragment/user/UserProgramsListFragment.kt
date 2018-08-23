@@ -19,7 +19,7 @@ import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramsListViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
 import thomas.example.com.model.Program
 import javax.inject.Inject
 

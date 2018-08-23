@@ -8,9 +8,10 @@ import android.support.v4.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_program.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.fragment.exercise.AbstractExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
-import thomas.example.com.guitarTrainingKotlin.viewmodel.ProgramViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 
@@ -56,8 +57,8 @@ class ProgramActivity : BaseActivity() {
             val rightExercise = exercisesOfProgram[rankExercise]
             val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.idExercise.toInt())
             val bundle = Bundle()
-            bundle.putInt(ConstValues.RANK_EXERCISE, rankExercise)
-            bundle.putInt(ConstValues.DURATION_EXERCISE, rightExercise.durationExercise)
+            bundle.putInt(AbstractExerciseFragment.RANK_EXERCISE, rankExercise)
+            bundle.putInt(AbstractExerciseFragment.DURATION_EXERCISE, rightExercise.durationExercise)
             NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, bundle, null)
         } else {
             NavHostFragment.findNavController(host).navigate(R.id.launcher_end_program_fragment, null, null)

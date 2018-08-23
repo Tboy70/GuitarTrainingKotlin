@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.viewmodel
+package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel

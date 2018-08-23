@@ -15,7 +15,7 @@ import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils
-import thomas.example.com.guitarTrainingKotlin.viewmodel.LoginHomeViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
 import javax.inject.Inject
 
 class LoginHomeFragment : BaseFragment() {

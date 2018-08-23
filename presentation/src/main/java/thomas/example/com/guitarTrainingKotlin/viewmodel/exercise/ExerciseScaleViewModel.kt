@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.viewmodel
+package thomas.example.com.guitarTrainingKotlin.viewmodel.exercise
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -22,6 +22,4 @@ class ExerciseScaleViewModel @Inject constructor() : ViewModel() {
 
         finishRandom.postValue(true)
     }
-
-
 }

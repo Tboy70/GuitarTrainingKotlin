@@ -23,8 +23,9 @@ import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
+import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserProgramDetailsViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramDetailsViewModel
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 
@@ -125,12 +126,12 @@ class UserProgramDetailsFragment : BaseFragment() {
             } else {
                 durationExercise.setTextAppearance(R.style.TextAppearance_AppCompat_Caption)
             }
-            if (exercise.durationExercise < ConstValues.TIME_FACTOR) {
+            if (exercise.durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
                 durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_minutes_txt),
                         exercise.durationExercise.toString())
             } else {
-                val hours = exercise.durationExercise / ConstValues.TIME_FACTOR
-                val minutes = exercise.durationExercise % ConstValues.TIME_FACTOR
+                val hours = exercise.durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
+                val minutes = exercise.durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
 
                 durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_hours_txt),
                         hours.toString(), minutes.toString())

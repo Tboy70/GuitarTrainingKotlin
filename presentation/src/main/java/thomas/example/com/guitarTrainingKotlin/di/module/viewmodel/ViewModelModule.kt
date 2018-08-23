@@ -7,6 +7,13 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import thomas.example.com.guitarTrainingKotlin.di.ViewModelKey
 import thomas.example.com.guitarTrainingKotlin.viewmodel.*
+import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseModeViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramDetailsViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -48,4 +55,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ExerciseScaleViewModel::class)
     abstract fun bindExerciseScaleViewModel(exerciseScaleViewModel: ExerciseScaleViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseModeViewModel::class)
+    abstract fun bindExerciseModeViewModel(exerciseModeViewModel: ExerciseModeViewModel): ViewModel
 }

@@ -16,7 +16,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
-import thomas.example.com.guitarTrainingKotlin.viewmodel.UserSongsListViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
 import thomas.example.com.model.Song
 import javax.inject.Inject
 

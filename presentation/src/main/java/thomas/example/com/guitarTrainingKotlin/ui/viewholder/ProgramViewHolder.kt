@@ -9,6 +9,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
+import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.util.*
 
 class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHolder(itemView), LayoutContainer {
@@ -26,15 +27,15 @@ class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.Vie
         )
 
         val totalDurationProgram: Int = calculateTotalDurationProgram(programObjectWrapper)
-        if (totalDurationProgram < ConstValues.TIME_FACTOR) {
+        if (totalDurationProgram < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
             view_user_programs_list_item_total_duration_exercises.text = String.format(
                     Locale.FRANCE,
                     context.getString(R.string.fragment_user_programs_list_total_duration_exercises_minutes_text),
                     totalDurationProgram
             )
         } else {
-            val hours: Int = totalDurationProgram / ConstValues.TIME_FACTOR
-            val minutes: Int = totalDurationProgram % ConstValues.TIME_FACTOR
+            val hours: Int = totalDurationProgram / DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
+            val minutes: Int = totalDurationProgram % DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
             view_user_programs_list_item_total_duration_exercises.text = String.format(
                     Locale.FRANCE,
                     context.getString(R.string.fragment_user_programs_list_total_duration_exercises_hours_text),
