@@ -10,5 +10,9 @@
             android:id="@+id/menu_drawer_songs"
             android:icon="@drawable/ic_song"
             android:title="@string/user_panel_navigation_drawer_songs" />
+        <item
+            android:id="@+id/menu_drawer_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/user_panel_navigation_drawer_logout" />
     </group>
 </menu>

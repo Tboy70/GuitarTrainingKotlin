@@ -1,5 +1,9 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,10 +15,20 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
+import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
+import javax.inject.Inject
 
 class UserPanelActivity : BaseActivity() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var userPanelViewModel: UserPanelViewModel
+
+    @Inject
+    lateinit var materialDialogComponent: MaterialDialogComponent
 
     private val navBuilder = NavOptions.Builder()
 
@@ -39,6 +53,27 @@ class UserPanelActivity : BaseActivity() {
         super.onPostCreate(savedInstanceState)
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
+
+        userPanelViewModel.finishLoading.observe(this, Observer<Boolean> {
+            if (it != null) {
+                materialDialogComponent.dismissDialog()
+                userPanelViewModel.finishLoading.removeObservers(this)
+            }
+        })
+
+        userPanelViewModel.logoutSucceed.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                userPanelViewModel.logoutSucceed.removeObservers(this)
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,6 +111,7 @@ class UserPanelActivity : BaseActivity() {
         when (menuItem.itemId) {
             R.id.menu_drawer_programs -> displayUserProgramsFragment()
             R.id.menu_drawer_songs -> displayUserSongsFragment()
+            R.id.menu_drawer_logout -> logoutUser()
             else -> displayUserProgramsFragment()
         }
 
@@ -103,6 +139,11 @@ class UserPanelActivity : BaseActivity() {
             val navOptions = navBuilder.setPopUpTo(R.id.launcher_user_songs_list, true).build()
             NavHostFragment.findNavController(host).navigate(R.id.action_songs_list_to_programs_list, null, navOptions)
         }
+    }
+
+    private fun logoutUser() {
+        materialDialogComponent.showProgressDialog(this, getString(R.string.dialog_logout_title), getString(R.string.dialog_logout_content), R.color.colorPrimary)
+        userPanelViewModel.logoutUser()
     }
 
     private fun setupDrawerToggle(): ActionBarDrawerToggle {

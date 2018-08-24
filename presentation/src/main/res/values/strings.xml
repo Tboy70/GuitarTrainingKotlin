@@ -22,6 +22,8 @@
     <string name="dialog_connection_content">Veuillez patienter</string>
     <string name="dialog_loading_program_details_title">Chargement du programme …</string>
     <string name="dialog_loading_content">Accorde toi en attendant …</string>
+    <string name="dialog_logout_title">Déconnexion en cours</string>
+    <string name="dialog_logout_content">Veuillez patienter</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -43,17 +45,18 @@
     <!-- ======================================================================================= -->
 
     <!-- LOGIN -->
-    <string name="login_home_title">Renseigne tes informations de connexion</string>
-    <string name="login_home_hint_username">Nom d\'utilisateur</string>
-    <string name="login_home_hint_password">Mot de passe</string>
-    <string name="login_forgot_password">Mot de passe oublié ?</string>
     <string name="login_create_account">Créer un compte</string>
+    <string name="login_home_hint_password">Mot de passe</string>
+    <string name="login_home_hint_username">Nom d\'utilisateur</string>
+    <string name="login_forgot_password">Mot de passe oublié ?</string>
+    <string name="login_home_title">Renseigne tes informations de connexion</string>
 
     <!-- USER PANEL -->
+    <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
+    <string name="user_panel_navigation_drawer_logout">Se déconnecter</string>
+    <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
     <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
     <string name="user_panel_navigation_drawer_close">Close navigation drawer</string>
-    <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
-    <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
 
     <!-- USER PROGRAMS LIST-->
     <string name="user_programs_list_no_program_text">Aucun programme disponible</string>

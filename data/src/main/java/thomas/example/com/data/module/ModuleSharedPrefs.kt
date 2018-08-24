@@ -5,4 +5,6 @@ interface ModuleSharedPrefs {
     fun setIdUserInSharedPrefs(idUser: String)
 
     fun getIdUserInSharedPrefs(): String
+
+    fun deleteIdUserInSharedPrefs()
 }

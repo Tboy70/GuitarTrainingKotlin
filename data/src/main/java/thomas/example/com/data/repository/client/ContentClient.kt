@@ -21,4 +21,13 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
     fun getIdInSharedPrefs(): Observable<String> {
         return Observable.just(moduleSharedPrefs.getIdUserInSharedPrefs())
     }
+
+    fun deleteIdInSharedPrefs(): Observable<Boolean> {
+        return try {
+            moduleSharedPrefs.deleteIdUserInSharedPrefs()
+            Observable.just(true)
+        } catch (e: Exception) {
+            Observable.error(e)
+        }
+    }
 }

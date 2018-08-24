@@ -34,4 +34,10 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
             }
         }
     }
+
+    override fun logoutUser(): Observable<Boolean> {
+        return Observable.defer {
+            contentClient.deleteIdInSharedPrefs()
+        }
+    }
 }

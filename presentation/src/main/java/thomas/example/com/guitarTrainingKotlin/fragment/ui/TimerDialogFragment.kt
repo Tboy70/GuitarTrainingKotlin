@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.timer_dialog_layout.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
-import thomas.example.com.guitarTrainingKotlin.utils.ConstantTags
+import thomas.example.com.utils.ConstantTags
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 
 class TimerDialogFragment : DialogFragment() {

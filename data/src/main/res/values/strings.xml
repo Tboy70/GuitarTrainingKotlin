@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">data</string>
+    <string name="error_delete_id_user_logout">Erreur lors de la déconnexion</string>
 </resources>

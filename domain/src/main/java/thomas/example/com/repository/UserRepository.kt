@@ -10,4 +10,6 @@ interface UserRepository {
     fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean>
 
     fun connectUser(user: User): Observable<User>
+
+    fun logoutUser(): Observable<Boolean>
 }
