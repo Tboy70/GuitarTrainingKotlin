@@ -15,6 +15,7 @@
     <string name="toolbar_title_exercise_skip_string">Mute une corde</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
+    <string name="toolbar_title_end_program">Fin du programme</string>
 
     <!-- DIALOGS-->
     <string name="dialog_connection_title">Connexion en cours</string>
@@ -72,10 +73,19 @@
     <string name="user_details_duration_exercise_minutes_txt">%1$s minutes</string>
     <string name="user_details_duration_exercise_hours_txt">%1$s heures %2$s minutes</string>
 
-
+    <!-- ======================================================================================= -->
+    <!-- ====================================== PROGRAMS ============+========================== -->
+    <!-- ======================================================================================= -->
+    <string name="end_program_title">Fin du programme</string>
+    <string name="end_program_description_text">Félicitations ! Vous êtes pavenu au bout du programme ! L\'entraînement est la clé, continuez ! :) </string>
+    <string name="end_program_quit_button">Quitter</string>
     <!-- ======================================================================================= -->
     <!-- ====================================== EXERCISES ====================================== -->
     <!-- ======================================================================================= -->
+
+    <!-- DIALOGS EXERCISE -->
+    <string name="confirm_next_exercise_title">Attention</string>
+    <string name="confirm_next_exercise_content">Vous n\'avez pas encore fini cet exercise. Voulez-vous vraiment passer au suivant ? </string>
 
     <!-- GENERIC EXERCISE -->
     <string name="generic_exercise_end_program_text">Terminer</string>
@@ -120,7 +130,7 @@
 
     <!-- SKIP STRING EXERCISE -->
     <string name="exercise_skip_string_title_text">Muter une corde en accord</string>
-    <string name="exercise_skip_fragment_description_text">Entraine toi à jouer des accords en sautant une corde !</string>
+    <string name="exercise_skip_string_description_text">Entraine toi à jouer des accords en sautant une corde !</string>
 
     <!-- TAPPING EXERCISE -->
     <string name="exercise_tapping_title_text">Tapping</string>

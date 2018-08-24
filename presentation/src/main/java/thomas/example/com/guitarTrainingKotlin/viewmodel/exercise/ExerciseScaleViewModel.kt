@@ -18,7 +18,7 @@ class ExerciseScaleViewModel @Inject constructor() : ViewModel() {
         scaleNoteValue = scaleNoteRandom.nextInt(ExerciseScaleFragment.NB_NOTES)
 
         val scaleToneRandom = Random()
-        scaleToneValue = scaleToneRandom.nextInt(ExerciseScaleFragment.NB_MODES)
+        scaleToneValue = scaleToneRandom.nextInt(ExerciseScaleFragment.NB_SCALES)
 
         finishRandom.postValue(true)
     }

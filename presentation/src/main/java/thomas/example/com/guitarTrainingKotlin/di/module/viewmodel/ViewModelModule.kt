@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import thomas.example.com.guitarTrainingKotlin.di.ViewModelKey
-import thomas.example.com.guitarTrainingKotlin.viewmodel.*
+import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseModeViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel

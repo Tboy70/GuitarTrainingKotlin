@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.view_user_programs_list_item.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
-import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.util.*
 

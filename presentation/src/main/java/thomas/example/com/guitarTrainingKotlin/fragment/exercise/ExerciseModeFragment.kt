@@ -43,6 +43,7 @@ class ExerciseModeFragment : AbstractExerciseFragment() {
         handleClickModeButton()
         handleClickRandomButton()
         handleClickStartButton()
+        handleClickNextButton()
 
         setDurationUI(fragment_exercise_mode_duration, fragment_exercise_mode_duration_left)
         setToolbar(R.string.toolbar_title_exercise_mode)
@@ -69,6 +70,12 @@ class ExerciseModeFragment : AbstractExerciseFragment() {
     private fun handleClickStartButton() {
         fragment_exercise_mode_button_start_exercise.setOnClickListener {
             launchTimer(fragment_exercise_mode_duration_left)
+        }
+    }
+
+    private fun handleClickNextButton() {
+        fragment_exercise_mode_next_button.setOnClickListener {
+            startNextExercise()
         }
     }
 

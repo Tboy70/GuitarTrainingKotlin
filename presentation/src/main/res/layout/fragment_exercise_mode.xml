@@ -55,10 +55,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
-        tools:ignore="contentDescription"
         android:src="@drawable/ic_random_scale"
         app:layout_constraintStart_toEndOf="@+id/fragment_exercise_mode_button_choice_mode"
-        app:layout_constraintTop_toTopOf="@+id/fragment_exercise_mode_button_choice_mode" />
+        app:layout_constraintTop_toTopOf="@+id/fragment_exercise_mode_button_choice_mode"
+        tools:ignore="contentDescription" />
 
     <TextView
         android:id="@+id/fragment_exercise_mode_duration"

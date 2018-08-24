@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
@@ -21,15 +20,15 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var exerciseScaleViewModel: ExerciseScaleViewModel
 
-    private lateinit var items: List<String>
+    private lateinit var items: MutableList<String>
 
     private var mSelectedItem: String? = null
 
     companion object {
-        const val SCALE_NOTE_SELECTION = 1
-        const val SCALE_MODE_SELECTION = 2
+        const val NOTE_SELECTION = 1
+        const val SCALE_SELECTION = 2
         const val NB_NOTES = 12
-        const val NB_MODES = 3
+        const val NB_SCALES = 3
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,23 +55,23 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
         exerciseScaleViewModel.finishRandom.observe(this, Observer<Boolean> {
             val notesArray = this.resources.getStringArray(R.array.list_notes)
             mSelectedItem = notesArray[exerciseScaleViewModel.scaleNoteValue]
-            displaySelectedChoice(mSelectedItem, SCALE_NOTE_SELECTION)
+            displaySelectedChoice(mSelectedItem, NOTE_SELECTION)
 
-            val modesArray = this.resources.getStringArray(R.array.list_tones)
-            mSelectedItem = modesArray[exerciseScaleViewModel.scaleToneValue]
-            displaySelectedChoice(mSelectedItem, SCALE_MODE_SELECTION)
+            val scalesArray = this.resources.getStringArray(R.array.list_scales)
+            mSelectedItem = scalesArray[exerciseScaleViewModel.scaleToneValue]
+            displaySelectedChoice(mSelectedItem, SCALE_SELECTION)
         })
     }
 
     private fun handleClickNoteButton() {
         fragment_exercise_scale_button_choice_note.setOnClickListener {
-            showSimpleChoiceDialog(SCALE_NOTE_SELECTION)
+            showSimpleChoiceDialog(NOTE_SELECTION)
         }
     }
 
     private fun handleClickModeButton() {
         fragment_exercise_scale_button_choice_mode.setOnClickListener {
-            showSimpleChoiceDialog(SCALE_MODE_SELECTION)
+            showSimpleChoiceDialog(SCALE_SELECTION)
         }
     }
 
@@ -90,24 +89,20 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
 
     private fun handleClickNextButton() {
         fragment_exercise_scale_next_button.setOnClickListener {
-            if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
-                (activity as ProgramActivity).startExercise(rankExercise + 1)
-            } else {
-                activity?.finish()
-            }
+            startNextExercise()
         }
     }
 
     private fun showSimpleChoiceDialog(typeSelection: Int) {
         var title: String = ConstValues.EMPTY_STRING
         when (typeSelection) {
-            SCALE_NOTE_SELECTION -> {
+            NOTE_SELECTION -> {
                 title = getString(R.string.exercise_scale_dialog_choice_note_text)
-                items = resources.getStringArray(R.array.list_notes).asList()
+                items = resources.getStringArray(R.array.list_notes).toMutableList()
             }
-            SCALE_MODE_SELECTION -> {
+            SCALE_SELECTION -> {
                 title = getString(R.string.exercise_scale_dialog_choice_mode_text)
-                items = resources.getStringArray(R.array.list_tones).asList()
+                items = resources.getStringArray(R.array.list_scales).toMutableList()
             }
             else -> {
                 items = ArrayList()
@@ -130,8 +125,8 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
     private fun displaySelectedChoice(selectedItem: String?, typeSelection: Int) {
         if (selectedItem != null && selectedItem.isNotEmpty()) {
             when (typeSelection) {
-                SCALE_NOTE_SELECTION -> fragment_exercise_scale_button_choice_note.text = selectedItem
-                SCALE_MODE_SELECTION -> fragment_exercise_scale_button_choice_mode.text = selectedItem
+                NOTE_SELECTION -> fragment_exercise_scale_button_choice_note.text = selectedItem
+                SCALE_SELECTION -> fragment_exercise_scale_button_choice_mode.text = selectedItem
             }
         }
     }
