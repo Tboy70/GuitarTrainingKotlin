@@ -24,6 +24,8 @@
     <string name="dialog_loading_content">Accorde toi en attendant …</string>
     <string name="dialog_logout_title">Déconnexion en cours</string>
     <string name="dialog_logout_content">Veuillez patienter</string>
+    <string name="dialog_logout_confirm_title">Déconnexion</string>
+    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -186,5 +188,15 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
+
+    <!-- TO SORT -->
+    <string name="fragment_user_programs_creation_duration_exercise_hint">Durée de l\'exercise</string>
+    <string name="fragment_user_programs_creation_duration_exercise_text">Durée de l\'exercise : %s</string>
+    <string name="fragment_user_programs_creation_type_exercise_text">Type de l\'exercise</string>
+    <string name="fragment_user_program_creation_name_program_hint">Nom du programme</string>
+    <string name="fragment_user_programs_creation_description_program_hint">Description du programme</string>
+    <string name="fragment_user_programs_creation_add_exercise_text">Ajouter un exercise</string>
+    <string name="fragment_user_programs_creation_button_validate_text">Créer le programme</string>
+    <string name="fragment_user_program_creation_title">Création d\'un programme</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.login
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -52,7 +51,7 @@ class LoginHomeFragment : BaseFragment() {
 
     private fun handleClickValidateLogin() {
         KeyboardUtils.hideKeyboard(this.activity!!)
-        materialDialogComponent.showProgressDialog(activity as Activity, getString(R.string.dialog_connection_title), getString(R.string.dialog_connection_content), R.color.colorPrimary)
+        materialDialogComponent.showProgressDialog(getString(R.string.dialog_connection_title), getString(R.string.dialog_connection_content), R.color.colorPrimary)
         loginHomeViewModel.connectUser(fragment_login_home_username.text.toString(), fragment_login_home_password.text.toString())
     }
 

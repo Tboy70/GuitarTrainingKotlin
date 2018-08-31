@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
@@ -142,8 +143,13 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun logoutUser() {
-        materialDialogComponent.showProgressDialog(this, getString(R.string.dialog_logout_title), getString(R.string.dialog_logout_content), R.color.colorPrimary)
-        userPanelViewModel.logoutUser()
+        materialDialogComponent.showConfirmationDialog(getString(R.string.dialog_logout_confirm_title),
+                getString(R.string.dialog_logout_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
+            override fun onYesSelected() {
+                materialDialogComponent.showProgressDialog(getString(R.string.dialog_logout_title), getString(R.string.dialog_logout_content), R.color.colorPrimary)
+                userPanelViewModel.logoutUser()
+            }
+        })
     }
 
     private fun setupDrawerToggle(): ActionBarDrawerToggle {

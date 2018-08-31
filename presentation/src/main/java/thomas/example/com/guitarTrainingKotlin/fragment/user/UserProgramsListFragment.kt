@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
@@ -33,7 +34,6 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     lateinit var userProgramsListAdapter: UserProgramsListAdapter
 
     private lateinit var idUser: String
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -66,6 +66,8 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
         userProgramsListViewModel.refreshList.observe(this, Observer<Boolean> {
             swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
         })
+
+        handleAddNewProgramButton()
     }
 
     override fun onStart() {
@@ -82,6 +84,13 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
         swipeRefreshLayout.setOnRefreshListener { userProgramsListViewModel.retrieveProgramsListByUserId(idUser) }
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+    }
+
+    private fun handleAddNewProgramButton() {
+        fragment_user_programs_floating_action_button.setOnClickListener {
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
+            NavHostFragment.findNavController(host).navigate(R.id.launcher_add_program, null, null)
+        }
     }
 
     private fun displayRetrievedPrograms(userProgramsListViewModel: UserProgramsListViewModel) {

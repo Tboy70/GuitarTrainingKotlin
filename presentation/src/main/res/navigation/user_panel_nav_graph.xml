@@ -12,6 +12,10 @@
         <action
             android:id="@+id/action_programs_list_to_songs_list"
             app:destination="@+id/launcher_user_songs_list" />
+
+        <action
+            android:id="@+id/action_programs_list_to_add_program"
+            app:destination="@+id/launcher_add_program" />
     </fragment>
     <fragment
         android:id="@+id/launcher_user_songs_list"
@@ -21,5 +25,10 @@
             android:id="@+id/action_songs_list_to_programs_list"
             app:destination="@+id/launcher_user_programs_list" />
     </fragment>
+
+    <fragment
+        android:id="@+id/launcher_add_program"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramCreationFragment"
+        tools:layout="@layout/fragment_user_program_creation" />
 
 </navigation>

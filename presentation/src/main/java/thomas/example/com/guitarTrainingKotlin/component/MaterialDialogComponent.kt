@@ -1,11 +1,13 @@
 package thomas.example.com.guitarTrainingKotlin.component
 
-import android.app.Activity
 import com.afollestad.materialdialogs.MaterialDialog
+import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.listener.AddExerciseListener
+import java.util.*
 import javax.inject.Inject
 
 @PerActivity
@@ -44,7 +46,7 @@ class MaterialDialogComponent @Inject constructor(val activity: BaseActivity) {
         } else -1
     }
 
-    fun showProgressDialog(activity: Activity, title: String, content: String, color: Int) {
+    fun showProgressDialog(title: String, content: String, color: Int) {
         materialDialog = MaterialDialog.Builder(activity)
                 .title(title)
                 .content(content)
@@ -58,14 +60,14 @@ class MaterialDialogComponent @Inject constructor(val activity: BaseActivity) {
         materialDialog.dismiss()
     }
 
-    fun showConfirmationNextExeciseDialog(title: String, content: String, color: Int, multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener) {
+    fun showConfirmationDialog(title: String, content: String, color: Int, multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener) {
         materialDialog = MaterialDialog.Builder(activity)
                 .title(title)
                 .content(content)
                 .canceledOnTouchOutside(false)
                 .positiveText(activity.getString(android.R.string.yes))
                 .positiveColorRes(color)
-                .onPositive { dialog, which -> multipleChoiceMaterialDialogListener.onYesSelected() }
+                .onPositive { _, _ -> multipleChoiceMaterialDialogListener.onYesSelected() }
                 .negativeText(activity.getString(android.R.string.no))
                 .negativeColorRes(color)
                 .onNegative { dialog, _ -> dialog.dismiss() }

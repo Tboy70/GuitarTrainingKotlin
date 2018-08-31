@@ -78,7 +78,7 @@ class UserProgramDetailsFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        materialDialogComponent.showProgressDialog(activity as Activity, getString(R.string.dialog_loading_program_details_title), getString(R.string.dialog_loading_content), R.color.colorPrimary)
+        materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_details_title), getString(R.string.dialog_loading_content), R.color.colorPrimary)
         userProgramDetailsViewModel.getProgramById(idProgram)
     }
 
