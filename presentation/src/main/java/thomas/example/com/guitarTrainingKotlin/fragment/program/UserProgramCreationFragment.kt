@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
@@ -34,6 +35,9 @@ class UserProgramCreationFragment : BaseFragment() {
 
     @Inject
     lateinit var exercisesUIComponent: ExerciseUIComponent
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -57,6 +61,14 @@ class UserProgramCreationFragment : BaseFragment() {
         userProgramCreationViewModel.finishProgramCreation.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
+            }
+        })
+
+        userProgramCreationViewModel.creationFailure.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                if (userProgramCreationViewModel.errorThrowable != null) {
+                    errorRendererComponent.requestRenderError(userProgramCreationViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                }
             }
         })
 

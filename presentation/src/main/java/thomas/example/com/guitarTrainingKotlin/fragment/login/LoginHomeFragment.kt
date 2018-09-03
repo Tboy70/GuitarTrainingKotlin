@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils
@@ -22,6 +23,9 @@ class LoginHomeFragment : BaseFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var loginHomeViewModel: LoginHomeViewModel
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -43,6 +47,15 @@ class LoginHomeFragment : BaseFragment() {
         loginHomeViewModel.connectSucceed.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
                 connectSuccess()
+            }
+        })
+
+        loginHomeViewModel.connectFailure.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                materialDialogComponent.dismissDialog()
+                if (loginHomeViewModel.errorThrowable != null) {
+                    errorRendererComponent.requestRenderError(loginHomeViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                }
             }
         })
 

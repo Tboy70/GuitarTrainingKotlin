@@ -8,7 +8,7 @@ import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import javax.inject.Inject
 
 @PerActivity
-class MaterialDialogComponent @Inject constructor(val activity: BaseActivity) {
+class MaterialDialogComponent @Inject constructor(private val activity: BaseActivity) {
 
     private lateinit var materialDialog: MaterialDialog
 

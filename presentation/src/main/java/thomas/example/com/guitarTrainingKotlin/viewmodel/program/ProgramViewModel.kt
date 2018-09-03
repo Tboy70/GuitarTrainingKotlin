@@ -10,13 +10,11 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
 
     lateinit var userProgramObjectWrapper: ProgramObjectWrapper
 
-    val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val finishRetrieveProgram: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getProgramById(idProgram: String) {
         retrieveProgramById.execute(
                 onComplete = {
-                    finishLoading.postValue(true)
                 },
                 onError = {
                     finishRetrieveProgram.postValue(false)
