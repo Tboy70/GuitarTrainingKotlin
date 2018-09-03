@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,14 +14,17 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
+import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ApiModuleImpl @Inject constructor() : ApiModule {
-    var apiService: APIServiceInterface
+
+    private var apiService: APIServiceInterface
 
     companion object {
         //        const val BASE_URL = "http://192.168.1.30/guitar_api/public/" // BOX
@@ -56,16 +60,38 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         return apiService.retrieveProgram(idProgram)
     }
 
-    interface APIServiceInterface {
-
-        @POST("connect")
-        fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
-
-        @GET("programs/{idUser}")
-        fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<List<ProgramRemoteEntity>>
-
-        @GET("program/{idProgram}")
-        fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<ProgramRemoteEntity>
-
+    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Observable<String> {
+        return apiService.createProgram(programRemoteEntity).map {
+            if (it.isSuccessful && it.body() != null) {
+                (it.body() as ProgramResponseRemoteEntity).getCreatedId()
+            } else {
+                null
+            }
+        }
     }
+
+    override fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
+        return apiService.createExercise(listRemoteEntities).map {
+            it.isSuccessful
+        }
+    }
+}
+
+
+interface APIServiceInterface {
+
+    @POST("connect")
+    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
+
+    @GET("programs/{idUser}")
+    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<List<ProgramRemoteEntity>>
+
+    @GET("program/{idProgram}")
+    fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<ProgramRemoteEntity>
+
+    @POST("program")
+    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<ProgramResponseRemoteEntity>>
+
+    @POST("exercise")
+    fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Observable<Response<Void>>
 }

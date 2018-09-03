@@ -7,7 +7,6 @@ import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramCreationFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment

@@ -4,27 +4,27 @@
     <string name="app_name">Guitar Training</string>
 
     <!-- TOOLBARS -->
-    <string name="generic_toolbar_about_title">A propos</string>
     <string name="toolbar_title_exercise_mode">Modes</string>
     <string name="toolbar_title_exercise_scale">Gammes</string>
+    <string name="generic_toolbar_about_title">A propos</string>
     <string name="toolbar_title_exercise_speed">Vitesse</string>
     <string name="toolbar_title_exercise_tapping">Tapping</string>
+    <string name="toolbar_title_end_program">Fin du programme</string>
     <string name="toolbar_title_exercise_palm_mute">Palm mute</string>
     <string name="toolbar_title_exercise_bend_slide">Bend / Slide</string>
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
     <string name="toolbar_title_exercise_skip_string">Mute une corde</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
-    <string name="toolbar_title_end_program">Fin du programme</string>
 
     <!-- DIALOGS-->
+    <string name="dialog_logout_confirm_title">Déconnexion</string>
+    <string name="dialog_logout_content">Veuillez patienter</string>
+    <string name="dialog_logout_title">Déconnexion en cours</string>
     <string name="dialog_connection_title">Connexion en cours</string>
     <string name="dialog_connection_content">Veuillez patienter</string>
-    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
     <string name="dialog_loading_content">Accorde toi en attendant …</string>
-    <string name="dialog_logout_title">Déconnexion en cours</string>
-    <string name="dialog_logout_content">Veuillez patienter</string>
-    <string name="dialog_logout_confirm_title">Déconnexion</string>
+    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
 
     <!-- GENERIC BUTTONS -->
@@ -32,14 +32,14 @@
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
+    <string name="nav_program_home">Program Home</string>
     <string name="nav_user_panel_home">User Panel Home</string>
     <string name="nav_user_program_home">User Program Home</string>
-    <string name="nav_program_home">Program Home</string>
 
     <!-- COMPONENTS -->
-    <string name="timer_start_button">Démarrer</string>
     <string name="timer_pause_button">Pause</string>
     <string name="timer_title">C\'est parti !</string>
+    <string name="timer_start_button">Démarrer</string>
 
 
     <!-- ======================================================================================= -->
@@ -70,20 +70,33 @@
     <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER PROGRAM DETAILS -->
-    <string name="user_program_details_remove">Supprimer le programme</string>
-    <string name="user_program_details_update">Modifier le programme</string>
-    <string name="user_program_details_start">Démarrer le programme</string>
-    <string name="user_details_program_no_description">Pas de description</string>
     <string name="user_details_program_exercises_text">Exercises</string>
+    <string name="user_program_details_start">Démarrer le programme</string>
+    <string name="user_program_details_update">Modifier le programme</string>
+    <string name="user_program_details_remove">Supprimer le programme</string>
+    <string name="user_details_program_no_description">Pas de description</string>
     <string name="user_details_duration_exercise_minutes_txt">%1$s minutes</string>
     <string name="user_details_duration_exercise_hours_txt">%1$s heures %2$s minutes</string>
+
+    <!-- USER PROGRAM CREATION -->
+    <string name="user_program_creation_title">Création d\'un programme</string>
+    <string name="user_program_creation_name_program_hint">Nom du programme</string>
+    <string name="user_program_creation_add_exercise_text">Ajouter un exercise</string>
+    <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
+    <string name="user_program_creation_button_validate_text">Créer le programme</string>
+    <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
+    <string name="user_program_creation_description_program_hint">Description du programme</string>
+
 
     <!-- ======================================================================================= -->
     <!-- ====================================== PROGRAMS ============+========================== -->
     <!-- ======================================================================================= -->
+
+    <string name="end_program_quit_button">Quitter</string>
     <string name="end_program_title">Fin du programme</string>
     <string name="end_program_description_text">Félicitations ! Vous êtes pavenu au bout du programme ! L\'entraînement est la clé, continuez ! :) </string>
-    <string name="end_program_quit_button">Quitter</string>
+
+
     <!-- ======================================================================================= -->
     <!-- ====================================== EXERCISES ====================================== -->
     <!-- ======================================================================================= -->
@@ -157,6 +170,7 @@
     <string name="generic_error_title_text">Erreur …</string>
     <string name="error_count_down_not_initialized">CountDown not initialized</string>
 
+
     <!-- ======================================================================================= -->
     <!-- ======================================= VALUES ======================================== -->
     <!-- ======================================================================================= -->
@@ -188,15 +202,5 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
-
-    <!-- TO SORT -->
-    <string name="fragment_user_programs_creation_duration_exercise_hint">Durée de l\'exercise</string>
-    <string name="fragment_user_programs_creation_duration_exercise_text">Durée de l\'exercise : %s</string>
-    <string name="fragment_user_programs_creation_type_exercise_text">Type de l\'exercise</string>
-    <string name="fragment_user_program_creation_name_program_hint">Nom du programme</string>
-    <string name="fragment_user_programs_creation_description_program_hint">Description du programme</string>
-    <string name="fragment_user_programs_creation_add_exercise_text">Ajouter un exercise</string>
-    <string name="fragment_user_programs_creation_button_validate_text">Créer le programme</string>
-    <string name="fragment_user_program_creation_title">Création d\'un programme</string>
 
 </resources>

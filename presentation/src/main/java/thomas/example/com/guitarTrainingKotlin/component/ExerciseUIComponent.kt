@@ -5,18 +5,19 @@ import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import javax.inject.Inject
 
 @PerActivity
-class ExerciseUIComponent {
+class ExerciseUIComponent @Inject constructor(val activity: BaseActivity) {
 
     private lateinit var horizontalLayoutContainingAllElements: LinearLayout
     private lateinit var verticalLayoutContainingTypeExerciseAndDurationExercise: LinearLayout
@@ -25,9 +26,9 @@ class ExerciseUIComponent {
     private lateinit var durationExercise: EditText
     private lateinit var removeExerciseButton: ImageButton
 
-    fun createNewExercise(activity: Activity, exercisesUIComponentListener: ExercisesUIComponentListener, textButton: String, textDuration: String, state: Int): LinearLayout {
+    fun createNewExercise(exercisesUIComponentListener: ExercisesUIComponentListener, textButton: String, textDuration: String, state: Int): LinearLayout {
         createLayout(activity)
-        createUIViews(activity, textButton, textDuration, state)
+        createUIViews(textButton, textDuration, state)
         setListeners(durationExercise, buttonTypeExercise, removeExerciseButton, exercisesUIComponentListener, state)
         addViews(verticalLayoutContainingTypeExerciseAndDurationExercise, horizontalLayoutContainingAllElements)
 
@@ -42,16 +43,14 @@ class ExerciseUIComponent {
         verticalLayoutContainingTypeExerciseAndDurationExercise.orientation = LinearLayout.VERTICAL
     }
 
-    private fun createUIViews(activity: Activity, textButton: String, textDuration: String, state: Int) {
+    private fun createUIViews(textButton: String, textDuration: String, state: Int) {
         buttonTypeExercise = Button(activity)
         buttonTypeExercise.setCompoundDrawables(null, null, ContextCompat.getDrawable(activity, R.drawable.ic_dropdown_black), null)
-        buttonTypeExercise.text = activity.getString(R.string.fragment_user_programs_creation_type_exercise_text)
+        buttonTypeExercise.text = activity.getString(R.string.user_program_creation_type_exercise_text)
         durationExercise = EditText(activity)
-        durationExercise.setHint(R.string.fragment_user_programs_creation_duration_exercise_text)
-
+        durationExercise.setHint(R.string.user_program_creation_duration_exercise_hint)
 
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        params.weight = 1.0f
         params.gravity = Gravity.CENTER
 
         removeExerciseButton = ImageButton(activity)
@@ -71,15 +70,14 @@ class ExerciseUIComponent {
                 exercisesUIComponentListener.setDurationExerciseAction(durationExercise, buttonTypeExercise)
             }
 
-            override fun afterTextChanged(s: Editable) {
-
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
 
         buttonTypeExercise.setOnClickListener { exercisesUIComponentListener.setTypeExerciseButtonAction(buttonTypeExercise, durationExercise) }
 
         removeExerciseButton.setOnClickListener { v ->
             (v.parent.parent as ViewGroup).removeView(v.parent as ViewGroup)
+            exercisesUIComponentListener.onRemoveView()
         }
     }
 

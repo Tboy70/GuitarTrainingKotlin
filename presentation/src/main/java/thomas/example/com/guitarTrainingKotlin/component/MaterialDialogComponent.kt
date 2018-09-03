@@ -1,13 +1,10 @@
 package thomas.example.com.guitarTrainingKotlin.component
 
 import com.afollestad.materialdialogs.MaterialDialog
-import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
-import thomas.example.com.guitarTrainingKotlin.listener.AddExerciseListener
-import java.util.*
 import javax.inject.Inject
 
 @PerActivity

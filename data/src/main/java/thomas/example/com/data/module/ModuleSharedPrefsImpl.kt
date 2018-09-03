@@ -3,9 +3,6 @@ package thomas.example.com.data.module
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.util.Log
-import thomas.example.com.data.R
-import thomas.example.com.utils.ConstantTags
 import javax.inject.Inject
 import javax.inject.Singleton
 

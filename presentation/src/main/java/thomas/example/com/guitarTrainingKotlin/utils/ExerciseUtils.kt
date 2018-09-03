@@ -38,5 +38,21 @@ class ExerciseUtils {
                 else -> R.id.launcher_end_program_fragment
             }
         }
+
+        fun getTypeExerciseIdByName(nameExercise: String, activity: Activity): Int {
+            return when (nameExercise) {
+                activity.getString(R.string.exercise_scale_title_text) -> ExercisesTypeValues.EXERCISE_SCALE
+                activity.getString(R.string.exercise_mode_title_text) -> ExercisesTypeValues.EXERCISE_MODE
+                activity.getString(R.string.exercise_pull_off_hammer_on_title_text) -> ExercisesTypeValues.EXERCISE_PULL_OFF_HAMMER_ON
+                activity.getString(R.string.exercise_bend_slide_title_text) -> ExercisesTypeValues.EXERCISE_BEND_SLIDE
+                activity.getString(R.string.exercise_back_forth_title_text) -> ExercisesTypeValues.EXERCISE_BACK_FORTH
+                activity.getString(R.string.exercise_palm_mute_title_text) -> ExercisesTypeValues.EXERCISE_PALM_MUTE
+                activity.getString(R.string.exercise_skip_string_title_text) -> ExercisesTypeValues.EXERCISE_SKIP_STRING
+                activity.getString(R.string.exercise_tapping_title_text) -> ExercisesTypeValues.EXERCISE_TAPPING
+                activity.getString(R.string.exercise_sweep_picking_title_text) -> ExercisesTypeValues.EXERCISE_SWEEP_PICKING
+                activity.getString(R.string.exercise_speed_title_text) -> ExercisesTypeValues.EXERCISE_SPEED
+                else -> ExercisesTypeValues.EXERCISE_EMPTY // TODO: 24/09/2017  Change that !
+            }
+        }
     }
 }

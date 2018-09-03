@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_exercise_bend_slide.*
-import kotlinx.android.synthetic.main.fragment_exercise_palm_mute.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 

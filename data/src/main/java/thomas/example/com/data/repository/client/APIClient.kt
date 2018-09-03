@@ -1,6 +1,7 @@
 package thomas.example.com.data.repository.client
 
 import io.reactivex.Observable
+import thomas.example.com.data.entity.ExerciseEntity
 import thomas.example.com.data.entity.ProgramEntity
 import thomas.example.com.data.entity.UserEntity
 import thomas.example.com.data.mapper.remote.ExerciseRemoteEntityDataMapper
@@ -33,5 +34,15 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
         return apiModule.retrieveProgramFromId(idProgram).map {
             programRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
         }
+    }
+
+    fun createProgram(programEntity: ProgramEntity): Observable<String> {
+        return apiModule.createProgram(programRemoteEntityDataMapper.transformEntityToRemoteEntity(programEntity)).map {
+            it
+        }
+    }
+
+    fun createExercise(listExercisesEntities: List<ExerciseEntity>): Observable<Boolean> {
+        return apiModule.createExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(listExercisesEntities))
     }
 }
