@@ -11,4 +11,6 @@ interface ProgramRepository {
     fun retrieveProgramById(idProgram: String): Observable<Program>
 
     fun createProgram(program: Program, exercisesList: List<Exercise>): Observable<Boolean>
+
+    fun removeProgram(idProgram: String): Observable<Boolean>
 }

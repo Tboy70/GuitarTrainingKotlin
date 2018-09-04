@@ -45,4 +45,8 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     fun createExercise(listExercisesEntities: List<ExerciseEntity>): Observable<Boolean> {
         return apiModule.createExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(listExercisesEntities))
     }
+
+    fun removeProgram(idProgram: String): Observable<Boolean> {
+        return apiModule.removeProgram(idProgram)
+    }
 }

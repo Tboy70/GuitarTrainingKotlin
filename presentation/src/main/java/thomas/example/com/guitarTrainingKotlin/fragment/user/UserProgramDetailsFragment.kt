@@ -71,9 +71,24 @@ class UserProgramDetailsFragment : BaseFragment() {
             }
         })
 
+        userProgramDetailsViewModel.finishProgramDeletion.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                activity?.finish()
+            }
+        })
+
         fragment_user_program_details_start_button.setOnClickListener {
             startProgram()
         }
+
+        fragment_user_program_details_remove_button.setOnClickListener {
+            materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_remove_title), getString(R.string.dialog_loading_program_remove_content), R.color.colorPrimary)
+            removeProgram()
+        }
+    }
+
+    private fun removeProgram() {
+        userProgramDetailsViewModel.removeProgram(idProgram)
     }
 
     override fun onStart() {

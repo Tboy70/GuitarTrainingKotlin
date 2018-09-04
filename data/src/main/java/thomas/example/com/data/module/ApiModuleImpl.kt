@@ -10,10 +10,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
@@ -75,6 +72,12 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             it.isSuccessful
         }
     }
+
+    override fun removeProgram(idProgram: String): Observable<Boolean> {
+        return apiService.removeProgram(idProgram).map {
+            it.isSuccessful
+        }
+    }
 }
 
 
@@ -94,4 +97,7 @@ interface APIServiceInterface {
 
     @POST("exercise")
     fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+
+    @DELETE("program/{idProgram}")
+    fun removeProgram(@Path("idProgram") idProgram: String): Observable<Response<Void>>
 }

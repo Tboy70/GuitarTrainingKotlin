@@ -29,6 +29,12 @@ class ProgramRepositoryImpl @Inject constructor(private val programClient: Progr
         }
     }
 
+    override fun removeProgram(idProgram: String): Observable<Boolean> {
+        return Observable.defer {
+            apiClient.removeProgram(idProgram)
+        }
+    }
+
     override fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>> {
         return Observable.defer {
             apiClient.retrieveProgramsListByUserId(idUser).map {

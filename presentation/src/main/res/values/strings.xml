@@ -24,8 +24,10 @@
     <string name="dialog_connection_title">Connexion en cours</string>
     <string name="dialog_connection_content">Veuillez patienter</string>
     <string name="dialog_loading_content">Accorde toi en attendant …</string>
+    <string name="dialog_loading_program_remove_title">Supression du programme</string>
     <string name="dialog_loading_program_details_title">Chargement du programme …</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
+    <string name="dialog_loading_program_remove_content">Supression du programme en cours. Veuillez patientez …</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
