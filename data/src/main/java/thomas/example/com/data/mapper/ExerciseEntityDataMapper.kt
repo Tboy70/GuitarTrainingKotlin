@@ -17,7 +17,7 @@ class ExerciseEntityDataMapper @Inject constructor() {
         return exercise
     }
 
-    fun transformListEntitiesToListModels(exerciseEntityList: List<ExerciseEntity>): List<Exercise> {
+    fun transformListEntitiesToListModels(exerciseEntityList: List<ExerciseEntity>): MutableList<Exercise> {
         val exerciseList: MutableList<Exercise> = mutableListOf()
 
         for (exerciseEntity: ExerciseEntity in exerciseEntityList) {
@@ -35,7 +35,7 @@ class ExerciseEntityDataMapper @Inject constructor() {
         return exerciseEntity
     }
 
-    fun transformListModelsToListEntities(exerciseModelList: List<Exercise>): List<ExerciseEntity> {
+    fun transformListModelsToListEntities(exerciseModelList: List<Exercise>): MutableList<ExerciseEntity> {
         val exerciseEntityList: MutableList<ExerciseEntity> = mutableListOf()
 
         for (exerciseModel: Exercise in exerciseModelList) {

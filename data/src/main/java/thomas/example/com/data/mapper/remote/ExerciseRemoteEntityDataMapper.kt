@@ -18,7 +18,7 @@ class ExerciseRemoteEntityDataMapper @Inject constructor() {
         return exerciseEntity
     }
 
-    fun transformListRemoteEntitiesToListEntities(exerciseRemoteEntitiesList: List<ExerciseRemoteEntity>): List<ExerciseEntity> {
+    fun transformListRemoteEntitiesToListEntities(exerciseRemoteEntitiesList: List<ExerciseRemoteEntity>): MutableList<ExerciseEntity> {
         val exerciseEntitiesList: MutableList<ExerciseEntity> = mutableListOf()
 
         for (exerciseRemoteEntity: ExerciseRemoteEntity in exerciseRemoteEntitiesList) {
@@ -37,7 +37,7 @@ class ExerciseRemoteEntityDataMapper @Inject constructor() {
         return exerciseRemoteEntity
     }
 
-    fun transformListEntitiesToListRemoteEntities(exerciseEntitiesList: List<ExerciseEntity>): List<ExerciseRemoteEntity> {
+    fun transformListEntitiesToListRemoteEntities(exerciseEntitiesList: List<ExerciseEntity>): MutableList<ExerciseRemoteEntity> {
         val exerciseRemoteEntitiesList: MutableList<ExerciseRemoteEntity> = mutableListOf()
 
         for (exerciseEntity: ExerciseEntity in exerciseEntitiesList) {

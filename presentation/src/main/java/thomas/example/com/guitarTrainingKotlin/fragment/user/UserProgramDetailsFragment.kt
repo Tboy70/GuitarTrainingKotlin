@@ -5,22 +5,24 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
 import android.support.v4.content.ContextCompat
+import android.support.v4.widget.TextViewCompat
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramUpdateFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
@@ -58,10 +60,11 @@ class UserProgramDetailsFragment : BaseFragment() {
             }
         }
 
-        userProgramDetailsViewModel.finishRetrieveProgram.observe(this, Observer<Boolean> {
+        userProgramDetailsViewModel.finishRetrieveProgramForDetails.observe(this, Observer<Boolean> {
             if (it == true) {
                 val userProgramObjectWrapper = userProgramDetailsViewModel.userProgramObjectWrapper
                 displayInformation(userProgramObjectWrapper)
+                userProgramDetailsViewModel.finishRetrieveProgramForDetails.removeObservers(this)
             }
         })
 
@@ -85,10 +88,10 @@ class UserProgramDetailsFragment : BaseFragment() {
             materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_remove_title), getString(R.string.dialog_loading_program_remove_content), R.color.colorPrimary)
             removeProgram()
         }
-    }
 
-    private fun removeProgram() {
-        userProgramDetailsViewModel.removeProgram(idProgram)
+        fragment_user_program_details_update_button.setOnClickListener {
+            updateProgram()
+        }
     }
 
     override fun onStart() {
@@ -109,7 +112,6 @@ class UserProgramDetailsFragment : BaseFragment() {
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun displayInformation(userProgramObjectWrapper: ProgramObjectWrapper) {
 
         fragment_user_program_details_name.text = userProgramObjectWrapper.program.nameProgram
@@ -128,6 +130,7 @@ class UserProgramDetailsFragment : BaseFragment() {
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         exercisesLinearLayout.layoutParams = layoutParams
 
+        exercisesLinearLayout.removeAllViews()
         for (exercise: Exercise in userProgramObjectWrapper.program.exercises) {
             val nameExercise = TextView(activity)
             nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as Activity)
@@ -136,11 +139,8 @@ class UserProgramDetailsFragment : BaseFragment() {
                     (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
 
             val durationExercise = TextView(activity)
-            if (Build.VERSION.SDK_INT < 23) {
-                durationExercise.setTextAppearance(activity, R.style.TextAppearance_AppCompat_Caption)
-            } else {
-                durationExercise.setTextAppearance(R.style.TextAppearance_AppCompat_Caption)
-            }
+            TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)
+
             if (exercise.durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
                 durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_minutes_txt),
                         exercise.durationExercise.toString())
@@ -171,5 +171,18 @@ class UserProgramDetailsFragment : BaseFragment() {
         intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
         startActivity(intent)
         activity?.finish()
+    }
+
+    private fun removeProgram() {
+        userProgramDetailsViewModel.removeProgram(idProgram)
+    }
+
+    private fun updateProgram() {
+
+        val bundle = Bundle()
+        bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
+
+        val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
+        NavHostFragment.findNavController(host).navigate(R.id.launcher_user_program_update, bundle, null)
     }
 }

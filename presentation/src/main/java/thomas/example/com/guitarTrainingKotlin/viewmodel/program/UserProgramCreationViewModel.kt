@@ -11,10 +11,10 @@ import javax.inject.Inject
 
 class UserProgramCreationViewModel @Inject constructor(private var createProgram: CreateProgram) : ViewModel() {
 
-    val finishProgramCreation: MutableLiveData<Boolean> = MutableLiveData()
-    val creationFailure: MutableLiveData<Boolean> = MutableLiveData()
+    val creationProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val creationProgramFailure: MutableLiveData<Boolean> = MutableLiveData()
 
-    var errorThrowable : Throwable? = null
+    var errorThrowable: Throwable? = null
 
     fun checkInformationAndValidateCreation(nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>) {
 
@@ -41,16 +41,17 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
                     },
                     onError = {
                         errorThrowable = it
-                        creationFailure.postValue(true)
+                        creationProgramFailure.postValue(true)
 
                     },
                     onNext = {
                         if (it) {
-                            finishProgramCreation.postValue(true)
+                            creationProgramSuccess.postValue(true)
                         }
                     }, params = CreateProgram.Params.toCreate(program, exercisesList))
         } else {
-            //TODO : Handle Error
+            errorThrowable = Exception("Veuillez remplir tous les champs")
+            creationProgramFailure.postValue(true)
         }
     }
 

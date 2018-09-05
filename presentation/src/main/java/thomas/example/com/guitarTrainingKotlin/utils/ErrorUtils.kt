@@ -8,9 +8,9 @@ import java.net.ConnectException
 class ErrorUtils {
 
     companion object {
-        const val HTTP_EXCEPTION_401 = 401
+        private const val HTTP_EXCEPTION_401 = 401
 
-        fun translateException(context: Context, throwable: Throwable) : String {
+        fun translateException(context: Context, throwable: Throwable): String {
             when (throwable) {
                 is HttpException -> {
                     when (throwable.code()) {
@@ -21,9 +21,10 @@ class ErrorUtils {
                     }
                 }
                 is ConnectException -> return context.getString(R.string.snackbar_error_connection_problem)
+                is Exception -> return throwable.message.toString()
                 else -> return context.getString(R.string.snackbar_error_unknown_error)
             }
-            return context.getString(R.string.snackbar_error_unknown_error)
+            return throwable.message.toString()
         }
     }
 

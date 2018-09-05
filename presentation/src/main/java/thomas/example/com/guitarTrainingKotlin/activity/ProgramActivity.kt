@@ -55,7 +55,7 @@ class ProgramActivity : BaseActivity() {
         this.rankExercise = rankExercise
         if (rankExercise < exercisesOfProgram.size) {
             val rightExercise = exercisesOfProgram[rankExercise]
-            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.idExercise.toInt())
+            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.typeExercise)
             val bundle = Bundle()
             bundle.putInt(AbstractExerciseFragment.RANK_EXERCISE, rankExercise)
             bundle.putInt(AbstractExerciseFragment.DURATION_EXERCISE, rightExercise.durationExercise)

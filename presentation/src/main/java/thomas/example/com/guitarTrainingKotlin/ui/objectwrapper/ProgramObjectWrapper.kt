@@ -1,5 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.ui.objectwrapper
 
 import thomas.example.com.model.Program
+import java.io.Serializable
 
-class ProgramObjectWrapper(val program: Program)
+class ProgramObjectWrapper(@Transient val program: Program) : Serializable

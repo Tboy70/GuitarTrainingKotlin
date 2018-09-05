@@ -12,6 +12,17 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
 
     private lateinit var materialDialog: MaterialDialog
 
+    fun showProgressDialog(title: String, content: String, color: Int) {
+        materialDialog = MaterialDialog.Builder(activity)
+                .title(title)
+                .content(content)
+                .progress(true, 0)
+                .widgetColorRes(color)
+                .canceledOnTouchOutside(false)
+                .cancelable(false)
+                .show()
+    }
+
     fun showSingleChoiceDialog(title: String, items: List<String>, selectedItem: String?, color: Int, cancelable: Boolean,
                                singleChoiceMaterialDialogListener: SingleChoiceMaterialDialogListener) {
 
@@ -43,21 +54,7 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
         } else -1
     }
 
-    fun showProgressDialog(title: String, content: String, color: Int) {
-        materialDialog = MaterialDialog.Builder(activity)
-                .title(title)
-                .content(content)
-                .progress(true, 0)
-                .widgetColorRes(color)
-                .canceledOnTouchOutside(false)
-                .show()
-    }
-
-    fun dismissDialog() {
-        materialDialog.dismiss()
-    }
-
-    fun showConfirmationDialog(title: String, content: String, color: Int, multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener) {
+    fun showMultiChoiceDialog(title: String, content: String, color: Int, multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener) {
         materialDialog = MaterialDialog.Builder(activity)
                 .title(title)
                 .content(content)
@@ -69,5 +66,9 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
                 .negativeColorRes(color)
                 .onNegative { dialog, _ -> dialog.dismiss() }
                 .show()
+    }
+
+    fun dismissDialog() {
+        materialDialog.dismiss()
     }
 }

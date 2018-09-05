@@ -4,12 +4,12 @@
     <string name="app_name">Guitar Training</string>
 
     <!-- TOOLBARS -->
+    <string name="generic_toolbar_about_title">A propos</string>
+
     <string name="toolbar_title_exercise_mode">Modes</string>
     <string name="toolbar_title_exercise_scale">Gammes</string>
-    <string name="generic_toolbar_about_title">A propos</string>
     <string name="toolbar_title_exercise_speed">Vitesse</string>
     <string name="toolbar_title_exercise_tapping">Tapping</string>
-    <string name="toolbar_title_end_program">Fin du programme</string>
     <string name="toolbar_title_exercise_palm_mute">Palm mute</string>
     <string name="toolbar_title_exercise_bend_slide">Bend / Slide</string>
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
@@ -17,17 +17,31 @@
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
 
+    <string name="toolbar_title_end_program">Fin du programme</string>
+
     <!-- DIALOGS-->
     <string name="dialog_logout_confirm_title">Déconnexion</string>
-    <string name="dialog_logout_content">Veuillez patienter</string>
-    <string name="dialog_logout_title">Déconnexion en cours</string>
-    <string name="dialog_connection_title">Connexion en cours</string>
-    <string name="dialog_connection_content">Veuillez patienter</string>
-    <string name="dialog_loading_content">Accorde toi en attendant …</string>
-    <string name="dialog_loading_program_remove_title">Supression du programme</string>
-    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
+
+    <string name="dialog_logout_title">Déconnexion en cours</string>
+    <string name="dialog_logout_content">Veuillez patienter</string>
+
+    <string name="dialog_login_title">Connexion en cours</string>
+    <string name="dialog_login_content">Veuillez patienter …</string>
+
+    <string name="dialog_loading_content">Accorde toi en attendant …</string>
+
+    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
+
+    <string name="dialog_loading_program_creation_title">Création du programme</string>
+    <string name="dialog_loading_program_creation_content">Création du programme en cours. Veuillez patientez …</string>
+
+    <string name="dialog_loading_program_update_title">Mise à jour du programme</string>
+    <string name="dialog_loading_program_update_content">Mise à jour du programme en cours. Veuillez patientez …</string>
+
+    <string name="dialog_loading_program_remove_title">Supression du programme</string>
     <string name="dialog_loading_program_remove_content">Supression du programme en cours. Veuillez patientez …</string>
+
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>

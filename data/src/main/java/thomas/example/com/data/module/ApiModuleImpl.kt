@@ -24,9 +24,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
     private var apiService: APIServiceInterface
 
     companion object {
-        //        const val BASE_URL = "http://192.168.1.30/guitar_api/public/" // BOX
-        const val BASE_URL = "http://thomasboy.fr/guitar_api/public/" // BOX
-        //        val BASE_URL = "http://192.168.43.235/guitar_api/public/" // 4G
+        const val BASE_URL = "http://thomasboy.fr/guitar_api/public/"
     }
 
     init {
@@ -62,6 +60,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             if (it.isSuccessful && it.body() != null) {
                 (it.body() as ProgramResponseRemoteEntity).getCreatedId()
             } else {
+                //TODO : Check if useful
                 null
             }
         }
@@ -73,8 +72,26 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
+    override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Observable<Boolean> {
+        return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity).map {
+            it.isSuccessful
+        }
+    }
+
+    override fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
+        return apiService.updateExercise(exerciseRemoteEntities).map {
+            it.isSuccessful
+        }
+    }
+
     override fun removeProgram(idProgram: String): Observable<Boolean> {
         return apiService.removeProgram(idProgram).map {
+            it.isSuccessful
+        }
+    }
+
+    override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean> {
+        return apiService.removeExercises(exercisesRemoteEntitiesToBeRemoved).map {
             it.isSuccessful
         }
     }
@@ -98,6 +115,15 @@ interface APIServiceInterface {
     @POST("exercise")
     fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Observable<Response<Void>>
 
+    @PATCH("program/{idProgram}")
+    fun updateProgram(@Path("idProgram") idProgram: String, @Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<Void>>
+
+    @PATCH("exercise")
+    fun updateExercise(@Body exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+
     @DELETE("program/{idProgram}")
     fun removeProgram(@Path("idProgram") idProgram: String): Observable<Response<Void>>
+
+    @HTTP(method = "DELETE", path = "exercise", hasBody = true)
+    fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Response<Void>>
 }

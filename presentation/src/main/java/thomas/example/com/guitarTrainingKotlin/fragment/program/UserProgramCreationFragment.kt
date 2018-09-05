@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
@@ -58,13 +57,15 @@ class UserProgramCreationFragment : BaseFragment() {
 
         userProgramCreationViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramCreationViewModel::class.java)
 
-        userProgramCreationViewModel.finishProgramCreation.observe(this, Observer<Boolean> {
+        userProgramCreationViewModel.creationProgramSuccess.observe(this, Observer<Boolean> {
+            materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
             }
         })
 
-        userProgramCreationViewModel.creationFailure.observe(this, Observer<Boolean> {
+        userProgramCreationViewModel.creationProgramFailure.observe(this, Observer<Boolean> {
+            materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 if (userProgramCreationViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userProgramCreationViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
@@ -78,6 +79,7 @@ class UserProgramCreationFragment : BaseFragment() {
 
     private fun handleClickCreateProgram() {
         fragment_user_program_creation_validation.setOnClickListener {
+            materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_creation_title), getString(R.string.dialog_loading_program_creation_content), R.color.colorPrimary)
             val exercises = SparseArray<String>()
             for (i in 0 until fragment_user_program_creation_exercises.childCount) {
                 val key = (((fragment_user_program_creation_exercises.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(0) as Button).text.toString()
@@ -128,20 +130,13 @@ class UserProgramCreationFragment : BaseFragment() {
 
                     override fun onCancelClick() {
                     }
-
                 })
-            }
-
-            override fun setDurationExerciseAction(durationExercise: EditText, buttonTypeExercise: Button) {
-                //TODO
-                Log.e("TEST", "setDurationExerciseAction")
             }
 
             override fun onRemoveView() {
                 enableCreationAddExerciseButton(true)
             }
-
-        }, ConstValues.EMPTY_STRING, ConstValues.EMPTY_STRING, 1)
+        }, ConstValues.EMPTY_STRING, ConstValues.EMPTY_STRING, ExerciseUIComponent.CREATE_STATE)
 
         fragment_user_program_creation_exercises.addView(horizontalLayoutContainingAllElements)
     }

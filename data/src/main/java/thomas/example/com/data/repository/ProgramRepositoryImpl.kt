@@ -17,24 +17,6 @@ class ProgramRepositoryImpl @Inject constructor(private val programClient: Progr
                                                 private val programEntityDataMapper: ProgramEntityDataMapper,
                                                 private val exerciseEntityDataMapper: ExerciseEntityDataMapper) : ProgramRepository {
 
-    override fun createProgram(program: Program, exercisesList: List<Exercise>): Observable<Boolean> {
-        return Observable.defer {
-            apiClient.createProgram(programEntityDataMapper.transformModelToEntity(program)).map {
-                for (exercise in exercisesList) {
-                    exercise.idProgram = it
-                }
-            }.flatMap {
-                apiClient.createExercise(exerciseEntityDataMapper.transformListModelsToListEntities(exercisesList))
-            }
-        }
-    }
-
-    override fun removeProgram(idProgram: String): Observable<Boolean> {
-        return Observable.defer {
-            apiClient.removeProgram(idProgram)
-        }
-    }
-
     override fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>> {
         return Observable.defer {
             apiClient.retrieveProgramsListByUserId(idUser).map {
@@ -48,6 +30,30 @@ class ProgramRepositoryImpl @Inject constructor(private val programClient: Progr
             apiClient.retrieveProgramFromId(idProgram).map {
                 programEntityDataMapper.transformEntityToModel(it)
             }
+        }
+    }
+
+    override fun createProgram(program: Program, exercisesList: List<Exercise>): Observable<Boolean> {
+        return Observable.defer {
+            apiClient.createProgram(programEntityDataMapper.transformModelToEntity(program)).map {
+                for (exercise in exercisesList) {
+                    exercise.idProgram = it
+                }
+            }.flatMap {
+                apiClient.createExercise(exerciseEntityDataMapper.transformListModelsToListEntities(exercisesList))
+            }
+        }
+    }
+
+    override fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Observable<Boolean> {
+        return Observable.defer {
+            apiClient.updateProgram(programEntityDataMapper.transformModelToEntity(program), exerciseEntityDataMapper.transformListModelsToListEntities(exercisesToBeRemoved))
+        }
+    }
+
+    override fun removeProgram(idProgram: String): Observable<Boolean> {
+        return Observable.defer {
+            apiClient.removeProgram(idProgram)
         }
     }
 }

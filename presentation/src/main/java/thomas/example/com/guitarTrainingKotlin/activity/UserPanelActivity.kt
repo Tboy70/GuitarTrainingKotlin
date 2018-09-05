@@ -143,7 +143,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun logoutUser() {
-        materialDialogComponent.showConfirmationDialog(getString(R.string.dialog_logout_confirm_title),
+        materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_logout_confirm_title),
                 getString(R.string.dialog_logout_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
             override fun onYesSelected() {
                 materialDialogComponent.showProgressDialog(getString(R.string.dialog_logout_title), getString(R.string.dialog_logout_content), R.color.colorPrimary)

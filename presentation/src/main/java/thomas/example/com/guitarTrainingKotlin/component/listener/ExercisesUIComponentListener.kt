@@ -7,7 +7,5 @@ interface ExercisesUIComponentListener {
 
     fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText)
 
-    fun setDurationExerciseAction(durationExercise: EditText, buttonTypeExercise: Button)
-
     fun onRemoveView()
 }

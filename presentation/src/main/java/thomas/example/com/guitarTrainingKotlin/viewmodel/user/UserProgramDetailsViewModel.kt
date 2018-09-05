@@ -13,7 +13,7 @@ class UserProgramDetailsViewModel @Inject constructor(private val retrieveProgra
     lateinit var userProgramObjectWrapper: ProgramObjectWrapper
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val finishRetrieveProgram: MutableLiveData<Boolean> = MutableLiveData()
+    val finishRetrieveProgramForDetails: MutableLiveData<Boolean> = MutableLiveData()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
 
     fun getProgramById(idProgram: String) {
@@ -22,11 +22,11 @@ class UserProgramDetailsViewModel @Inject constructor(private val retrieveProgra
                     finishLoading.postValue(true)
                 },
                 onError = {
-                    finishRetrieveProgram.postValue(false)
+                    finishRetrieveProgramForDetails.postValue(false)
                 },
                 onNext = {
                     userProgramObjectWrapper = ProgramObjectWrapper(it)
-                    finishRetrieveProgram.postValue(true)
+                    finishRetrieveProgramForDetails.postValue(true)
 
                 }, params = RetrieveProgramById.Params.toRetrieve(idProgram))
     }
@@ -46,5 +46,4 @@ class UserProgramDetailsViewModel @Inject constructor(private val retrieveProgra
 
                 }, params = RemoveProgram.Params.toRemove(idProgram))
     }
-
 }

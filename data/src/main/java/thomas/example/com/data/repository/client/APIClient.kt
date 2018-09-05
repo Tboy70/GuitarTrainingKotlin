@@ -46,6 +46,12 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
         return apiModule.createExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(listExercisesEntities))
     }
 
+    fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Observable<Boolean> {
+        return apiModule.removeExercises(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(exerciseEntityList))
+                .concatWith(apiModule.updateProgram(programRemoteEntityDataMapper.transformEntityToRemoteEntity(programEntity)))
+                .concatWith(apiModule.updateExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)))
+    }
+
     fun removeProgram(idProgram: String): Observable<Boolean> {
         return apiModule.removeProgram(idProgram)
     }

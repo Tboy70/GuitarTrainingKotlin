@@ -51,7 +51,7 @@ class ExerciseUtils {
                 activity.getString(R.string.exercise_tapping_title_text) -> ExercisesTypeValues.EXERCISE_TAPPING
                 activity.getString(R.string.exercise_sweep_picking_title_text) -> ExercisesTypeValues.EXERCISE_SWEEP_PICKING
                 activity.getString(R.string.exercise_speed_title_text) -> ExercisesTypeValues.EXERCISE_SPEED
-                else -> ExercisesTypeValues.EXERCISE_EMPTY // TODO: 24/09/2017  Change that !
+                else -> ExercisesTypeValues.EXERCISE_EMPTY
             }
         }
     }

@@ -5,4 +5,4 @@ data class ProgramEntity(var idProgram: String = "",
                          var descriptionProgram: String = "",
                          var defaultProgram: Boolean = false,
                          var idUser: String? = "",
-                         var exerciseEntities: List<ExerciseEntity> = mutableListOf())
+                         var exerciseEntities: MutableList<ExerciseEntity> = mutableListOf())

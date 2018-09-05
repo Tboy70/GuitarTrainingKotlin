@@ -17,5 +17,12 @@ interface ApiModule {
 
     fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean>
 
+    fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Observable<Boolean>
+
+    fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean>
+
     fun removeProgram(idProgram: String): Observable<Boolean>
+
+    fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean>
+
 }

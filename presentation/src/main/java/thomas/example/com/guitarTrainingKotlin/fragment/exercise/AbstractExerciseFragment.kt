@@ -61,7 +61,7 @@ abstract class AbstractExerciseFragment : BaseFragment() {
 
     fun startNextExercise() {
         if (durationLeft.compareTo(0.0) != 0) {
-            materialDialogComponent.showConfirmationDialog(getString(R.string.confirm_next_exercise_title),
+            materialDialogComponent.showMultiChoiceDialog(getString(R.string.confirm_next_exercise_title),
                     getString(R.string.confirm_next_exercise_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
                 override fun onYesSelected() {
                     if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {

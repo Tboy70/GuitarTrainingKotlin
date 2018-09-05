@@ -13,6 +13,7 @@ import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewMode
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramCreationViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramUpdateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramDetailsViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
@@ -72,4 +73,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserProgramCreationViewModel::class)
     abstract fun bindUserProgramCreationViewModel(userProgramCreationViewModel: UserProgramCreationViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserProgramUpdateViewModel::class)
+    abstract fun bindUserProgramUpdateViewModel(userProgramUpdateViewModel: UserProgramUpdateViewModel): ViewModel
 }

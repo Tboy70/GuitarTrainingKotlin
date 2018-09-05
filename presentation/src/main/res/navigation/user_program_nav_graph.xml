@@ -10,4 +10,9 @@
         android:label="@string/nav_user_program_home"
         tools:layout="@layout/fragment_user_program_details" />
 
+    <fragment
+        android:id="@+id/launcher_user_program_update"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramUpdateFragment"
+        tools:layout="@layout/fragment_user_program_update" />
+
 </navigation>

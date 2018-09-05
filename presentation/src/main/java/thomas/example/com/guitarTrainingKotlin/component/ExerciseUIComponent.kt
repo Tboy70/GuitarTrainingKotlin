@@ -26,6 +26,11 @@ class ExerciseUIComponent @Inject constructor(val activity: BaseActivity) {
     private lateinit var durationExercise: EditText
     private lateinit var removeExerciseButton: ImageButton
 
+    companion object {
+        const val CREATE_STATE = 0
+        const val UPDATE_STATE = 1
+    }
+
     fun createNewExercise(exercisesUIComponentListener: ExercisesUIComponentListener, textButton: String, textDuration: String, state: Int): LinearLayout {
         createLayout(activity)
         createUIViews(textButton, textDuration, state)
@@ -46,9 +51,17 @@ class ExerciseUIComponent @Inject constructor(val activity: BaseActivity) {
     private fun createUIViews(textButton: String, textDuration: String, state: Int) {
         buttonTypeExercise = Button(activity)
         buttonTypeExercise.setCompoundDrawables(null, null, ContextCompat.getDrawable(activity, R.drawable.ic_dropdown_black), null)
-        buttonTypeExercise.text = activity.getString(R.string.user_program_creation_type_exercise_text)
+        if (state == CREATE_STATE) {
+            buttonTypeExercise.text = activity.getString(R.string.user_program_creation_type_exercise_text)
+        } else if (state == UPDATE_STATE) {
+            buttonTypeExercise.text = textButton
+        }
         durationExercise = EditText(activity)
-        durationExercise.setHint(R.string.user_program_creation_duration_exercise_hint)
+        if (state == CREATE_STATE) {
+            durationExercise.setHint(R.string.user_program_creation_duration_exercise_hint)
+        } else if (state == UPDATE_STATE) {
+            durationExercise.setText(textDuration)
+        }
 
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         params.gravity = Gravity.CENTER
@@ -67,7 +80,6 @@ class ExerciseUIComponent @Inject constructor(val activity: BaseActivity) {
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                exercisesUIComponentListener.setDurationExerciseAction(durationExercise, buttonTypeExercise)
             }
 
             override fun afterTextChanged(s: Editable) {}
