@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/padding_start_end"
+    android:paddingStart="@dimen/padding_start_end">
 
     <TextView
         android:id="@+id/fragment_exercise_mode_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/space_small"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/constraint_layout_margin_8"
         android:gravity="center"
         android:text="@string/exercise_mode_title_text"
         android:textColor="@android:color/black"
@@ -24,9 +24,7 @@
         android:id="@+id/fragment_exercise_mode_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/margin_big"
         android:gravity="center_vertical"
         android:text="@string/exercise_mode_description_text"
         android:textColor="@android:color/black"
@@ -34,51 +32,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_mode_title" />
 
-
-    <Button
-        android:id="@+id/fragment_exercise_mode_button_choice_mode"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/choice_mode_linear_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="103dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/white"
-        android:drawableEnd="@drawable/ic_dropdown_black"
-        android:text="@string/exercise_mode_mode_text"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="@dimen/margin_big"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_mode_description" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_mode_description">
 
-    <ImageButton
-        android:id="@+id/fragment_exercise_mode_random_selection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-        android:src="@drawable/ic_random_scale"
-        app:layout_constraintStart_toEndOf="@+id/fragment_exercise_mode_button_choice_mode"
-        app:layout_constraintTop_toTopOf="@+id/fragment_exercise_mode_button_choice_mode"
-        tools:ignore="contentDescription" />
+        <Button
+            android:id="@+id/fragment_exercise_mode_button_choice_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:drawableEnd="@drawable/ic_dropdown_black"
+            android:text="@string/exercise_mode_mode_text"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black" />
+
+        <ImageButton
+            android:id="@+id/fragment_exercise_mode_random_selection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_random_scale"
+            tools:ignore="contentDescription" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/fragment_exercise_mode_duration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_big"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_mode_random_selection"
+        app:layout_constraintTop_toBottomOf="@+id/choice_mode_linear_layout"
         tools:text="@string/generic_exercise_duration_text" />
 
     <TextView
         android:id="@+id/fragment_exercise_mode_duration_left"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,9 +85,7 @@
         android:id="@+id/fragment_exercise_mode_button_start_exercise"
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:background="@drawable/button_drawable"
         android:text="@string/generic_exercise_start_button_text"
         android:textColor="@android:color/white"
@@ -103,9 +97,7 @@
         android:id="@+id/fragment_exercise_mode_next_button"
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:background="@drawable/button_drawable"
         android:text="@string/generic_exercise_next_exercise_text"
         android:textColor="@android:color/white"

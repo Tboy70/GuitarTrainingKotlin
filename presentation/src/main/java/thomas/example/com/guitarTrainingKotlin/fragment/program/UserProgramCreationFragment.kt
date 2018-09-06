@@ -79,7 +79,7 @@ class UserProgramCreationFragment : BaseFragment() {
 
     private fun handleClickCreateProgram() {
         fragment_user_program_creation_validation.setOnClickListener {
-            materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_creation_title), getString(R.string.dialog_loading_program_creation_content), R.color.colorPrimary)
+            materialDialogComponent.showProgressDialog(getString(R.string.dialog_creation_program_title), getString(R.string.dialog_creation_program_content), R.color.colorPrimary)
             val exercises = SparseArray<String>()
             for (i in 0 until fragment_user_program_creation_exercises.childCount) {
                 val key = (((fragment_user_program_creation_exercises.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(0) as Button).text.toString()

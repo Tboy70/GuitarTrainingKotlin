@@ -1,13 +1,18 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
 import thomas.example.com.interactor.program.UpdateProgram
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
 import javax.inject.Inject
 
 class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: UpdateProgram) : ViewModel() {
+
+    val updateProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
+    val updateProgramFailure: MutableLiveData<Boolean> = MutableLiveData()
+
+    var errorThrowable: Throwable? = null
 
     fun checkInformationAndValidateUpdate(idProgram: String, nameProgram: String, descriptionProgram: String, programListExercises: MutableList<Exercise>, exercisesToBeRemoved: MutableList<Exercise>) {
         if (checkInformation(nameProgram, programListExercises)) {
@@ -23,11 +28,13 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
 
                     },
                     onError = {
-
-
+                        errorThrowable = it
+                        updateProgramFailure.postValue(true)
                     },
                     onNext = {
-                        Log.e("OKTM", "OKTM")
+                        if (it) {
+                            updateProgramSuccess.postValue(true)
+                        }
                     }, params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved))
         }
     }

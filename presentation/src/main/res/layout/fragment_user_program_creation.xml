@@ -2,13 +2,15 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/padding_start_end"
+    android:paddingStart="@dimen/padding_start_end">
 
     <TextView
         android:id="@+id/fragment_user_program_creation_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/constraint_layout_margin_8"
         android:gravity="center"
         android:text="@string/user_program_creation_title"
         android:textColor="@android:color/black"
@@ -20,8 +22,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:layout_marginTop="@dimen/constraint_layout_margin_8"
         app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_creation_add_exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +38,7 @@
                 android:id="@+id/fragment_user_program_creation_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_program_creation_name_program_hint"
+                android:hint="@string/program_name"
                 android:inputType="text"
                 android:maxLines="1" />
 
@@ -44,7 +46,7 @@
                 android:id="@+id/fragment_user_program_creation_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/user_program_creation_description_program_hint"
+                android:hint="@string/program_description"
                 android:inputType="text"
                 android:maxLines="1" />
 
@@ -62,9 +64,7 @@
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:background="@drawable/button_drawable"
         android:text="@string/user_program_creation_add_exercise_text"
         android:textColor="@android:color/white"
@@ -77,9 +77,7 @@
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
         android:layout_gravity="center"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:background="@drawable/button_drawable"
         android:text="@string/user_program_creation_button_validate_text"
         android:textColor="@android:color/white"

@@ -21,6 +21,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramUpdateFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
@@ -60,6 +61,61 @@ class UserProgramDetailsFragment : BaseFragment() {
             }
         }
 
+        handleLiveData()
+        handleStartProgram()
+        handleUpdateProgram()
+        handleRemoveProgram()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        materialDialogComponent.showProgressDialog(getString(R.string.dialog_details_program_title), getString(R.string.dialog_details_program_content), R.color.colorPrimary)
+        userProgramDetailsViewModel.getProgramById(idProgram)
+    }
+
+    private fun checkProgramAndHideButtons(idProgram: String?) {
+        if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL) {
+            fragment_user_program_details_remove_button.visibility = View.GONE
+            fragment_user_program_details_update_button.visibility = View.GONE
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(fragment_user_program_details_constraint_layout)
+            constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
+            constraintSet.connect(R.id.fragment_user_program_details_start_button, ConstraintSet.BOTTOM, R.id.fragment_user_program_details_constraint_layout, ConstraintSet.BOTTOM, 24)
+            constraintSet.applyTo(fragment_user_program_details_constraint_layout)
+        }
+    }
+
+    private fun handleStartProgram() {
+        fragment_user_program_details_start_button.setOnClickListener {
+            val intent = Intent(activity, ProgramActivity::class.java)
+            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
+            startActivity(intent)
+            activity?.finish()
+        }
+    }
+
+    private fun handleUpdateProgram() {
+        fragment_user_program_details_remove_button.setOnClickListener {
+            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
+                override fun onYesSelected() {
+                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_content), R.color.colorPrimary)
+                    userProgramDetailsViewModel.removeProgram(idProgram)
+                }
+            })
+        }
+    }
+
+    private fun handleRemoveProgram() {
+        fragment_user_program_details_update_button.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
+
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
+            NavHostFragment.findNavController(host).navigate(R.id.launcher_user_program_update, bundle, null)
+        }
+    }
+
+    private fun handleLiveData() {
         userProgramDetailsViewModel.finishRetrieveProgramForDetails.observe(this, Observer<Boolean> {
             if (it == true) {
                 val userProgramObjectWrapper = userProgramDetailsViewModel.userProgramObjectWrapper
@@ -79,64 +135,45 @@ class UserProgramDetailsFragment : BaseFragment() {
                 activity?.finish()
             }
         })
-
-        fragment_user_program_details_start_button.setOnClickListener {
-            startProgram()
-        }
-
-        fragment_user_program_details_remove_button.setOnClickListener {
-            materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_remove_title), getString(R.string.dialog_loading_program_remove_content), R.color.colorPrimary)
-            removeProgram()
-        }
-
-        fragment_user_program_details_update_button.setOnClickListener {
-            updateProgram()
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        materialDialogComponent.showProgressDialog(getString(R.string.dialog_loading_program_details_title), getString(R.string.dialog_loading_content), R.color.colorPrimary)
-        userProgramDetailsViewModel.getProgramById(idProgram)
-    }
-
-    private fun checkProgramAndHideButtons(idProgram: String?) {
-        if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL) {
-            fragment_user_program_details_remove_button.visibility = View.GONE
-            fragment_user_program_details_update_button.visibility = View.GONE
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(fragment_user_program_details_constraint_layout)
-            constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
-            constraintSet.connect(R.id.fragment_user_program_details_start_button, ConstraintSet.BOTTOM, R.id.fragment_user_program_details_constraint_layout, ConstraintSet.BOTTOM, 24)
-            constraintSet.applyTo(fragment_user_program_details_constraint_layout)
-        }
     }
 
     private fun displayInformation(userProgramObjectWrapper: ProgramObjectWrapper) {
 
-        fragment_user_program_details_name.text = userProgramObjectWrapper.program.nameProgram
-        fragment_user_program_details_description.text = userProgramObjectWrapper.program.descriptionProgram
-
+        val nameProgram = userProgramObjectWrapper.program.nameProgram
         val descriptionProgram = userProgramObjectWrapper.program.descriptionProgram
+
+        setToolbar(nameProgram)
+
+        fragment_user_program_details_name.text = nameProgram
+
         if (descriptionProgram.isEmpty()) {
             fragment_user_program_details_description.text = activity?.getString(R.string.user_details_program_no_description)
         } else {
             fragment_user_program_details_description.text = descriptionProgram
         }
 
+        createExercisesList(userProgramObjectWrapper.program.exercises)
+    }
+
+    private fun setToolbar(nameProgram: String) {
+        if (activity is UserProgramActivity) {
+            (activity as UserProgramActivity).setToolbar(nameProgram)
+        }
+    }
+
+    private fun createExercisesList(exercises: MutableList<Exercise>) {
         val exercisesLinearLayout = LinearLayout(activity)
         exercisesLinearLayout.orientation = LinearLayout.VERTICAL
 
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         exercisesLinearLayout.layoutParams = layoutParams
 
-        exercisesLinearLayout.removeAllViews()
-        for (exercise: Exercise in userProgramObjectWrapper.program.exercises) {
+        for (exercise: Exercise in exercises) {
+
             val nameExercise = TextView(activity)
             nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as Activity)
             nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
-            nameExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-                    (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
+            nameExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP, (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
 
             val durationExercise = TextView(activity)
             TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)
@@ -148,41 +185,15 @@ class UserProgramDetailsFragment : BaseFragment() {
                 val hours = exercise.durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
                 val minutes = exercise.durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
 
-                durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_hours_txt),
-                        hours.toString(), minutes.toString())
+                durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_hours_txt), hours.toString(), minutes.toString())
             }
 
-            durationExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-                    (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
+            durationExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP, (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
 
             exercisesLinearLayout.addView(nameExercise, 0)
             exercisesLinearLayout.addView(durationExercise, 1)
         }
 
         fragment_user_program_details_exercises.addView(exercisesLinearLayout, 1)
-
-        if (activity is UserProgramActivity) {
-            (activity as UserProgramActivity).setToolbar(userProgramObjectWrapper.program.nameProgram)
-        }
-    }
-
-    private fun startProgram() {
-        val intent = Intent(activity, ProgramActivity::class.java)
-        intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
-        startActivity(intent)
-        activity?.finish()
-    }
-
-    private fun removeProgram() {
-        userProgramDetailsViewModel.removeProgram(idProgram)
-    }
-
-    private fun updateProgram() {
-
-        val bundle = Bundle()
-        bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
-
-        val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
-        NavHostFragment.findNavController(host).navigate(R.id.launcher_user_program_update, bundle, null)
     }
 }

@@ -20,31 +20,35 @@
     <string name="toolbar_title_end_program">Fin du programme</string>
 
     <!-- DIALOGS-->
-    <string name="dialog_logout_confirm_title">Déconnexion</string>
-    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
-
-    <string name="dialog_logout_title">Déconnexion en cours</string>
-    <string name="dialog_logout_content">Veuillez patienter</string>
-
     <string name="dialog_login_title">Connexion en cours</string>
     <string name="dialog_login_content">Veuillez patienter …</string>
 
-    <string name="dialog_loading_content">Accorde toi en attendant …</string>
+    <string name="dialog_logout_title">Déconnexion</string>
+    <string name="dialog_logout_content">Veuillez patienter</string>
+    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
 
-    <string name="dialog_loading_program_details_title">Chargement du programme …</string>
+    <string name="dialog_details_program_title">Chargement du programme …</string>
+    <string name="dialog_details_program_content">Accorde toi en attendant …</string>
 
-    <string name="dialog_loading_program_creation_title">Création du programme</string>
-    <string name="dialog_loading_program_creation_content">Création du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_creation_program_title">Création du programme</string>
+    <string name="dialog_creation_program_content">Création du programme en cours. Veuillez patientez …</string>
 
-    <string name="dialog_loading_program_update_title">Mise à jour du programme</string>
-    <string name="dialog_loading_program_update_content">Mise à jour du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_update_program_title">Mise à jour du programme</string>
+    <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?</string>
 
-    <string name="dialog_loading_program_remove_title">Supression du programme</string>
-    <string name="dialog_loading_program_remove_content">Supression du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_remove_program_title">Supression du programme</string>
+    <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ? </string>
 
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
+
+    <!-- GENERIC TEXTS -->
+    <string name="exercises_text">Exercices</string>
+    <string name="program_name">Nom du programme</string>
+    <string name="program_description">Description du programme</string>
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
@@ -56,7 +60,6 @@
     <string name="timer_pause_button">Pause</string>
     <string name="timer_title">C\'est parti !</string>
     <string name="timer_start_button">Démarrer</string>
-
 
     <!-- ======================================================================================= -->
     <!-- ===================================== USER ============================================ -->
@@ -96,12 +99,10 @@
 
     <!-- USER PROGRAM CREATION -->
     <string name="user_program_creation_title">Création d\'un programme</string>
-    <string name="user_program_creation_name_program_hint">Nom du programme</string>
     <string name="user_program_creation_add_exercise_text">Ajouter un exercise</string>
     <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
     <string name="user_program_creation_button_validate_text">Créer le programme</string>
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
-    <string name="user_program_creation_description_program_hint">Description du programme</string>
 
 
     <!-- ======================================================================================= -->
