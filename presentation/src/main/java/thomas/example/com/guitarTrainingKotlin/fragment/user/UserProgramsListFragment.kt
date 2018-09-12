@@ -16,6 +16,7 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
@@ -32,6 +33,9 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
     @Inject
     lateinit var userProgramsListAdapter: UserProgramsListAdapter
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     private lateinit var idUser: String
     private lateinit var recyclerView: RecyclerView
@@ -60,6 +64,8 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
         userProgramsListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
             if (it == true) {
                 displayRetrievedPrograms(userProgramsListViewModel)
+            } else {
+                errorRendererComponent.requestRenderError(userProgramsListViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
             }
         })
 

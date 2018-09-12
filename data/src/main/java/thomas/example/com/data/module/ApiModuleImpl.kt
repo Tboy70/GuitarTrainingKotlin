@@ -15,6 +15,7 @@ import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
+import thomas.example.com.utils.ConstantErrors
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,15 +45,33 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
 
 
     override fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity> {
-        return apiService.connectUser(userRemoteEntity)
+        return apiService.connectUser(userRemoteEntity).map {
+            if (it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_CONNECT_USER)
+            }
+        }
     }
 
     override fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(idUser)
+        return apiService.retrieveProgramsListByUserId(idUser).map {
+            if (it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAMS)
+            }
+        }
     }
 
     override fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity> {
-        return apiService.retrieveProgram(idProgram)
+        return apiService.retrieveProgram(idProgram).map {
+            if (it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAM)
+            }
+        }
     }
 
     override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Observable<String> {
@@ -60,54 +79,72 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             if (it.isSuccessful && it.body() != null) {
                 (it.body() as ProgramResponseRemoteEntity).getCreatedId()
             } else {
-                //TODO : Check if useful
-                null
+                throw Exception(ConstantErrors.ERROR_CREATION_PROGRAM)
             }
         }
     }
 
     override fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
         return apiService.createExercise(listRemoteEntities).map {
-            it.isSuccessful
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_CREATION_EXERCISE)
+            }
         }
     }
 
     override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Observable<Boolean> {
         return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity).map {
-            it.isSuccessful
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_UPDATE_PROGRAM)
+            }
         }
     }
 
     override fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
         return apiService.updateExercise(exerciseRemoteEntities).map {
-            it.isSuccessful
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_UPDATE_EXERCISE)
+            }
         }
     }
 
     override fun removeProgram(idProgram: String): Observable<Boolean> {
         return apiService.removeProgram(idProgram).map {
-            it.isSuccessful
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_REMOVE_PROGRAM)
+            }
         }
     }
 
     override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean> {
         return apiService.removeExercises(exercisesRemoteEntitiesToBeRemoved).map {
-            it.isSuccessful
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_REMOVE_EXERCISE)
+            }
         }
     }
 }
 
-
 interface APIServiceInterface {
 
     @POST("connect")
-    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
+    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserRemoteEntity>>
 
     @GET("programs/{idUser}")
-    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<List<ProgramRemoteEntity>>
+    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
-    fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<ProgramRemoteEntity>
+    fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<Response<ProgramRemoteEntity>>
 
     @POST("program")
     fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<ProgramResponseRemoteEntity>>

@@ -18,6 +18,8 @@ class UserProgramsListViewModel @Inject constructor(private val retrievePrograms
 
     val refreshList: MutableLiveData<Boolean> = MutableLiveData()
 
+    var errorThrowable: Throwable? = null
+
     fun retrieveProgramsListByUserId(idUser: String) {
         refreshList.postValue(true)
         retrieveProgramsListByUserId.execute(
@@ -25,8 +27,9 @@ class UserProgramsListViewModel @Inject constructor(private val retrievePrograms
                     refreshList.postValue(false)
                 },
                 onError = {
+                    errorThrowable = it
                     refreshList.postValue(false)
-                    finishRetrievePrograms.postValue(true)
+                    finishRetrievePrograms.postValue(false)
                 },
                 onNext = {
                     userPrograms = it

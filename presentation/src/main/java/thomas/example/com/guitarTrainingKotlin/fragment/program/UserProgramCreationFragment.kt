@@ -57,6 +57,12 @@ class UserProgramCreationFragment : BaseFragment() {
 
         userProgramCreationViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramCreationViewModel::class.java)
 
+        handleLiveData(view)
+        handleClickAddExercise()
+        handleClickCreateProgram()
+    }
+
+    private fun handleLiveData(view: View) {
         userProgramCreationViewModel.creationProgramSuccess.observe(this, Observer<Boolean> {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
@@ -70,11 +76,25 @@ class UserProgramCreationFragment : BaseFragment() {
                 if (userProgramCreationViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userProgramCreationViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 }
+                fragmentManager?.popBackStack()
             }
         })
 
-        handleClickAddExercise()
-        handleClickCreateProgram()
+        userProgramCreationViewModel.creationProgramNotLaunch.observe(this, Observer<Boolean> {
+            materialDialogComponent.dismissDialog()
+            if (it != null && it == true) {
+                if (userProgramCreationViewModel.errorThrowable != null) {
+                    errorRendererComponent.requestRenderError(Exception(getString(R.string.error_field_not_filled)), ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                }
+            }
+        })
+    }
+
+    private fun handleClickAddExercise() {
+        fragment_user_program_creation_add_exercise.setOnClickListener {
+            addFieldToCreateExercise()
+            enableCreationAddExerciseButton(false)
+        }
     }
 
     private fun handleClickCreateProgram() {
@@ -88,25 +108,6 @@ class UserProgramCreationFragment : BaseFragment() {
                 exercises.append(ExerciseUtils.getTypeExerciseIdByName(key, activity as UserPanelActivity), value)
             }
             userProgramCreationViewModel.checkInformationAndValidateCreation(fragment_user_program_creation_name.text.toString(), fragment_user_program_creation_description.text.toString(), exercises)
-        }
-    }
-
-    private fun handleClickAddExercise() {
-        fragment_user_program_creation_add_exercise.setOnClickListener {
-            addFieldToCreateExercise()
-            enableCreationAddExerciseButton(false)
-        }
-    }
-
-    private fun enableCreationAddExerciseButton(enableButton: Boolean) {
-        if (enableButton) {
-            fragment_user_program_creation_add_exercise.isEnabled = true
-            fragment_user_program_creation_add_exercise.setBackgroundColor(ContextCompat.getColor(activity as UserPanelActivity, R.color.colorPrimary))
-            fragment_user_program_creation_add_exercise.alpha = FULL_ALPHA
-        } else {
-            fragment_user_program_creation_add_exercise.isEnabled = false
-            fragment_user_program_creation_add_exercise.setBackgroundColor(ContextCompat.getColor(activity as UserPanelActivity, R.color.colorGrey))
-            fragment_user_program_creation_add_exercise.alpha = HALF_ALPHA
         }
     }
 
@@ -139,5 +140,17 @@ class UserProgramCreationFragment : BaseFragment() {
         }, ConstValues.EMPTY_STRING, ConstValues.EMPTY_STRING, ExerciseUIComponent.CREATE_STATE)
 
         fragment_user_program_creation_exercises.addView(horizontalLayoutContainingAllElements)
+    }
+
+    private fun enableCreationAddExerciseButton(enableButton: Boolean) {
+        if (enableButton) {
+            fragment_user_program_creation_add_exercise.isEnabled = true
+            fragment_user_program_creation_add_exercise.setBackgroundColor(ContextCompat.getColor(activity as UserPanelActivity, R.color.colorPrimary))
+            fragment_user_program_creation_add_exercise.alpha = FULL_ALPHA
+        } else {
+            fragment_user_program_creation_add_exercise.isEnabled = false
+            fragment_user_program_creation_add_exercise.setBackgroundColor(ContextCompat.getColor(activity as UserPanelActivity, R.color.colorGrey))
+            fragment_user_program_creation_add_exercise.alpha = HALF_ALPHA
+        }
     }
 }

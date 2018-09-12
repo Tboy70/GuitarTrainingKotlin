@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
+import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
 
 interface ApiModule {
 

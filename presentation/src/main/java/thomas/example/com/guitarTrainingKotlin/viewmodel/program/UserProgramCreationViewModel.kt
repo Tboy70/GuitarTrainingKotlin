@@ -13,6 +13,7 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
 
     val creationProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val creationProgramFailure: MutableLiveData<Boolean> = MutableLiveData()
+    val creationProgramNotLaunch: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -50,8 +51,7 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
                         }
                     }, params = CreateProgram.Params.toCreate(program, exercisesList))
         } else {
-            errorThrowable = Exception("Veuillez remplir tous les champs")
-            creationProgramFailure.postValue(true)
+            creationProgramNotLaunch.postValue(true)
         }
     }
 

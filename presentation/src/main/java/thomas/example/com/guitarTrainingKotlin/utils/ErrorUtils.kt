@@ -3,6 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.utils
 import android.content.Context
 import retrofit2.HttpException
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.utils.ConstantErrors
 import java.net.ConnectException
 
 class ErrorUtils {
@@ -21,7 +22,21 @@ class ErrorUtils {
                     }
                 }
                 is ConnectException -> return context.getString(R.string.snackbar_error_connection_problem)
-                is Exception -> return throwable.message.toString()
+                is Exception -> {
+                    return when (throwable.message) {
+                        ConstantErrors.ERROR_CONNECT_USER -> context.getString(R.string.error_connect_user)
+                        ConstantErrors.ERROR_RETRIEVE_PROGRAM -> context.getString(R.string.error_retrieve_program)
+                        ConstantErrors.ERROR_RETRIEVE_PROGRAMS -> context.getString(R.string.error_retrieve_programs)
+                        ConstantErrors.ERROR_CREATION_PROGRAM -> context.getString(R.string.error_creation_program)
+                        ConstantErrors.ERROR_UPDATE_PROGRAM -> context.getString(R.string.error_update_program)
+                        ConstantErrors.ERROR_REMOVE_PROGRAM -> context.getString(R.string.error_remove_program)
+                        ConstantErrors.ERROR_CREATION_EXERCISE -> context.getString(R.string.error_creation_exercises)
+                        ConstantErrors.ERROR_UPDATE_EXERCISE -> context.getString(R.string.error_update_exercise)
+                        ConstantErrors.ERROR_REMOVE_EXERCISE -> context.getString(R.string.error_remove_exercise)
+                        else -> context.getString(R.string.snackbar_error_unknown_error)
+                    }
+
+                }
                 else -> return context.getString(R.string.snackbar_error_unknown_error)
             }
             return throwable.message.toString()

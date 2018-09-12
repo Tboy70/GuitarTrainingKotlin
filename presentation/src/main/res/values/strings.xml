@@ -189,8 +189,22 @@
     <string name="wrong_login_error_value_from_API">WRONG LOGIN</string>
     <string name="snackbar_error_wrong_login">Authentification incorrecte</string>
     <string name="snackbar_error_wrong_information">Informations invalides</string>
+    <string name="error_field_not_filled">Veuillez remplir tous les champs</string>
+    <string name="error_delete_id_user_logout">Erreur lors de la déconnexion</string>
     <string name="error_count_down_not_initialized">CountDown not initialized</string>
     <string name="snackbar_error_connection_problem">Problème de connexion internet</string>
+
+    <string name="error_connect_user">Problème lors de la connexion au compte</string>
+
+    <string name="error_retrieve_program">Erreur pendant la récupération du programme</string>
+    <string name="error_retrieve_programs">Erreur pendant la récupération des programmes</string>
+    <string name="error_creation_program">Erreur pendant la création du programme</string>
+    <string name="error_update_program">Erreur pendant la mise à jour du programme</string>
+    <string name="error_remove_program">Erreur pendant la suppression du programme</string>
+
+    <string name="error_creation_exercises">Erreur pendant la création des exercices</string>
+    <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
+    <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
 
 
     <!-- ======================================================================================= -->
