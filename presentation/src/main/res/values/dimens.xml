@@ -16,6 +16,9 @@
     <dimen name="space_small">5dp</dimen>
     <dimen name="space_medium">15dp</dimen>
 
+    <!-- GENERIC EDIT TEXT SIZE -->
+    <dimen name="edit_text_width">200dp</dimen>
+
     <!-- GENERIC PADDING -->
     <dimen name="padding_start_end">16dp</dimen>
     <dimen name="padding_top_bottom">8dp</dimen>
@@ -49,8 +52,5 @@
     <dimen name="user_songs_list_icon_placeholder_padding_bottom">16dp</dimen>
     <dimen name="user_songs_list_icon_placeholder_height">200dp</dimen>
     <dimen name="user_songs_list_icon_placeholder_width">200dp</dimen>
-
-    <!-- LOGIN -->
-    <dimen name="login_edit_text_width">200dp</dimen>
 
 </resources>

@@ -41,14 +41,14 @@
 
         <EditText
             android:id="@+id/fragment_login_home_username"
-            android:layout_width="@dimen/login_edit_text_width"
+            android:layout_width="@dimen/edit_text_width"
             android:layout_height="wrap_content"
             android:hint="@string/login_home_hint_username"
             android:inputType="text" />
 
         <EditText
             android:id="@+id/fragment_login_home_password"
-            android:layout_width="@dimen/login_edit_text_width"
+            android:layout_width="@dimen/edit_text_width"
             android:layout_height="wrap_content"
             android:hint="@string/login_home_hint_password"
             android:inputType="textPassword" />

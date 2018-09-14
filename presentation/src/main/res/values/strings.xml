@@ -23,6 +23,9 @@
     <string name="dialog_login_title">Connexion en cours</string>
     <string name="dialog_login_content">Veuillez patienter …</string>
 
+    <string name="dialog_create_account_title">Création d\'un compte</string>
+    <string name="dialog_create_account_content">Création du compte en cours. Veuillez patienter …</string>
+
     <string name="dialog_logout_title">Déconnexion</string>
     <string name="dialog_logout_content">Veuillez patienter</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
@@ -71,6 +74,12 @@
     <string name="login_home_hint_username">Nom d\'utilisateur</string>
     <string name="login_forgot_password">Mot de passe oublié ?</string>
     <string name="login_home_title">Renseigne tes informations de connexion</string>
+
+    <!-- CREATE ACCOUNT -->
+    <string name="create_account_email_hint">Email</string>
+    <string name="create_account_pseudo_hint">Pseudo</string>
+    <string name="create_account_password_hint">Mot de passe</string>
+    <string name="create_account_title">Création d\'un compte</string>
 
     <!-- USER PANEL -->
     <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
@@ -240,5 +249,7 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
+
+    <!-- TO SORT -->
 
 </resources>
