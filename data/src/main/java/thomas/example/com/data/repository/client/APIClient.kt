@@ -55,4 +55,17 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     fun removeProgram(idProgram: String): Observable<Boolean> {
         return apiModule.removeProgram(idProgram)
     }
+
+    fun retrieveUserById(idUser: String): Observable<UserEntity> {
+        return apiModule.retrieveUserById(idUser).map {
+            userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+        }
+    }
+
+    fun createNewUser(userEntity: UserEntity): Observable<String> {
+        return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity)).map {
+            it
+        }
+
+    }
 }

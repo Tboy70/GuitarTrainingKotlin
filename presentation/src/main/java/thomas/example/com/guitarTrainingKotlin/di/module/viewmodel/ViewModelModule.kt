@@ -9,6 +9,7 @@ import thomas.example.com.guitarTrainingKotlin.di.ViewModelKey
 import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseModeViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.login.CreateAccountViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
@@ -78,4 +79,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserProgramUpdateViewModel::class)
     abstract fun bindUserProgramUpdateViewModel(userProgramUpdateViewModel: UserProgramUpdateViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CreateAccountViewModel::class)
+    abstract fun bindCreateAccountViewModel(createAccountViewModel: CreateAccountViewModel): ViewModel
 }

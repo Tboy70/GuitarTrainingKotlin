@@ -11,5 +11,9 @@ interface UserRepository {
 
     fun connectUser(user: User): Observable<User>
 
+    fun createNewUser(user: User): Observable<String>
+
     fun logoutUser(): Observable<Boolean>
+
+    fun retrieveUserById(idUser: String): Observable<User>
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -59,7 +60,7 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.idUser = userProgramsListViewModel.getIdUser(activity!!)
+        this.idUser = userProgramsListViewModel.getIdUser(activity as UserPanelActivity)
 
         userProgramsListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
             if (it == true) {

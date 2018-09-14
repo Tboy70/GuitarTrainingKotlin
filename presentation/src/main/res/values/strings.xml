@@ -195,6 +195,8 @@
     <string name="snackbar_error_connection_problem">Problème de connexion internet</string>
 
     <string name="error_connect_user">Problème lors de la connexion au compte</string>
+    <string name="error_creation_user">Erreur lors de la création de l\'utilisateur</string>
+    <string name="error_retrieve_user">Erreur lors de la récupération de l\'utilisateur</string>
 
     <string name="error_retrieve_program">Erreur pendant la récupération du programme</string>
     <string name="error_retrieve_programs">Erreur pendant la récupération des programmes</string>

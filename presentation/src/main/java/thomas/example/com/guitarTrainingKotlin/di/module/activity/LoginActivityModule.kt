@@ -7,6 +7,7 @@ import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.login.CreateAccountFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment
 
 @Module(includes = [BaseActivityModule::class])
@@ -19,5 +20,9 @@ abstract class LoginActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun loginHomeFragmentInjector(): LoginHomeFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun createAccountFragmentInjector(): CreateAccountFragment
 
 }

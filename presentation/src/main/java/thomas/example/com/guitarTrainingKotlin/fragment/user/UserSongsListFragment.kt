@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
@@ -52,7 +53,7 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.idUser = userSongsListViewModel.getIdUser(activity!!)
+        this.idUser = userSongsListViewModel.getIdUser(activity as UserPanelActivity)
 
         userSongsListViewModel.finishRetrieveSongs.observe(this, Observer<Boolean> {
             if (it == true) {

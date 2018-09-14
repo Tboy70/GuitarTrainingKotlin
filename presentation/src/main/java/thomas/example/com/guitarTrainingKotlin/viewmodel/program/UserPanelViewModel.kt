@@ -2,13 +2,23 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.content.Context
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
+import android.util.Log
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.interactor.user.LogoutUser
+import thomas.example.com.interactor.user.RetrieveUserById
+import thomas.example.com.model.User
 import javax.inject.Inject
 
-class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser) : ViewModel() {
+class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser, private val retrieveUserById: RetrieveUserById) : ViewModel() {
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val logoutSucceed: MutableLiveData<Boolean> = MutableLiveData()
+    val getUserSucceed: MutableLiveData<Boolean> = MutableLiveData()
+
+    lateinit var user: User
 
     fun logoutUser() {
 
@@ -22,5 +32,24 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser)
                     logoutSucceed.postValue(true)
 
                 }, params = Unit)
+    }
+
+    fun getIdUser(context: Context): String {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
+    }
+
+    fun getUserById(idUser: String) {
+        retrieveUserById.execute(
+                onComplete = {
+
+                },
+                onError = {
+                    Log.e("TEST", "Error")
+                },
+                onNext = {
+                    user = it
+                    getUserSucceed.postValue(true)
+                }, params = RetrieveUserById.Params.toRetrieve(idUser))
     }
 }

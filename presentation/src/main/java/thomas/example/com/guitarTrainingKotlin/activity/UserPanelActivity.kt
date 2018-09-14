@@ -14,6 +14,7 @@ import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
@@ -33,8 +34,9 @@ class UserPanelActivity : BaseActivity() {
 
     private val navBuilder = NavOptions.Builder()
 
-    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var idUser: String
     private lateinit var host: NavHostFragment
+    private lateinit var drawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,21 +62,12 @@ class UserPanelActivity : BaseActivity() {
         super.onStart()
         userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
 
-        userPanelViewModel.finishLoading.observe(this, Observer<Boolean> {
-            if (it != null) {
-                materialDialogComponent.dismissDialog()
-                userPanelViewModel.finishLoading.removeObservers(this)
-            }
-        })
+        this.idUser = userPanelViewModel.getIdUser(this)
+        if (!idUser.isEmpty()) {
+            userPanelViewModel.getUserById(idUser)
+        }
 
-        userPanelViewModel.logoutSucceed.observe(this, Observer<Boolean> {
-            if (it != null && it == true) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-                userPanelViewModel.logoutSucceed.removeObservers(this)
-            }
-        })
+        handleLiveData()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -124,6 +117,31 @@ class UserPanelActivity : BaseActivity() {
         activity_main_drawer_layout.closeDrawers()
 
         return true
+    }
+
+    private fun handleLiveData() {
+        userPanelViewModel.finishLoading.observe(this, Observer<Boolean> {
+            if (it != null) {
+                materialDialogComponent.dismissDialog()
+                userPanelViewModel.finishLoading.removeObservers(this)
+            }
+        })
+
+        userPanelViewModel.logoutSucceed.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                userPanelViewModel.logoutSucceed.removeObservers(this)
+            }
+        })
+
+        userPanelViewModel.getUserSucceed.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                view_drawer_header_pseudo.text = userPanelViewModel.user.pseudoUser
+                view_drawer_header_email.text = userPanelViewModel.user.emailUser
+            }
+        })
     }
 
     private fun displayUserSongsFragment() {

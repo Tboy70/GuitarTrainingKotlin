@@ -2,6 +2,7 @@ package thomas.example.com.data.module
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.scottyab.aescrypt.AESCrypt
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -15,6 +16,7 @@ import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.UserRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
+import thomas.example.com.data.entity.remote.user.UserResponseRemoteEntity
 import thomas.example.com.utils.ConstantErrors
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -45,11 +47,23 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
 
 
     override fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity> {
+        userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
         return apiService.connectUser(userRemoteEntity).map {
             if (it.body() != null) {
                 it.body()
             } else {
                 throw Exception(ConstantErrors.ERROR_CONNECT_USER)
+            }
+        }
+    }
+
+    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Observable<String> {
+        userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
+        return apiService.createNewUser(userRemoteEntity).map {
+            if (it.isSuccessful && it.body() != null) {
+                (it.body() as UserResponseRemoteEntity).getCreatedId()
+            } else {
+                throw Exception(ConstantErrors.ERROR_CREATION_USER)
             }
         }
     }
@@ -133,6 +147,16 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             }
         }
     }
+
+    override fun retrieveUserById(idUser: String): Observable<UserRemoteEntity> {
+        return apiService.retrieveUserById(idUser).map {
+            if (it.isSuccessful && it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_USER)
+            }
+        }
+    }
 }
 
 interface APIServiceInterface {
@@ -163,4 +187,10 @@ interface APIServiceInterface {
 
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
     fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+
+    @GET("user/{idUser}")
+    fun retrieveUserById(@Path("idUser") idUser: String): Observable<Response<UserRemoteEntity>>
+
+    @POST("user")
+    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
 }

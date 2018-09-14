@@ -35,6 +35,20 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
         }
     }
 
+    override fun retrieveUserById(idUser: String): Observable<User> {
+        return Observable.defer {
+            apiClient.retrieveUserById(idUser).map {
+                userEntityDataMapper.transformEntityToModel(it)
+            }
+        }
+    }
+
+    override fun createNewUser(user: User): Observable<String> {
+        return Observable.defer {
+            apiClient.createNewUser(userEntityDataMapper.transformModelToEntity(user))
+        }
+    }
+
     override fun logoutUser(): Observable<Boolean> {
         return Observable.defer {
             contentClient.deleteIdInSharedPrefs()

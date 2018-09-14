@@ -10,4 +10,9 @@
         android:label="@string/nav_login_home"
         tools:layout="@layout/fragment_login_home" />
 
+    <fragment
+        android:id="@+id/launcher_create_account"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.login.CreateAccountFragment"
+        tools:layout="@layout/fragment_create_account" />
+
 </navigation>

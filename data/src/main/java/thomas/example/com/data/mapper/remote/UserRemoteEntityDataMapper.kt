@@ -12,6 +12,7 @@ class UserRemoteEntityDataMapper @Inject constructor() {
         val userEntity = UserEntity()
         userEntity.idUser = userRemoteEntity.idUser
         userEntity.pseudoUser = userRemoteEntity.pseudoUser
+        userEntity.emailUser = userRemoteEntity.emailUser
         userEntity.passwordUser = userRemoteEntity.passwordUser
         return userEntity
     }
@@ -29,6 +30,7 @@ class UserRemoteEntityDataMapper @Inject constructor() {
         val userRemoteEntity = UserRemoteEntity()
         userRemoteEntity.idUser = userEntity.idUser
         userRemoteEntity.pseudoUser = userEntity.pseudoUser
+        userRemoteEntity.emailUser = userEntity.emailUser
         userRemoteEntity.passwordUser = userEntity.passwordUser
         return userRemoteEntity
     }

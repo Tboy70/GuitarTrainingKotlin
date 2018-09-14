@@ -1,8 +1,8 @@
-package thomas.example.com.data.entity.remote.program
+package thomas.example.com.data.entity.remote.user
 
 import com.google.gson.annotations.SerializedName
 
-class ProgramResponseRemoteEntity {
+class UserResponseRemoteEntity {
 
     @SerializedName("createdId")
     private var createdId: String? = null

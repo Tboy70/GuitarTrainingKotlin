@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_drawer_header_root_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navigation_drawer_header_height"
     android:background="@color/colorPrimary"
@@ -8,10 +11,33 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/broken_guitar" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_16"
+        android:layout_marginStart="@dimen/constraint_layout_margin_8"
+        android:src="@drawable/ic_account_default"
+        app:layout_constraintBottom_toTopOf="@+id/view_drawer_header_pseudo"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/view_drawer_header_pseudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/constraint_layout_margin_8"
+        android:textSize="@dimen/text_huge"
+        app:layout_constraintBottom_toTopOf="@+id/view_drawer_header_email"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Boysteuf" />
+
+    <TextView
+        android:id="@+id/view_drawer_header_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:layout_marginStart="@dimen/constraint_layout_margin_8"
+        android:textSize="@dimen/text_big"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="thomas.boy@orange.fr" />
+
+</android.support.constraint.ConstraintLayout>

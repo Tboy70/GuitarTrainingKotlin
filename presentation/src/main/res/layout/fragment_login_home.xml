@@ -91,7 +91,7 @@
             android:textColor="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/fragment_login_home_already_have_account"
+            android:id="@+id/fragment_login_home_create_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

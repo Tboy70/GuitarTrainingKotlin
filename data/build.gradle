@@ -51,6 +51,8 @@ dependencies {
     // OkHttp
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
+    implementation 'com.scottyab:aescrypt:0.0.1'
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
