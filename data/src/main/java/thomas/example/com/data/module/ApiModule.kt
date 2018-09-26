@@ -9,7 +9,7 @@ interface ApiModule {
 
     fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
 
-    fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramRemoteEntity>>
+    fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<ProgramRemoteEntity>>
 
     fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity>
 

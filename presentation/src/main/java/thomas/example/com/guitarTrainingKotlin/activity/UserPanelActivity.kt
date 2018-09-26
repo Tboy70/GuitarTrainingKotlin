@@ -168,9 +168,7 @@ class UserPanelActivity : BaseActivity() {
     private fun displayUserSettings() {
         if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
                 != UserSettingsFragment::class.java.simpleName) {
-            val bundle = Bundle()
-            bundle.putSerializable(UserSettingsFragment.CURRENT_USER_INSTRUMENT_MODE, this.instrumentMode)
-            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, bundle, null)
+            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, null)
         }
     }
 

@@ -3,7 +3,9 @@ package thomas.example.com.guitarTrainingKotlin.fragment.program
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -42,6 +45,8 @@ class UserProgramUpdateFragment : BaseFragment() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
 
+    private lateinit var exercisesArray: Array<String>
+
     private var programObjectWrapper: ProgramObjectWrapper? = null
 
     private var selectedItem: String = ConstValues.EMPTY_STRING
@@ -61,6 +66,8 @@ class UserProgramUpdateFragment : BaseFragment() {
 
         userProgramUpdateViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramUpdateViewModel::class.java)
 
+        exercisesArray = getInstrumentMode()
+
         val bundle = arguments
         if (bundle != null) {
             if (bundle.containsKey(PROGRAM_OBJECT_WRAPPER_KEY)) {
@@ -68,6 +75,13 @@ class UserProgramUpdateFragment : BaseFragment() {
             }
         }
 
+        handleLiveData(view)
+        initEditText()
+        initExercisesList()
+        handleClickValidateUpdateButton()
+    }
+
+    private fun handleLiveData(view: View) {
         userProgramUpdateViewModel.updateProgramSuccess.observe(this, Observer<Boolean> {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
@@ -83,10 +97,6 @@ class UserProgramUpdateFragment : BaseFragment() {
                 }
             }
         })
-
-        initEditText()
-        initExercisesList()
-        handleClickValidateUpdateButton()
     }
 
     private fun initEditText() {
@@ -99,7 +109,6 @@ class UserProgramUpdateFragment : BaseFragment() {
             val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(object : ExercisesUIComponentListener {
 
                 override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
-                    val exercisesArray = resources.getStringArray(R.array.list_exercises)
                     val title = getString(R.string.generic_exercise_choice_creation_program)
                     val items = exercisesArray.toList()
 
@@ -125,6 +134,15 @@ class UserProgramUpdateFragment : BaseFragment() {
             }, ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as UserProgramActivity), exercise.durationExercise.toString(), ExerciseUIComponent.UPDATE_STATE)
 
             fragment_user_program_update_exercises_list.addView(horizontalLayoutContainingAllElements)
+        }
+    }
+
+    private fun getInstrumentMode(): Array<String> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return if (prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
+            resources.getStringArray(R.array.list_exercises_guitar)
+        } else {
+            resources.getStringArray(R.array.list_exercises_bass)
         }
     }
 

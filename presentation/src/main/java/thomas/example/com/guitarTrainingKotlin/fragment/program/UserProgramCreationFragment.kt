@@ -3,7 +3,9 @@ package thomas.example.com.guitarTrainingKotlin.fragment.program
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.util.SparseArray
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -43,6 +46,8 @@ class UserProgramCreationFragment : BaseFragment() {
 
     private var selectedItem: String = ConstValues.EMPTY_STRING
 
+    private lateinit var exercisesArray: Array<String>
+
     companion object {
         const val FULL_ALPHA = 1.0f
         const val HALF_ALPHA = 0.5f
@@ -56,6 +61,8 @@ class UserProgramCreationFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         userProgramCreationViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramCreationViewModel::class.java)
+
+        exercisesArray = getInstrumentMode()
 
         handleLiveData(view)
         handleClickAddExercise()
@@ -115,7 +122,6 @@ class UserProgramCreationFragment : BaseFragment() {
         val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(object : ExercisesUIComponentListener {
 
             override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
-                val exercisesArray = resources.getStringArray(R.array.list_exercises)
                 val title = getString(R.string.generic_exercise_choice_creation_program)
                 val items = exercisesArray.toList()
 
@@ -140,6 +146,15 @@ class UserProgramCreationFragment : BaseFragment() {
         }, ConstValues.EMPTY_STRING, ConstValues.EMPTY_STRING, ExerciseUIComponent.CREATE_STATE)
 
         fragment_user_program_creation_exercises.addView(horizontalLayoutContainingAllElements)
+    }
+
+    private fun getInstrumentMode(): Array<String> {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return if (prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
+            resources.getStringArray(R.array.list_exercises_guitar)
+        } else {
+            resources.getStringArray(R.array.list_exercises_bass)
+        }
     }
 
     private fun enableCreationAddExerciseButton(enableButton: Boolean) {

@@ -19,6 +19,8 @@ class ExerciseUtils {
                 ExercisesTypeValues.EXERCISE_TAPPING -> activity.getString(R.string.exercise_tapping_title_text)
                 ExercisesTypeValues.EXERCISE_SWEEP_PICKING -> activity.getString(R.string.exercise_sweep_picking_title_text)
                 ExercisesTypeValues.EXERCISE_SPEED -> activity.getString(R.string.exercise_speed_title_text)
+                ExercisesTypeValues.EXERCISE_SLAP -> activity.getString(R.string.exercise_slap_title_text)
+                ExercisesTypeValues.EXERCISE_THREE_FINGERS_RIGHT_HAND -> activity.getString(R.string.exercise_three_fingers_title_text)
                 else -> activity.getString(R.string.generic_error_title_text)
             }
         }
@@ -35,6 +37,8 @@ class ExerciseUtils {
                 ExercisesTypeValues.EXERCISE_TAPPING -> R.id.launcher_tapping_exercise_fragment
                 ExercisesTypeValues.EXERCISE_SWEEP_PICKING -> R.id.launcher_sweep_picking_exercise_fragment
                 ExercisesTypeValues.EXERCISE_SPEED -> R.id.launcher_speed_exercise_fragment
+                ExercisesTypeValues.EXERCISE_SLAP -> R.id.launcher_slap_exercise_fragment
+                ExercisesTypeValues.EXERCISE_THREE_FINGERS_RIGHT_HAND -> R.id.launcher_three_fingers_exercise_fragment
                 else -> R.id.launcher_end_program_fragment
             }
         }
@@ -51,6 +55,8 @@ class ExerciseUtils {
                 activity.getString(R.string.exercise_tapping_title_text) -> ExercisesTypeValues.EXERCISE_TAPPING
                 activity.getString(R.string.exercise_sweep_picking_title_text) -> ExercisesTypeValues.EXERCISE_SWEEP_PICKING
                 activity.getString(R.string.exercise_speed_title_text) -> ExercisesTypeValues.EXERCISE_SPEED
+                activity.getString(R.string.exercise_slap_title_text) -> ExercisesTypeValues.EXERCISE_SLAP
+                activity.getString(R.string.exercise_three_fingers_title_text) -> ExercisesTypeValues.EXERCISE_THREE_FINGERS_RIGHT_HAND
                 else -> ExercisesTypeValues.EXERCISE_EMPTY
             }
         }

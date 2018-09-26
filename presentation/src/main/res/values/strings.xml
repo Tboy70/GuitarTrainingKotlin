@@ -6,6 +6,7 @@
     <!-- TOOLBARS -->
     <string name="generic_toolbar_about_title">A propos</string>
 
+    <string name="toolbar_title_exercise_slap">Slap</string>
     <string name="toolbar_title_exercise_mode">Modes</string>
     <string name="toolbar_title_exercise_scale">Gammes</string>
     <string name="toolbar_title_exercise_speed">Vitesse</string>
@@ -15,6 +16,7 @@
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
     <string name="toolbar_title_exercise_skip_string">Mute une corde</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
+    <string name="toolbar_title_exercise_three_fingers">Jeu à trois doigts</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
 
     <string name="toolbar_title_end_program">Fin du programme</string>
@@ -193,6 +195,14 @@
     <string name="exercise_speed_title_text">Vitesse</string>
     <string name="exercise_tapping_description_text">Entraine toi au tapping !</string>
 
+    <!-- SLAP EXERCISE -->
+    <string name="exercise_slap_title_text">Slap</string>
+    <string name="exercise_slap_description_text">Entraîne toi au slap !</string>
+
+    <!-- THREE FINGERS EXERCISE -->
+    <string name="exercise_three_fingers_title_text">Jeu avec trois doigts main droite</string>
+    <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite ! </string>
+
 
     <!-- ======================================================================================= -->
     <!-- ====================================== ERRORS ========================================= -->
@@ -254,7 +264,5 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
-
-    <!-- TO SORT -->
 
 </resources>

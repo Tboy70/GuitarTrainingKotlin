@@ -60,6 +60,16 @@
         tools:layout="@layout/fragment_exercise_speed" />
 
     <fragment
+        android:id="@+id/launcher_slap_exercise_fragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSlapFragment"
+        tools:layout="@layout/fragment_exercise_slap" />
+
+    <fragment
+        android:id="@+id/launcher_three_fingers_exercise_fragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseThreeFingersFragment"
+        tools:layout="@layout/fragment_exercise_three_fingers" />
+
+    <fragment
         android:id="@+id/launcher_end_program_fragment"
         android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.EndProgramFragment"
         tools:layout="@layout/fragment_end_program" />

@@ -59,6 +59,14 @@ abstract class ProgramActivityModule {
 
     @PerFragment
     @ContributesAndroidInjector
+    abstract fun exerciseSlapFragmentInjector(): ExerciseSlapFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun exerciseThreeFingersFragmentInjector(): ExerciseThreeFingersFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
     abstract fun introProgramFragmentInjector(): IntroProgramFragment
 
     @PerFragment

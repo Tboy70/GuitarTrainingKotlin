@@ -8,11 +8,14 @@ import thomas.example.com.data.mapper.remote.ExerciseRemoteEntityDataMapper
 import thomas.example.com.data.mapper.remote.ProgramRemoteEntityDataMapper
 import thomas.example.com.data.mapper.remote.UserRemoteEntityDataMapper
 import thomas.example.com.data.module.ApiModule
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.utils.InstrumentModeUtils
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class APIClient @Inject constructor(private val apiModule: ApiModule,
+                                    private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
                                     private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
                                     private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
                                     private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper) {
@@ -25,7 +28,7 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
-        return apiModule.retrieveProgramsListByUserId(idUser).map {
+        return apiModule.retrieveProgramsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
             programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }

@@ -13,6 +13,8 @@ class ExercisesTypeValues {
         const val EXERCISE_TAPPING = 8
         const val EXERCISE_SWEEP_PICKING = 9
         const val EXERCISE_SPEED = 10
+        const val EXERCISE_SLAP = 11
+        const val EXERCISE_THREE_FINGERS_RIGHT_HAND = 12
         const val EXERCISE_EMPTY = -1
     }
 

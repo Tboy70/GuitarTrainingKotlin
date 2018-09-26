@@ -38,4 +38,8 @@ class ModuleSharedPrefsImpl @Inject constructor(context: Context) : ModuleShared
             sharedPreferences.edit().putString(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR).apply()
         }
     }
+
+    override fun getInstrumentModeInSharedPrefs(): String {
+        return sharedPreferences.getString(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR)
+    }
 }

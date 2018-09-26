@@ -3,7 +3,9 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,19 +42,15 @@ class UserSettingsFragment : BaseFragment() {
 
         userSettingsViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserSettingsViewModel::class.java)
 
-        val bundle = arguments
-        if (bundle != null) {
-            if (bundle.containsKey(CURRENT_USER_INSTRUMENT_MODE)) {
-                currentInstrumentMode = bundle.getString(CURRENT_USER_INSTRUMENT_MODE)
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val currentInstrumentMode = prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
 
-                if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
-                    settings_guitar_switch.isChecked = true
-                    settings_bass_switch.isChecked = false
-                } else if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_BASS) {
-                    settings_guitar_switch.isChecked = false
-                    settings_bass_switch.isChecked = true
-                }
-            }
+        if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
+            settings_guitar_switch.isChecked = true
+            settings_bass_switch.isChecked = false
+        } else if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_BASS) {
+            settings_guitar_switch.isChecked = false
+            settings_bass_switch.isChecked = true
         }
 
         handleLiveData(view)

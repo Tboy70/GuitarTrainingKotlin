@@ -68,8 +68,8 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(idUser).map {
+    override fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<ProgramRemoteEntity>> {
+        return apiService.retrieveProgramsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
             } else {
@@ -164,8 +164,8 @@ interface APIServiceInterface {
     @POST("connect")
     fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserRemoteEntity>>
 
-    @GET("programs/{idUser}")
-    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<ProgramRemoteEntity>>>
+    @GET("programs/{idUser}/{instrumentMode}")
+    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
     fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<Response<ProgramRemoteEntity>>

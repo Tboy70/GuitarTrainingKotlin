@@ -32,7 +32,7 @@
         <item>@string/mode_locrian</item>
     </string-array>
 
-    <string-array name="list_exercises">
+    <string-array name="list_exercises_guitar">
         <item>@string/exercise_scale_title_text</item>
         <item>@string/exercise_mode_title_text</item>
         <item>@string/exercise_pull_off_hammer_on_title_text</item>
@@ -43,6 +43,19 @@
         <item>@string/exercise_tapping_title_text</item>
         <item>@string/exercise_sweep_picking_title_text</item>
         <item>@string/exercise_speed_title_text</item>
+    </string-array>
+
+    <string-array name="list_exercises_bass">
+        <item>@string/exercise_scale_title_text</item>
+        <item>@string/exercise_mode_title_text</item>
+        <item>@string/exercise_pull_off_hammer_on_title_text</item>
+        <item>@string/exercise_bend_slide_title_text</item>
+        <item>@string/exercise_back_forth_title_text</item>
+        <item>@string/exercise_palm_mute_title_text</item>
+        <item>@string/exercise_tapping_title_text</item>
+        <item>@string/exercise_speed_title_text</item>
+        <item>@string/exercise_slap_title_text</item>
+        <item>@string/exercise_three_fingers_title_text</item>
     </string-array>
 
 </resources>
