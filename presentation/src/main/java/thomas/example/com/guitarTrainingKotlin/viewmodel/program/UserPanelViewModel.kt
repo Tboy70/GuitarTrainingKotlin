@@ -34,11 +34,13 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
                 }, params = Unit)
     }
 
+    //TODO : Context dans view model !!!!!
     fun getIdUser(context: Context): String {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
     }
 
+    //TODO : Handle error
     fun getUserById(idUser: String) {
         retrieveUserById.execute(
                 onComplete = {
@@ -51,5 +53,10 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
                     user = it
                     getUserSucceed.postValue(true)
                 }, params = RetrieveUserById.Params.toRetrieve(idUser))
+    }
+
+    fun getInstrumentMode(context: Context): String {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
     }
 }

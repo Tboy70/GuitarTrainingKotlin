@@ -96,7 +96,7 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     private fun handleAddNewProgramButton() {
         fragment_user_programs_floating_action_button.setOnClickListener {
             val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.launcher_add_program, null, null)
+            NavHostFragment.findNavController(host).navigate(R.id.add_program, null, null)
         }
     }
 

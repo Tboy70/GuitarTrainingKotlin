@@ -35,6 +35,12 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
         }
     }
 
+    override fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
+        return Observable.defer {
+            contentClient.setInstrumentModeInSharedPrefs()
+        }
+    }
+
     override fun retrieveUserById(idUser: String): Observable<User> {
         return Observable.defer {
             apiClient.retrieveUserById(idUser).map {

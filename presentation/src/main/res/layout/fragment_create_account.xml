@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="@dimen/padding_start_end"
-    android:paddingStart="@dimen/padding_start_end">
+    android:paddingStart="@dimen/padding_start_end"
+    android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
-        android:id="@+id/fragment_login_home_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/constraint_layout_margin_8"
+        android:id="@+id/fragment_create_account_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:text="@string/create_account_title"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_very_huge"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_account_guideline_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.constraint.Guideline
+        android:id="@+id/fragment_create_account_guideline_1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_account_guideline_2"
+        app:layout_constraintGuide_percent="0.33"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title" />
+
+    <LinearLayout
+        android:id="@+id/fragment_create_account_info_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/create_account_validate"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_account_guideline_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_title">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title">
 
         <EditText
             android:id="@+id/create_account_pseudo"
@@ -37,7 +48,8 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_title" />
+            app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/create_account_email"
@@ -47,7 +59,8 @@
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_account_pseudo" />
+            app:layout_constraintTop_toBottomOf="@+id/create_account_pseudo"
+            tools:ignore="Autofill" />
 
         <EditText
             android:id="@+id/create_account_password"
@@ -57,20 +70,30 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_account_email" />
+            app:layout_constraintTop_toBottomOf="@+id/create_account_email"
+            tools:ignore="Autofill" />
 
     </LinearLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/fragment_create_account_guideline_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.66"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_guideline_1" />
 
     <Button
         android:id="@+id/create_account_validate"
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:background="@drawable/button_drawable"
         android:text="@string/generic_button_validate"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_create_account_guideline_2" />
 
 </android.support.constraint.ConstraintLayout>

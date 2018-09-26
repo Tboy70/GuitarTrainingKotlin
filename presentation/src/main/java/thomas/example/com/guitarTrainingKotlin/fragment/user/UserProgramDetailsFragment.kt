@@ -111,7 +111,7 @@ class UserProgramDetailsFragment : BaseFragment() {
             bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
 
             val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.launcher_user_program_update, bundle, null)
+            NavHostFragment.findNavController(host).navigate(R.id.user_program_update, bundle, null)
         }
     }
 

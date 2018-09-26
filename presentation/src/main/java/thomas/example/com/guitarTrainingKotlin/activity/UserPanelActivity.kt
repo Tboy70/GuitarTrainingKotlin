@@ -19,6 +19,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
@@ -35,6 +36,7 @@ class UserPanelActivity : BaseActivity() {
     private val navBuilder = NavOptions.Builder()
 
     private lateinit var idUser: String
+    private lateinit var instrumentMode: String
     private lateinit var host: NavHostFragment
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
@@ -66,6 +68,8 @@ class UserPanelActivity : BaseActivity() {
         if (!idUser.isEmpty()) {
             userPanelViewModel.getUserById(idUser)
         }
+
+        this.instrumentMode = userPanelViewModel.getInstrumentMode(this)
 
         handleLiveData()
     }
@@ -106,6 +110,7 @@ class UserPanelActivity : BaseActivity() {
             R.id.menu_drawer_programs -> displayUserProgramsFragment()
             R.id.menu_drawer_songs -> displayUserSongsFragment()
             R.id.menu_drawer_logout -> logoutUser()
+            R.id.menu_drawer_settings -> displayUserSettings()
             else -> displayUserProgramsFragment()
         }
 
@@ -147,16 +152,25 @@ class UserPanelActivity : BaseActivity() {
     private fun displayUserSongsFragment() {
         if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
                 != UserSongsListFragment::class.java.simpleName) {
-            val navOptions = navBuilder.setPopUpTo(R.id.launcher_user_programs_list, true).build()
-            NavHostFragment.findNavController(host).navigate(R.id.action_programs_list_to_songs_list, null, navOptions)
+            val navOptions = navBuilder.setPopUpTo(R.id.user_programs_list, true).build()
+            NavHostFragment.findNavController(host).navigate(R.id.user_songs_list, null, navOptions)
         }
     }
 
     private fun displayUserProgramsFragment() {
         if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
                 != UserProgramsListFragment::class.java.simpleName) {
-            val navOptions = navBuilder.setPopUpTo(R.id.launcher_user_songs_list, true).build()
-            NavHostFragment.findNavController(host).navigate(R.id.action_songs_list_to_programs_list, null, navOptions)
+            val navOptions = navBuilder.setPopUpTo(R.id.user_songs_list, true).build()
+            NavHostFragment.findNavController(host).navigate(R.id.user_programs_list, null, navOptions)
+        }
+    }
+
+    private fun displayUserSettings() {
+        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
+                != UserSettingsFragment::class.java.simpleName) {
+            val bundle = Bundle()
+            bundle.putSerializable(UserSettingsFragment.CURRENT_USER_INSTRUMENT_MODE, this.instrumentMode)
+            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, bundle, null)
         }
     }
 

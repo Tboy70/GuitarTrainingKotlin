@@ -30,4 +30,13 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
             Observable.error(e)
         }
     }
+
+    fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
+        return try {
+            moduleSharedPrefs.setInstrumentModeInSharedPrefs()
+            Observable.just(true)
+        } catch (e: Exception) {
+            Observable.error(e)
+        }
+    }
 }

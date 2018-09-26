@@ -83,6 +83,7 @@
 
     <!-- USER PANEL -->
     <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
+    <string name="user_panel_navigation_drawer_settings">Paramètres</string>
     <string name="user_panel_navigation_drawer_logout">Se déconnecter</string>
     <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
     <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
@@ -112,6 +113,10 @@
     <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
     <string name="user_program_creation_button_validate_text">Créer le programme</string>
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
+
+    <!-- SETTINGS -->
+    <string name="user_settings_bass_mode">Mode basse</string>
+    <string name="user_settings_guitar_mode">Mode guitare</string>
 
 
     <!-- ======================================================================================= -->

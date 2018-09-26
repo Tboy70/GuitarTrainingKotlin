@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="@dimen/padding_start_end"
-    android:paddingStart="@dimen/padding_start_end">
+    android:paddingStart="@dimen/padding_start_end"
+    android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
         android:id="@+id/fragment_user_program_creation_title"
@@ -22,8 +22,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:layout_marginTop="@dimen/constraint_layout_margin_8"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_creation_add_exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

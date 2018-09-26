@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="@dimen/padding_start_end"
-    android:paddingStart="@dimen/padding_start_end">
+    android:paddingStart="@dimen/padding_start_end"
+    android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
         android:id="@+id/fragment_exercise_skip_string_title"

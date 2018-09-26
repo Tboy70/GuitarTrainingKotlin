@@ -7,4 +7,6 @@ interface ModuleSharedPrefs {
     fun getIdUserInSharedPrefs(): String
 
     fun deleteIdUserInSharedPrefs()
+
+    fun setInstrumentModeInSharedPrefs()
 }

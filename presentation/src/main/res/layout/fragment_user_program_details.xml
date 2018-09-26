@@ -5,8 +5,8 @@
     android:id="@+id/fragment_user_program_details_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingEnd="@dimen/padding_start_end"
-    android:paddingStart="@dimen/padding_start_end">
+    android:paddingStart="@dimen/padding_start_end"
+    android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
         android:id="@+id/fragment_user_program_details_name"

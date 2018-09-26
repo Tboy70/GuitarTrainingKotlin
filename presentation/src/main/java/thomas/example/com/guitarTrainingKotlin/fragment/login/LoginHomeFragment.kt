@@ -79,7 +79,7 @@ class LoginHomeFragment : BaseFragment() {
     private fun handleClickCreateAccount() {
         fragment_login_home_create_account.setOnClickListener {
             val host = activity?.supportFragmentManager?.findFragmentById(R.id.login_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.launcher_create_account, null, null)
+            NavHostFragment.findNavController(host).navigate(R.id.fragment_create_account, null, null)
         }
     }
 

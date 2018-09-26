@@ -4,10 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/padding_top_bottom"
-    android:paddingEnd="@dimen/padding_start_end"
     android:paddingStart="@dimen/padding_start_end"
-    android:paddingTop="@dimen/padding_top_bottom">
+    android:paddingTop="@dimen/padding_top_bottom"
+    android:paddingEnd="@dimen/padding_start_end"
+    android:paddingBottom="@dimen/padding_top_bottom">
 
     <TextView
         android:id="@+id/view_user_songs_list_item_title"

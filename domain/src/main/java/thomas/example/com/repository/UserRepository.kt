@@ -16,4 +16,6 @@ interface UserRepository {
     fun logoutUser(): Observable<Boolean>
 
     fun retrieveUserById(idUser: String): Observable<User>
+
+    fun setInstrumentModeInSharedPrefs(): Observable<Boolean>
 }
