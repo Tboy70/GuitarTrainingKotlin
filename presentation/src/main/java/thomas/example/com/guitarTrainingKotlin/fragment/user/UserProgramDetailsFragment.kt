@@ -74,7 +74,8 @@ class UserProgramDetailsFragment : BaseFragment() {
     }
 
     private fun checkProgramAndHideButtons(idProgram: String?) {
-        if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL) {
+        if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_GUITAR || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_GUITAR
+                || idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_BASS || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_BASS) {
             fragment_user_program_details_remove_button.visibility = View.GONE
             fragment_user_program_details_update_button.visibility = View.GONE
             val constraintSet = ConstraintSet()
@@ -168,22 +169,21 @@ class UserProgramDetailsFragment : BaseFragment() {
         val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         exercisesLinearLayout.layoutParams = layoutParams
 
-        for (exercise: Exercise in exercises) {
-
+        for (i in exercises.size - 1 downTo 0) {
             val nameExercise = TextView(activity)
-            nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as Activity)
+            nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercises[i].typeExercise, activity as Activity)
             nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
             nameExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP, (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
 
             val durationExercise = TextView(activity)
             TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)
 
-            if (exercise.durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
+            if (exercises[i].durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
                 durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_minutes_txt),
-                        exercise.durationExercise.toString())
+                        exercises[i].durationExercise.toString())
             } else {
-                val hours = exercise.durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
-                val minutes = exercise.durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
+                val hours = exercises[i].durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
+                val minutes = exercises[i].durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
 
                 durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_hours_txt), hours.toString(), minutes.toString())
             }

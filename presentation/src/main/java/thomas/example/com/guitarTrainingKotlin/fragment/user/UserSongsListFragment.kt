@@ -11,9 +11,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
@@ -26,6 +28,9 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var userSongsListViewModel: UserSongsListViewModel
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var userSongsListAdapter: UserSongsListAdapter
@@ -58,12 +63,16 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
         userSongsListViewModel.finishRetrieveSongs.observe(this, Observer<Boolean> {
             if (it == true) {
                 displayRetrievedSongs(userSongsListViewModel)
+            } else {
+                errorRendererComponent.requestRenderError(userSongsListViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
             }
         })
 
         userSongsListViewModel.refreshList.observe(this, Observer<Boolean> {
             swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
         })
+
+        handleAddNewSong()
     }
 
     override fun onStart() {
@@ -82,6 +91,13 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
             userSongsListViewModel.retrieveSongsListByUserId(idUser)
         }
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+    }
+
+    private fun handleAddNewSong() {
+        fragment_user_songs_floating_action_button.setOnClickListener {
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
+            NavHostFragment.findNavController(host).navigate(R.id.add_song, null, null)
+        }
     }
 
     private fun displayRetrievedSongs(userSongsListViewModel: UserSongsListViewModel) {

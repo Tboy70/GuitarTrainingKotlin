@@ -18,6 +18,8 @@ class UserSongsListViewModel @Inject constructor(private val retrieveSongsListBy
 
     val refreshList: MutableLiveData<Boolean> = MutableLiveData()
 
+    var errorThrowable: Throwable? = null
+
     fun retrieveSongsListByUserId(idUser: String) {
         refreshList.postValue(true)
         retrieveSongsListByUserId.execute(
@@ -25,10 +27,12 @@ class UserSongsListViewModel @Inject constructor(private val retrieveSongsListBy
                     refreshList.postValue(false)
                 },
                 onError = {
+                    errorThrowable = it
                     refreshList.postValue(false)
-                    finishRetrieveSongs.postValue(true)
+                    finishRetrieveSongs.postValue(false)
                 },
                 onNext = {
+                    userSongs =it
                     finishRetrieveSongs.postValue(true)
 
                 }, params = RetrieveSongsListByUserId.Params.forList(idUser))

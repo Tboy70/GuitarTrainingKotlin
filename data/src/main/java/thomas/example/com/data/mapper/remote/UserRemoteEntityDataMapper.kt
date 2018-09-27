@@ -1,7 +1,7 @@
 package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.UserEntity
-import thomas.example.com.data.entity.remote.UserRemoteEntity
+import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

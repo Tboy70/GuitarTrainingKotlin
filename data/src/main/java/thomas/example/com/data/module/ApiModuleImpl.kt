@@ -12,10 +12,12 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
-import thomas.example.com.data.entity.remote.ProgramRemoteEntity
-import thomas.example.com.data.entity.remote.UserRemoteEntity
+import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
+import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
+import thomas.example.com.data.entity.remote.song.SongRemoteEntity
+import thomas.example.com.data.entity.remote.song.SongResponseRemoteEntity
+import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 import thomas.example.com.data.entity.remote.user.UserResponseRemoteEntity
 import thomas.example.com.utils.ConstantErrors
 import javax.inject.Inject
@@ -74,6 +76,26 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
                 it.body()
             } else {
                 throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAMS)
+            }
+        }
+    }
+
+    override fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>> {
+        return apiService.retrieveSongsListByUserId(idUser).map {
+            if (it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAMS)
+            }
+        }
+    }
+
+    override fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String> {
+        return apiService.createSong(songRemoteEntity).map {
+            if (it.isSuccessful && it.body() != null) {
+                (it.body() as SongResponseRemoteEntity).getCreatedId()
+            } else {
+                throw Exception(ConstantErrors.ERROR_CREATION_PROGRAM)
             }
         }
     }
@@ -193,4 +215,10 @@ interface APIServiceInterface {
 
     @POST("user")
     fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
+
+    @POST("song")
+    fun createSong(@Body songRemoteEntity: SongRemoteEntity): Observable<Response<SongResponseRemoteEntity>>
+
+    @GET("songs/{idUser}")
+    fun retrieveSongsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<SongRemoteEntity>>>
 }

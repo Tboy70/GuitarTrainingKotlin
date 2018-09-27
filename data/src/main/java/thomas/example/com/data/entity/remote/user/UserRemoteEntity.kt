@@ -1,4 +1,4 @@
-package thomas.example.com.data.entity.remote
+package thomas.example.com.data.entity.remote.user
 
 import com.google.gson.annotations.SerializedName
 

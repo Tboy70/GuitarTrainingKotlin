@@ -3,9 +3,11 @@ package thomas.example.com.data.repository.client
 import io.reactivex.Observable
 import thomas.example.com.data.entity.ExerciseEntity
 import thomas.example.com.data.entity.ProgramEntity
+import thomas.example.com.data.entity.SongEntity
 import thomas.example.com.data.entity.UserEntity
 import thomas.example.com.data.mapper.remote.ExerciseRemoteEntityDataMapper
 import thomas.example.com.data.mapper.remote.ProgramRemoteEntityDataMapper
+import thomas.example.com.data.mapper.remote.SongRemoteEntityDataMapper
 import thomas.example.com.data.mapper.remote.UserRemoteEntityDataMapper
 import thomas.example.com.data.module.ApiModule
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
@@ -18,7 +20,8 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
                                     private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
                                     private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
                                     private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
-                                    private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper) {
+                                    private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
+                                    private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper) {
 
     fun connectUser(userEntity: UserEntity): Observable<UserEntity>? {
         return apiModule.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
@@ -70,5 +73,17 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
             it
         }
 
+    }
+
+    fun createSong(songEntity: SongEntity): Observable<String> {
+        return apiModule.createSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity)).map {
+            it
+        }
+    }
+
+    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
+        return apiModule.retrieveSongsListByUserId(idUser).map {
+            songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
+        }
     }
 }

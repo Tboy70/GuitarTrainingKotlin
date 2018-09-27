@@ -1,9 +1,10 @@
 package thomas.example.com.data.module
 
 import io.reactivex.Observable
-import thomas.example.com.data.entity.remote.ExerciseRemoteEntity
-import thomas.example.com.data.entity.remote.ProgramRemoteEntity
-import thomas.example.com.data.entity.remote.UserRemoteEntity
+import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
+import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
+import thomas.example.com.data.entity.remote.song.SongRemoteEntity
+import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 
 interface ApiModule {
 
@@ -28,4 +29,8 @@ interface ApiModule {
     fun retrieveUserById(idUser: String): Observable<UserRemoteEntity>
 
     fun createNewUser(userRemoteEntity: UserRemoteEntity): Observable<String>
+
+    fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String>
+
+    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>>
 }

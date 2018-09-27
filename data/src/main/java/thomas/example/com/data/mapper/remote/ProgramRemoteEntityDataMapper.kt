@@ -1,7 +1,7 @@
 package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.ProgramEntity
-import thomas.example.com.data.entity.remote.ProgramRemoteEntity
+import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

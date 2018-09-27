@@ -46,6 +46,8 @@
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
     <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ? </string>
 
+    <string name="dialog_creation_song_title">Création de la chanson</string>
+    <string name="dialog_creation_song_content">Création de la chanson en cours. Veuillez patienter …</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -115,6 +117,12 @@
     <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
     <string name="user_program_creation_button_validate_text">Créer le programme</string>
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
+
+    <!-- USER SONG CREATION -->
+    <string name="song_title">Titre de la chanson</string>
+    <string name="song_artist">Nom de l\'artiste</string>
+    <string name="user_song_creation_title">Création d\'un chanson</string>
+    <string name="user_song_creation_button_validate_text">Créer la chanson</string>
 
     <!-- SETTINGS -->
     <string name="user_settings_bass_mode">Mode basse</string>

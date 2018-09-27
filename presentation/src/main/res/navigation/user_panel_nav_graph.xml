@@ -21,6 +21,11 @@
         tools:layout="@layout/fragment_user_program_creation" />
 
     <fragment
+        android:id="@+id/add_song"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongCreationFragment"
+        tools:layout="@layout/fragment_user_song_creation" />
+
+    <fragment
         android:id="@+id/action_user_settings"
         android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment"
         tools:layout="@layout/fragment_user_settings" />
