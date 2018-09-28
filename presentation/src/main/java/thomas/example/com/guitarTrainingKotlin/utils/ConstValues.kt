@@ -12,6 +12,7 @@ class ConstValues {
         const val DEFAULT_PROGRAM_THEORETICAL_BASS = "3"
         const val DEFAULT_PROGRAM_PRACTICAL_BASS = "4"
         const val ID_PROGRAM = "thomas.example.com.guitarTrainingKotlin.activity.ID_PROGRAM"
+        const val ID_SONG = "thomas.example.com.guitarTrainingKotlin.activity.ID_SONG"
 
     }
 }

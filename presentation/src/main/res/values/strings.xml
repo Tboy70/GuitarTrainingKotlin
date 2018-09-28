@@ -62,6 +62,7 @@
     <string name="nav_program_home">Program Home</string>
     <string name="nav_user_panel_home">User Panel Home</string>
     <string name="nav_user_program_home">User Program Home</string>
+    <string name="nav_user_song_home">User Song Home</string>
 
     <!-- COMPONENTS -->
     <string name="timer_pause_button">Pause</string>
@@ -117,6 +118,11 @@
     <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
     <string name="user_program_creation_button_validate_text">Créer le programme</string>
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
+
+    <!-- USER SONG DETAILS -->
+    <string name="user_song_details_start">Noter la répétition</string>
+    <string name="user_song_details_update">Modifier la chanson</string>
+    <string name="user_song_details_remove">Supprimer le chanson</string>
 
     <!-- USER SONG CREATION -->
     <string name="song_title">Titre de la chanson</string>
@@ -272,5 +278,10 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
+    <string name="dialog_details_song_title">Chargement de la chanson</string>
+    <string name="dialog_details_song_content">Accorde toi en attendant ...</string>
+    <string name="dialog_remove_song_title">Suppression de la chanson</string>
+    <string name="dialog_remove_song_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
+    <string name="dialog_remove_song_content">Suppression de la chanson en cours. Veuillez patientez ...</string>
 
 </resources>

@@ -30,6 +30,18 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
                 }
     }
 
+    fun retrieveUserById(idUser: String): Observable<UserEntity> {
+        return apiModule.retrieveUserById(idUser).map {
+            userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+        }
+    }
+
+    fun createNewUser(userEntity: UserEntity): Observable<String> {
+        return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity)).map {
+            it
+        }
+    }
+
     fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
         return apiModule.retrieveProgramsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
             programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
@@ -62,17 +74,16 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
         return apiModule.removeProgram(idProgram)
     }
 
-    fun retrieveUserById(idUser: String): Observable<UserEntity> {
-        return apiModule.retrieveUserById(idUser).map {
-            userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
+        return apiModule.retrieveSongsListByUserId(idUser).map {
+            songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }
 
-    fun createNewUser(userEntity: UserEntity): Observable<String> {
-        return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity)).map {
-            it
+    fun retrieveSongFromId(idSong: String): Observable<SongEntity> {
+        return apiModule.retrieveSongFromId(idSong).map {
+            songRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
         }
-
     }
 
     fun createSong(songEntity: SongEntity): Observable<String> {
@@ -81,9 +92,7 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
         }
     }
 
-    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
-        return apiModule.retrieveSongsListByUserId(idUser).map {
-            songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
-        }
+    fun removeSong(idSong: String): Observable<Boolean> {
+        return apiModule.removeSong(idSong)
     }
 }

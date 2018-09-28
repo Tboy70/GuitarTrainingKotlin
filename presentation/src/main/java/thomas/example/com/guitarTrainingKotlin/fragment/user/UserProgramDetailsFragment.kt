@@ -86,36 +86,6 @@ class UserProgramDetailsFragment : BaseFragment() {
         }
     }
 
-    private fun handleStartProgram() {
-        fragment_user_program_details_start_button.setOnClickListener {
-            val intent = Intent(activity, ProgramActivity::class.java)
-            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
-            startActivity(intent)
-            activity?.finish()
-        }
-    }
-
-    private fun handleUpdateProgram() {
-        fragment_user_program_details_remove_button.setOnClickListener {
-            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_content), R.color.colorPrimary)
-                    userProgramDetailsViewModel.removeProgram(idProgram)
-                }
-            })
-        }
-    }
-
-    private fun handleRemoveProgram() {
-        fragment_user_program_details_update_button.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
-
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.user_program_update, bundle, null)
-        }
-    }
-
     private fun handleLiveData() {
         userProgramDetailsViewModel.finishRetrieveProgramForDetails.observe(this, Observer<Boolean> {
             if (it == true) {
@@ -136,6 +106,36 @@ class UserProgramDetailsFragment : BaseFragment() {
                 activity?.finish()
             }
         })
+    }
+
+    private fun handleStartProgram() {
+        fragment_user_program_details_start_button.setOnClickListener {
+            val intent = Intent(activity, ProgramActivity::class.java)
+            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
+            startActivity(intent)
+            activity?.finish()
+        }
+    }
+
+    private fun handleUpdateProgram() {
+        fragment_user_program_details_update_button.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
+
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
+            NavHostFragment.findNavController(host).navigate(R.id.user_program_update, bundle, null)
+        }
+    }
+
+    private fun handleRemoveProgram() {
+        fragment_user_program_details_remove_button.setOnClickListener {
+            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
+                override fun onYesSelected() {
+                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_content), R.color.colorPrimary)
+                    userProgramDetailsViewModel.removeProgram(idProgram)
+                }
+            })
+        }
     }
 
     private fun displayInformation(userProgramObjectWrapper: ProgramObjectWrapper) {

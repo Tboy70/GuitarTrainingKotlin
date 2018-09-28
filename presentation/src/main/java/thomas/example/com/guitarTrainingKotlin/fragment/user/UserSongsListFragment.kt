@@ -3,6 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
@@ -15,10 +16,12 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
+import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
 import thomas.example.com.model.Song
 import javax.inject.Inject
@@ -36,7 +39,6 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     lateinit var userSongsListAdapter: UserSongsListAdapter
 
     private lateinit var idUser: String
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -114,6 +116,8 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     }
 
     override fun onSongClick(idSong: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(activity, UserSongActivity::class.java)
+        intent.putExtra(ConstValues.ID_SONG, idSong)
+        activity?.startActivity(intent)
     }
 }

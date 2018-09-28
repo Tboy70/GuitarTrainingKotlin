@@ -10,6 +10,10 @@ interface ApiModule {
 
     fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity>
 
+    fun retrieveUserById(idUser: String): Observable<UserRemoteEntity>
+
+    fun createNewUser(userRemoteEntity: UserRemoteEntity): Observable<String>
+
     fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<ProgramRemoteEntity>>
 
     fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity>
@@ -26,11 +30,11 @@ interface ApiModule {
 
     fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean>
 
-    fun retrieveUserById(idUser: String): Observable<UserRemoteEntity>
+    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>>
 
-    fun createNewUser(userRemoteEntity: UserRemoteEntity): Observable<String>
+    fun retrieveSongFromId(idSong: String): Observable<SongRemoteEntity>
 
     fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String>
 
-    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>>
+    fun removeSong(idSong: String): Observable<Boolean>
 }

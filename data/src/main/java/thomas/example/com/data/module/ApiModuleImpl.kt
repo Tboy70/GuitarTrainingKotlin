@@ -47,7 +47,6 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         apiService = retrofit.create(APIServiceInterface::class.java)
     }
 
-
     override fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity> {
         userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
         return apiService.connectUser(userRemoteEntity).map {
@@ -55,6 +54,16 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
                 it.body()
             } else {
                 throw Exception(ConstantErrors.ERROR_CONNECT_USER)
+            }
+        }
+    }
+
+    override fun retrieveUserById(idUser: String): Observable<UserRemoteEntity> {
+        return apiService.retrieveUserById(idUser).map {
+            if (it.isSuccessful && it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_USER)
             }
         }
     }
@@ -80,28 +89,8 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>> {
-        return apiService.retrieveSongsListByUserId(idUser).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAMS)
-            }
-        }
-    }
-
-    override fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String> {
-        return apiService.createSong(songRemoteEntity).map {
-            if (it.isSuccessful && it.body() != null) {
-                (it.body() as SongResponseRemoteEntity).getCreatedId()
-            } else {
-                throw Exception(ConstantErrors.ERROR_CREATION_PROGRAM)
-            }
-        }
-    }
-
     override fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity> {
-        return apiService.retrieveProgram(idProgram).map {
+        return apiService.retrieveProgramFromId(idProgram).map {
             if (it.body() != null) {
                 it.body()
             } else {
@@ -170,12 +159,42 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveUserById(idUser: String): Observable<UserRemoteEntity> {
-        return apiService.retrieveUserById(idUser).map {
-            if (it.isSuccessful && it.body() != null) {
+    override fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>> {
+        return apiService.retrieveSongsListByUserId(idUser).map {
+            if (it.body() != null) {
                 it.body()
             } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_USER)
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_SONGS)
+            }
+        }
+    }
+
+    override fun retrieveSongFromId(idSong: String): Observable<SongRemoteEntity> {
+        return apiService.retrieveSongFromId(idSong).map {
+            if (it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_SONG)
+            }
+        }
+    }
+
+    override fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String> {
+        return apiService.createSong(songRemoteEntity).map {
+            if (it.isSuccessful && it.body() != null) {
+                (it.body() as SongResponseRemoteEntity).getCreatedId()
+            } else {
+                throw Exception(ConstantErrors.ERROR_CREATION_SONG)
+            }
+        }
+    }
+
+    override fun removeSong(idSong: String): Observable<Boolean> {
+        return apiService.removeSong(idSong).map {
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_REMOVE_SONG)
             }
         }
     }
@@ -186,11 +205,17 @@ interface APIServiceInterface {
     @POST("connect")
     fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserRemoteEntity>>
 
+    @GET("user/{idUser}")
+    fun retrieveUserById(@Path("idUser") idUser: String): Observable<Response<UserRemoteEntity>>
+
+    @POST("user")
+    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
+
     @GET("programs/{idUser}/{instrumentMode}")
     fun retrieveProgramsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
-    fun retrieveProgram(@Path("idProgram") idProgram: String): Observable<Response<ProgramRemoteEntity>>
+    fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Observable<Response<ProgramRemoteEntity>>
 
     @POST("program")
     fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<ProgramResponseRemoteEntity>>
@@ -210,15 +235,15 @@ interface APIServiceInterface {
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
     fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Response<Void>>
 
-    @GET("user/{idUser}")
-    fun retrieveUserById(@Path("idUser") idUser: String): Observable<Response<UserRemoteEntity>>
+    @GET("songs/{idUser}")
+    fun retrieveSongsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<SongRemoteEntity>>>
 
-    @POST("user")
-    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
+    @GET("song/{idSong}")
+    fun retrieveSongFromId(@Path("idSong") idSong: String): Observable<Response<SongRemoteEntity>>
 
     @POST("song")
     fun createSong(@Body songRemoteEntity: SongRemoteEntity): Observable<Response<SongResponseRemoteEntity>>
 
-    @GET("songs/{idUser}")
-    fun retrieveSongsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<SongRemoteEntity>>>
+    @DELETE("song/{idSong}")
+    fun removeSong(@Path("idSong") idProgram: String): Observable<Response<Void>>
 }

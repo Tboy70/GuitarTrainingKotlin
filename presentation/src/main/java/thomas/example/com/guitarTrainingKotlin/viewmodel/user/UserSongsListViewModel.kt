@@ -32,7 +32,7 @@ class UserSongsListViewModel @Inject constructor(private val retrieveSongsListBy
                     finishRetrieveSongs.postValue(false)
                 },
                 onNext = {
-                    userSongs =it
+                    userSongs = it
                     finishRetrieveSongs.postValue(true)
 
                 }, params = RetrieveSongsListByUserId.Params.forList(idUser))

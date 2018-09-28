@@ -8,4 +8,8 @@ interface SongRepository {
     fun createSong(song: Song): Observable<String>
 
     fun retrieveSongsListByUserId(idUser: String): Observable<List<Song>>
+
+    fun retrieveSongById(idSong: String): Observable<Song>
+
+    fun removeSong(idSong: String): Observable<Boolean>
 }

@@ -25,6 +25,12 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
         return Observable.defer { Observable.just(true) }
     }
 
+    override fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
+        return Observable.defer {
+            contentClient.setInstrumentModeInSharedPrefs()
+        }
+    }
+
     override fun connectUser(user: User): Observable<User> {
         return Observable.defer {
             apiClient.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
@@ -32,12 +38,6 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
             }?.doOnNext {
                 contentClient.setIdInSharedPrefs(it.idUser)
             }
-        }
-    }
-
-    override fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
-        return Observable.defer {
-            contentClient.setInstrumentModeInSharedPrefs()
         }
     }
 

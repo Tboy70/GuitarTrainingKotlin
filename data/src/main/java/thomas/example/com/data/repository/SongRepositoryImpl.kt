@@ -14,17 +14,31 @@ class SongRepositoryImpl @Inject constructor(private val songClient: SongClient,
                                              private val apiClient: APIClient,
                                              private val songEntityDataMapper: SongEntityDataMapper) : SongRepository {
 
+    override fun retrieveSongsListByUserId(idUser: String): Observable<List<Song>> {
+        return Observable.defer {
+            apiClient.retrieveSongsListByUserId(idUser).map {
+                songEntityDataMapper.transformListEntitiesToListModels(it)
+            }
+        }
+    }
+
+    override fun retrieveSongById(idSong: String): Observable<Song> {
+        return Observable.defer {
+            apiClient.retrieveSongFromId(idSong).map {
+                songEntityDataMapper.transformEntityToModel(it)
+            }
+        }
+    }
+
     override fun createSong(song: Song): Observable<String> {
         return Observable.defer {
             apiClient.createSong(songEntityDataMapper.transformModelToEntity(song))
         }
     }
 
-    override fun retrieveSongsListByUserId(idUser: String): Observable<List<Song>> {
+    override fun removeSong(idSong: String): Observable<Boolean> {
         return Observable.defer {
-            apiClient.retrieveSongsListByUserId(idUser).map {
-                songEntityDataMapper.transformListEntitiesToListModels(it)
-            }
+            apiClient.removeSong(idSong)
         }
     }
 }
