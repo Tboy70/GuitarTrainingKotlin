@@ -24,7 +24,6 @@ class ErrorUtils {
                 is ConnectException -> return context.getString(R.string.snackbar_error_connection_problem)
                 is Exception -> {
                     return when (throwable.message) {
-                        //TODO : Handle not handled cases !
                         ConstantErrors.ERROR_CONNECT_USER -> context.getString(R.string.error_connect_user)
                         ConstantErrors.ERROR_CREATION_USER -> context.getString(R.string.error_creation_user)
                         ConstantErrors.ERROR_RETRIEVE_USER -> context.getString(R.string.error_retrieve_user)
@@ -36,6 +35,12 @@ class ErrorUtils {
                         ConstantErrors.ERROR_CREATION_EXERCISE -> context.getString(R.string.error_creation_exercises)
                         ConstantErrors.ERROR_UPDATE_EXERCISE -> context.getString(R.string.error_update_exercise)
                         ConstantErrors.ERROR_REMOVE_EXERCISE -> context.getString(R.string.error_remove_exercise)
+                        ConstantErrors.ERROR_RETRIEVE_SONG -> context.getString(R.string.error_retrieve_song)
+                        ConstantErrors.ERROR_RETRIEVE_SONGS -> context.getString(R.string.error_retrieve_songs)
+                        ConstantErrors.ERROR_CREATION_SONG -> context.getString(R.string.error_creation_song)
+                        ConstantErrors.ERROR_UPDATE_SONG -> context.getString(R.string.error_update_song)
+                        ConstantErrors.ERROR_REMOVE_SONG -> context.getString(R.string.error_remove_song)
+                        ConstantErrors.ERROR_SEND_FEEDBACK_SONG -> context.getString(R.string.error_send_feedback_song)
                         else -> context.getString(R.string.snackbar_error_unknown_error)
                     }
 

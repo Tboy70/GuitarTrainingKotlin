@@ -13,8 +13,10 @@ class SongRemoteEntityDataMapper @Inject constructor() {
         songEntity.idSong = songRemoteEntity.idSong
         songEntity.titleSong = songRemoteEntity.titleSong
         songEntity.artistSong = songRemoteEntity.artistSong
-        songEntity.scoreSong = songRemoteEntity.scoreSong
+        songEntity.averageScoreSong = songRemoteEntity.averageScoreSong
+        songEntity.totalScoreSong = songRemoteEntity.totalScoreSong
         songEntity.nbPlay = songRemoteEntity.nbPlay
+        songEntity.lastPlay = songRemoteEntity.lastPlay
         songEntity.idUser = songRemoteEntity.idUser
 
         return songEntity
@@ -34,8 +36,10 @@ class SongRemoteEntityDataMapper @Inject constructor() {
         songRemoteEntity.idSong = songEntity.idSong
         songRemoteEntity.titleSong = songEntity.titleSong
         songRemoteEntity.artistSong = songEntity.artistSong
-        songRemoteEntity.scoreSong = songEntity.scoreSong
+        songRemoteEntity.averageScoreSong = songEntity.averageScoreSong
+        songRemoteEntity.totalScoreSong = songEntity.totalScoreSong
         songRemoteEntity.nbPlay = songEntity.nbPlay
+        songRemoteEntity.lastPlay = songEntity.lastPlay
         songRemoteEntity.idUser = songEntity.idUser
 
         return songRemoteEntity

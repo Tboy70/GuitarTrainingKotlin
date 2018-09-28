@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.fragment.user
+package thomas.example.com.guitarTrainingKotlin.fragment.program
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
@@ -23,7 +23,6 @@ import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramUpdateFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils

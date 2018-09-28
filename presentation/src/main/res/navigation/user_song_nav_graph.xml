@@ -6,8 +6,17 @@
 
     <fragment
         android:id="@+id/user_song_details"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongDetailsFragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongDetailsFragment"
         android:label="@string/nav_user_song_home"
-        tools:layout="@layout/fragment_user_song_details" />
+        tools:layout="@layout/fragment_user_song_details">
+        <action
+            android:id="@+id/action_user_song_update"
+            app:destination="@id/user_song_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_song_update"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongUpdateFragment"
+        tools:layout="@layout/fragment_user_song_update" />
 
 </navigation>

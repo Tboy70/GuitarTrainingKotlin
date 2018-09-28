@@ -47,5 +47,4 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
         }
         return programEntitiesList
     }
-
 }

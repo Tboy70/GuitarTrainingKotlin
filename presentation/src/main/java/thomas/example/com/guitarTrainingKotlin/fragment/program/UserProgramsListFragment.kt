@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.fragment.user
+package thomas.example.com.guitarTrainingKotlin.fragment.program
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider

@@ -46,8 +46,23 @@
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
     <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ? </string>
 
+    <string name="dialog_details_song_title">Chargement de la chanson</string>
+    <string name="dialog_details_song_content">Accorde toi en attendant …</string>
+    <string name="dialog_details_song_score_title">Vous avez fini ? Notez votre performance</string>
+
     <string name="dialog_creation_song_title">Création de la chanson</string>
     <string name="dialog_creation_song_content">Création de la chanson en cours. Veuillez patienter …</string>
+
+    <string name="dialog_update_song_title">Mise à jour du programme</string>
+    <string name="dialog_update_song_content">Mise à jour de la chanson en cours. Veuillez patienter …</string>
+    <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chansons ?</string>
+
+    <string name="dialog_remove_song_title">Suppression de la chanson</string>
+    <string name="dialog_remove_song_content">Suppression de la chanson en cours. Veuillez patientez …</string>
+    <string name="dialog_remove_song_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
+
+    <string name="dialog_send_feedback_title">Envoi de la note</string>
+    <string name="dialog_send_feedback_content">Envoi de la note en cours. Veuillez patientez …</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -56,6 +71,9 @@
     <string name="exercises_text">Exercices</string>
     <string name="program_name">Nom du programme</string>
     <string name="program_description">Description du programme</string>
+
+    <string name="song_name">Nom de la chanson</string>
+    <string name="song_description">Nom de l\'artiste</string>
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
@@ -101,6 +119,9 @@
     <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s heure(s) et %2$s minutes</string>
 
     <!-- USER SONGS LIST -->
+    <string name="user_songs_list_score">Note : %1$s %2$s</string>
+    <string name="user_songs_list_nb_play">Joué : %1$d fois</string>
+    <string name="user_songs_list_last_play">Joué la dernière fois : %1$s</string>
     <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER PROGRAM DETAILS -->
@@ -246,6 +267,13 @@
     <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
     <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
 
+    <string name="error_retrieve_song">Erreur pendant la récupération de la chanson</string>
+    <string name="error_retrieve_songs">Erreur pendant la récupération des chansons</string>
+    <string name="error_creation_song">Erreur pendant la création de la chanson</string>
+    <string name="error_update_song">Erreur pendant la mise à jour de la chanson</string>
+    <string name="error_remove_song">Erreur pendant la suppression de la chanson</string>
+    <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
+
 
     <!-- ======================================================================================= -->
     <!-- ======================================= VALUES ======================================== -->
@@ -278,10 +306,5 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
-    <string name="dialog_details_song_title">Chargement de la chanson</string>
-    <string name="dialog_details_song_content">Accorde toi en attendant ...</string>
-    <string name="dialog_remove_song_title">Suppression de la chanson</string>
-    <string name="dialog_remove_song_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
-    <string name="dialog_remove_song_content">Suppression de la chanson en cours. Veuillez patientez ...</string>
 
 </resources>

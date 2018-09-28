@@ -24,5 +24,4 @@ class UpdateProgram @Inject constructor(threadExecutor: ThreadExecutor,
             }
         }
     }
-
 }

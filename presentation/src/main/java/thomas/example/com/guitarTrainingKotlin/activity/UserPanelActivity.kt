@@ -4,8 +4,10 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
@@ -15,12 +17,14 @@ import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
 
@@ -29,6 +33,9 @@ class UserPanelActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var userPanelViewModel: UserPanelViewModel
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -64,7 +71,9 @@ class UserPanelActivity : BaseActivity() {
         super.onStart()
         userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
 
-        this.idUser = userPanelViewModel.getIdUser(this)
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        this.idUser = prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
+
         if (!idUser.isEmpty()) {
             userPanelViewModel.getUserById(idUser)
         }
@@ -145,6 +154,16 @@ class UserPanelActivity : BaseActivity() {
             if (it != null && it == true) {
                 view_drawer_header_pseudo.text = userPanelViewModel.user.pseudoUser
                 view_drawer_header_email.text = userPanelViewModel.user.emailUser
+            }
+        })
+
+        userPanelViewModel.getUserFailure.observe(this, Observer<Boolean> {
+            materialDialogComponent.dismissDialog()
+            if (it != null && it == true) {
+                if (userPanelViewModel.errorThrowable != null) {
+                    errorRendererComponent.requestRenderError(userPanelViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, window.decorView.rootView)
+                }
+                fragmentManager?.popBackStack()
             }
         })
     }

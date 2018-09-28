@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.util.Log
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.interactor.user.LogoutUser
 import thomas.example.com.interactor.user.RetrieveUserById
@@ -17,11 +16,13 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val logoutSucceed: MutableLiveData<Boolean> = MutableLiveData()
     val getUserSucceed: MutableLiveData<Boolean> = MutableLiveData()
+    val getUserFailure: MutableLiveData<Boolean> = MutableLiveData()
+
+    var errorThrowable: Throwable? = null
 
     lateinit var user: User
 
     fun logoutUser() {
-
         logoutUser.execute(
                 onComplete = {
                     finishLoading.postValue(true)
@@ -34,20 +35,14 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
                 }, params = Unit)
     }
 
-    //TODO : Context dans view model !!!!!
-    fun getIdUser(context: Context): String {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
-    }
-
-    //TODO : Handle error
     fun getUserById(idUser: String) {
         retrieveUserById.execute(
                 onComplete = {
 
                 },
                 onError = {
-                    Log.e("TEST", "Error")
+                    errorThrowable = it
+                    getUserFailure.postValue(true)
                 },
                 onNext = {
                     user = it

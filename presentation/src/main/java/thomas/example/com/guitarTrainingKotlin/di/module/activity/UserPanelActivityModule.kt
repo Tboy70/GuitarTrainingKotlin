@@ -8,10 +8,10 @@ import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramCreationFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongCreationFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongsListFragment
 
 @Module(includes = [BaseActivityModule::class])
 abstract class UserPanelActivityModule {

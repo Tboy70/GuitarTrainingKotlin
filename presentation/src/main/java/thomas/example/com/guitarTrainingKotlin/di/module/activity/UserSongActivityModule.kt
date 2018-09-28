@@ -7,7 +7,8 @@ import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSongDetailsFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongDetailsFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongUpdateFragment
 
 @Module(includes = [BaseActivityModule::class])
 abstract class UserSongActivityModule {
@@ -19,5 +20,9 @@ abstract class UserSongActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun userSongDetailsFragmentInjector(): UserSongDetailsFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun userSongUpdateFragmentInjector(): UserSongUpdateFragment
 
 }

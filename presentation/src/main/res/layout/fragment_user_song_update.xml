@@ -8,7 +8,7 @@
     android:paddingEnd="@dimen/padding_start_end">
 
     <EditText
-        android:id="@+id/fragment_user_program_update_name"
+        android:id="@+id/fragment_user_song_update_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/constraint_layout_margin_8"
         android:layout_marginEnd="@dimen/constraint_layout_margin_8"
         android:gravity="center"
-        android:hint="@string/program_name"
+        android:hint="@string/song_name"
         android:inputType="text"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_huge"
@@ -25,58 +25,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tool:ignore="Autofill"
-        tool:text="Mon super programme" />
+        tool:text="Ma super chanson" />
 
     <EditText
-        android:id="@+id/fragment_user_program_update_description"
+        android:id="@+id/fragment_user_song_update_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/constraint_layout_margin_8"
         android:layout_marginTop="@dimen/constraint_layout_margin_8"
         android:layout_marginEnd="@dimen/constraint_layout_margin_8"
         android:gravity="center_vertical"
-        android:hint="@string/program_description"
+        android:hint="@string/song_description"
         android:inputType="text"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_name"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_update_name"
         tool:ignore="Autofill"
-        tool:text="Ma super description" />
-
-    <TextView
-        android:id="@+id/fragment_user_program_update_exercises_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/constraint_layout_margin_8"
-        android:layout_marginTop="@dimen/constraint_layout_margin_8"
-        android:layout_marginEnd="@dimen/constraint_layout_margin_8"
-        android:text="@string/exercises_text"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_description" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_update_validate_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_exercises_title">
-
-        <LinearLayout
-            android:id="@+id/fragment_user_program_update_exercises_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-    </ScrollView>
+        tool:text="Mon super article" />
 
     <Button
-        android:id="@+id/fragment_user_program_update_validate_button"
+        android:id="@+id/fragment_user_song_update_validate_button"
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
         android:layout_marginBottom="@dimen/constraint_layout_margin_8"

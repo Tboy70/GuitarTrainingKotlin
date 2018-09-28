@@ -15,6 +15,7 @@ import retrofit2.http.*
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
+import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongResponseRemoteEntity
 import thomas.example.com.data.entity.remote.user.UserRemoteEntity
@@ -189,12 +190,32 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
+    override fun updateSong(songRemoteEntity: SongRemoteEntity): Observable<Boolean> {
+        return apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity).map {
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_UPDATE_SONG)
+            }
+        }
+    }
+
     override fun removeSong(idSong: String): Observable<Boolean> {
         return apiService.removeSong(idSong).map {
             if (it.isSuccessful) {
                 it.isSuccessful
             } else {
                 throw Exception(ConstantErrors.ERROR_REMOVE_SONG)
+            }
+        }
+    }
+
+    override fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Observable<Boolean> {
+        return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong).map {
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_SEND_FEEDBACK_SONG)
             }
         }
     }
@@ -244,6 +265,12 @@ interface APIServiceInterface {
     @POST("song")
     fun createSong(@Body songRemoteEntity: SongRemoteEntity): Observable<Response<SongResponseRemoteEntity>>
 
+    @PATCH("song/{idSong}")
+    fun updateSong(@Path("idSong") idSong: String, @Body songRemoteEntity: SongRemoteEntity): Observable<Response<Void>>
+
     @DELETE("song/{idSong}")
     fun removeSong(@Path("idSong") idProgram: String): Observable<Response<Void>>
+
+    @POST("song/{idSong}")
+    fun sendScoreFeedback(@Body scoreFeedback: ScoreFeedbackRemoteEntity, @Path("idSong") idSong: String): Observable<Response<Void>>
 }

@@ -7,8 +7,8 @@ import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramDetailsFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramUpdateFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramDetailsFragment
 
 @Module(includes = [BaseActivityModule::class])
 abstract class UserProgramActivityModule {

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/user_program_details"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserProgramDetailsFragment"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramDetailsFragment"
         android:label="@string/nav_user_program_home"
         tools:layout="@layout/fragment_user_program_details">
         <action

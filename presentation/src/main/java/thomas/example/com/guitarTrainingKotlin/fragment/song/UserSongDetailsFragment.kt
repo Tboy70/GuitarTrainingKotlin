@@ -1,19 +1,20 @@
-package thomas.example.com.guitarTrainingKotlin.fragment.user
+package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.fragment_user_song_details.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -27,9 +28,14 @@ class UserSongDetailsFragment : BaseFragment() {
     private lateinit var userSongDetailsViewModel: UserSongDetailsViewModel
 
     @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
+
+    @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     private lateinit var idSong: String
+
+    private var mSelectedItem: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_user_song_details, container, false)
@@ -48,7 +54,7 @@ class UserSongDetailsFragment : BaseFragment() {
             }
         }
 
-        handleLiveData()
+        handleLiveData(view)
         handleStartSong()
         handleUpdateSong()
         handleRemoveSong()
@@ -60,7 +66,7 @@ class UserSongDetailsFragment : BaseFragment() {
         userSongDetailsViewModel.getSongById(idSong)
     }
 
-    private fun handleLiveData() {
+    private fun handleLiveData(view: View) {
         userSongDetailsViewModel.finishRetrieveSongForDetails.observe(this, Observer<Boolean> {
             if (it == true) {
                 val userSongObjectWrapper = userSongDetailsViewModel.userSongObjectWrapper
@@ -77,6 +83,15 @@ class UserSongDetailsFragment : BaseFragment() {
 
         userSongDetailsViewModel.finishSongDeletion.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
+                activity?.finish()
+            }
+        })
+
+        userSongDetailsViewModel.finishFeedbackSending.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                activity?.finish()
+            } else {
+                errorRendererComponent.requestRenderError(userSongDetailsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 activity?.finish()
             }
         })
@@ -100,21 +115,28 @@ class UserSongDetailsFragment : BaseFragment() {
 
     private fun handleStartSong() {
         fragment_user_song_details_start_button.setOnClickListener {
-            val intent = Intent(activity, ProgramActivity::class.java)
-            intent.putExtra(ConstValues.ID_SONG, idSong)
-            startActivity(intent)
-            activity?.finish()
+            materialDialogComponent.showSingleChoiceDialog(getString(R.string.dialog_details_song_score_title), resources.getStringArray(R.array.list_scores).toMutableList(), mSelectedItem, R.color.colorPrimary, true, object : SingleChoiceMaterialDialogListener {
+
+                override fun onItemSelected(selectedItem: String) {
+                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_send_feedback_title), getString(R.string.dialog_send_feedback_content), R.color.colorPrimary)
+                    mSelectedItem = selectedItem
+                    userSongDetailsViewModel.sendSongFeedback(selectedItem.toInt(), idSong)
+                }
+
+                override fun onCancelClick() {}
+
+                override fun getPositionSelected(which: Int) {}
+            })
         }
     }
 
     private fun handleUpdateSong() {
         fragment_user_song_details_update_button.setOnClickListener {
-            //TODO : Update song
-//            val bundle = Bundle()
-//            bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userSongDetailsViewModel.userProgramObjectWrapper)
-//
-//            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
-//            NavHostFragment.findNavController(host).navigate(R.id.user_program_update, bundle, null)
+            val bundle = Bundle()
+            bundle.putSerializable(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY, userSongDetailsViewModel.userSongObjectWrapper)
+
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_song_nav_host_fragment) as NavHostFragment
+            NavHostFragment.findNavController(host).navigate(R.id.user_song_update, bundle, null)
         }
     }
 

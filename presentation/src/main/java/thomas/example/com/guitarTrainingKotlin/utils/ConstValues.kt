@@ -5,6 +5,9 @@ class ConstValues {
     companion object {
         const val CONST_ERROR = -1
         const val EMPTY_STRING = ""
+        const val NA = "NA"
+        const val NEVER = "Jamais"
+        const val ON_5 = " / 5"
 
         //TODO : Mettre ça autre part ?
         const val DEFAULT_PROGRAM_THEORETICAL_GUITAR = "1"

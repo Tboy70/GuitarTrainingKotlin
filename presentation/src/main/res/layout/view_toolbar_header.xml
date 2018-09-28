@@ -17,7 +17,8 @@
         android:layout_marginBottom="@dimen/constraint_layout_margin_16"
         android:src="@drawable/ic_account_default"
         app:layout_constraintBottom_toTopOf="@+id/view_drawer_header_pseudo"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/view_drawer_header_pseudo"

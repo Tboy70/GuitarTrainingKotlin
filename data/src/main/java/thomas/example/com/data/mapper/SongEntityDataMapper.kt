@@ -13,8 +13,10 @@ class SongEntityDataMapper @Inject constructor() {
         song.idSong = songEntity.idSong
         song.titleSong = songEntity.titleSong
         song.artistSong = songEntity.artistSong
-        song.scoreSong = songEntity.scoreSong
+        song.averageScoreSong = songEntity.averageScoreSong
+        song.totalScoreSong = songEntity.totalScoreSong
         song.nbPlay = songEntity.nbPlay
+        song.lastPlay = songEntity.lastPlay
         song.idUser = songEntity.idUser
 
         return song
@@ -35,8 +37,10 @@ class SongEntityDataMapper @Inject constructor() {
         songEntity.idSong = song.idSong
         songEntity.titleSong = song.titleSong
         songEntity.artistSong = song.artistSong
-        songEntity.scoreSong = song.scoreSong
+        songEntity.averageScoreSong = song.averageScoreSong
+        songEntity.totalScoreSong = song.totalScoreSong
         songEntity.nbPlay = song.nbPlay
+        songEntity.lastPlay = song.lastPlay
         songEntity.idUser = song.idUser
 
         return songEntity
