@@ -15,6 +15,7 @@ import retrofit2.http.*
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
+import thomas.example.com.data.entity.remote.score.ScoreRemoteEntity
 import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongResponseRemoteEntity
