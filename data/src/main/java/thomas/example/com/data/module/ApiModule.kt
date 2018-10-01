@@ -1,8 +1,10 @@
 package thomas.example.com.data.module
 
 import io.reactivex.Observable
+import thomas.example.com.data.entity.ScoreEntity
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
+import thomas.example.com.data.entity.remote.score.ScoreRemoteEntity
 import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
 import thomas.example.com.data.entity.remote.user.UserRemoteEntity
@@ -42,4 +44,6 @@ interface ApiModule {
     fun removeSong(idSong: String): Observable<Boolean>
 
     fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Observable<Boolean>
+
+    fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreRemoteEntity>>
 }

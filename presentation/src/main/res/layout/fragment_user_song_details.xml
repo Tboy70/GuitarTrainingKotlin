@@ -50,20 +50,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.2" />
 
-    <ScrollView
-        android:id="@+id/fragment_user_song_details_exercises_scroll_view"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/fragment_user_song_chart"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_guideline_3"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_start_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fragment_user_song_details_guideline_2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="@+id/fragment_user_song_details_guideline_2" />
 
-    </ScrollView>
 
     <android.support.constraint.Guideline
         android:id="@+id/fragment_user_song_details_guideline_3"

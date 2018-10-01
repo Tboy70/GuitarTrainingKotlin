@@ -2,23 +2,29 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.interactor.song.RemoveSong
 import thomas.example.com.interactor.song.RetrieveSongById
+import thomas.example.com.interactor.song.RetrieveSongScoreHistoric
 import thomas.example.com.interactor.song.SendScoreFeedback
+import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
 import javax.inject.Inject
 
 class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById: RetrieveSongById,
                                                    private val removeSong: RemoveSong,
-                                                   private val sendScoreFeedback: SendScoreFeedback) : ViewModel() {
+                                                   private val sendScoreFeedback: SendScoreFeedback,
+                                                   private val retrieveSongScoreHistoric: RetrieveSongScoreHistoric) : ViewModel() {
 
     lateinit var userSongObjectWrapper: SongObjectWrapper
+    lateinit var songScoreHistoric : List<Score>
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val finishRetrieveSongForDetails: MutableLiveData<Boolean> = MutableLiveData()
     val finishSongDeletion: MutableLiveData<Boolean> = MutableLiveData()
     val finishFeedbackSending: MutableLiveData<Boolean> = MutableLiveData()
+    val finishRetrieveSongScoreHistoric: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -71,5 +77,20 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
                 onNext = {
                     finishFeedbackSending.postValue(true)
                 }, params = SendScoreFeedback.Params.toSend(scoreFeedback, idSong))
+    }
+
+    fun retrieveSongScoreHistoric(idSong: String) {
+        retrieveSongScoreHistoric.execute(
+                onComplete = {
+
+                },
+                onError = {
+                    errorThrowable = it
+                    finishRetrieveSongScoreHistoric.postValue(false)
+                },
+                onNext = {
+                    songScoreHistoric = it
+                    finishRetrieveSongScoreHistoric.postValue(true)
+                }, params = RetrieveSongScoreHistoric.Params.toRetrieve(idSong))
     }
 }

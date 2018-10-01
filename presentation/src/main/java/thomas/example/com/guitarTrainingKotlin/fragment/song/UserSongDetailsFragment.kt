@@ -4,10 +4,15 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.fragment_user_song_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
@@ -16,10 +21,18 @@ import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.ui.chart.HourAxisValueFormatter
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
+import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongDetailsViewModel
+import thomas.example.com.model.Score
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
+
 
 class UserSongDetailsFragment : BaseFragment() {
 
@@ -34,6 +47,7 @@ class UserSongDetailsFragment : BaseFragment() {
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     private lateinit var idSong: String
+    private var referenceTimestamp: Long = 1000000000000
 
     private var mSelectedItem: String? = null
 
@@ -53,6 +67,8 @@ class UserSongDetailsFragment : BaseFragment() {
                 idSong = bundle.getString(ConstValues.ID_SONG)
             }
         }
+
+        userSongDetailsViewModel.retrieveSongScoreHistoric(idSong)
 
         handleLiveData(view)
         handleStartSong()
@@ -95,6 +111,15 @@ class UserSongDetailsFragment : BaseFragment() {
                 activity?.finish()
             }
         })
+
+        userSongDetailsViewModel.finishRetrieveSongScoreHistoric.observe(this, Observer<Boolean> {
+            if (it != null && it == true) {
+                displayHistoricValues(userSongDetailsViewModel.songScoreHistoric)
+            } else {
+                errorRendererComponent.requestRenderError(userSongDetailsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                //TODO : Handle
+            }
+        })
     }
 
     private fun displayInformation(userSongObjectWrapper: SongObjectWrapper) {
@@ -111,6 +136,49 @@ class UserSongDetailsFragment : BaseFragment() {
         if (activity is UserSongActivity) {
             (activity as UserSongActivity).setToolbar(nameSong)
         }
+    }
+
+    private fun displayHistoricValues(songScoreHistoric: List<Score>) {
+
+        val entries = HashMap<Long, Float>()
+        val dateFormat = SimpleDateFormat(DateTimeUtils.FROM_API_FORMAT, Locale.FRANCE)
+
+        for (score in songScoreHistoric) {
+            val timestamp = Timestamp(dateFormat.parse(score.dateScore).time).time / 1000
+            if (timestamp < referenceTimestamp) {
+                referenceTimestamp = timestamp
+            }
+            entries[timestamp] = score.valueScore
+        }
+
+        val newEntries = HashMap<Long, Float>()
+        for (entry in entries) {
+            newEntries[entry.key - referenceTimestamp] = entry.value
+        }
+
+
+        entries.clear()
+
+        Log.e("TEST", "OKLM")
+
+        val test = newEntries.toSortedMap()
+
+        val dataValues = ArrayList<Entry>()
+        for (entry in test) {
+            dataValues.add(Entry(entry.key.toFloat(), entry.value))
+        }
+
+        val xAxisFormatter = HourAxisValueFormatter(referenceTimestamp)
+        val xAxis = fragment_user_song_chart.xAxis
+        xAxis.valueFormatter = xAxisFormatter
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        fragment_user_song_chart.axisRight.isEnabled = false
+
+        val dataSet = LineDataSet(dataValues, "Notes")
+        val lineData = LineData(dataSet)
+        fragment_user_song_chart.data = lineData
+        fragment_user_song_chart.invalidate()
     }
 
     private fun handleStartSong() {

@@ -16,7 +16,8 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
                                     private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
                                     private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
                                     private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
-                                    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper) {
+                                    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
+                                    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper) {
 
     fun connectUser(userEntity: UserEntity): Observable<UserEntity>? {
         return apiModule.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
@@ -97,5 +98,11 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Observable<Boolean> {
         return apiModule.sendScoreFeedback(scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(scoreFeedbackEntity), idSong)
+    }
+
+    fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreEntity>> {
+        return apiModule.retrieveSongScoreHistoric(idSong).map {
+            scoreRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
+        }
     }
 }

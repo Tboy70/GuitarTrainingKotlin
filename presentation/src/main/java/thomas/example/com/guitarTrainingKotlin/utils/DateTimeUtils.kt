@@ -12,6 +12,7 @@ class DateTimeUtils {
         const val MINUTE_TO_MILLISECONDS: Long = 1000
         const val FROM_API_FORMAT = "yyyy-MM-dd"
         const val WANTED_FORMAT = "dd/MM/yyyy"
+        const val WANTED_FORMAT_WITHOUT_YEAR = "dd/MM"
         private const val CONVERSION_FORMAT = "%02d:%02d:%02d"
 
         fun convertMillisecondsToTimeFormat(milliSeconds: Long): String {

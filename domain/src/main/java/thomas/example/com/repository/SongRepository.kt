@@ -1,6 +1,7 @@
 package thomas.example.com.repository
 
 import io.reactivex.Observable
+import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
 import thomas.example.com.model.Song
 
@@ -17,4 +18,6 @@ interface SongRepository {
     fun removeSong(idSong: String): Observable<Boolean>
 
     fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Observable<Boolean>
+    
+    fun retrieveSongScoreHistoric(idSong: String): Observable<List<Score>>
 }

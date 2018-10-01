@@ -220,6 +220,16 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             }
         }
     }
+
+    override fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreRemoteEntity>> {
+        return apiService.retrieveSongScoreHistoric(idSong).map {
+            if (it.isSuccessful && it.body() != null) {
+                it.body()
+            } else {
+                throw Exception(ConstantErrors.ERROR_RETRIEVE_SCORE_SONG_HISTORIC)
+            }
+        }
+    }
 }
 
 interface APIServiceInterface {
@@ -274,4 +284,7 @@ interface APIServiceInterface {
 
     @POST("song/{idSong}")
     fun sendScoreFeedback(@Body scoreFeedback: ScoreFeedbackRemoteEntity, @Path("idSong") idSong: String): Observable<Response<Void>>
+
+    @GET("score/{idSong}")
+    fun retrieveSongScoreHistoric(@Path("idSong") idSong: String): Observable<Response<List<ScoreRemoteEntity>>>
 }

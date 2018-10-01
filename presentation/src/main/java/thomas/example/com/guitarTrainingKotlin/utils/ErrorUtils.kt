@@ -41,6 +41,7 @@ class ErrorUtils {
                         ConstantErrors.ERROR_UPDATE_SONG -> context.getString(R.string.error_update_song)
                         ConstantErrors.ERROR_REMOVE_SONG -> context.getString(R.string.error_remove_song)
                         ConstantErrors.ERROR_SEND_FEEDBACK_SONG -> context.getString(R.string.error_send_feedback_song)
+                        ConstantErrors.ERROR_RETRIEVE_SCORE_SONG_HISTORIC -> context.getString(R.string.error_retrieve_song_score_historic)
                         else -> context.getString(R.string.snackbar_error_unknown_error)
                     }
 

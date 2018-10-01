@@ -65,6 +65,7 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha06'
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha06'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.0.5-beta'

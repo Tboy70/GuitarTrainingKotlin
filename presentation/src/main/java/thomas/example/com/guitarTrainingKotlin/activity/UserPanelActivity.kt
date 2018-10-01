@@ -163,6 +163,7 @@ class UserPanelActivity : BaseActivity() {
                 if (userPanelViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userPanelViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, window.decorView.rootView)
                 }
+                userPanelViewModel.finishLoading.removeObservers(this)
                 fragmentManager?.popBackStack()
             }
         })

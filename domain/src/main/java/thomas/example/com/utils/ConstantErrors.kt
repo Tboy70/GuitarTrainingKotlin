@@ -23,5 +23,6 @@ class ConstantErrors : Throwable() {
         const val ERROR_UPDATE_SONG = "thomas.example.com.utils.ERROR_UPDATE_SONG"
         const val ERROR_REMOVE_SONG = "thomas.example.com.utils.ERROR_REMOVE_SONG"
         const val ERROR_SEND_FEEDBACK_SONG = "thomas.example.com.utils.ERROR_SEND_FEEDBACK_SONG"
+        const val ERROR_RETRIEVE_SCORE_SONG_HISTORIC = "thomas.example.com.utils.ERROR_RETRIEVE_SCORE_SONG_HISTORIC"
     }
 }
