@@ -141,9 +141,11 @@
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
 
     <!-- USER SONG DETAILS -->
+    <string name="label_chart">Notes</string>
     <string name="user_song_details_start">Noter la répétition</string>
     <string name="user_song_details_update">Modifier la chanson</string>
     <string name="user_song_details_remove">Supprimer le chanson</string>
+    <string name="chart_marker_content">%1$s / 5 le %2$s</string>
 
     <!-- USER SONG CREATION -->
     <string name="song_title">Titre de la chanson</string>

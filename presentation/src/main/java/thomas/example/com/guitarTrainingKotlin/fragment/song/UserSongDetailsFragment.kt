@@ -4,11 +4,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.util.Log
+import android.util.LongSparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
+import com.github.mikephil.charting.charts.Chart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -24,14 +26,11 @@ import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.chart.HourAxisValueFormatter
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
-import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongDetailsViewModel
-import thomas.example.com.model.Score
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
+import thomas.example.com.guitarTrainingKotlin.ui.chart.MyMarkerView
+
+
 
 
 class UserSongDetailsFragment : BaseFragment() {
@@ -47,7 +46,6 @@ class UserSongDetailsFragment : BaseFragment() {
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     private lateinit var idSong: String
-    private var referenceTimestamp: Long = 1000000000000
 
     private var mSelectedItem: String? = null
 
@@ -114,7 +112,7 @@ class UserSongDetailsFragment : BaseFragment() {
 
         userSongDetailsViewModel.finishRetrieveSongScoreHistoric.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
-                displayHistoricValues(userSongDetailsViewModel.songScoreHistoric)
+                displayHistoricValues(userSongDetailsViewModel.timestampKeyList)
             } else {
                 errorRendererComponent.requestRenderError(userSongDetailsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 //TODO : Handle
@@ -138,46 +136,27 @@ class UserSongDetailsFragment : BaseFragment() {
         }
     }
 
-    private fun displayHistoricValues(songScoreHistoric: List<Score>) {
-
-        val entries = HashMap<Long, Float>()
-        val dateFormat = SimpleDateFormat(DateTimeUtils.FROM_API_FORMAT, Locale.FRANCE)
-
-        for (score in songScoreHistoric) {
-            val timestamp = Timestamp(dateFormat.parse(score.dateScore).time).time / 1000
-            if (timestamp < referenceTimestamp) {
-                referenceTimestamp = timestamp
-            }
-            entries[timestamp] = score.valueScore
-        }
-
-        val newEntries = HashMap<Long, Float>()
-        for (entry in entries) {
-            newEntries[entry.key - referenceTimestamp] = entry.value
-        }
-
-
-        entries.clear()
-
-        Log.e("TEST", "OKLM")
-
-        val test = newEntries.toSortedMap()
-
+    private fun displayHistoricValues(timestampKeyList: LongSparseArray<Float>) {
         val dataValues = ArrayList<Entry>()
-        for (entry in test) {
-            dataValues.add(Entry(entry.key.toFloat(), entry.value))
+        for (i in 0 until timestampKeyList.size()) {
+            val key = timestampKeyList.keyAt(i)
+            dataValues.add(Entry(key.toFloat(), timestampKeyList.get(key)))
         }
 
-        val xAxisFormatter = HourAxisValueFormatter(referenceTimestamp)
+        val xAxisFormatter = HourAxisValueFormatter(userSongDetailsViewModel.referenceTimestamp)
         val xAxis = fragment_user_song_chart.xAxis
         xAxis.valueFormatter = xAxisFormatter
         xAxis.position = XAxis.XAxisPosition.BOTTOM
 
-        fragment_user_song_chart.axisRight.isEnabled = false
-
-        val dataSet = LineDataSet(dataValues, "Notes")
+        val dataSet = LineDataSet(dataValues, activity?.getString(R.string.label_chart))
         val lineData = LineData(dataSet)
         fragment_user_song_chart.data = lineData
+
+        fragment_user_song_chart.description = null
+        fragment_user_song_chart.axisRight.isEnabled = false
+        val myMarkerView = MyMarkerView(context, R.layout.my_marker_view_layout, userSongDetailsViewModel.referenceTimestamp)
+        myMarkerView.chartView = fragment_user_song_chart
+        fragment_user_song_chart.marker = myMarkerView
         fragment_user_song_chart.invalidate()
     }
 

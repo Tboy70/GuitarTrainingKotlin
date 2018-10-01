@@ -2,14 +2,19 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import android.util.Log
+import android.util.LongSparseArray
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
+import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.interactor.song.RemoveSong
 import thomas.example.com.interactor.song.RetrieveSongById
 import thomas.example.com.interactor.song.RetrieveSongScoreHistoric
 import thomas.example.com.interactor.song.SendScoreFeedback
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById: RetrieveSongById,
@@ -18,7 +23,7 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
                                                    private val retrieveSongScoreHistoric: RetrieveSongScoreHistoric) : ViewModel() {
 
     lateinit var userSongObjectWrapper: SongObjectWrapper
-    lateinit var songScoreHistoric : List<Score>
+    lateinit var timestampKeyList: LongSparseArray<Float>
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val finishRetrieveSongForDetails: MutableLiveData<Boolean> = MutableLiveData()
@@ -27,6 +32,7 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
     val finishRetrieveSongScoreHistoric: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
+    var referenceTimestamp: Long = ConstValues.CONST_DEFAULT_TIMESTAMP
 
     fun getSongById(idProgram: String) {
         retrieveSongById.execute(
@@ -89,8 +95,33 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
                     finishRetrieveSongScoreHistoric.postValue(false)
                 },
                 onNext = {
-                    songScoreHistoric = it
-                    finishRetrieveSongScoreHistoric.postValue(true)
+                    formatRetrievedList(it)
                 }, params = RetrieveSongScoreHistoric.Params.toRetrieve(idSong))
+    }
+
+    private fun formatRetrievedList(scoreList: List<Score>) {
+        timestampKeyList = convertHistoricDatesToTimestamp(scoreList)
+        finishRetrieveSongScoreHistoric.postValue(true)
+    }
+
+    private fun convertHistoricDatesToTimestamp(scoreList: List<Score>): LongSparseArray<Float> {
+        val timestampKeyList = LongSparseArray<Float>()
+        val dateFormat = SimpleDateFormat(DateTimeUtils.FROM_API_FORMAT, Locale.FRANCE)
+
+        for (score in scoreList) {
+            val timestamp = Timestamp(dateFormat.parse(score.dateScore).time).time / 1000
+            if (timestamp < referenceTimestamp) {
+                referenceTimestamp = timestamp
+            }
+            timestampKeyList.put(timestamp, score.valueScore)
+        }
+
+        val timestampKeyListMinusReferenceTimestamp = LongSparseArray<Float>()
+        for (i in 0 until timestampKeyList.size()) {
+            val key = timestampKeyList.keyAt(i)
+            timestampKeyListMinusReferenceTimestamp.put(key - referenceTimestamp, timestampKeyList.get(key))
+        }
+
+        return timestampKeyListMinusReferenceTimestamp
     }
 }

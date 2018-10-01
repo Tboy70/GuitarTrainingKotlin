@@ -7,8 +7,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-//TODO : Check
 class HourAxisValueFormatter(private val referenceTimestamp: Long) : IAxisValueFormatter {
+
     private val mDataFormat: DateFormat
     private val mDate: Date
 
@@ -16,7 +16,6 @@ class HourAxisValueFormatter(private val referenceTimestamp: Long) : IAxisValueF
         this.mDataFormat = SimpleDateFormat(DateTimeUtils.WANTED_FORMAT_WITHOUT_YEAR, Locale.FRANCE)
         this.mDate = Date()
     }
-
 
     /**
      * Called when a value from an axis is to be formatted
@@ -45,6 +44,5 @@ class HourAxisValueFormatter(private val referenceTimestamp: Long) : IAxisValueF
         } catch (ex: Exception) {
             "xx"
         }
-
     }
 }
