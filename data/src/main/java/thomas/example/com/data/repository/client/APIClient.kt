@@ -71,7 +71,7 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
-        return apiModule.retrieveSongsListByUserId(idUser).map {
+        return apiModule.retrieveSongsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
             songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }

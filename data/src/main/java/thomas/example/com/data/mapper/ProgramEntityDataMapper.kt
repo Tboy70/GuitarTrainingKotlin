@@ -16,6 +16,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
         program.defaultProgram = programEntity.defaultProgram
         program.idUser = programEntity.idUser
         program.exercises = exerciseEntityDataMapper.transformListEntitiesToListModels(programEntity.exerciseEntities)
+        program.idInstrument = programEntity.idInstrument
         return program
     }
 
@@ -36,6 +37,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
         programEntity.defaultProgram = program.defaultProgram
         programEntity.idUser = program.idUser
         programEntity.exerciseEntities = exerciseEntityDataMapper.transformListModelsToListEntities(program.exercises)
+        programEntity.idInstrument = program.idInstrument
         return programEntity
     }
 

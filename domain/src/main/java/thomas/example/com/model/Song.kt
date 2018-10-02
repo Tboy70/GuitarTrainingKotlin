@@ -7,4 +7,5 @@ data class Song(var idSong: String = "",
                 var totalScoreSong: Int = 0,
                 var nbPlay: Int = 0,
                 var lastPlay: String = "",
-                var idUser: String = "")
+                var idUser: String = "",
+                var idInstrument: String = "")

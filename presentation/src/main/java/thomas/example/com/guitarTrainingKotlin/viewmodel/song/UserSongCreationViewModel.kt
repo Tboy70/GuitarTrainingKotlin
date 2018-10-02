@@ -13,11 +13,12 @@ class UserSongCreationViewModel @Inject constructor(private var createSong: Crea
 
     var errorThrowable: Throwable? = null
 
-    fun checkInformationAndValidateCreation(titleSong: String, artistSong: String) {
+    fun checkInformationAndValidateCreation(titleSong: String, artistSong: String, instrumentMode: String) {
         if (checkInformation(titleSong)) {
             val song = Song()
             song.titleSong = titleSong
             song.artistSong = artistSong
+            song.idInstrument = instrumentMode
 
             createSong.execute(
                     onComplete = {

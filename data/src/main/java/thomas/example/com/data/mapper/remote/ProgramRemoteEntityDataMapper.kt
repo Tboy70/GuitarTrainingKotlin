@@ -16,6 +16,7 @@ class ProgramRemoteEntityDataMapper @Inject constructor(private val exerciseRemo
         programEntity.defaultProgram = programRemoteEntity.defaultProgram
         programEntity.idUser = programRemoteEntity.idUser
         programEntity.exerciseEntities = exerciseRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(programRemoteEntity.exerciseRemoteEntities)
+        programEntity.idInstrument = programRemoteEntity.idInstrument
 
         return programEntity
     }
@@ -36,8 +37,8 @@ class ProgramRemoteEntityDataMapper @Inject constructor(private val exerciseRemo
         programRemoteEntity.descriptionProgram = programEntity.descriptionProgram
         programRemoteEntity.defaultProgram = programEntity.defaultProgram
         programRemoteEntity.idUser = programEntity.idUser
-        programRemoteEntity.exerciseRemoteEntities = exerciseRemoteEntityDataMapper
-                .transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)
+        programRemoteEntity.exerciseRemoteEntities = exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)
+        programRemoteEntity.idInstrument = programEntity.idInstrument
 
         return programRemoteEntity
     }

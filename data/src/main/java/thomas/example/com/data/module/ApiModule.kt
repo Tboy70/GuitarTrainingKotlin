@@ -1,7 +1,6 @@
 package thomas.example.com.data.module
 
 import io.reactivex.Observable
-import thomas.example.com.data.entity.ScoreEntity
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
 import thomas.example.com.data.entity.remote.score.ScoreRemoteEntity
@@ -33,7 +32,7 @@ interface ApiModule {
 
     fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean>
 
-    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>>
+    fun retrieveSongsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<SongRemoteEntity>>
 
     fun retrieveSongFromId(idSong: String): Observable<SongRemoteEntity>
 

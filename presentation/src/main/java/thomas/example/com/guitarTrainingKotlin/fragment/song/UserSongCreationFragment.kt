@@ -3,11 +3,15 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
+import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
@@ -66,7 +70,10 @@ class UserSongCreationFragment : BaseFragment() {
     private fun handleClickCreateSong() {
         fragment_user_song_creation_validation.setOnClickListener {
             materialDialogComponent.showProgressDialog(getString(R.string.dialog_creation_song_title), getString(R.string.dialog_creation_song_content), R.color.colorPrimary)
-            userSongCreationViewModel.checkInformationAndValidateCreation(fragment_user_song_creation_name.text.toString(), fragment_user_song_creation_artist.text.toString())
+
+            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)).toString()
+            userSongCreationViewModel.checkInformationAndValidateCreation(fragment_user_song_creation_name.text.toString(), fragment_user_song_creation_artist.text.toString(), instrumentMode)
         }
     }
 }

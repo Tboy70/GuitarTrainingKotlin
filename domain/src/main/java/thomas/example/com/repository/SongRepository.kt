@@ -18,6 +18,6 @@ interface SongRepository {
     fun removeSong(idSong: String): Observable<Boolean>
 
     fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Observable<Boolean>
-    
+
     fun retrieveSongScoreHistoric(idSong: String): Observable<List<Score>>
 }

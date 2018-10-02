@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -62,7 +63,7 @@ class UserProgramCreationFragment : BaseFragment() {
 
         userProgramCreationViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramCreationViewModel::class.java)
 
-        exercisesArray = getInstrumentMode()
+        exercisesArray = getStringArrayGivenInstrumentMode()
 
         handleLiveData(view)
         handleClickAddExercise()
@@ -109,7 +110,11 @@ class UserProgramCreationFragment : BaseFragment() {
 
                 exercises.append(ExerciseUtils.getTypeExerciseIdByName(key, activity as UserPanelActivity), value)
             }
-            userProgramCreationViewModel.checkInformationAndValidateCreation(fragment_user_program_creation_name.text.toString(), fragment_user_program_creation_description.text.toString(), exercises)
+
+            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)).toString()
+
+            userProgramCreationViewModel.checkInformationAndValidateCreation(fragment_user_program_creation_name.text.toString(), fragment_user_program_creation_description.text.toString(), exercises, instrumentMode)
         }
     }
 
@@ -143,7 +148,7 @@ class UserProgramCreationFragment : BaseFragment() {
         fragment_user_program_creation_exercises.addView(horizontalLayoutContainingAllElements)
     }
 
-    private fun getInstrumentMode(): Array<String> {
+    private fun getStringArrayGivenInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return if (prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
             resources.getStringArray(R.array.list_exercises_guitar)

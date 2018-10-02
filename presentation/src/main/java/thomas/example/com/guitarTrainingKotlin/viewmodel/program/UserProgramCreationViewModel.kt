@@ -16,7 +16,7 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
 
     var errorThrowable: Throwable? = null
 
-    fun checkInformationAndValidateCreation(nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>) {
+    fun checkInformationAndValidateCreation(nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>, instrumentMode: String) {
 
         if (checkInformation(nameProgram, exercises)) {
 
@@ -24,6 +24,7 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
             program.nameProgram = nameProgram
             program.descriptionProgram = descriptionProgram
             program.defaultProgram = false
+            program.idInstrument = instrumentMode
 
             val exercisesList = ArrayList<Exercise>()
 

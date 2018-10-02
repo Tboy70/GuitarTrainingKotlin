@@ -18,6 +18,7 @@ class SongEntityDataMapper @Inject constructor() {
         song.nbPlay = songEntity.nbPlay
         song.lastPlay = songEntity.lastPlay
         song.idUser = songEntity.idUser
+        song.idInstrument = songEntity.idInstrument
 
         return song
     }
@@ -42,6 +43,7 @@ class SongEntityDataMapper @Inject constructor() {
         songEntity.nbPlay = song.nbPlay
         songEntity.lastPlay = song.lastPlay
         songEntity.idUser = song.idUser
+        songEntity.idInstrument = song.idInstrument
 
         return songEntity
     }

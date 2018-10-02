@@ -161,8 +161,8 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveSongsListByUserId(idUser: String): Observable<List<SongRemoteEntity>> {
-        return apiService.retrieveSongsListByUserId(idUser).map {
+    override fun retrieveSongsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<SongRemoteEntity>> {
+        return apiService.retrieveSongsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
             } else {
@@ -267,8 +267,8 @@ interface APIServiceInterface {
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
     fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Response<Void>>
 
-    @GET("songs/{idUser}")
-    fun retrieveSongsListByUserId(@Path("idUser") idUser: String): Observable<Response<List<SongRemoteEntity>>>
+    @GET("songs/{idUser}/{instrumentMode}")
+    fun retrieveSongsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<SongRemoteEntity>>>
 
     @GET("song/{idSong}")
     fun retrieveSongFromId(@Path("idSong") idSong: String): Observable<Response<SongRemoteEntity>>
