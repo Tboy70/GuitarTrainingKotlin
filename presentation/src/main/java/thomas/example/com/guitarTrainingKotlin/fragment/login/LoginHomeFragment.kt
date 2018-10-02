@@ -55,11 +55,7 @@ class LoginHomeFragment : BaseFragment() {
         loginHomeViewModel.connectSucceed.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
                 connectSuccess()
-            }
-        })
-
-        loginHomeViewModel.connectFailure.observe(this, Observer<Boolean> {
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 materialDialogComponent.dismissDialog()
                 if (loginHomeViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(loginHomeViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)

@@ -154,12 +154,7 @@ class UserPanelActivity : BaseActivity() {
             if (it != null && it == true) {
                 view_drawer_header_pseudo.text = userPanelViewModel.user.pseudoUser
                 view_drawer_header_email.text = userPanelViewModel.user.emailUser
-            }
-        })
-
-        userPanelViewModel.getUserFailure.observe(this, Observer<Boolean> {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 if (userPanelViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userPanelViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, window.decorView.rootView)
                 }

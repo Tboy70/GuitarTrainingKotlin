@@ -53,4 +53,10 @@
     <dimen name="user_songs_list_icon_placeholder_height">200dp</dimen>
     <dimen name="user_songs_list_icon_placeholder_width">200dp</dimen>
 
+    <!-- CHART -->
+    <dimen name="ic_chart_marker_width">110dp</dimen>
+    <dimen name="ic_chart_marker_height">110dp</dimen>
+    <dimen name="ic_chart_text_margin_start">40dp</dimen>
+    <dimen name="ic_chart_text_margin_top">20dp</dimen>
+
 </resources>

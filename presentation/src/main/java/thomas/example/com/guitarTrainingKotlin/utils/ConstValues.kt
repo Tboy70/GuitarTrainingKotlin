@@ -5,9 +5,6 @@ class ConstValues {
     companion object {
         const val CONST_ERROR = -1
         const val EMPTY_STRING = ""
-        const val NA = "NA" // TODO Use string WTF O_o
-        const val NEVER = "Jamais"  // TODO same
-        const val ON_5 = " / 5" // TODO same
         const val CONST_DEFAULT_TIMESTAMP = 1000000000000
 
         //TODO : Mettre ça autre part ?

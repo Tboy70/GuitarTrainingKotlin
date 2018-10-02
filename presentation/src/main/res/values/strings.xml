@@ -119,7 +119,7 @@
     <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s heure(s) et %2$s minutes</string>
 
     <!-- USER SONGS LIST -->
-    <string name="user_songs_list_score">Note : %1$s %2$s</string>
+    <string name="user_songs_list_score">Note : %1$s/5</string>
     <string name="user_songs_list_nb_play">Joué : %1$d fois</string>
     <string name="user_songs_list_last_play">Joué la dernière fois : %1$s</string>
     <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
@@ -309,5 +309,7 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
+    <string name="const_na">NA</string>
+    <string name="never">Jamais</string>
 
 </resources>

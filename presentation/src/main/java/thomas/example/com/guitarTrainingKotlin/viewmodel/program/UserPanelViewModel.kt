@@ -16,7 +16,6 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val logoutSucceed: MutableLiveData<Boolean> = MutableLiveData()
     val getUserSucceed: MutableLiveData<Boolean> = MutableLiveData()
-    val getUserFailure: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -42,7 +41,7 @@ class UserPanelViewModel @Inject constructor(private val logoutUser: LogoutUser,
                 },
                 onError = {
                     errorThrowable = it
-                    getUserFailure.postValue(true)
+                    getUserSucceed.postValue(false)
                 },
                 onNext = {
                     user = it

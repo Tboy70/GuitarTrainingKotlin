@@ -61,12 +61,7 @@ class UserSongUpdateFragment : BaseFragment() {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
-            }
-        })
-
-        userSongUpdateViewModel.updateSongFailure.observe(this, Observer<Boolean> {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 if (userSongUpdateViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userSongUpdateViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 }

@@ -50,11 +50,7 @@ class CreateAccountFragment : BaseFragment() {
         createAccountViewModel.creationSuccess.observe(this, Observer<Boolean> {
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
-            }
-        })
-
-        createAccountViewModel.creationFailure.observe(this, Observer<Boolean> {
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 materialDialogComponent.dismissDialog()
                 if (createAccountViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(createAccountViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)

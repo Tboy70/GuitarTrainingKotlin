@@ -74,12 +74,7 @@ class UserProgramCreationFragment : BaseFragment() {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
-            }
-        })
-
-        userProgramCreationViewModel.creationProgramFailure.observe(this, Observer<Boolean> {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 if (userProgramCreationViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userProgramCreationViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 }

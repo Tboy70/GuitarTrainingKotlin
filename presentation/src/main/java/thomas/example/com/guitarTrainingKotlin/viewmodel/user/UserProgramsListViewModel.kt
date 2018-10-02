@@ -12,12 +12,10 @@ import javax.inject.Inject
 
 class UserProgramsListViewModel @Inject constructor(private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId) : ViewModel() {
 
-    var userPrograms: List<Program> = ArrayList()
-
     val finishRetrievePrograms: MutableLiveData<Boolean> = MutableLiveData()
-
     val refreshList: MutableLiveData<Boolean> = MutableLiveData()
 
+    var userPrograms: List<Program> = ArrayList()
     var errorThrowable: Throwable? = null
 
     fun retrieveProgramsListByUserId(idUser: String) {

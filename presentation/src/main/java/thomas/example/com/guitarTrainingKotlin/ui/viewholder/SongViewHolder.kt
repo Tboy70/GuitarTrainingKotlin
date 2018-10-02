@@ -26,14 +26,14 @@ class SongViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHo
         val nbPlay = songObjectWrapper.song.nbPlay
         view_user_songs_list_item_nb_play.text = String.format(context.getString(R.string.user_songs_list_nb_play), nbPlay)
         if ((averageScoreSong == 0.0f && nbPlay == 0) || nbPlay == 0) {
-            view_user_songs_list_item_score.text = String.format(context.getString(R.string.user_songs_list_score), ConstValues.NA, ConstValues.EMPTY_STRING)
+            view_user_songs_list_item_score.text = String.format(context.getString(R.string.user_songs_list_score), context.getString(R.string.const_na), ConstValues.EMPTY_STRING)
         } else {
-            view_user_songs_list_item_score.text = String.format(context.getString(R.string.user_songs_list_score), (Math.round(averageScoreSong * 100.0) / 100.0).toString(), ConstValues.ON_5)
+            view_user_songs_list_item_score.text = String.format(context.getString(R.string.user_songs_list_score), (Math.round(averageScoreSong * 100.0) / 100.0).toString())
         }
 
         val lastPlay = songObjectWrapper.song.lastPlay
         if (lastPlay.isEmpty()) {
-            view_user_songs_list_item_last_play.text = String.format(context.getString(R.string.user_songs_list_last_play), ConstValues.NEVER)
+            view_user_songs_list_item_last_play.text = String.format(context.getString(R.string.user_songs_list_last_play), context.getString(R.string.never))
         } else {
             val date = DateTimeUtils.formatDate(DateTimeUtils.FROM_API_FORMAT, DateTimeUtils.WANTED_FORMAT, lastPlay)
             view_user_songs_list_item_last_play.text = String.format(context.getString(R.string.user_songs_list_last_play), date)

@@ -45,12 +45,7 @@ class UserSongCreationFragment : BaseFragment() {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
-            }
-        })
-
-        userSongCreationViewModel.creationSongFailure.observe(this, Observer<Boolean> {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 if (userSongCreationViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userSongCreationViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 }

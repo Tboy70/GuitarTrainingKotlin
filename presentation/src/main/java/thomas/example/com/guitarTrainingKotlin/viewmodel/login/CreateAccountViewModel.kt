@@ -10,7 +10,6 @@ class CreateAccountViewModel @Inject constructor(private val createNewUser: Crea
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val creationSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val creationFailure: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -26,7 +25,7 @@ class CreateAccountViewModel @Inject constructor(private val createNewUser: Crea
                 },
                 onError = {
                     errorThrowable = it
-                    creationFailure.postValue(true)
+                    creationSuccess.postValue(false)
                 },
                 onNext = {
                     creationSuccess.postValue(true)

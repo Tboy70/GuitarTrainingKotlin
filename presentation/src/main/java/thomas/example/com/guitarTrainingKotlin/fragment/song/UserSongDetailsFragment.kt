@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.NavHostFragment
-import com.github.mikephil.charting.charts.Chart
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -23,15 +21,12 @@ import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.ui.chart.ChartMarkerView
 import thomas.example.com.guitarTrainingKotlin.ui.chart.HourAxisValueFormatter
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongDetailsViewModel
 import javax.inject.Inject
-import thomas.example.com.guitarTrainingKotlin.ui.chart.MyMarkerView
-
-
-
 
 class UserSongDetailsFragment : BaseFragment() {
 
@@ -115,7 +110,6 @@ class UserSongDetailsFragment : BaseFragment() {
                 displayHistoricValues(userSongDetailsViewModel.timestampKeyList)
             } else {
                 errorRendererComponent.requestRenderError(userSongDetailsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
-                //TODO : Handle
             }
         })
     }
@@ -137,27 +131,31 @@ class UserSongDetailsFragment : BaseFragment() {
     }
 
     private fun displayHistoricValues(timestampKeyList: LongSparseArray<Float>) {
-        val dataValues = ArrayList<Entry>()
-        for (i in 0 until timestampKeyList.size()) {
-            val key = timestampKeyList.keyAt(i)
-            dataValues.add(Entry(key.toFloat(), timestampKeyList.get(key)))
+        if (timestampKeyList.size() != 0) {
+            val dataValues = ArrayList<Entry>()
+            for (i in 0 until timestampKeyList.size()) {
+                val key = timestampKeyList.keyAt(i)
+                dataValues.add(Entry(key.toFloat(), timestampKeyList.get(key)))
+            }
+
+            val xAxisFormatter = HourAxisValueFormatter(userSongDetailsViewModel.referenceTimestamp)
+            val xAxis = fragment_user_song_chart.xAxis
+            xAxis.valueFormatter = xAxisFormatter
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+            val dataSet = LineDataSet(dataValues, activity?.getString(R.string.label_chart))
+            val lineData = LineData(dataSet)
+            fragment_user_song_chart.data = lineData
+
+            fragment_user_song_chart.description = null
+            fragment_user_song_chart.axisRight.isEnabled = false
+
+            val chartMarkerView = ChartMarkerView(context, R.layout.chart_marker_view_layout, userSongDetailsViewModel.referenceTimestamp)
+            chartMarkerView.chartView = fragment_user_song_chart
+            fragment_user_song_chart.marker = chartMarkerView
+
+            fragment_user_song_chart.invalidate()
         }
-
-        val xAxisFormatter = HourAxisValueFormatter(userSongDetailsViewModel.referenceTimestamp)
-        val xAxis = fragment_user_song_chart.xAxis
-        xAxis.valueFormatter = xAxisFormatter
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        val dataSet = LineDataSet(dataValues, activity?.getString(R.string.label_chart))
-        val lineData = LineData(dataSet)
-        fragment_user_song_chart.data = lineData
-
-        fragment_user_song_chart.description = null
-        fragment_user_song_chart.axisRight.isEnabled = false
-        val myMarkerView = MyMarkerView(context, R.layout.my_marker_view_layout, userSongDetailsViewModel.referenceTimestamp)
-        myMarkerView.chartView = fragment_user_song_chart
-        fragment_user_song_chart.marker = myMarkerView
-        fragment_user_song_chart.invalidate()
     }
 
     private fun handleStartSong() {

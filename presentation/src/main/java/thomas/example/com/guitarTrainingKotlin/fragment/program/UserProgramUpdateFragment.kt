@@ -86,12 +86,7 @@ class UserProgramUpdateFragment : BaseFragment() {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
-            }
-        })
-
-        userProgramUpdateViewModel.updateProgramFailure.observe(this, Observer<Boolean> {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
+            } else if (it != null && it == false) {
                 if (userProgramUpdateViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(userProgramUpdateViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
                 }

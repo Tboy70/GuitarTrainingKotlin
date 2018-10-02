@@ -12,7 +12,6 @@ import javax.inject.Inject
 class UserProgramCreationViewModel @Inject constructor(private var createProgram: CreateProgram) : ViewModel() {
 
     val creationProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val creationProgramFailure: MutableLiveData<Boolean> = MutableLiveData()
     val creationProgramNotLaunch: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
@@ -38,12 +37,10 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
 
             createProgram.execute(
                     onComplete = {
-
                     },
                     onError = {
                         errorThrowable = it
-                        creationProgramFailure.postValue(true)
-
+                        creationProgramSuccess.postValue(false)
                     },
                     onNext = {
                         if (it) {

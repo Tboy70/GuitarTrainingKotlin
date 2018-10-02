@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="110dp"
-    android:layout_height="110dp"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/ic_chart_marker_width"
+    android:layout_height="@dimen/ic_chart_marker_height"
     android:background="@drawable/ic_plectrum">
 
     <TextView
         android:id="@+id/chart_marker_view_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        tools:text="4.00/5 le 24/08/2018"
+        android:layout_marginStart="@dimen/ic_chart_text_margin_start"
+        android:layout_marginTop="@dimen/ic_chart_text_margin_top"
         android:gravity="center"
-        android:textSize="@dimen/text_default"
         android:lines="2"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_default"
+        tools:text="4.00/5 le 24/08/2018" />
 
 </RelativeLayout>

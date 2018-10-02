@@ -10,7 +10,6 @@ import javax.inject.Inject
 class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: UpdateProgram) : ViewModel() {
 
     val updateProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val updateProgramFailure: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -29,7 +28,7 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
                     },
                     onError = {
                         errorThrowable = it
-                        updateProgramFailure.postValue(true)
+                        updateProgramSuccess.postValue(false)
                     },
                     onNext = {
                         if (it) {

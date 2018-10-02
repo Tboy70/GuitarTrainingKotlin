@@ -6,7 +6,7 @@ import android.view.WindowManager
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
-import kotlinx.android.synthetic.main.my_marker_view_layout.view.*
+import kotlinx.android.synthetic.main.chart_marker_view_layout.view.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.text.DateFormat
@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MyMarkerView(context: Context?, layoutResource: Int, private val referenceTimestamp: Long)
+class ChartMarkerView(context: Context?, layoutResource: Int, private val referenceTimestamp: Long)
     : MarkerView(context, layoutResource) {
 
     private val mDataFormat: DateFormat

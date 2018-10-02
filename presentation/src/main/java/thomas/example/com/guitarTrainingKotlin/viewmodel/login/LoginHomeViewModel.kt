@@ -10,7 +10,6 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
 
     val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
     val connectSucceed: MutableLiveData<Boolean> = MutableLiveData()
-    val connectFailure: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
 
@@ -26,7 +25,7 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
                 },
                 onError = {
                     errorThrowable = it
-                    connectFailure.postValue(true)
+                    connectSucceed.postValue(false)
                 },
                 onNext = {
                     connectSucceed.postValue(true)

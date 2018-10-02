@@ -9,7 +9,6 @@ import javax.inject.Inject
 class UserSongCreationViewModel @Inject constructor(private var createSong: CreateSong) : ViewModel() {
 
     val creationSongSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val creationSongFailure: MutableLiveData<Boolean> = MutableLiveData()
     val creationSongNotLaunch: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
@@ -26,7 +25,7 @@ class UserSongCreationViewModel @Inject constructor(private var createSong: Crea
                     },
                     onError = {
                         errorThrowable = it
-                        creationSongFailure.postValue(true)
+                        creationSongSuccess.postValue(false)
 
                     },
                     onNext = {
