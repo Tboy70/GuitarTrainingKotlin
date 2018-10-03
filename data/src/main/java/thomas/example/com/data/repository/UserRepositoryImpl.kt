@@ -55,6 +55,14 @@ class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: U
         }
     }
 
+    override fun suppressAccount(idUser: String): Observable<Boolean> {
+        return Observable.defer {
+            apiClient.suppressAccount(idUser).doOnNext {
+                contentClient.deleteIdInSharedPrefs()
+            }
+        }
+    }
+
     override fun logoutUser(): Observable<Boolean> {
         return Observable.defer {
             contentClient.deleteIdInSharedPrefs()

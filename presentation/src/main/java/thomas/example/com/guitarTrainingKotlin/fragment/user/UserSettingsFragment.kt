@@ -3,6 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -13,7 +14,12 @@ import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
+import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity_MembersInjector
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSettingsViewModel
 import javax.inject.Inject
@@ -26,6 +32,9 @@ class UserSettingsFragment : BaseFragment() {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
+
+    @Inject
+    lateinit var materialDialogComponent: MaterialDialogComponent
 
     private lateinit var currentInstrumentMode: String
 
@@ -44,6 +53,7 @@ class UserSettingsFragment : BaseFragment() {
 
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val currentInstrumentMode = prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
+        val idUser = prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
 
         if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
             settings_guitar_switch.isChecked = true
@@ -62,11 +72,32 @@ class UserSettingsFragment : BaseFragment() {
         settings_bass_switch.setOnCheckedChangeListener { _, isChecked ->
             handleSwitch(settings_guitar_switch, isChecked)
         }
+
+        suppress_account.setOnClickListener {
+            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
+                    getString(R.string.dialog_suppress_account_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
+                override fun onYesSelected() {
+                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_suppress_account_title), getString(R.string.dialog_suppress_account_content), R.color.colorPrimary)
+                    if (!idUser.isEmpty()) {
+                        userSettingsViewModel.suppressAccount(idUser)
+                    }
+                }
+            })
+        }
     }
 
     private fun handleLiveData(view: View) {
         userSettingsViewModel.finishSetInstrumentsModeInSharedPrefs.observe(this, Observer<Boolean> {
             if (it == false) {
+                errorRendererComponent.requestRenderError(userSettingsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+            }
+        })
+
+        userSettingsViewModel.finishSuppressAccount.observe(this, Observer<Boolean> {
+            materialDialogComponent.dismissDialog()
+            if (it == true) {
+                activity?.finish()
+            } else {
                 errorRendererComponent.requestRenderError(userSettingsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
             }
         })

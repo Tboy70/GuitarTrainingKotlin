@@ -81,6 +81,16 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
+    override fun suppressAccount(idUser: String): Observable<Boolean> {
+        return apiService.suppressAccount(idUser).map {
+            if (it.isSuccessful) {
+                it.isSuccessful
+            } else {
+                throw Exception(ConstantErrors.ERROR_REMOVE_USER)
+            }
+        }
+    }
+
     override fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<ProgramRemoteEntity>> {
         return apiService.retrieveProgramsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
@@ -242,6 +252,9 @@ interface APIServiceInterface {
 
     @POST("user")
     fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
+
+    @DELETE("user/{idUser}")
+    fun suppressAccount(@Path("idUser") idUser: String): Observable<Response<Void>>
 
     @GET("programs/{idUser}/{instrumentMode}")
     fun retrieveProgramsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<ProgramRemoteEntity>>>

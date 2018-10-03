@@ -6,6 +6,7 @@ class ConstantErrors : Throwable() {
         const val ERROR_CONNECT_USER = "thomas.example.com.utils.ERROR_CONNECT_USER"
         const val ERROR_CREATION_USER = "thomas.example.com.utils.ERROR_CREATION_USER"
         const val ERROR_RETRIEVE_USER = "thomas.example.com.utils.ERROR_RETRIEVE_USER"
+        const val ERROR_REMOVE_USER = "thomas.example.com.utils.ERROR_REMOVE_USER"
 
         const val ERROR_RETRIEVE_PROGRAM = "thomas.example.com.utils.ERROR_RETRIEVE_PROGRAM"
         const val ERROR_RETRIEVE_PROGRAMS = "thomas.example.com.utils.ERROR_RETRIEVE_PROGRAMS"

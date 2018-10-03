@@ -28,6 +28,10 @@
     <string name="dialog_create_account_title">Création d\'un compte</string>
     <string name="dialog_create_account_content">Création du compte en cours. Veuillez patienter …</string>
 
+    <string name="dialog_suppress_account_title">Suppression d\'un compte</string>
+    <string name="dialog_suppress_account_confirm_content">Êtes-vous sûr de vouloir supprimer le compte ? </string>
+    <string name="dialog_suppress_account_content">Suppression du compte en cours. Veuillez patientez …</string>
+
     <string name="dialog_logout_title">Déconnexion</string>
     <string name="dialog_logout_content">Veuillez patienter</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
@@ -111,6 +115,7 @@
     <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
     <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
     <string name="user_panel_navigation_drawer_close">Close navigation drawer</string>
+    <string name="user_panel_navigation_drawer_legal_notices">Mentions légales</string>
 
     <!-- USER PROGRAMS LIST-->
     <string name="user_programs_list_no_program_text">Aucun programme disponible</string>
@@ -156,6 +161,7 @@
     <!-- SETTINGS -->
     <string name="user_settings_bass_mode">Mode basse</string>
     <string name="user_settings_guitar_mode">Mode guitare</string>
+    <string name="user_settings_suppress_account">Supprimer mon compte</string>
 
 
     <!-- ======================================================================================= -->
@@ -258,6 +264,7 @@
     <string name="error_connect_user">Problème lors de la connexion au compte</string>
     <string name="error_creation_user">Erreur lors de la création de l\'utilisateur</string>
     <string name="error_retrieve_user">Erreur lors de la récupération de l\'utilisateur</string>
+    <string name="error_remove_user">Erreur pendant la suppression de l\'utilisateur</string>
 
     <string name="error_retrieve_program">Erreur pendant la récupération du programme</string>
     <string name="error_retrieve_programs">Erreur pendant la récupération des programmes</string>

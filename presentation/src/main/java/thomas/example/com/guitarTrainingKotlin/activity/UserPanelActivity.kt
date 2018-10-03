@@ -74,8 +74,10 @@ class UserPanelActivity : BaseActivity() {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         this.idUser = prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
 
-        if (!idUser.isEmpty()) {
+        if (!idUser.isEmpty() && idUser != "0") {
             userPanelViewModel.getUserById(idUser)
+        } else {
+            backToLogin()
         }
 
         this.instrumentMode = userPanelViewModel.getInstrumentMode(this)
@@ -183,7 +185,8 @@ class UserPanelActivity : BaseActivity() {
     private fun displayUserSettings() {
         if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
                 != UserSettingsFragment::class.java.simpleName) {
-            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, null)
+            val navOptions = navBuilder.setPopUpTo(R.id.user_songs_list, true).build()
+            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, navOptions)
         }
     }
 
@@ -201,5 +204,11 @@ class UserPanelActivity : BaseActivity() {
         // NOTE: Make sure you pass in a valid view_toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
         return ActionBarDrawerToggle(this, activity_main_drawer_layout, view_toolbar, R.string.user_panel_navigation_drawer_open, R.string.user_panel_navigation_drawer_close)
+    }
+
+    fun backToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

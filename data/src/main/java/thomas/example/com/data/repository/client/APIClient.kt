@@ -38,6 +38,10 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
         }
     }
 
+    fun suppressAccount(idUser: String): Observable<Boolean> {
+        return apiModule.suppressAccount(idUser)
+    }
+
     fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
         return apiModule.retrieveProgramsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
             programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)

@@ -45,4 +45,6 @@ interface ApiModule {
     fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Observable<Boolean>
 
     fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreRemoteEntity>>
+
+    fun suppressAccount(idUser: String): Observable<Boolean>
 }

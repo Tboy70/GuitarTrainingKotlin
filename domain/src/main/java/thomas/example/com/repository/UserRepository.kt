@@ -18,4 +18,6 @@ interface UserRepository {
     fun retrieveUserById(idUser: String): Observable<User>
 
     fun setInstrumentModeInSharedPrefs(): Observable<Boolean>
+
+    fun suppressAccount(idUser: String): Observable<Boolean>
 }

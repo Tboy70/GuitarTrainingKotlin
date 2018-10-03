@@ -27,6 +27,7 @@ class ErrorUtils {
                         ConstantErrors.ERROR_CONNECT_USER -> context.getString(R.string.error_connect_user)
                         ConstantErrors.ERROR_CREATION_USER -> context.getString(R.string.error_creation_user)
                         ConstantErrors.ERROR_RETRIEVE_USER -> context.getString(R.string.error_retrieve_user)
+                        ConstantErrors.ERROR_REMOVE_USER -> context.getString(R.string.error_remove_user)
                         ConstantErrors.ERROR_RETRIEVE_PROGRAM -> context.getString(R.string.error_retrieve_program)
                         ConstantErrors.ERROR_RETRIEVE_PROGRAMS -> context.getString(R.string.error_retrieve_programs)
                         ConstantErrors.ERROR_CREATION_PROGRAM -> context.getString(R.string.error_creation_program)
