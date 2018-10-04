@@ -7,6 +7,7 @@ import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramCreationFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongCreationFragment
@@ -39,4 +40,8 @@ abstract class UserPanelActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun userSettingsFragmentInjector(): UserSettingsFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun legalNoticesFragmentInjector(): LegalNoticesFragment
 }

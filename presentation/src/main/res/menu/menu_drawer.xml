@@ -16,7 +16,7 @@
             android:title="@string/user_panel_navigation_drawer_settings" />
         <item
             android:id="@+id/menu_drawer_legal_notices"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_legal_notices"
             android:title="@string/user_panel_navigation_drawer_legal_notices" />
         <item
             android:id="@+id/menu_drawer_logout"

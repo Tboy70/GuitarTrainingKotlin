@@ -30,4 +30,9 @@
         android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment"
         tools:layout="@layout/fragment_user_settings" />
 
+    <fragment
+        android:id="@+id/action_legal_notices"
+        android:name="thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment"
+        tools:layout="@layout/fragment_legal_notices" />
+
 </navigation>

@@ -22,6 +22,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment
@@ -122,6 +123,7 @@ class UserPanelActivity : BaseActivity() {
             R.id.menu_drawer_songs -> displayUserSongsFragment()
             R.id.menu_drawer_logout -> logoutUser()
             R.id.menu_drawer_settings -> displayUserSettings()
+            R.id.menu_drawer_legal_notices -> displayLegalNotices()
             else -> displayUserProgramsFragment()
         }
 
@@ -185,8 +187,14 @@ class UserPanelActivity : BaseActivity() {
     private fun displayUserSettings() {
         if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
                 != UserSettingsFragment::class.java.simpleName) {
-            val navOptions = navBuilder.setPopUpTo(R.id.user_songs_list, true).build()
-            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, navOptions)
+            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, null)
+        }
+    }
+
+    private fun displayLegalNotices() {
+        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
+                != LegalNoticesFragment::class.java.simpleName) {
+            NavHostFragment.findNavController(host).navigate(R.id.action_legal_notices, null, null)
         }
     }
 
@@ -206,7 +214,7 @@ class UserPanelActivity : BaseActivity() {
         return ActionBarDrawerToggle(this, activity_main_drawer_layout, view_toolbar, R.string.user_panel_navigation_drawer_open, R.string.user_panel_navigation_drawer_close)
     }
 
-    fun backToLogin() {
+    private fun backToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
