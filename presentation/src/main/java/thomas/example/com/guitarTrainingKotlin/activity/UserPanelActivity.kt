@@ -169,32 +169,34 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun displayUserSongsFragment() {
-        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
-                != UserSongsListFragment::class.java.simpleName) {
-            val navOptions = navBuilder.setPopUpTo(R.id.user_programs_list, true).build()
-            NavHostFragment.findNavController(host).navigate(R.id.user_songs_list, null, navOptions)
+        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_user_songs_list)
+            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_songs_list)
+            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_songs_list)
         }
     }
 
     private fun displayUserProgramsFragment() {
-        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
-                != UserProgramsListFragment::class.java.simpleName) {
-            val navOptions = navBuilder.setPopUpTo(R.id.user_songs_list, true).build()
-            NavHostFragment.findNavController(host).navigate(R.id.user_programs_list, null, navOptions)
+        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
+            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_programs_list)
+            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_programs_list)
         }
     }
 
     private fun displayUserSettings() {
-        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
-                != UserSettingsFragment::class.java.simpleName) {
-            NavHostFragment.findNavController(host).navigate(R.id.action_user_settings, null, null)
+        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_user_settings)
+            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_user_settings)
+            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_action_user_settings)
         }
     }
 
     private fun displayLegalNotices() {
-        if ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName
-                != LegalNoticesFragment::class.java.simpleName) {
-            NavHostFragment.findNavController(host).navigate(R.id.action_legal_notices, null, null)
+        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_legal_notices)
+            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_legal_notices)
+            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_action_legal_notices)
         }
     }
 
