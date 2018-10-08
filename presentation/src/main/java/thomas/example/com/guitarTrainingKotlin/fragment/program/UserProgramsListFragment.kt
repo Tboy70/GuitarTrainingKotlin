@@ -79,6 +79,7 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
     override fun onStart() {
         super.onStart()
+        (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_programs))
         userProgramsListViewModel.retrieveProgramsListByUserId(idUser)
     }
 

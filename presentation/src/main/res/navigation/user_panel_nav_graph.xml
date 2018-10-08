@@ -11,7 +11,9 @@
         tools:layout="@layout/fragment_user_programs_list">
         <action
             android:id="@+id/action_user_programs_list_to_user_songs_list"
-            app:destination="@id/user_songs_list" app:popUpTo="@id/user_programs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_songs_list"
+            app:popUpTo="@id/user_programs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_user_programs_list_to_action_user_settings"
             app:destination="@id/action_user_settings" />
@@ -32,7 +34,9 @@
             app:destination="@id/add_song" />
         <action
             android:id="@+id/action_user_songs_list_to_user_programs_list"
-            app:destination="@id/user_programs_list" app:popUpTo="@id/user_songs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_programs_list"
+            app:popUpTo="@id/user_songs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_user_songs_list_to_action_user_settings"
             app:destination="@id/action_user_settings" />
@@ -47,13 +51,19 @@
         tools:layout="@layout/fragment_user_settings">
         <action
             android:id="@+id/action_action_user_settings_to_user_programs_list"
-            app:destination="@id/user_programs_list" app:popUpTo="@id/user_programs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_programs_list"
+            app:popUpTo="@id/user_programs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_action_user_settings_to_user_songs_list"
-            app:destination="@id/user_songs_list" app:popUpTo="@id/user_programs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_songs_list"
+            app:popUpTo="@id/user_programs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_action_user_settings_to_action_legal_notices"
-            app:destination="@id/action_legal_notices"  app:popUpTo="@id/action_user_settings" app:popUpToInclusive="true"/>
+            app:destination="@id/action_legal_notices"
+            app:popUpTo="@id/action_user_settings"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -62,13 +72,19 @@
         tools:layout="@layout/fragment_legal_notices">
         <action
             android:id="@+id/action_action_legal_notices_to_user_programs_list"
-            app:destination="@id/user_programs_list" app:popUpTo="@id/user_programs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_programs_list"
+            app:popUpTo="@id/user_programs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_action_legal_notices_to_user_songs_list"
-            app:destination="@id/user_songs_list" app:popUpTo="@id/user_programs_list" app:popUpToInclusive="true"/>
+            app:destination="@id/user_songs_list"
+            app:popUpTo="@id/user_programs_list"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_action_legal_notices_to_action_user_settings"
-            app:destination="@id/action_user_settings" app:popUpTo="@id/action_legal_notices" app:popUpToInclusive="true"/>
+            app:destination="@id/action_user_settings"
+            app:popUpTo="@id/action_legal_notices"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

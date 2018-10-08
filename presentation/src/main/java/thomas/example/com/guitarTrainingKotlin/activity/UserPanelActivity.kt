@@ -11,10 +11,11 @@ import android.preference.PreferenceManager
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
-import androidx.navigation.NavOptions
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_user_panel.*
+import kotlinx.android.synthetic.main.activity_user_program.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
@@ -41,8 +42,6 @@ class UserPanelActivity : BaseActivity() {
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
 
-    private val navBuilder = NavOptions.Builder()
-
     private lateinit var idUser: String
     private lateinit var instrumentMode: String
     private lateinit var host: NavHostFragment
@@ -58,7 +57,6 @@ class UserPanelActivity : BaseActivity() {
                 onBackPressed()
             }
         }
-
         host = supportFragmentManager.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
     }
 
@@ -90,10 +88,17 @@ class UserPanelActivity : BaseActivity() {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item)
     }
 
+    override fun onSupportNavigateUp() =
+            findNavController(this, R.id.user_panel_nav_host_fragment).navigateUp()
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig)
+    }
+
+    fun setToolbar(toolbarName: String) {
+        view_toolbar.title = toolbarName
     }
 
     private fun initDrawerMenu() {
@@ -114,6 +119,13 @@ class UserPanelActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener {
             selectDrawerItem(it)
         }
+        navigationView.setCheckedItem(R.id.menu_drawer_programs);
+    }
+
+    private fun setupDrawerToggle(): ActionBarDrawerToggle {
+        // NOTE: Make sure you pass in a valid view_toolbar reference.  ActionBarDrawToggle() does not require it
+        // and will not render the hamburger icon without it.
+        return ActionBarDrawerToggle(this, activity_main_drawer_layout, view_toolbar, R.string.user_panel_navigation_drawer_open, R.string.user_panel_navigation_drawer_close)
     }
 
     private fun selectDrawerItem(menuItem: MenuItem): Boolean {
@@ -169,7 +181,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun displayUserSongsFragment() {
-        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
             UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_user_songs_list)
             UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_songs_list)
             LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_songs_list)
@@ -177,7 +189,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun displayUserProgramsFragment() {
-        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
             UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
             UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_programs_list)
             LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_programs_list)
@@ -185,7 +197,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun displayUserSettings() {
-        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
             UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_user_settings)
             UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_user_settings)
             LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_action_user_settings)
@@ -193,7 +205,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun displayLegalNotices() {
-        when((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
             UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_legal_notices)
             UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_legal_notices)
             UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_action_legal_notices)
@@ -208,12 +220,6 @@ class UserPanelActivity : BaseActivity() {
                 userPanelViewModel.logoutUser()
             }
         })
-    }
-
-    private fun setupDrawerToggle(): ActionBarDrawerToggle {
-        // NOTE: Make sure you pass in a valid view_toolbar reference.  ActionBarDrawToggle() does not require it
-        // and will not render the hamburger icon without it.
-        return ActionBarDrawerToggle(this, activity_main_drawer_layout, view_toolbar, R.string.user_panel_navigation_drawer_open, R.string.user_panel_navigation_drawer_close)
     }
 
     private fun backToLogin() {

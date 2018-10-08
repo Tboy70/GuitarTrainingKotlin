@@ -3,7 +3,6 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -14,9 +13,7 @@ import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
-import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity_MembersInjector
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
@@ -35,12 +32,6 @@ class UserSettingsFragment : BaseFragment() {
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
-
-    private lateinit var currentInstrumentMode: String
-
-    companion object {
-        const val CURRENT_USER_INSTRUMENT_MODE = "thomas.example.com.guitarTrainingKotlin.fragment.user.CURRENT_USER_INSTRUMENT_MODE"
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_user_settings, container, false)
@@ -84,6 +75,11 @@ class UserSettingsFragment : BaseFragment() {
                 }
             })
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_settings))
     }
 
     private fun handleLiveData(view: View) {
