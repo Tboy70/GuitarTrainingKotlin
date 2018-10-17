@@ -10,6 +10,7 @@ import thomas.example.com.guitarTrainingKotlin.di.module.ApplicationModule
 import thomas.example.com.guitarTrainingKotlin.di.module.viewmodel.ViewModelModule
 import javax.inject.Singleton
 
+
 /** We only have to implement one Dagger component -
  * Other components for injecting activities will be Subcomponents automatically generated in
  * ActivityInjectorModule (one subcomponent per Activity)
@@ -24,12 +25,14 @@ import javax.inject.Singleton
  */
 
 @Singleton
-@Component(modules = [
-    ApplicationModule::class,
-    AndroidSupportInjectionModule::class,
-    ActivityInjectorModule::class,
-    ViewModelModule::class
-])
+@Component(
+    modules = [
+        ApplicationModule::class,
+        AndroidSupportInjectionModule::class,
+        ActivityInjectorModule::class,
+        ViewModelModule::class
+    ]
+)
 interface ApplicationComponent {
 
     /** That's the only inject method we need in the application

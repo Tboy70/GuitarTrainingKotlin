@@ -1,8 +1,8 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.LongSparseArray
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
@@ -17,10 +17,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById: RetrieveSongById,
-                                                   private val removeSong: RemoveSong,
-                                                   private val sendScoreFeedback: SendScoreFeedback,
-                                                   private val retrieveSongScoreHistoric: RetrieveSongScoreHistoric) : ViewModel() {
+class UserSongDetailsViewModel @Inject constructor(
+    private val retrieveSongById: RetrieveSongById,
+    private val removeSong: RemoveSong,
+    private val sendScoreFeedback: SendScoreFeedback,
+    private val retrieveSongScoreHistoric: RetrieveSongScoreHistoric
+) : ViewModel() {
 
     lateinit var userSongObjectWrapper: SongObjectWrapper
     lateinit var timestampKeyList: LongSparseArray<Float>
@@ -36,35 +38,37 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
 
     fun getSongById(idProgram: String) {
         retrieveSongById.execute(
-                onComplete = {
-                    finishLoading.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    finishRetrieveSongForDetails.postValue(false)
-                },
-                onNext = {
-                    userSongObjectWrapper = SongObjectWrapper(it)
-                    finishRetrieveSongForDetails.postValue(true)
+            onComplete = {
+                finishLoading.postValue(true)
+            },
+            onError = {
+                errorThrowable = it
+                finishRetrieveSongForDetails.postValue(false)
+            },
+            onNext = {
+                userSongObjectWrapper = SongObjectWrapper(it)
+                finishRetrieveSongForDetails.postValue(true)
 
-                }, params = RetrieveSongById.Params.toRetrieve(idProgram))
+            }, params = RetrieveSongById.Params.toRetrieve(idProgram)
+        )
     }
 
     fun removeSong(idProgram: String) {
         removeSong.execute(
-                onComplete = {
-                    finishLoading.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    finishSongDeletion.postValue(false)
-                },
-                onNext = {
-                    if (it) {
-                        finishSongDeletion.postValue(true)
-                    }
+            onComplete = {
+                finishLoading.postValue(true)
+            },
+            onError = {
+                errorThrowable = it
+                finishSongDeletion.postValue(false)
+            },
+            onNext = {
+                if (it) {
+                    finishSongDeletion.postValue(true)
+                }
 
-                }, params = RemoveSong.Params.toRemove(idProgram))
+            }, params = RemoveSong.Params.toRemove(idProgram)
+        )
     }
 
     fun sendSongFeedback(scoreFeedbackValue: Int, idSong: String) {
@@ -73,30 +77,32 @@ class UserSongDetailsViewModel @Inject constructor(private val retrieveSongById:
         scoreFeedback.scoreFeedback = scoreFeedbackValue
 
         sendScoreFeedback.execute(
-                onComplete = {
+            onComplete = {
 
-                },
-                onError = {
-                    errorThrowable = it
-                    finishFeedbackSending.postValue(false)
-                },
-                onNext = {
-                    finishFeedbackSending.postValue(true)
-                }, params = SendScoreFeedback.Params.toSend(scoreFeedback, idSong))
+            },
+            onError = {
+                errorThrowable = it
+                finishFeedbackSending.postValue(false)
+            },
+            onNext = {
+                finishFeedbackSending.postValue(true)
+            }, params = SendScoreFeedback.Params.toSend(scoreFeedback, idSong)
+        )
     }
 
     fun retrieveSongScoreHistoric(idSong: String) {
         retrieveSongScoreHistoric.execute(
-                onComplete = {
+            onComplete = {
 
-                },
-                onError = {
-                    errorThrowable = it
-                    finishRetrieveSongScoreHistoric.postValue(false)
-                },
-                onNext = {
-                    formatRetrievedList(it)
-                }, params = RetrieveSongScoreHistoric.Params.toRetrieve(idSong))
+            },
+            onError = {
+                errorThrowable = it
+                finishRetrieveSongScoreHistoric.postValue(false)
+            },
+            onNext = {
+                formatRetrievedList(it)
+            }, params = RetrieveSongScoreHistoric.Params.toRetrieve(idSong)
+        )
     }
 
     private fun formatRetrievedList(scoreList: List<Score>) {

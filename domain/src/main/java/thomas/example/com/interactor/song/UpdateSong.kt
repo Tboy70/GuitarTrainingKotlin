@@ -7,9 +7,10 @@ import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
-class UpdateSong @Inject constructor(threadExecutor: ThreadExecutor,
-                                     private var songRepository: SongRepository)
-    : UseCase<Boolean, UpdateSong.Params>(threadExecutor) {
+class UpdateSong @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var songRepository: SongRepository
+) : UseCase<Boolean, UpdateSong.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: UpdateSong.Params): Observable<Boolean> {
         return songRepository.updateSong(params.song)

@@ -6,9 +6,10 @@ import thomas.example.com.interactor.UseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class GetIdInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor,
-                                             private var userRepository: UserRepository)
-    : UseCase<String, String>(threadExecutor) {
+class GetIdInSharedPrefs @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var userRepository: UserRepository
+) : UseCase<String, String>(threadExecutor) {
 
     companion object {
         var ID_USER_DEFAULT = "ID_USER_DEFAULT"

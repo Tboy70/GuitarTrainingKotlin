@@ -8,10 +8,12 @@ import thomas.example.com.repository.SongRepository
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class CreateSong @Inject constructor(threadExecutor: ThreadExecutor,
-                                     private var songRepository: SongRepository,
-                                     private var userRepository: UserRepository) :
-        UseCase<String, CreateSong.Params>(threadExecutor) {
+class CreateSong @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var songRepository: SongRepository,
+    private var userRepository: UserRepository
+) :
+    UseCase<String, CreateSong.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: CreateSong.Params): Observable<String> {
         return userRepository.getIdUserInSharedPrefs().map {

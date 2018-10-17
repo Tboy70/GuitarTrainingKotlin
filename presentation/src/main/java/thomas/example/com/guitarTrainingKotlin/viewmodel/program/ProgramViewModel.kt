@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject
@@ -14,16 +14,17 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
 
     fun getProgramById(idProgram: String) {
         retrieveProgramById.execute(
-                onComplete = {
-                },
-                onError = {
-                    finishRetrieveProgram.postValue(false)
-                },
-                onNext = {
-                    userProgramObjectWrapper = ProgramObjectWrapper(it)
-                    finishRetrieveProgram.postValue(true)
+            onComplete = {
+            },
+            onError = {
+                finishRetrieveProgram.postValue(false)
+            },
+            onNext = {
+                userProgramObjectWrapper = ProgramObjectWrapper(it)
+                finishRetrieveProgram.postValue(true)
 
-                }, params = RetrieveProgramById.Params.toRetrieve(idProgram))
+            }, params = RetrieveProgramById.Params.toRetrieve(idProgram)
+        )
     }
 
 }

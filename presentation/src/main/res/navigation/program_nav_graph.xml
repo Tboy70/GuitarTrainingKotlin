@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/launcher_intro_program_fragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@+id/launcher_intro_program_fragment">
 
     <fragment
-        android:id="@+id/launcher_intro_program_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.IntroProgramFragment"
-        tools:layout="@layout/fragment_intro_program" />
+            android:id="@+id/launcher_intro_program_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.IntroProgramFragment"
+            tools:layout="@layout/fragment_intro_program"/>
 
     <fragment
-        android:id="@+id/launcher_scale_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseScaleFragment"
-        tools:layout="@layout/fragment_exercise_scale" />
+            android:id="@+id/launcher_scale_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseScaleFragment"
+            tools:layout="@layout/fragment_exercise_scale"/>
 
     <fragment
-        android:id="@+id/launcher_mode_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseModeFragment"
-        tools:layout="@layout/fragment_exercise_mode" />
+            android:id="@+id/launcher_mode_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseModeFragment"
+            tools:layout="@layout/fragment_exercise_mode"/>
 
     <fragment
-        android:id="@+id/launcher_pull_off_hammer_on_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExercisePullOffHammerOnFragment"
-        tools:layout="@layout/fragment_exercise_pull_off_hammer_on" />
+            android:id="@+id/launcher_pull_off_hammer_on_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExercisePullOffHammerOnFragment"
+            tools:layout="@layout/fragment_exercise_pull_off_hammer_on"/>
 
     <fragment
-        android:id="@+id/launcher_bend_slide_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseBendSlideFragment"
-        tools:layout="@layout/fragment_exercise_bend_slide" />
+            android:id="@+id/launcher_bend_slide_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseBendSlideFragment"
+            tools:layout="@layout/fragment_exercise_bend_slide"/>
 
     <fragment
-        android:id="@+id/launcher_back_forth_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseBackForthFragment"
-        tools:layout="@layout/fragment_exercise_back_forth" />
+            android:id="@+id/launcher_back_forth_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseBackForthFragment"
+            tools:layout="@layout/fragment_exercise_back_forth"/>
 
     <fragment
-        android:id="@+id/launcher_palm_mute_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExercisePalmMuteFragment"
-        tools:layout="@layout/fragment_exercise_palm_mute" />
+            android:id="@+id/launcher_palm_mute_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExercisePalmMuteFragment"
+            tools:layout="@layout/fragment_exercise_palm_mute"/>
 
     <fragment
-        android:id="@+id/launcher_skip_string_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSkipStringFragment"
-        tools:layout="@layout/fragment_exercise_skip_string" />
+            android:id="@+id/launcher_skip_string_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSkipStringFragment"
+            tools:layout="@layout/fragment_exercise_skip_string"/>
 
     <fragment
-        android:id="@+id/launcher_tapping_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseTappingFragment"
-        tools:layout="@layout/fragment_exercise_tapping" />
+            android:id="@+id/launcher_tapping_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseTappingFragment"
+            tools:layout="@layout/fragment_exercise_tapping"/>
 
     <fragment
-        android:id="@+id/launcher_sweep_picking_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSweepPickingFragment"
-        tools:layout="@layout/fragment_exercise_sweep_picking" />
+            android:id="@+id/launcher_sweep_picking_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSweepPickingFragment"
+            tools:layout="@layout/fragment_exercise_sweep_picking"/>
 
     <fragment
-        android:id="@+id/launcher_speed_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSpeedFragment"
-        tools:layout="@layout/fragment_exercise_speed" />
+            android:id="@+id/launcher_speed_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSpeedFragment"
+            tools:layout="@layout/fragment_exercise_speed"/>
 
     <fragment
-        android:id="@+id/launcher_slap_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSlapFragment"
-        tools:layout="@layout/fragment_exercise_slap" />
+            android:id="@+id/launcher_slap_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseSlapFragment"
+            tools:layout="@layout/fragment_exercise_slap"/>
 
     <fragment
-        android:id="@+id/launcher_three_fingers_exercise_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseThreeFingersFragment"
-        tools:layout="@layout/fragment_exercise_three_fingers" />
+            android:id="@+id/launcher_three_fingers_exercise_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.exercise.ExerciseThreeFingersFragment"
+            tools:layout="@layout/fragment_exercise_three_fingers"/>
 
     <fragment
-        android:id="@+id/launcher_end_program_fragment"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.EndProgramFragment"
-        tools:layout="@layout/fragment_end_program" />
+            android:id="@+id/launcher_end_program_fragment"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.EndProgramFragment"
+            tools:layout="@layout/fragment_end_program"/>
 
 
 </navigation>

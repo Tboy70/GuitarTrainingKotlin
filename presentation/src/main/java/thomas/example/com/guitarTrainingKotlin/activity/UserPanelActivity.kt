@@ -1,21 +1,19 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.widget.NavigationView
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_user_panel.*
-import kotlinx.android.synthetic.main.activity_user_program.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
@@ -23,6 +21,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment
@@ -44,7 +43,6 @@ class UserPanelActivity : BaseActivity() {
 
     private lateinit var idUser: String
     private lateinit var instrumentMode: String
-    private lateinit var host: NavHostFragment
     private lateinit var drawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +55,6 @@ class UserPanelActivity : BaseActivity() {
                 onBackPressed()
             }
         }
-        host = supportFragmentManager.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -89,7 +86,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp() =
-            findNavController(this, R.id.user_panel_nav_host_fragment).navigateUp()
+        findNavController(this, R.id.user_panel_nav_host_fragment).navigateUp()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -119,13 +116,19 @@ class UserPanelActivity : BaseActivity() {
         navigationView.setNavigationItemSelectedListener {
             selectDrawerItem(it)
         }
-        navigationView.setCheckedItem(R.id.menu_drawer_programs);
+        navigationView.setCheckedItem(R.id.menu_drawer_programs)
     }
 
     private fun setupDrawerToggle(): ActionBarDrawerToggle {
         // NOTE: Make sure you pass in a valid view_toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return ActionBarDrawerToggle(this, activity_main_drawer_layout, view_toolbar, R.string.user_panel_navigation_drawer_open, R.string.user_panel_navigation_drawer_close)
+        return ActionBarDrawerToggle(
+            this,
+            activity_main_drawer_layout,
+            view_toolbar,
+            R.string.user_panel_navigation_drawer_open,
+            R.string.user_panel_navigation_drawer_close
+        )
     }
 
     private fun selectDrawerItem(menuItem: MenuItem): Boolean {
@@ -150,76 +153,110 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun handleLiveData() {
-        userPanelViewModel.finishLoading.observe(this, Observer<Boolean> {
+        userPanelViewModel.finishLoading.observeSafe(this) {
             if (it != null) {
                 materialDialogComponent.dismissDialog()
                 userPanelViewModel.finishLoading.removeObservers(this)
             }
-        })
+        }
 
-        userPanelViewModel.logoutSucceed.observe(this, Observer<Boolean> {
+        userPanelViewModel.logoutSucceed.observeSafe(this) {
             if (it != null && it == true) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
                 userPanelViewModel.logoutSucceed.removeObservers(this)
             }
-        })
+        }
 
-        userPanelViewModel.getUserSucceed.observe(this, Observer<Boolean> {
+        userPanelViewModel.getUserSucceed.observeSafe(this) {
             if (it != null && it == true) {
                 view_drawer_header_pseudo.text = userPanelViewModel.user.pseudoUser
                 view_drawer_header_email.text = userPanelViewModel.user.emailUser
             } else if (it != null && it == false) {
                 if (userPanelViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(userPanelViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, window.decorView.rootView)
+                    errorRendererComponent.requestRenderError(
+                        userPanelViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        window.decorView.rootView
+                    )
                 }
                 userPanelViewModel.finishLoading.removeObservers(this)
                 fragmentManager?.popBackStack()
             }
-        })
+        }
     }
 
     private fun displayUserSongsFragment() {
-        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_user_songs_list)
-            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_songs_list)
-            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_songs_list)
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_programs_list_to_user_songs_list
+            )
+            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_user_settings_to_user_songs_list
+            )
+            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_legal_notices_to_user_songs_list
+            )
         }
     }
 
     private fun displayUserProgramsFragment() {
-        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
-            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_user_programs_list)
-            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_user_programs_list)
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_songs_list_to_user_programs_list
+            )
+            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_user_settings_to_user_programs_list
+            )
+            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_legal_notices_to_user_programs_list
+            )
         }
     }
 
     private fun displayUserSettings() {
-        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_user_settings)
-            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_user_settings)
-            LegalNoticesFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_legal_notices_to_action_user_settings)
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_programs_list_to_action_user_settings
+            )
+            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_songs_list_to_action_user_settings
+            )
+            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_legal_notices_to_action_user_settings
+            )
         }
     }
 
     private fun displayLegalNotices() {
-        when ((NavHostFragment.findNavController(host).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-            UserProgramsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_programs_list_to_action_legal_notices)
-            UserSongsListFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_user_songs_list_to_action_legal_notices)
-            UserSettingsFragment::class.java.simpleName -> NavHostFragment.findNavController(host).navigate(R.id.action_action_user_settings_to_action_legal_notices)
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
+            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_programs_list_to_action_legal_notices
+            )
+            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_user_songs_list_to_action_legal_notices
+            )
+            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
+                R.id.action_action_user_settings_to_action_legal_notices
+            )
         }
     }
 
     private fun logoutUser() {
         materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
-                getString(R.string.dialog_logout_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-            override fun onYesSelected() {
-                materialDialogComponent.showProgressDialog(getString(R.string.dialog_logout_title), getString(R.string.dialog_logout_content), R.color.colorPrimary)
-                userPanelViewModel.logoutUser()
-            }
-        })
+            getString(R.string.dialog_logout_confirm_content),
+            R.color.colorPrimary,
+            object : MultipleChoiceMaterialDialogListener {
+                override fun onYesSelected() {
+                    materialDialogComponent.showProgressDialog(
+                        getString(R.string.dialog_logout_title),
+                        getString(R.string.dialog_logout_content),
+                        R.color.colorPrimary
+                    )
+                    userPanelViewModel.logoutUser()
+                }
+            })
     }
 
     private fun backToLogin() {

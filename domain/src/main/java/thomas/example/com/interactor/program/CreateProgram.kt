@@ -9,10 +9,11 @@ import thomas.example.com.repository.ProgramRepository
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class CreateProgram @Inject constructor(threadExecutor: ThreadExecutor,
-                                        private var programRepository: ProgramRepository,
-                                        private var userRepository: UserRepository)
-    : UseCase<Boolean, CreateProgram.Params>(threadExecutor) {
+class CreateProgram @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var programRepository: ProgramRepository,
+    private var userRepository: UserRepository
+) : UseCase<Boolean, CreateProgram.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: CreateProgram.Params): Observable<Boolean> {
         return userRepository.getIdUserInSharedPrefs().map {

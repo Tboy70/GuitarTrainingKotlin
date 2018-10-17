@@ -19,7 +19,7 @@ class ModuleSharedPrefsImpl @Inject constructor(context: Context) : ModuleShared
 
     private var sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    override fun setIdUserInSharedPrefs(idUser: String) {
+    override fun setIdUserInSharedPrefs(idUser: String?) {
         sharedPreferences.edit().putString(CURRENT_USER_ID, idUser).apply()
     }
 

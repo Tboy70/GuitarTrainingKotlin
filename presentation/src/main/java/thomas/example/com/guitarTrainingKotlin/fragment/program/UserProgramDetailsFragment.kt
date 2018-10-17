@@ -1,27 +1,27 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.program
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintSet
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.TextViewCompat
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
+import androidx.core.widget.TextViewCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -45,7 +45,8 @@ class UserProgramDetailsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_user_program_details, container, false)
 
-        userProgramDetailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramDetailsViewModel::class.java)
+        userProgramDetailsViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(UserProgramDetailsViewModel::class.java)
 
         return rootView
     }
@@ -68,43 +69,54 @@ class UserProgramDetailsFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        materialDialogComponent.showProgressDialog(getString(R.string.dialog_details_program_title), getString(R.string.dialog_details_program_content), R.color.colorPrimary)
+        materialDialogComponent.showProgressDialog(
+            getString(R.string.dialog_details_program_title),
+            getString(R.string.dialog_details_program_content),
+            R.color.colorPrimary
+        )
         userProgramDetailsViewModel.getProgramById(idProgram)
     }
 
     private fun checkProgramAndHideButtons(idProgram: String?) {
         if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_GUITAR || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_GUITAR
-                || idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_BASS || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_BASS) {
+            || idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_BASS || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_BASS
+        ) {
             fragment_user_program_details_remove_button.visibility = View.GONE
             fragment_user_program_details_update_button.visibility = View.GONE
             val constraintSet = ConstraintSet()
             constraintSet.clone(fragment_user_program_details_constraint_layout)
             constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
-            constraintSet.connect(R.id.fragment_user_program_details_start_button, ConstraintSet.BOTTOM, R.id.fragment_user_program_details_constraint_layout, ConstraintSet.BOTTOM, 24)
+            constraintSet.connect(
+                R.id.fragment_user_program_details_start_button,
+                ConstraintSet.BOTTOM,
+                R.id.fragment_user_program_details_constraint_layout,
+                ConstraintSet.BOTTOM,
+                24
+            )
             constraintSet.applyTo(fragment_user_program_details_constraint_layout)
         }
     }
 
     private fun handleLiveData() {
-        userProgramDetailsViewModel.finishRetrieveProgramForDetails.observe(this, Observer<Boolean> {
+        userProgramDetailsViewModel.finishRetrieveProgramForDetails.observeSafe(this) {
             if (it == true) {
                 val userProgramObjectWrapper = userProgramDetailsViewModel.userProgramObjectWrapper
                 displayInformation(userProgramObjectWrapper)
                 userProgramDetailsViewModel.finishRetrieveProgramForDetails.removeObservers(this)
             }
-        })
+        }
 
-        userProgramDetailsViewModel.finishLoading.observe(this, Observer<Boolean> {
+        userProgramDetailsViewModel.finishLoading.observeSafe(this) {
             if (it != null) {
                 materialDialogComponent.dismissDialog()
             }
-        })
+        }
 
-        userProgramDetailsViewModel.finishProgramDeletion.observe(this, Observer<Boolean> {
+        userProgramDetailsViewModel.finishProgramDeletion.observeSafe(this) {
             if (it != null && it == true) {
                 activity?.finish()
             }
-        })
+        }
     }
 
     private fun handleStartProgram() {
@@ -119,21 +131,35 @@ class UserProgramDetailsFragment : BaseFragment() {
     private fun handleUpdateProgram() {
         fragment_user_program_details_update_button.setOnClickListener {
             val bundle = Bundle()
-            bundle.putSerializable(UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY, userProgramDetailsViewModel.userProgramObjectWrapper)
+            bundle.putSerializable(
+                UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
+                userProgramDetailsViewModel.userProgramObjectWrapper
+            )
 
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_program_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.user_program_update, bundle, null)
+            val host = activity?.findViewById(R.id.user_program_nav_host_fragment) as View
+            findNavController(host).navigate(
+                R.id.action_user_songs_list_to_user_programs_list
+            )
+//            findNavController(R.id.user_program_nav_host_fragment).navigate(R.id.user_program_update, bundle, null)
         }
     }
 
     private fun handleRemoveProgram() {
         fragment_user_program_details_remove_button.setOnClickListener {
-            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_remove_program_title), getString(R.string.dialog_remove_program_content), R.color.colorPrimary)
-                    userProgramDetailsViewModel.removeProgram(idProgram)
-                }
-            })
+            materialDialogComponent.showMultiChoiceDialog(
+                getString(R.string.dialog_remove_program_title),
+                getString(R.string.dialog_remove_program_confirm_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_remove_program_title),
+                            getString(R.string.dialog_remove_program_content),
+                            R.color.colorPrimary
+                        )
+                        userProgramDetailsViewModel.removeProgram(idProgram)
+                    }
+                })
         }
     }
 
@@ -147,7 +173,8 @@ class UserProgramDetailsFragment : BaseFragment() {
         fragment_user_program_details_name.text = nameProgram
 
         if (descriptionProgram.isEmpty()) {
-            fragment_user_program_details_description.text = activity?.getString(R.string.user_details_program_no_description)
+            fragment_user_program_details_description.text =
+                    activity?.getString(R.string.user_details_program_no_description)
         } else {
             fragment_user_program_details_description.text = descriptionProgram
         }
@@ -165,29 +192,42 @@ class UserProgramDetailsFragment : BaseFragment() {
         val exercisesLinearLayout = LinearLayout(activity)
         exercisesLinearLayout.orientation = LinearLayout.VERTICAL
 
-        val layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val layoutParams =
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         exercisesLinearLayout.layoutParams = layoutParams
 
         for (i in exercises.size - 1 downTo 0) {
             val nameExercise = TextView(activity)
             nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercises[i].typeExercise, activity as Activity)
             nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
-            nameExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP, (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
+            nameExercise.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
+            )
 
             val durationExercise = TextView(activity)
             TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)
 
             if (exercises[i].durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
-                durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_minutes_txt),
-                        exercises[i].durationExercise.toString())
+                durationExercise.text = String.format(
+                    getString(R.string.user_details_duration_exercise_minutes_txt),
+                    exercises[i].durationExercise.toString()
+                )
             } else {
                 val hours = exercises[i].durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
                 val minutes = exercises[i].durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
 
-                durationExercise.text = String.format(getString(R.string.user_details_duration_exercise_hours_txt), hours.toString(), minutes.toString())
+                durationExercise.text = String.format(
+                    getString(R.string.user_details_duration_exercise_hours_txt),
+                    hours.toString(),
+                    minutes.toString()
+                )
             }
 
-            durationExercise.setTextSize(TypedValue.COMPLEX_UNIT_SP, (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density)
+            durationExercise.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
+            )
 
             exercisesLinearLayout.addView(nameExercise, 0)
             exercisesLinearLayout.addView(durationExercise, 1)

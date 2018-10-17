@@ -8,9 +8,10 @@ import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
 import javax.inject.Inject
 
-class UpdateProgram @Inject constructor(threadExecutor: ThreadExecutor,
-                                        private var programRepository: ProgramRepository)
-    : UseCase<Boolean, UpdateProgram.Params>(threadExecutor) {
+class UpdateProgram @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var programRepository: ProgramRepository
+) : UseCase<Boolean, UpdateProgram.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: UpdateProgram.Params): Observable<Boolean> {
         return programRepository.updateProgram(params.program, params.exercisesToBeRemoved)

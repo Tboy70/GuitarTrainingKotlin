@@ -1,9 +1,9 @@
 package thomas.example.com.guitarTrainingKotlin.ui.adapter
 
 import android.app.Activity
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper

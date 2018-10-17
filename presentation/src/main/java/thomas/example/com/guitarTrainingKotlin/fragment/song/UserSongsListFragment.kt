@@ -1,23 +1,23 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.song
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
@@ -62,17 +62,21 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
 
         this.idUser = userSongsListViewModel.getIdUser(activity as UserPanelActivity)
 
-        userSongsListViewModel.finishRetrieveSongs.observe(this, Observer<Boolean> {
+        userSongsListViewModel.finishRetrieveSongs.observeSafe(this) {
             if (it == true) {
                 displayRetrievedSongs(userSongsListViewModel)
             } else {
-                errorRendererComponent.requestRenderError(userSongsListViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                errorRendererComponent.requestRenderError(
+                    userSongsListViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
             }
-        })
+        }
 
-        userSongsListViewModel.refreshList.observe(this, Observer<Boolean> {
+        userSongsListViewModel.refreshList.observeSafe(this) {
             swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
-        })
+        }
 
         handleAddNewSong()
     }
@@ -98,7 +102,8 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
 
     private fun handleAddNewSong() {
         fragment_user_songs_floating_action_button.setOnClickListener {
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
+            val host =
+                activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
             NavHostFragment.findNavController(host).navigate(R.id.add_song, null, null)
         }
     }

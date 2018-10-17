@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.song
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.interactor.song.CreateSong
 import thomas.example.com.model.Song
 import javax.inject.Inject
@@ -21,19 +21,20 @@ class UserSongCreationViewModel @Inject constructor(private var createSong: Crea
             song.idInstrument = instrumentMode
 
             createSong.execute(
-                    onComplete = {
+                onComplete = {
 
-                    },
-                    onError = {
-                        errorThrowable = it
-                        creationSongSuccess.postValue(false)
+                },
+                onError = {
+                    errorThrowable = it
+                    creationSongSuccess.postValue(false)
 
-                    },
-                    onNext = {
-                        if (!it.isEmpty()) {
-                            creationSongSuccess.postValue(true)
-                        }
-                    }, params = CreateSong.Params.toCreate(song))
+                },
+                onNext = {
+                    if (!it.isEmpty()) {
+                        creationSongSuccess.postValue(true)
+                    }
+                }, params = CreateSong.Params.toCreate(song)
+            )
         } else {
             creationSongNotLaunch.postValue(true)
         }

@@ -6,9 +6,10 @@ import thomas.example.com.interactor.UseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class SetInstrumentsModeInSharedPrefs @Inject constructor(threadExecutor: ThreadExecutor,
-                                                          private var userRepository: UserRepository)
-    : UseCase<Boolean, Unit>(threadExecutor) {
+class SetInstrumentsModeInSharedPrefs @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var userRepository: UserRepository
+) : UseCase<Boolean, Unit>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Unit): Observable<Boolean> {
         return userRepository.setInstrumentModeInSharedPrefs()

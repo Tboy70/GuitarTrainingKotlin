@@ -1,8 +1,8 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.util.SparseArray
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.interactor.program.CreateProgram
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
@@ -37,17 +37,18 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
             }
 
             createProgram.execute(
-                    onComplete = {
-                    },
-                    onError = {
-                        errorThrowable = it
-                        creationProgramSuccess.postValue(false)
-                    },
-                    onNext = {
-                        if (it) {
-                            creationProgramSuccess.postValue(true)
-                        }
-                    }, params = CreateProgram.Params.toCreate(program, exercisesList))
+                onComplete = {
+                },
+                onError = {
+                    errorThrowable = it
+                    creationProgramSuccess.postValue(false)
+                },
+                onNext = {
+                    if (it) {
+                        creationProgramSuccess.postValue(true)
+                    }
+                }, params = CreateProgram.Params.toCreate(program, exercisesList)
+            )
         } else {
             creationProgramNotLaunch.postValue(true)
         }

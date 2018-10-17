@@ -6,9 +6,10 @@ import thomas.example.com.interactor.UseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class SuppressAccount @Inject constructor(threadExecutor: ThreadExecutor,
-                                          private var userRepository: UserRepository)
-    : UseCase<Boolean, SuppressAccount.Params>(threadExecutor) {
+class SuppressAccount @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var userRepository: UserRepository
+) : UseCase<Boolean, SuppressAccount.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<Boolean> {
         return userRepository.suppressAccount(params.idUser)

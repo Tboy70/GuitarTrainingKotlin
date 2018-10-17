@@ -1,6 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.di.module.activity
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity

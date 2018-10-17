@@ -1,15 +1,15 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.exercise
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
 import javax.inject.Inject
@@ -52,7 +52,7 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
         setDurationUI(fragment_exercise_scale_duration, fragment_exercise_scale_duration_left)
         setToolbar(R.string.toolbar_title_exercise_scale)
 
-        exerciseScaleViewModel.finishRandom.observe(this, Observer<Boolean> {
+        exerciseScaleViewModel.finishRandom.observeSafe(this) {
             val notesArray = this.resources.getStringArray(R.array.list_notes)
             mSelectedItem = notesArray[exerciseScaleViewModel.scaleNoteValue]
             displaySelectedChoice(mSelectedItem, NOTE_SELECTION)
@@ -60,7 +60,7 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
             val scalesArray = this.resources.getStringArray(R.array.list_scales)
             mSelectedItem = scalesArray[exerciseScaleViewModel.scaleToneValue]
             displaySelectedChoice(mSelectedItem, SCALE_SELECTION)
-        })
+        }
     }
 
     private fun handleClickNoteButton() {
@@ -109,17 +109,23 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
             }
         }
 
-        materialDialogComponent.showSingleChoiceDialog(title, items, mSelectedItem, R.color.colorPrimary, true, object : SingleChoiceMaterialDialogListener {
+        materialDialogComponent.showSingleChoiceDialog(
+            title,
+            items,
+            mSelectedItem,
+            R.color.colorPrimary,
+            true,
+            object : SingleChoiceMaterialDialogListener {
 
-            override fun onItemSelected(selectedItem: String) {
-                mSelectedItem = selectedItem
-                displaySelectedChoice(mSelectedItem, typeSelection)
-            }
+                override fun onItemSelected(selectedItem: String) {
+                    mSelectedItem = selectedItem
+                    displaySelectedChoice(mSelectedItem, typeSelection)
+                }
 
-            override fun onCancelClick() {}
+                override fun onCancelClick() {}
 
-            override fun getPositionSelected(which: Int) {}
-        })
+                override fun getPositionSelected(which: Int) {}
+            })
     }
 
     private fun displaySelectedChoice(selectedItem: String?, typeSelection: Int) {

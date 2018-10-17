@@ -14,11 +14,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SongRepositoryImpl @Inject constructor(private val songClient: SongClient,
-                                             private val apiClient: APIClient,
-                                             private val songEntityDataMapper: SongEntityDataMapper,
-                                             private val scoreFeedbackEntityDataMapper: ScoreFeedbackEntityDataMapper,
-                                             private val scoreEntityDataMapper: ScoreEntityDataMapper) : SongRepository {
+class SongRepositoryImpl @Inject constructor(
+    private val songClient: SongClient,
+    private val apiClient: APIClient,
+    private val songEntityDataMapper: SongEntityDataMapper,
+    private val scoreFeedbackEntityDataMapper: ScoreFeedbackEntityDataMapper,
+    private val scoreEntityDataMapper: ScoreEntityDataMapper
+) : SongRepository {
 
     override fun retrieveSongsListByUserId(idUser: String): Observable<List<Song>> {
         return Observable.defer {

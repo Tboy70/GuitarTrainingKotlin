@@ -1,13 +1,13 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import androidx.navigation.fragment.NavHostFragment
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_program.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.exercise.AbstractExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
@@ -21,8 +21,6 @@ class ProgramActivity : BaseActivity() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var programViewModel: ProgramViewModel
 
-    private lateinit var host: NavHostFragment
-
     private lateinit var exercisesOfProgram: List<Exercise>
     private var rankExercise = 0
 
@@ -32,8 +30,6 @@ class ProgramActivity : BaseActivity() {
 
         programViewModel = ViewModelProviders.of(this, viewModelFactory).get(ProgramViewModel::class.java)
 
-        host = supportFragmentManager.findFragmentById(R.id.program_nav_host_fragment) as NavHostFragment
-
         exercisesOfProgram = ArrayList()
 
         val extras = intent.extras
@@ -42,13 +38,13 @@ class ProgramActivity : BaseActivity() {
             programViewModel.getProgramById(extras.getString(ConstValues.ID_PROGRAM))
         }
 
-        programViewModel.finishRetrieveProgram.observe(this, Observer<Boolean> {
+        programViewModel.finishRetrieveProgram.observeSafe(this) {
             if (it == true) {
                 val userProgramObjectWrapper = programViewModel.userProgramObjectWrapper
                 exercisesOfProgram = userProgramObjectWrapper.program.exercises
                 startExercise(rankExercise)
             }
-        })
+        }
     }
 
     fun startExercise(rankExercise: Int) {
@@ -59,9 +55,9 @@ class ProgramActivity : BaseActivity() {
             val bundle = Bundle()
             bundle.putInt(AbstractExerciseFragment.RANK_EXERCISE, rankExercise)
             bundle.putInt(AbstractExerciseFragment.DURATION_EXERCISE, rightExercise.durationExercise)
-            NavHostFragment.findNavController(host).navigate(idFragmentToLaunch, bundle, null)
+            findNavController(R.id.program_nav_host_fragment).navigate(idFragmentToLaunch, bundle, null)
         } else {
-            NavHostFragment.findNavController(host).navigate(R.id.launcher_end_program_fragment, null, null)
+            findNavController(R.id.program_nav_host_fragment).navigate(R.id.launcher_end_program_fragment, null, null)
         }
     }
 

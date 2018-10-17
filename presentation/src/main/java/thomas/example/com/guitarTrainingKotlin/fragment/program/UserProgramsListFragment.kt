@@ -1,23 +1,23 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.program
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
@@ -48,7 +48,8 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
         recyclerView = rootView.findViewById(R.id.fragment_user_programs_list_recycler_view)
         swipeRefreshLayout = rootView.findViewById(R.id.fragment_user_programs_list_swipe_refresh_layout)
 
-        userProgramsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramsListViewModel::class.java)
+        userProgramsListViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(UserProgramsListViewModel::class.java)
 
         userProgramsListAdapter.setUserProgramsListAdapter(this)
 
@@ -62,17 +63,21 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
         this.idUser = userProgramsListViewModel.getIdUser(activity as UserPanelActivity)
 
-        userProgramsListViewModel.finishRetrievePrograms.observe(this, Observer<Boolean> {
+        userProgramsListViewModel.finishRetrievePrograms.observeSafe(this) {
             if (it == true) {
                 displayRetrievedPrograms(userProgramsListViewModel)
             } else {
-                errorRendererComponent.requestRenderError(userProgramsListViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                errorRendererComponent.requestRenderError(
+                    userProgramsListViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
             }
-        })
+        }
 
-        userProgramsListViewModel.refreshList.observe(this, Observer<Boolean> {
+        userProgramsListViewModel.refreshList.observeSafe(this) {
             swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
-        })
+        }
 
         handleAddNewProgramButton()
     }
@@ -96,8 +101,8 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
     private fun handleAddNewProgramButton() {
         fragment_user_programs_floating_action_button.setOnClickListener {
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.add_program, null, null)
+            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as View
+            findNavController(host).navigate(R.id.add_program, null, null)
         }
     }
 

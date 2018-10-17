@@ -1,8 +1,5 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.program
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -12,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
@@ -22,6 +21,7 @@ import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -54,7 +54,8 @@ class UserProgramUpdateFragment : BaseFragment() {
     private var exercisesToBeRemoved: MutableList<Exercise> = ArrayList()
 
     companion object {
-        const val PROGRAM_OBJECT_WRAPPER_KEY = "thomas.example.com.guitarTrainingKotlin.fragment.program.PROGRAM_OBJECT_WRAPPER_KEY"
+        const val PROGRAM_OBJECT_WRAPPER_KEY =
+            "thomas.example.com.guitarTrainingKotlin.fragment.program.PROGRAM_OBJECT_WRAPPER_KEY"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,7 +65,8 @@ class UserProgramUpdateFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userProgramUpdateViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramUpdateViewModel::class.java)
+        userProgramUpdateViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(UserProgramUpdateViewModel::class.java)
 
         exercisesArray = getInstrumentMode()
 
@@ -82,16 +84,20 @@ class UserProgramUpdateFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        userProgramUpdateViewModel.updateProgramSuccess.observe(this, Observer<Boolean> {
+        userProgramUpdateViewModel.updateProgramSuccess.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
             } else if (it != null && it == false) {
                 if (userProgramUpdateViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(userProgramUpdateViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                    errorRendererComponent.requestRenderError(
+                        userProgramUpdateViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
+                    )
                 }
             }
-        })
+        }
     }
 
     private fun initEditText() {
@@ -101,32 +107,43 @@ class UserProgramUpdateFragment : BaseFragment() {
 
     private fun initExercisesList() {
         for (exercise in programObjectWrapper?.program?.exercises.orEmpty()) {
-            val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(object : ExercisesUIComponentListener {
+            val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(
+                object : ExercisesUIComponentListener {
 
-                override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
-                    val title = getString(R.string.generic_exercise_choice_creation_program)
-                    val items = exercisesArray.toList()
+                    override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
+                        val title = getString(R.string.generic_exercise_choice_creation_program)
+                        val items = exercisesArray.toList()
 
-                    materialDialogComponent.showSingleChoiceDialog(title, items, selectedItem, R.color.colorPrimary, true, object : SingleChoiceMaterialDialogListener {
-                        override fun onItemSelected(selectedItem: String) {
-                            this@UserProgramUpdateFragment.selectedItem = selectedItem
-                            buttonTypeExercise.text = selectedItem
-                        }
+                        materialDialogComponent.showSingleChoiceDialog(
+                            title,
+                            items,
+                            selectedItem,
+                            R.color.colorPrimary,
+                            true,
+                            object : SingleChoiceMaterialDialogListener {
+                                override fun onItemSelected(selectedItem: String) {
+                                    this@UserProgramUpdateFragment.selectedItem = selectedItem
+                                    buttonTypeExercise.text = selectedItem
+                                }
 
-                        override fun getPositionSelected(which: Int) {
-                        }
+                                override fun getPositionSelected(which: Int) {
+                                }
 
-                        override fun onCancelClick() {
-                        }
+                                override fun onCancelClick() {
+                                }
 
-                    })
-                }
+                            })
+                    }
 
-                override fun onRemoveView() {
-                    exercisesToBeRemoved.add(exercise)
-                }
+                    override fun onRemoveView() {
+                        exercisesToBeRemoved.add(exercise)
+                    }
 
-            }, ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as UserProgramActivity), exercise.durationExercise.toString(), ExerciseUIComponent.UPDATE_STATE)
+                },
+                ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as UserProgramActivity),
+                exercise.durationExercise.toString(),
+                ExerciseUIComponent.UPDATE_STATE
+            )
 
             fragment_user_program_update_exercises_list.addView(horizontalLayoutContainingAllElements)
         }
@@ -134,7 +151,11 @@ class UserProgramUpdateFragment : BaseFragment() {
 
     private fun getInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return if (prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
+        return if (prefs.getString(
+                ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
+                ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+            ) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+        ) {
             resources.getStringArray(R.array.list_exercises_guitar)
         } else {
             resources.getStringArray(R.array.list_exercises_bass)
@@ -144,33 +165,49 @@ class UserProgramUpdateFragment : BaseFragment() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_program_update_validate_button.setOnClickListener {
 
-            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_update_program_title), getString(R.string.dialog_update_program_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_update_program_title), getString(R.string.dialog_update_program_content), R.color.colorPrimary)
+            materialDialogComponent.showMultiChoiceDialog(
+                getString(R.string.dialog_update_program_title),
+                getString(R.string.dialog_update_program_confirm_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_update_program_title),
+                            getString(R.string.dialog_update_program_content),
+                            R.color.colorPrimary
+                        )
 
-                    val currentProgram = programObjectWrapper?.program
+                        val currentProgram = programObjectWrapper?.program
 
-                    for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
+                        for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
 
-                        val exerciseName = (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(0) as Button).text.toString()
-                        val exerciseDurationValue = (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(1) as EditText).text.toString()
+                            val exerciseName =
+                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
+                                    0
+                                ) as LinearLayout).getChildAt(0) as Button).text.toString()
+                            val exerciseDurationValue =
+                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
+                                    0
+                                ) as LinearLayout).getChildAt(1) as EditText).text.toString()
 
-                        currentProgram?.exercises?.get(i)?.typeExercise = ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
-                        currentProgram?.exercises?.get(i)?.durationExercise = exerciseDurationValue.toInt()
-                    }
+                            currentProgram?.exercises?.get(i)?.typeExercise =
+                                    ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
+                            currentProgram?.exercises?.get(i)?.durationExercise = exerciseDurationValue.toInt()
+                        }
 
-                    currentProgram?.exercises?.removeAll(exercisesToBeRemoved)
+                        currentProgram?.exercises?.removeAll(exercisesToBeRemoved)
 
-                    if (currentProgram != null) {
-                        userProgramUpdateViewModel.checkInformationAndValidateUpdate(
+                        if (currentProgram != null) {
+                            userProgramUpdateViewModel.checkInformationAndValidateUpdate(
                                 currentProgram.idProgram,
                                 fragment_user_program_update_name.text.toString(),
                                 fragment_user_program_update_description.text.toString(),
                                 currentProgram.exercises,
-                                exercisesToBeRemoved)
+                                exercisesToBeRemoved
+                            )
+                        }
                     }
-                }
-            })
+                })
         }
     }
 }

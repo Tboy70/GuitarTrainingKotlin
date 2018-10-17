@@ -1,3 +1,3 @@
 package thomas.example.com.data.entity
 
-data class UserEntity(var idUser: String = "", var pseudoUser: String = "", var emailUser: String = "", var passwordUser: String = "")
+data class UserEntity(val idUser: String?, val pseudoUser: String, val emailUser: String?, val passwordUser: String?)

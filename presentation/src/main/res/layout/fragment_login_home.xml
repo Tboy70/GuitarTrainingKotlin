@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/padding_start_end"
-    android:paddingEnd="@dimen/padding_start_end">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:paddingStart="@dimen/padding_start_end"
+                                                   android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
-        android:id="@+id/fragment_create_account_title"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="@string/login_home_title"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_very_huge"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/fragment_create_account_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/login_home_title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_very_huge"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/fragment_login_home_guideline_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_2"
-        app:layout_constraintGuide_percent="0.33"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title" />
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_login_home_guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_2"
+            app:layout_constraintGuide_percent="0.33"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title"/>
 
     <LinearLayout
-        android:id="@+id/fragment_login_home_info_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title">
+            android:id="@+id/fragment_login_home_info_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_guideline_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title">
 
         <EditText
-            android:id="@+id/fragment_login_home_username"
-            android:layout_width="@dimen/edit_text_width"
-            android:layout_height="wrap_content"
-            android:hint="@string/login_home_hint_username"
-            android:inputType="text" />
+                android:id="@+id/fragment_login_home_username"
+                android:layout_width="@dimen/edit_text_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_home_hint_username"
+                android:inputType="text"/>
 
         <EditText
-            android:id="@+id/fragment_login_home_password"
-            android:layout_width="@dimen/edit_text_width"
-            android:layout_height="wrap_content"
-            android:hint="@string/login_home_hint_password"
-            android:inputType="textPassword" />
+                android:id="@+id/fragment_login_home_password"
+                android:layout_width="@dimen/edit_text_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_home_hint_password"
+                android:inputType="textPassword"/>
 
     </LinearLayout>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/fragment_login_home_guideline_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_percent="0.66"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_guideline_1" />
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_login_home_guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintGuide_percent="0.66"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_guideline_1"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_info_layout">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_home_info_layout">
 
         <Button
-            android:id="@+id/fragment_login_home_validate_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginBottom="@dimen/space_medium"
-            android:background="@drawable/button_drawable"
-            android:text="@string/generic_button_validate"
-            android:textColor="@android:color/white" />
+                android:id="@+id/fragment_login_home_validate_button"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginBottom="@dimen/space_medium"
+                android:background="@drawable/button_drawable"
+                android:text="@string/generic_button_validate"
+                android:textColor="@android:color/white"/>
 
         <TextView
-            android:id="@+id/fragment_login_home_forgot_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_small"
-            android:gravity="center"
-            android:text="@string/login_forgot_password"
-            android:textColor="@color/colorPrimary" />
+                android:id="@+id/fragment_login_home_forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_small"
+                android:gravity="center"
+                android:text="@string/login_forgot_password"
+                android:textColor="@color/colorPrimary"/>
 
         <TextView
-            android:id="@+id/fragment_login_home_create_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/login_create_account"
-            android:textColor="@color/colorPrimary" />
+                android:id="@+id/fragment_login_home_create_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/login_create_account"
+                android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

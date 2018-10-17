@@ -1,8 +1,5 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.user
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -10,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
@@ -17,6 +16,7 @@ import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSettingsViewModel
 import javax.inject.Inject
@@ -43,7 +43,8 @@ class UserSettingsFragment : BaseFragment() {
         userSettingsViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserSettingsViewModel::class.java)
 
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val currentInstrumentMode = prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
+        val currentInstrumentMode =
+            prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
         val idUser = prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
 
         if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
@@ -66,14 +67,20 @@ class UserSettingsFragment : BaseFragment() {
 
         suppress_account.setOnClickListener {
             materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
-                    getString(R.string.dialog_suppress_account_confirm_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    materialDialogComponent.showProgressDialog(getString(R.string.dialog_suppress_account_title), getString(R.string.dialog_suppress_account_content), R.color.colorPrimary)
-                    if (!idUser.isEmpty()) {
-                        userSettingsViewModel.suppressAccount(idUser)
+                getString(R.string.dialog_suppress_account_confirm_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_suppress_account_title),
+                            getString(R.string.dialog_suppress_account_content),
+                            R.color.colorPrimary
+                        )
+                        if (!idUser.isEmpty()) {
+                            userSettingsViewModel.suppressAccount(idUser)
+                        }
                     }
-                }
-            })
+                })
         }
     }
 
@@ -83,20 +90,28 @@ class UserSettingsFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        userSettingsViewModel.finishSetInstrumentsModeInSharedPrefs.observe(this, Observer<Boolean> {
+        userSettingsViewModel.finishSetInstrumentsModeInSharedPrefs.observeSafe(this) {
             if (it == false) {
-                errorRendererComponent.requestRenderError(userSettingsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                errorRendererComponent.requestRenderError(
+                    userSettingsViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
             }
-        })
+        }
 
-        userSettingsViewModel.finishSuppressAccount.observe(this, Observer<Boolean> {
+        userSettingsViewModel.finishSuppressAccount.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it == true) {
                 activity?.finish()
             } else {
-                errorRendererComponent.requestRenderError(userSettingsViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
+                errorRendererComponent.requestRenderError(
+                    userSettingsViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
             }
-        })
+        }
     }
 
     private fun handleSwitch(switch: Switch, isChecked: Boolean) {

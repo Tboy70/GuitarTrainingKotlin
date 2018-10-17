@@ -32,8 +32,10 @@ class TimerDialogFragment : DialogFragment() {
 
     companion object {
 
-        private const val DIALOG_FRAGMENT_TITLE = "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_TITLE"
-        private const val DIALOG_FRAGMENT_DURATION_EXERCISE = "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_DURATION_EXERCISE"
+        private const val DIALOG_FRAGMENT_TITLE =
+            "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_TITLE"
+        private const val DIALOG_FRAGMENT_DURATION_EXERCISE =
+            "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_DURATION_EXERCISE"
 
         fun newInstance(dialogTitle: String, durationExercise: Long): TimerDialogFragment {
 

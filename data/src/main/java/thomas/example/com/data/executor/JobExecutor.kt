@@ -14,8 +14,10 @@ class JobExecutor @Inject constructor() : ThreadExecutor {
 
     init {
         val workQueue = LinkedBlockingQueue<Runnable>()
-        this.threadPoolExecutor = ThreadPoolExecutor(INITIAL_POOL_SIZE, MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME.toLong(), KEEP_ALIVE_TIME_UNIT, workQueue)
+        this.threadPoolExecutor = ThreadPoolExecutor(
+            INITIAL_POOL_SIZE, MAX_POOL_SIZE,
+            KEEP_ALIVE_TIME.toLong(), KEEP_ALIVE_TIME_UNIT, workQueue
+        )
     }
 
     override fun execute(runnable: Runnable) {

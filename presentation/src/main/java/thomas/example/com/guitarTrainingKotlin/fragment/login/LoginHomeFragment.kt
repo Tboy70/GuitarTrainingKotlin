@@ -1,20 +1,20 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.login
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
@@ -46,36 +46,52 @@ class LoginHomeFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        loginHomeViewModel.finishLoading.observe(this, Observer<Boolean> {
-            if (it != null) {
-                materialDialogComponent.dismissDialog()
-            }
-        })
 
-        loginHomeViewModel.connectSucceed.observe(this, Observer<Boolean> {
-            if (it != null && it == true) {
-                connectSuccess()
-            } else if (it != null && it == false) {
+        loginHomeViewModel.retrievedUser.observeSafe(this) {
+            connectSuccess()
+        }
+
+        loginHomeViewModel.viewState.observeSafe(this) {
+            if (it.displayingLoading) {
+                materialDialogComponent.showProgressDialog(
+                    getString(R.string.dialog_login_title),
+                    getString(R.string.dialog_login_content),
+                    R.color.colorPrimary
+                )
+            } else {
                 materialDialogComponent.dismissDialog()
-                if (loginHomeViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(loginHomeViewModel.errorThrowable as Throwable, ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR, view)
-                }
             }
-        })
+        }
+
+        loginHomeViewModel.errorEvent.observeSafe(this) {
+            materialDialogComponent.dismissDialog()
+            if (loginHomeViewModel.errorThrowable != null) {
+                errorRendererComponent.requestRenderError(
+                    loginHomeViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
+            }
+        }
     }
 
     private fun handleClickValidateLogin() {
         fragment_login_home_validate_button.setOnClickListener {
             KeyboardUtils.hideKeyboard(this.activity as LoginActivity)
-            materialDialogComponent.showProgressDialog(getString(R.string.dialog_login_title), getString(R.string.dialog_login_content), R.color.colorPrimary)
-            loginHomeViewModel.connectUser(fragment_login_home_username.text.toString(), fragment_login_home_password.text.toString())
+            loginHomeViewModel.connectUser(
+                fragment_login_home_username.text.toString(),
+                fragment_login_home_password.text.toString()
+            )
         }
     }
 
     private fun handleClickCreateAccount() {
         fragment_login_home_create_account.setOnClickListener {
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.login_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.fragment_create_account, null, null)
+            findNavController(activity?.findViewById(R.id.login_nav_host_fragment) as View).navigate(
+                R.id.fragment_create_account,
+                null,
+                null
+            )
         }
     }
 

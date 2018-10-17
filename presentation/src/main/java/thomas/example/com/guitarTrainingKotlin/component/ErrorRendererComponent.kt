@@ -3,10 +3,11 @@ package thomas.example.com.guitarTrainingKotlin.component
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.di.PerActivity
 import thomas.example.com.guitarTrainingKotlin.utils.ErrorUtils
@@ -26,11 +27,15 @@ class ErrorRendererComponent @Inject constructor(private val activity: BaseActiv
     }
 
     private fun displayErrorInFragmentView(throwable: Throwable, context: Context, view: View) {
-        val snackBar = Snackbar.make(view, ErrorUtils.translateException(context.applicationContext, throwable), Snackbar.LENGTH_LONG)
+        val snackBar = Snackbar.make(
+            view,
+            ErrorUtils.translateException(context.applicationContext, throwable),
+            Snackbar.LENGTH_LONG
+        )
         snackBar.setActionTextColor(Color.WHITE)
         snackBar.view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
         val yourSnackBarView = snackBar.view
-        val textView = yourSnackBarView.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        val textView = yourSnackBarView.findViewById<View>(R.id.snackbar_text) as TextView
         textView.maxLines = 3
         snackBar.show()
     }
@@ -41,18 +46,22 @@ class ErrorRendererComponent @Inject constructor(private val activity: BaseActiv
             snackBar.setActionTextColor(Color.WHITE)
             snackBar.view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
             val yourSnackBarView = snackBar.view
-            val textView = yourSnackBarView.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+            val textView = yourSnackBarView.findViewById<View>(R.id.snackbar_text) as TextView
             textView.maxLines = 3
             snackBar.show()
         }
     }
 
     fun displayError(throwable: Throwable, activity: Activity, activityViewId: Int) {
-        val snackBar = Snackbar.make(activity.findViewById(activityViewId), ErrorUtils.translateException(activity.applicationContext, throwable), Snackbar.LENGTH_LONG)
+        val snackBar = Snackbar.make(
+            activity.findViewById(activityViewId),
+            ErrorUtils.translateException(activity.applicationContext, throwable),
+            Snackbar.LENGTH_LONG
+        )
         snackBar.setActionTextColor(Color.WHITE)
         snackBar.view.setBackgroundColor(ContextCompat.getColor(activity, android.R.color.holo_red_light))
         val yourSnackBarView = snackBar.view
-        val textView = yourSnackBarView.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        val textView = yourSnackBarView.findViewById<View>(R.id.snackbar_text) as TextView
         textView.maxLines = 3
         snackBar.show()
         throwable.printStackTrace()
@@ -63,7 +72,7 @@ class ErrorRendererComponent @Inject constructor(private val activity: BaseActiv
         snackBar.setActionTextColor(Color.WHITE)
         snackBar.view.setBackgroundColor(ContextCompat.getColor(activity, android.R.color.holo_red_light))
         val yourSnackBarView = snackBar.view
-        val textView = yourSnackBarView.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        val textView = yourSnackBarView.findViewById<View>(R.id.snackbar_text) as TextView
         textView.maxLines = 3
         snackBar.show()
     }

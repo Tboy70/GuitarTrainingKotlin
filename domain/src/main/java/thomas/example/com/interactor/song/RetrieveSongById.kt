@@ -7,9 +7,10 @@ import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
-class RetrieveSongById @Inject constructor(threadExecutor: ThreadExecutor,
-                                           private var songRepository: SongRepository)
-    : UseCase<Song, RetrieveSongById.Params>(threadExecutor) {
+class RetrieveSongById @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var songRepository: SongRepository
+) : UseCase<Song, RetrieveSongById.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<Song> {
         return songRepository.retrieveSongById(params.idSong)

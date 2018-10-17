@@ -10,9 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl @Inject constructor(private val userEntityDataMapper: UserEntityDataMapper,
-                                             private val contentClient: ContentClient,
-                                             private val apiClient: APIClient) : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val userEntityDataMapper: UserEntityDataMapper,
+    private val contentClient: ContentClient,
+    private val apiClient: APIClient
+) : UserRepository {
 
     /**
      * No need of try / catch anymore !

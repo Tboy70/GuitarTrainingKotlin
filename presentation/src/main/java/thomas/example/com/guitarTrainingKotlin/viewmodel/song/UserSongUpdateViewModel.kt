@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.song
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.interactor.song.UpdateSong
 import thomas.example.com.model.Song
 import javax.inject.Inject
@@ -20,18 +20,19 @@ class UserSongUpdateViewModel @Inject constructor(private var updateSong: Update
             song.artistSong = artistSong
 
             updateSong.execute(
-                    onComplete = {
+                onComplete = {
 
-                    },
-                    onError = {
-                        errorThrowable = it
-                        updateSongSuccess.postValue(false)
-                    },
-                    onNext = {
-                        if (it) {
-                            updateSongSuccess.postValue(true)
-                        }
-                    }, params = UpdateSong.Params.toUpdate(song))
+                },
+                onError = {
+                    errorThrowable = it
+                    updateSongSuccess.postValue(false)
+                },
+                onNext = {
+                    if (it) {
+                        updateSongSuccess.postValue(true)
+                    }
+                }, params = UpdateSong.Params.toUpdate(song)
+            )
         }
     }
 

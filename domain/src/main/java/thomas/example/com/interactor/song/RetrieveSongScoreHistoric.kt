@@ -7,9 +7,10 @@ import thomas.example.com.model.Score
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
-class RetrieveSongScoreHistoric @Inject constructor(threadExecutor: ThreadExecutor,
-                                                    private var songRepository: SongRepository)
-    : UseCase<List<Score>, RetrieveSongScoreHistoric.Params>(threadExecutor) {
+class RetrieveSongScoreHistoric @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var songRepository: SongRepository
+) : UseCase<List<Score>, RetrieveSongScoreHistoric.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<List<Score>> {
         return songRepository.retrieveSongScoreHistoric(params.idSong)

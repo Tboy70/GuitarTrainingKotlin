@@ -9,7 +9,7 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
 
     private var moduleSharedPrefs: ModuleSharedPrefs = moduleSharedPrefs
 
-    fun setIdInSharedPrefs(idUser: String): Observable<Boolean> {
+    fun setIdInSharedPrefs(idUser: String?): Observable<Boolean> {
         return try {
             moduleSharedPrefs.setIdUserInSharedPrefs(idUser)
             Observable.just(true)

@@ -6,9 +6,10 @@ import thomas.example.com.interactor.UseCase
 import thomas.example.com.repository.ProgramRepository
 import javax.inject.Inject
 
-class RemoveProgram @Inject constructor(threadExecutor: ThreadExecutor,
-                                        private var programRepository: ProgramRepository)
-    : UseCase<Boolean, RemoveProgram.Params>(threadExecutor) {
+class RemoveProgram @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var programRepository: ProgramRepository
+) : UseCase<Boolean, RemoveProgram.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: RemoveProgram.Params): Observable<Boolean> {
         return programRepository.removeProgram(params.idProgram)

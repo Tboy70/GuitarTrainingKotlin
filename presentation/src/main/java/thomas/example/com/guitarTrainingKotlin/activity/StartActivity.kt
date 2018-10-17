@@ -1,11 +1,11 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
 import thomas.example.com.interactor.sharedprefs.GetIdInSharedPrefs
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class StartActivity : BaseActivity() {
         startViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartViewModel::class.java)
 
         /** Check the user ID in shared prefs to know what should be the right activity to launch. **/
-        startViewModel.idUserPref.observe(this, Observer<String> {
+        startViewModel.idUserPref.observeSafe(this) {
             if (it.equals(GetIdInSharedPrefs.ID_USER_DEFAULT)) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
@@ -33,7 +33,7 @@ class StartActivity : BaseActivity() {
                 startActivity(intent)
                 finish()
             }
-        })
+        }
     }
 
     override fun onStart() {

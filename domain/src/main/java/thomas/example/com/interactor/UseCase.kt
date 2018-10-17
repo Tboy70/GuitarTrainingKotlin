@@ -12,10 +12,12 @@ abstract class UseCase<ReturnType, Params> protected constructor(private val thr
     /**
      * Unit -> Void in java
      */
-    fun execute(onComplete: (() -> Unit), onError: ((Throwable) -> Unit), onNext: ((ReturnType) -> Unit), params: Params) {
+    fun execute(onComplete: (() -> Unit), onError: ((Throwable) -> Unit), onNext: ((ReturnType) -> Unit), params: Params): Disposable? {
         disposable = buildUseCaseObservable(params)
-                .subscribeOn(Schedulers.from(threadExecutor))
-                .subscribe(onNext, onError, onComplete)
+            .subscribeOn(Schedulers.from(threadExecutor))
+            .subscribe(onNext, onError, onComplete)
+
+        return disposable
     }
 
     fun unsubscribe() {

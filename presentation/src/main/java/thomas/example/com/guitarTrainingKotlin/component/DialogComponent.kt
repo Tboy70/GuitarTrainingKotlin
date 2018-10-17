@@ -12,7 +12,8 @@ import javax.inject.Inject
 class DialogComponent @Inject constructor() {
 
     fun showTimerDialog(activity: Activity, durationExercise: Long, onTimerDialogDismiss: OnTimerDialogDismiss) {
-        val timerDialogFragment = TimerDialogFragment.newInstance(activity.getString(R.string.timer_title), durationExercise)
+        val timerDialogFragment =
+            TimerDialogFragment.newInstance(activity.getString(R.string.timer_title), durationExercise)
         timerDialogFragment.setTimerDialogDismissListener(onTimerDialogDismiss)
         timerDialogFragment.show(activity.fragmentManager, ConstantTags.DIALOG.tag)
     }

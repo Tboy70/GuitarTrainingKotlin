@@ -28,12 +28,12 @@
     <string name="dialog_create_account_content">Création du compte en cours. Veuillez patienter …</string>
 
     <string name="dialog_suppress_account_title">Suppression d\'un compte</string>
-    <string name="dialog_suppress_account_confirm_content">Êtes-vous sûr de vouloir supprimer le compte ? </string>
+    <string name="dialog_suppress_account_confirm_content">Êtes-vous sûr de vouloir supprimer le compte ?</string>
     <string name="dialog_suppress_account_content">Suppression du compte en cours. Veuillez patientez …</string>
 
     <string name="dialog_logout_title">Déconnexion</string>
     <string name="dialog_logout_content">Veuillez patienter</string>
-    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ? </string>
+    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ?</string>
 
     <string name="dialog_details_program_title">Chargement du programme …</string>
     <string name="dialog_details_program_content">Accorde toi en attendant …</string>
@@ -43,11 +43,12 @@
 
     <string name="dialog_update_program_title">Mise à jour du programme</string>
     <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?</string>
+    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?
+    </string>
 
     <string name="dialog_remove_program_title">Supression du programme</string>
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ? </string>
+    <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
 
     <string name="dialog_details_song_title">Chargement de la chanson</string>
     <string name="dialog_details_song_content">Accorde toi en attendant …</string>
@@ -118,8 +119,12 @@
     <!-- USER PROGRAMS LIST-->
     <string name="user_programs_list_no_program_text">Aucun programme disponible</string>
     <string name="user_programs_list_nb_exercises_text">Nombre d\'exercises : %s</string>
-    <string name="fragment_user_programs_list_total_duration_exercises_minutes_text">Durée totale du programme: %s minutes</string>
-    <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s heure(s) et %2$s minutes</string>
+    <string name="fragment_user_programs_list_total_duration_exercises_minutes_text">Durée totale du programme: %s
+        minutes
+    </string>
+    <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s
+        heure(s) et %2$s minutes
+    </string>
 
     <!-- USER SONGS LIST -->
     <string name="user_songs_list_score">Note : %1$s/5</string>
@@ -168,7 +173,9 @@
 
     <string name="end_program_quit_button">Quitter</string>
     <string name="end_program_title">Fin du programme</string>
-    <string name="end_program_description_text">Félicitations ! Vous êtes pavenu au bout du programme ! L\'entraînement est la clé, continuez ! :) </string>
+    <string name="end_program_description_text">Félicitations ! Vous êtes pavenu au bout du programme ! L\'entraînement
+        est la clé, continuez ! :)
+    </string>
 
 
     <!-- ======================================================================================= -->
@@ -177,7 +184,9 @@
 
     <!-- DIALOGS EXERCISE -->
     <string name="confirm_next_exercise_title">Attention</string>
-    <string name="confirm_next_exercise_content">Vous n\'avez pas encore fini cet exercise. Voulez-vous vraiment passer au suivant ? </string>
+    <string name="confirm_next_exercise_content">Vous n\'avez pas encore fini cet exercise. Voulez-vous vraiment passer
+        au suivant ?
+    </string>
 
     <!-- GENERIC EXERCISE -->
     <string name="generic_exercise_next_exercise_text">Exercice suivant</string>
@@ -192,17 +201,20 @@
     <string name="exercise_scale_title_text">Pratique des gammes</string>
     <string name="exercise_scale_dialog_choice_mode_text">Choix du mode</string>
     <string name="exercise_scale_dialog_choice_note_text">Choix de la note</string>
-    <string name="exercise_scale_description_text"><![CDATA[Entraine toi à improviser sur une gamme ! Choisi la gamme de ton choix ou sélectionne la aléatoirement à l\'aide des listes ci-dessous.]]></string>
+    <string name="exercise_scale_description_text">
+        <![CDATA[Entraine toi à improviser sur une gamme ! Choisi la gamme de ton choix ou sélectionne la aléatoirement à l\'aide des listes ci-dessous.]]></string>
 
     <!-- MODE EXERCISE -->
     <string name="exercise_mode_mode_text">Mode</string>
     <string name="exercise_mode_title_text">Pratique des modes</string>
     <string name="exercise_mode_dialog_choice_mode_text">Choix du mode</string>
-    <string name="exercise_mode_description_text">Entraîne toi à improviser avec un mode de ton choix ou choisi de manière aléatoire ! </string>
+    <string name="exercise_mode_description_text">Entraîne toi à improviser avec un mode de ton choix ou choisi de
+        manière aléatoire !
+    </string>
 
     <!-- PULL OFF / HAMMER ON EXERCISE -->
     <string name="exercise_pull_off_hammer_on_title_text">Pull off / Hammer on</string>
-    <string name="exercise_pull_off_hammer_on_description_text">Entraine toi aux hammer on et aux pull off ! </string>
+    <string name="exercise_pull_off_hammer_on_description_text">Entraine toi aux hammer on et aux pull off !</string>
 
     <!-- BEND / SLIDE EXERCISE -->
     <string name="exercise_bend_slide_title_text">Bend / Slide</string>
@@ -210,7 +222,8 @@
 
     <!-- BACK FORTH EXERCISE -->
     <string name="exercise_back_forth_title_text">Allers et retours</string>
-    <string name="exercise_back_forth_description_text">Entraine toi à faire des allers et retours à la main droite !</string>
+    <string name="exercise_back_forth_description_text">Entraine toi à faire des allers et retours à la main droite !
+    </string>
 
     <!-- PALM MUTE EXERCISE -->
     <string name="exercise_palm_mute_title_text">Palm mute</string>
@@ -218,7 +231,8 @@
 
     <!-- SKIP STRING EXERCISE -->
     <string name="exercise_skip_string_title_text">Muter une corde en accord</string>
-    <string name="exercise_skip_string_description_text">Entraine toi à jouer des accords en sautant une corde !</string>
+    <string name="exercise_skip_string_description_text">Entraine toi à jouer des accords en sautant une corde !
+    </string>
 
     <!-- TAPPING EXERCISE -->
     <string name="exercise_tapping_title_text">Tapping</string>
@@ -238,7 +252,7 @@
 
     <!-- THREE FINGERS EXERCISE -->
     <string name="exercise_three_fingers_title_text">Jeu avec trois doigts main droite</string>
-    <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite ! </string>
+    <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite !</string>
 
 
     <!-- ======================================================================================= -->
@@ -274,7 +288,8 @@
     <string name="error_update_song">Erreur pendant la mise à jour de la chanson</string>
     <string name="error_remove_song">Erreur pendant la suppression de la chanson</string>
     <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
-    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson</string>
+    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson
+    </string>
 
 
     <!-- ======================================================================================= -->

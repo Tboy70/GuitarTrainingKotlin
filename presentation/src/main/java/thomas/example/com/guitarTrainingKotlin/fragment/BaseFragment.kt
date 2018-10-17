@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.fragment
 
 import android.content.Context
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import dagger.android.support.AndroidSupportInjection
 
 abstract class BaseFragment : Fragment() {
@@ -11,5 +11,4 @@ abstract class BaseFragment : Fragment() {
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
-
 }

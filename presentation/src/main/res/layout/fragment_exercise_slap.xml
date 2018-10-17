@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/padding_start_end"
-    android:paddingEnd="@dimen/padding_start_end">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:paddingStart="@dimen/padding_start_end"
+                                                   android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
-        android:id="@+id/fragment_exercise_slap_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/constraint_layout_margin_8"
-        android:gravity="center"
-        android:text="@string/exercise_slap_title_text"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_very_huge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/fragment_exercise_slap_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/constraint_layout_margin_8"
+            android:gravity="center"
+            android:text="@string/exercise_slap_title_text"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_very_huge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/fragment_exercise_slap_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_big"
-        android:gravity="center_vertical"
-        android:text="@string/exercise_slap_description_text"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_title" />
+            android:id="@+id/fragment_exercise_slap_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:gravity="center_vertical"
+            android:text="@string/exercise_slap_description_text"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_title"/>
 
     <TextView
-        android:id="@+id/fragment_exercise_slap_duration"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_big"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_description"
-        tools:text="@string/generic_exercise_duration_text" />
+            android:id="@+id/fragment_exercise_slap_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_description"
+            tools:text="@string/generic_exercise_duration_text"/>
 
     <TextView
-        android:id="@+id/fragment_exercise_slap_duration_left"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_duration"
-        tools:text="@string/generic_exercise_duration_left_text" />
+            android:id="@+id/fragment_exercise_slap_duration_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_slap_duration"
+            tools:text="@string/generic_exercise_duration_left_text"/>
 
     <Button
-        android:id="@+id/fragment_exercise_slap_button_start_exercise"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        android:background="@drawable/button_drawable"
-        android:text="@string/generic_exercise_start_button_text"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_exercise_slap_next_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/fragment_exercise_slap_button_start_exercise"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/generic_exercise_start_button_text"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_exercise_slap_next_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/fragment_exercise_slap_next_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        android:background="@drawable/button_drawable"
-        android:text="@string/generic_exercise_next_exercise_text"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/fragment_exercise_slap_next_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/generic_exercise_next_exercise_text"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

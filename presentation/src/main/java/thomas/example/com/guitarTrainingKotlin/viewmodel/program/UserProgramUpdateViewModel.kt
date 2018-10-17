@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.interactor.program.UpdateProgram
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
@@ -23,18 +23,19 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
             program.exercises = programListExercises
 
             updateProgram.execute(
-                    onComplete = {
+                onComplete = {
 
-                    },
-                    onError = {
-                        errorThrowable = it
-                        updateProgramSuccess.postValue(false)
-                    },
-                    onNext = {
-                        if (it) {
-                            updateProgramSuccess.postValue(true)
-                        }
-                    }, params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved))
+                },
+                onError = {
+                    errorThrowable = it
+                    updateProgramSuccess.postValue(false)
+                },
+                onNext = {
+                    if (it) {
+                        updateProgramSuccess.postValue(true)
+                    }
+                }, params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved)
+            )
         }
     }
 

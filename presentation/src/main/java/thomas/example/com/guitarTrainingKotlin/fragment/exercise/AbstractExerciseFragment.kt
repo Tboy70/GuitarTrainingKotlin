@@ -40,9 +40,10 @@ abstract class AbstractExerciseFragment : BaseFragment() {
     }
 
     fun setDurationUI(exerciseDurationTextView: TextView, exerciseDurationLeftTextView: TextView) {
-        durationLeft = durationComponent.setDuration(durationExercise, durationLeft, exerciseDurationTextView,
-                activity?.getString(R.string.generic_exercise_duration_text), exerciseDurationLeftTextView,
-                activity?.getString(R.string.generic_exercise_duration_left_text)
+        durationLeft = durationComponent.setDuration(
+            durationExercise, durationLeft, exerciseDurationTextView,
+            activity?.getString(R.string.generic_exercise_duration_text), exerciseDurationLeftTextView,
+            activity?.getString(R.string.generic_exercise_duration_left_text)
         )
     }
 
@@ -51,9 +52,10 @@ abstract class AbstractExerciseFragment : BaseFragment() {
             dialogComponent.showTimerDialog(activity as ProgramActivity, durationLeft, object : OnTimerDialogDismiss {
                 override fun onDismiss(timeCountInMilliseconds: Long) {
                     durationLeft = durationComponent.setDurationLeft(
-                            textViewToUpdate,
-                            getString(R.string.generic_exercise_duration_left_text),
-                            timeCountInMilliseconds)
+                        textViewToUpdate,
+                        getString(R.string.generic_exercise_duration_left_text),
+                        timeCountInMilliseconds
+                    )
                 }
             })
         }
@@ -62,15 +64,17 @@ abstract class AbstractExerciseFragment : BaseFragment() {
     fun startNextExercise() {
         if (durationLeft.compareTo(0.0) != 0) {
             materialDialogComponent.showMultiChoiceDialog(getString(R.string.confirm_next_exercise_title),
-                    getString(R.string.confirm_next_exercise_content), R.color.colorPrimary, object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
-                        (activity as ProgramActivity).startExercise(rankExercise + 1)
-                    } else {
-                        activity?.finish()
+                getString(R.string.confirm_next_exercise_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
+                            (activity as ProgramActivity).startExercise(rankExercise + 1)
+                        } else {
+                            activity?.finish()
+                        }
                     }
-                }
-            })
+                })
         }
     }
 }

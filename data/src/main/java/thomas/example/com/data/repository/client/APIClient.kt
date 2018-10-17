@@ -10,20 +10,22 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class APIClient @Inject constructor(private val apiModule: ApiModule,
-                                    private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
-                                    private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
-                                    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
-                                    private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
-                                    private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
-                                    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
-                                    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper) {
+class APIClient @Inject constructor(
+    private val apiModule: ApiModule,
+    private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
+    private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
+    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
+    private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
+    private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
+    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
+    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper
+) {
 
     fun connectUser(userEntity: UserEntity): Observable<UserEntity>? {
         return apiModule.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
-                .map {
-                    userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
-                }
+            .map {
+                userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+            }
     }
 
     fun retrieveUserById(idUser: String): Observable<UserEntity> {
@@ -43,7 +45,10 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
-        return apiModule.retrieveProgramsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
+        return apiModule.retrieveProgramsListByUserId(
+            idUser,
+            InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
+        ).map {
             programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }
@@ -61,13 +66,33 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun createExercise(listExercisesEntities: List<ExerciseEntity>): Observable<Boolean> {
-        return apiModule.createExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(listExercisesEntities))
+        return apiModule.createExercise(
+            exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                listExercisesEntities
+            )
+        )
     }
 
     fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Observable<Boolean> {
-        return apiModule.removeExercises(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(exerciseEntityList))
-                .concatWith(apiModule.updateProgram(programRemoteEntityDataMapper.transformEntityToRemoteEntity(programEntity)))
-                .concatWith(apiModule.updateExercise(exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)))
+        return apiModule.removeExercises(
+            exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                exerciseEntityList
+            )
+        )
+            .concatWith(
+                apiModule.updateProgram(
+                    programRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                        programEntity
+                    )
+                )
+            )
+            .concatWith(
+                apiModule.updateExercise(
+                    exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                        programEntity.exerciseEntities
+                    )
+                )
+            )
     }
 
     fun removeProgram(idProgram: String): Observable<Boolean> {
@@ -75,7 +100,10 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
-        return apiModule.retrieveSongsListByUserId(idUser, InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())).map {
+        return apiModule.retrieveSongsListByUserId(
+            idUser,
+            InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
+        ).map {
             songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }
@@ -101,7 +129,11 @@ class APIClient @Inject constructor(private val apiModule: ApiModule,
     }
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Observable<Boolean> {
-        return apiModule.sendScoreFeedback(scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(scoreFeedbackEntity), idSong)
+        return apiModule.sendScoreFeedback(
+            scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                scoreFeedbackEntity
+            ), idSong
+        )
     }
 
     fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreEntity>> {

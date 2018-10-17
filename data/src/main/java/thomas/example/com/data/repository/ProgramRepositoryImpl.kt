@@ -12,10 +12,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProgramRepositoryImpl @Inject constructor(private val programClient: ProgramClient,
-                                                private val apiClient: APIClient,
-                                                private val programEntityDataMapper: ProgramEntityDataMapper,
-                                                private val exerciseEntityDataMapper: ExerciseEntityDataMapper) : ProgramRepository {
+class ProgramRepositoryImpl @Inject constructor(
+    private val programClient: ProgramClient,
+    private val apiClient: APIClient,
+    private val programEntityDataMapper: ProgramEntityDataMapper,
+    private val exerciseEntityDataMapper: ExerciseEntityDataMapper
+) : ProgramRepository {
 
     override fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>> {
         return Observable.defer {
@@ -47,7 +49,10 @@ class ProgramRepositoryImpl @Inject constructor(private val programClient: Progr
 
     override fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Observable<Boolean> {
         return Observable.defer {
-            apiClient.updateProgram(programEntityDataMapper.transformModelToEntity(program), exerciseEntityDataMapper.transformListModelsToListEntities(exercisesToBeRemoved))
+            apiClient.updateProgram(
+                programEntityDataMapper.transformModelToEntity(program),
+                exerciseEntityDataMapper.transformListModelsToListEntities(exercisesToBeRemoved)
+            )
         }
     }
 

@@ -7,9 +7,10 @@ import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class ConnectUser @Inject constructor(threadExecutor: ThreadExecutor,
-                                      private var userRepository: UserRepository)
-    : UseCase<User, ConnectUser.Params>(threadExecutor) {
+class ConnectUser @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var userRepository: UserRepository
+) : UseCase<User, ConnectUser.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<User> {
         return userRepository.connectUser(params.user)

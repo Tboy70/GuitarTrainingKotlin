@@ -1,13 +1,15 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import thomas.example.com.interactor.sharedprefs.SetInstrumentsModeInSharedPrefs
 import thomas.example.com.interactor.user.SuppressAccount
 import javax.inject.Inject
 
-class UserSettingsViewModel @Inject constructor(private val setInstrumentsModeInSharedPrefs: SetInstrumentsModeInSharedPrefs,
-                                                private val suppressAccount : SuppressAccount) : ViewModel() {
+class UserSettingsViewModel @Inject constructor(
+    private val setInstrumentsModeInSharedPrefs: SetInstrumentsModeInSharedPrefs,
+    private val suppressAccount: SuppressAccount
+) : ViewModel() {
 
     val finishSetInstrumentsModeInSharedPrefs: MutableLiveData<Boolean> = MutableLiveData()
     val finishSuppressAccount: MutableLiveData<Boolean> = MutableLiveData()
@@ -16,29 +18,31 @@ class UserSettingsViewModel @Inject constructor(private val setInstrumentsModeIn
 
     fun updateInstrumentMode() {
         setInstrumentsModeInSharedPrefs.execute(
-                onComplete = {
+            onComplete = {
 
-                },
-                onError = {
-                    errorThrowable = it
-                    finishSetInstrumentsModeInSharedPrefs.postValue(false)
-                },
-                onNext = {
-                    finishSetInstrumentsModeInSharedPrefs.postValue(true)
-                }, params = Unit)
+            },
+            onError = {
+                errorThrowable = it
+                finishSetInstrumentsModeInSharedPrefs.postValue(false)
+            },
+            onNext = {
+                finishSetInstrumentsModeInSharedPrefs.postValue(true)
+            }, params = Unit
+        )
     }
 
-    fun suppressAccount(idUser : String) {
+    fun suppressAccount(idUser: String) {
         suppressAccount.execute(
-                onComplete = {
+            onComplete = {
 
-                },
-                onError = {
-                    errorThrowable = it
-                    finishSuppressAccount.postValue(false)
-                },
-                onNext = {
-                    finishSuppressAccount.postValue(true)
-                }, params = SuppressAccount.Params.toSuppress(idUser))
+            },
+            onError = {
+                errorThrowable = it
+                finishSuppressAccount.postValue(false)
+            },
+            onNext = {
+                finishSuppressAccount.postValue(true)
+            }, params = SuppressAccount.Params.toSuppress(idUser)
+        )
     }
 }

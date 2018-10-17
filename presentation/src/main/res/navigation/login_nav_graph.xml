@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/fragment_login">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            app:startDestination="@+id/fragment_login">
 
     <fragment
-        android:id="@+id/fragment_login"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment"
-        android:label="@string/nav_login_home"
-        tools:layout="@layout/fragment_login_home">
+            android:id="@+id/fragment_login"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment"
+            android:label="@string/nav_login_home"
+            tools:layout="@layout/fragment_login_home">
         <action
-            android:id="@+id/action_create_account"
-            app:destination="@id/fragment_create_account"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/fragment_create_account" />
+                android:id="@+id/action_create_account"
+                app:destination="@id/fragment_create_account"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@+id/fragment_create_account"/>
     </fragment>
 
     <fragment
-        android:id="@+id/fragment_create_account"
-        android:name="thomas.example.com.guitarTrainingKotlin.fragment.login.CreateAccountFragment"
-        tools:layout="@layout/fragment_create_account" />
+            android:id="@+id/fragment_create_account"
+            android:name="thomas.example.com.guitarTrainingKotlin.fragment.login.CreateAccountFragment"
+            tools:layout="@layout/fragment_create_account"/>
 
 </navigation>

@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ChartMarkerView(context: Context?, layoutResource: Int, private val referenceTimestamp: Long)
-    : MarkerView(context, layoutResource) {
+class ChartMarkerView(context: Context?, layoutResource: Int, private val referenceTimestamp: Long) :
+    MarkerView(context, layoutResource) {
 
     private val mDataFormat: DateFormat
     private val mDate: Date
@@ -28,7 +28,11 @@ class ChartMarkerView(context: Context?, layoutResource: Int, private val refere
     override fun refreshContent(e: Entry, highlight: Highlight) {
         val currentTimestamp = e.x.toInt() + referenceTimestamp
 
-        chart_marker_view_content.text = String.format(context.getString(R.string.chart_marker_content), "%.2f".format(e.y), getTimeDate(currentTimestamp))
+        chart_marker_view_content.text = String.format(
+            context.getString(R.string.chart_marker_content),
+            "%.2f".format(e.y),
+            getTimeDate(currentTimestamp)
+        )
     }
 
     fun getXOffset(xpos: Float): Int {

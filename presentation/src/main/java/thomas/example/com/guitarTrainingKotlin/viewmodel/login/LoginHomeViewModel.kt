@@ -1,35 +1,57 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.Disposable
+import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
 import javax.inject.Inject
 
 class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUser) : ViewModel() {
 
-    val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val connectSucceed: MutableLiveData<Boolean> = MutableLiveData()
-
     var errorThrowable: Throwable? = null
 
-    fun connectUser(username: String, password: String) {
+    /** ViewData, ViewState and ErrorState **/
+    val retrievedUser = MutableLiveData<User>()
+    val viewState = MutableLiveData<LoginHomeViewState>()
+    val errorEvent = SingleLiveEvent<LoginHomeErrorEvent>()
+    /** CAREFUL : SingleLiveEvent cause we don't want it to be kept when rotate for example. **/
 
-        val user = User()
-        user.pseudoUser = username
-        user.passwordUser = password
+    /** For ViewSate **/
+    data class LoginHomeViewState(
+        var displayingLoading: Boolean = false
+    )
 
-        connectUser.execute(
-                onComplete = {
-                    finishLoading.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    connectSucceed.postValue(false)
-                },
-                onNext = {
-                    connectSucceed.postValue(true)
+    /** For ErrorState **/
+    data class LoginHomeErrorEvent(
+        val ERROR_TRIGGERED: Boolean = false
+    )
 
-                }, params = ConnectUser.Params.forLogin(user))
+    private var disposable: Disposable? = null
+
+    fun connectUser(pseudoUser: String, password: String) {
+
+        viewState.postValue(LoginHomeViewState(true))
+
+        val user = User(null, pseudoUser, null, password)
+
+        disposable = connectUser.execute(
+            onComplete = {
+                viewState.postValue(LoginHomeViewState(false))
+            },
+            onError = {
+                errorThrowable = it
+                errorEvent.postValue(LoginHomeErrorEvent(ERROR_TRIGGERED = true))
+            },
+            onNext = {
+                retrievedUser.postValue(it)
+            }, params = ConnectUser.Params.forLogin(user)
+        )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable?.dispose()
     }
 }

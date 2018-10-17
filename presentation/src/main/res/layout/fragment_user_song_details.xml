@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_user_song_details_constraint_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="@dimen/padding_start_end"
-    android:paddingEnd="@dimen/padding_start_end">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/fragment_user_song_details_constraint_layout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:paddingStart="@dimen/padding_start_end"
+                                                   android:paddingEnd="@dimen/padding_start_end">
 
     <TextView
-        android:id="@+id/fragment_user_song_details_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/constraint_layout_margin_8"
-        android:layout_marginTop="@dimen/constraint_layout_margin_8"
-        android:layout_marginEnd="@dimen/constraint_layout_margin_8"
-        android:ellipsize="end"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_huge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ma super chanson" />
+            android:id="@+id/fragment_user_song_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/constraint_layout_margin_8"
+            android:layout_marginTop="@dimen/constraint_layout_margin_8"
+            android:layout_marginEnd="@dimen/constraint_layout_margin_8"
+            android:ellipsize="end"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_huge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ma super chanson"/>
 
     <TextView
-        android:id="@+id/fragment_user_song_details_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/constraint_layout_margin_8"
-        android:layout_marginEnd="@dimen/constraint_layout_margin_8"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_guideline_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_name"
-        tools:text="Mon super artiste" />
+            android:id="@+id/fragment_user_song_details_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/constraint_layout_margin_8"
+            android:layout_marginEnd="@dimen/constraint_layout_margin_8"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_guideline_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_name"
+            tools:text="Mon super artiste"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/fragment_user_song_details_guideline_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_user_song_details_guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1"/>
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/fragment_user_song_chart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/constraint_layout_margin_8"
-        android:layout_marginTop="@dimen/constraint_layout_margin_8"
-        android:layout_marginEnd="@dimen/constraint_layout_margin_8"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_start_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_description" />
+            android:id="@+id/fragment_user_song_chart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/constraint_layout_margin_8"
+            android:layout_marginTop="@dimen/constraint_layout_margin_8"
+            android:layout_marginEnd="@dimen/constraint_layout_margin_8"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_start_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_description"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/fragment_user_song_details_guideline_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
-    <Button
-        android:id="@+id/fragment_user_song_details_remove_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        android:background="@drawable/button_drawable"
-        android:text="@string/user_song_details_remove"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_user_song_details_guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7"/>
 
     <Button
-        android:id="@+id/fragment_user_song_details_start_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        android:background="@drawable/button_drawable"
-        android:text="@string/user_song_details_start"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_update_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_guideline_2" />
+            android:id="@+id/fragment_user_song_details_remove_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/user_song_details_remove"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/fragment_user_song_details_update_button"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
-        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-        android:background="@drawable/button_drawable"
-        android:text="@string/user_song_details_update"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_remove_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/fragment_user_song_details_start_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/user_song_details_start"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_update_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_guideline_2"/>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+            android:id="@+id/fragment_user_song_details_update_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/user_song_details_update"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_remove_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

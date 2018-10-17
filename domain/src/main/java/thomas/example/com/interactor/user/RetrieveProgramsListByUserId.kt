@@ -7,9 +7,10 @@ import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
 import javax.inject.Inject
 
-class RetrieveProgramsListByUserId @Inject constructor(threadExecutor: ThreadExecutor,
-                                                       private var programRepository: ProgramRepository)
-    : UseCase<List<Program>, RetrieveProgramsListByUserId.Params>(threadExecutor) {
+class RetrieveProgramsListByUserId @Inject constructor(
+    threadExecutor: ThreadExecutor,
+    private var programRepository: ProgramRepository
+) : UseCase<List<Program>, RetrieveProgramsListByUserId.Params>(threadExecutor) {
 
     override fun buildUseCaseObservable(params: Params): Observable<List<Program>> {
         return programRepository.retrieveProgramsListByUserId(params.idUser)
