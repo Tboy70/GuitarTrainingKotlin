@@ -41,35 +41,39 @@ class CreateAccountFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        createAccountViewModel.finishLoading.observeSafe(this) {
+        createAccountViewModel.creationSuccess.observeSafe(this) {
             if (it != null) {
+                materialDialogComponent.dismissDialog()
+                fragmentManager?.popBackStack()
+            }
+        }
+
+        createAccountViewModel.viewState.observeSafe(this) {
+            if (it.displayingLoading) {
+                materialDialogComponent.showProgressDialog(
+                    getString(R.string.dialog_create_account_title),
+                    getString(R.string.dialog_create_account_content),
+                    R.color.colorPrimary
+                )
+            } else {
                 materialDialogComponent.dismissDialog()
             }
         }
 
-        createAccountViewModel.creationSuccess.observeSafe(this) {
-            if (it != null && it == true) {
-                fragmentManager?.popBackStack()
-            } else if (it != null && it == false) {
-                materialDialogComponent.dismissDialog()
-                if (createAccountViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        createAccountViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
-                }
+        createAccountViewModel.errorEvent.observeSafe(this) {
+            materialDialogComponent.dismissDialog()
+            if (createAccountViewModel.errorThrowable != null) {
+                errorRendererComponent.requestRenderError(
+                    createAccountViewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
+                )
             }
         }
     }
 
     private fun handleClickValidateCreation() {
         create_account_validate.setOnClickListener {
-            materialDialogComponent.showProgressDialog(
-                getString(R.string.dialog_create_account_title),
-                getString(R.string.dialog_create_account_content),
-                R.color.colorPrimary
-            )
             createAccountViewModel.createNewUser(
                 create_account_pseudo.text.toString(),
                 create_account_email.text.toString(),

@@ -32,7 +32,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
     }
 
     init {
-        val gson: Gson = GsonBuilder().create()
+        val gson: Gson = GsonBuilder().setLenient().create()
         val rxAdapter: RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
