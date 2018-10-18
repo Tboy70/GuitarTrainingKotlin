@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_program.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.exercise.AbstractExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -20,6 +21,9 @@ class ProgramActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var programViewModel: ProgramViewModel
+
+    @Inject
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     private lateinit var exercisesOfProgram: List<Exercise>
     private var rankExercise = 0
@@ -38,13 +42,23 @@ class ProgramActivity : BaseActivity() {
             programViewModel.getProgramById(extras.getString(ConstValues.ID_PROGRAM))
         }
 
-        programViewModel.finishRetrieveProgram.observeSafe(this) {
-            if (it == true) {
-                val userProgramObjectWrapper = programViewModel.userProgramObjectWrapper
-                exercisesOfProgram = userProgramObjectWrapper.program.exercises
-                startExercise(rankExercise)
+        programViewModel.programRetrieved.observeSafe(this) {
+            exercisesOfProgram = it.program.exercises
+            startExercise(rankExercise)
+        }
+
+        programViewModel.errorEvent.observeSafe(this) {
+            val errorTriggered = programViewModel.errorThrowable
+            if (it.ERROR_TRIGGERED && errorTriggered != null) {
+                errorRendererComponent.requestRenderError(
+                        errorTriggered,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        findViewById(android.R.id.content)
+                )
             }
         }
+
+        // TODO : Create a view state for loading ?
     }
 
     fun startExercise(rankExercise: Int) {

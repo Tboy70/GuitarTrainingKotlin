@@ -1,6 +1,8 @@
 package thomas.example.com.data.repository
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import thomas.example.com.data.mapper.ExerciseEntityDataMapper
 import thomas.example.com.data.mapper.ProgramEntityDataMapper
 import thomas.example.com.data.repository.client.APIClient
@@ -27,28 +29,28 @@ class ProgramRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun retrieveProgramById(idProgram: String): Observable<Program> {
-        return Observable.defer {
+    override fun retrieveProgramById(idProgram: String): Single<Program> {
+        return Single.defer {
             apiClient.retrieveProgramFromId(idProgram).map {
                 programEntityDataMapper.transformEntityToModel(it)
             }
         }
     }
 
-    override fun createProgram(program: Program, exercisesList: List<Exercise>): Observable<Boolean> {
-        return Observable.defer {
+    override fun createProgram(program: Program, exercisesList: List<Exercise>): Completable {
+        return Completable.defer {
             apiClient.createProgram(programEntityDataMapper.transformModelToEntity(program)).map {
                 for (exercise in exercisesList) {
                     exercise.idProgram = it
                 }
-            }.flatMap {
+            }.flatMapCompletable {
                 apiClient.createExercise(exerciseEntityDataMapper.transformListModelsToListEntities(exercisesList))
             }
         }
     }
 
-    override fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Observable<Boolean> {
-        return Observable.defer {
+    override fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Completable {
+        return Completable.defer {
             apiClient.updateProgram(
                 programEntityDataMapper.transformModelToEntity(program),
                 exerciseEntityDataMapper.transformListModelsToListEntities(exercisesToBeRemoved)

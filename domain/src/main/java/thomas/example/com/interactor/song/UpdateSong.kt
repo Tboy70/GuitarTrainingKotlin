@@ -1,18 +1,19 @@
 package thomas.example.com.interactor.song
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import thomas.example.com.interactor.base.UseCase
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
 class UpdateSong @Inject constructor(
-    threadExecutor: ThreadExecutor,
     private var songRepository: SongRepository
-) : UseCase<Boolean, UpdateSong.Params>(threadExecutor) {
+) : CompletableParametrizedUseCase<UpdateSong.Params>() {
 
-    override fun buildUseCaseObservable(params: UpdateSong.Params): Observable<Boolean> {
+    override fun build(params: UpdateSong.Params): Completable {
         return songRepository.updateSong(params.song)
     }
 

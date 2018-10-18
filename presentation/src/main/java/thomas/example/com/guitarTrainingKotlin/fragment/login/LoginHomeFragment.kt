@@ -54,9 +54,9 @@ class LoginHomeFragment : BaseFragment() {
         loginHomeViewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
                 materialDialogComponent.showProgressDialog(
-                    getString(R.string.dialog_login_title),
-                    getString(R.string.dialog_login_content),
-                    R.color.colorPrimary
+                        getString(R.string.dialog_login_title),
+                        getString(R.string.dialog_login_content),
+                        R.color.colorPrimary
                 )
             } else {
                 materialDialogComponent.dismissDialog()
@@ -64,12 +64,12 @@ class LoginHomeFragment : BaseFragment() {
         }
 
         loginHomeViewModel.errorEvent.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
-            if (loginHomeViewModel.errorThrowable != null) {
+            val errorTriggered = loginHomeViewModel.errorThrowable
+            if (it.ERROR_TRIGGERED && errorTriggered != null) {
                 errorRendererComponent.requestRenderError(
-                    loginHomeViewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
+                        loginHomeViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
                 )
             }
         }
@@ -79,8 +79,8 @@ class LoginHomeFragment : BaseFragment() {
         fragment_login_home_validate_button.setOnClickListener {
             KeyboardUtils.hideKeyboard(this.activity as LoginActivity)
             loginHomeViewModel.connectUser(
-                fragment_login_home_username.text.toString(),
-                fragment_login_home_password.text.toString()
+                    fragment_login_home_username.text.toString(),
+                    fragment_login_home_password.text.toString()
             )
         }
     }
@@ -88,9 +88,9 @@ class LoginHomeFragment : BaseFragment() {
     private fun handleClickCreateAccount() {
         fragment_login_home_create_account.setOnClickListener {
             findNavController(activity?.findViewById(R.id.login_nav_host_fragment) as View).navigate(
-                R.id.fragment_create_account,
-                null,
-                null
+                    R.id.fragment_create_account,
+                    null,
+                    null
             )
         }
     }

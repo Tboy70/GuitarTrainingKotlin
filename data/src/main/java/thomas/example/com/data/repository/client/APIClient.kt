@@ -1,6 +1,8 @@
 package thomas.example.com.data.repository.client
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import thomas.example.com.data.entity.*
 import thomas.example.com.data.mapper.remote.*
 import thomas.example.com.data.module.ApiModule
@@ -11,33 +13,31 @@ import javax.inject.Singleton
 
 @Singleton
 class APIClient @Inject constructor(
-    private val apiModule: ApiModule,
-    private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
-    private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
-    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
-    private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
-    private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
-    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
-    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper
+        private val apiModule: ApiModule,
+        private val moduleSharedPrefsImpl: ModuleSharedPrefsImpl,
+        private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
+        private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
+        private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
+        private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
+        private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
+        private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper
 ) {
 
-    fun connectUser(userEntity: UserEntity): Observable<UserEntity>? {
+    fun connectUser(userEntity: UserEntity): Single<UserEntity>? {
         return apiModule.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
             .map {
                 userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
             }
     }
 
-    fun retrieveUserById(idUser: String): Observable<UserEntity> {
+    fun retrieveUserById(idUser: String): Single<UserEntity> {
         return apiModule.retrieveUserById(idUser).map {
             userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
         }
     }
 
-    fun createNewUser(userEntity: UserEntity): Observable<String> {
-        return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity)).map {
-            it
-        }
+    fun createNewUser(userEntity: UserEntity): Completable {
+        return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
     }
 
     fun suppressAccount(idUser: String): Observable<Boolean> {
@@ -46,53 +46,51 @@ class APIClient @Inject constructor(
 
     fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
         return apiModule.retrieveProgramsListByUserId(
-            idUser,
-            InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
+                idUser,
+                InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
         ).map {
             programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
     }
 
-    fun retrieveProgramFromId(idProgram: String): Observable<ProgramEntity> {
+    fun retrieveProgramFromId(idProgram: String): Single<ProgramEntity> {
         return apiModule.retrieveProgramFromId(idProgram).map {
             programRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
         }
     }
 
-    fun createProgram(programEntity: ProgramEntity): Observable<String> {
+    fun createProgram(programEntity: ProgramEntity): Single<String> {
         return apiModule.createProgram(programRemoteEntityDataMapper.transformEntityToRemoteEntity(programEntity)).map {
             it
         }
     }
 
-    fun createExercise(listExercisesEntities: List<ExerciseEntity>): Observable<Boolean> {
+    fun createExercise(listExercisesEntities: List<ExerciseEntity>): Completable {
         return apiModule.createExercise(
-            exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
-                listExercisesEntities
-            )
+                exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                        listExercisesEntities
+                )
         )
     }
 
-    fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Observable<Boolean> {
+    fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Completable {
         return apiModule.removeExercises(
-            exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
-                exerciseEntityList
-            )
-        )
-            .concatWith(
+                exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                        exerciseEntityList
+                )
+        ).concatWith(
                 apiModule.updateProgram(
-                    programRemoteEntityDataMapper.transformEntityToRemoteEntity(
-                        programEntity
-                    )
+                        programRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                                programEntity
+                        )
                 )
-            )
-            .concatWith(
+        ).concatWith(
                 apiModule.updateExercise(
-                    exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
-                        programEntity.exerciseEntities
-                    )
+                        exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                                programEntity.exerciseEntities
+                        )
                 )
-            )
+        )
     }
 
     fun removeProgram(idProgram: String): Observable<Boolean> {
@@ -101,8 +99,8 @@ class APIClient @Inject constructor(
 
     fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
         return apiModule.retrieveSongsListByUserId(
-            idUser,
-            InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
+                idUser,
+                InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
         ).map {
             songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }
@@ -114,25 +112,23 @@ class APIClient @Inject constructor(
         }
     }
 
-    fun createSong(songEntity: SongEntity): Observable<String> {
-        return apiModule.createSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity)).map {
-            it
-        }
+    fun createSong(songEntity: SongEntity): Completable {
+        return apiModule.createSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
     }
 
     fun removeSong(idSong: String): Observable<Boolean> {
         return apiModule.removeSong(idSong)
     }
 
-    fun updateSong(songEntity: SongEntity): Observable<Boolean> {
+    fun updateSong(songEntity: SongEntity): Completable {
         return apiModule.updateSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
     }
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Observable<Boolean> {
         return apiModule.sendScoreFeedback(
-            scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(
-                scoreFeedbackEntity
-            ), idSong
+                scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                        scoreFeedbackEntity
+                ), idSong
         )
     }
 

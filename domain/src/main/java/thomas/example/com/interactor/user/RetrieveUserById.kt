@@ -1,18 +1,16 @@
 package thomas.example.com.interactor.user
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import io.reactivex.Single
+import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class RetrieveUserById @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var userRepository: UserRepository
-) : UseCase<User, RetrieveUserById.Params>(threadExecutor) {
+        private var userRepository: UserRepository
+) : SingleParametrizedUseCase<User, RetrieveUserById.Params>() {
 
-    override fun buildUseCaseObservable(params: Params): Observable<User> {
+    override fun build(params: Params): Single<User> {
         return userRepository.retrieveUserById(params.idUser)
     }
 

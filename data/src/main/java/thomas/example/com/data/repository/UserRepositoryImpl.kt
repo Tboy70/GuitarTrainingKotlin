@@ -1,6 +1,8 @@
 package thomas.example.com.data.repository
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import thomas.example.com.data.mapper.UserEntityDataMapper
 import thomas.example.com.data.repository.client.APIClient
 import thomas.example.com.data.repository.client.ContentClient
@@ -19,8 +21,8 @@ class UserRepositoryImpl @Inject constructor(
     /**
      * No need of try / catch anymore !
      */
-    override fun getIdUserInSharedPrefs(): Observable<String> {
-        return Observable.defer { contentClient.getIdInSharedPrefs() }
+    override fun getIdUserInSharedPrefs(): Single<String> {
+        return Single.defer { contentClient.getIdInSharedPrefs() }
     }
 
     override fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean> {
@@ -33,26 +35,26 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun connectUser(user: User): Observable<User> {
-        return Observable.defer {
+    override fun connectUser(user: User): Single<User> {
+        return Single.defer {
             apiClient.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
                 userEntityDataMapper.transformEntityToModel(it)
-            }?.doOnNext {
+            }?.doOnSuccess {
                 contentClient.setIdInSharedPrefs(it.idUser)
             }
         }
     }
 
-    override fun retrieveUserById(idUser: String): Observable<User> {
-        return Observable.defer {
+    override fun retrieveUserById(idUser: String): Single<User> {
+        return Single.defer {
             apiClient.retrieveUserById(idUser).map {
                 userEntityDataMapper.transformEntityToModel(it)
             }
         }
     }
 
-    override fun createNewUser(user: User): Observable<String> {
-        return Observable.defer {
+    override fun createNewUser(user: User): Completable {
+        return Completable.defer {
             apiClient.createNewUser(userEntityDataMapper.transformModelToEntity(user))
         }
     }
@@ -65,8 +67,8 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun logoutUser(): Observable<Boolean> {
-        return Observable.defer {
+    override fun logoutUser(): Completable {
+        return Completable.defer {
             contentClient.deleteIdInSharedPrefs()
         }
     }

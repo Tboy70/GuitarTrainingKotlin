@@ -42,18 +42,16 @@ class CreateAccountFragment : BaseFragment() {
 
     private fun handleLiveData(view: View) {
         createAccountViewModel.creationSuccess.observeSafe(this) {
-            if (it != null) {
-                materialDialogComponent.dismissDialog()
-                fragmentManager?.popBackStack()
-            }
+            materialDialogComponent.dismissDialog()
+            fragmentManager?.popBackStack()
         }
 
         createAccountViewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
                 materialDialogComponent.showProgressDialog(
-                    getString(R.string.dialog_create_account_title),
-                    getString(R.string.dialog_create_account_content),
-                    R.color.colorPrimary
+                        getString(R.string.dialog_create_account_title),
+                        getString(R.string.dialog_create_account_content),
+                        R.color.colorPrimary
                 )
             } else {
                 materialDialogComponent.dismissDialog()
@@ -62,11 +60,12 @@ class CreateAccountFragment : BaseFragment() {
 
         createAccountViewModel.errorEvent.observeSafe(this) {
             materialDialogComponent.dismissDialog()
-            if (createAccountViewModel.errorThrowable != null) {
+            val errorTriggered = createAccountViewModel.errorThrowable
+            if (it.ERROR_TRIGGERED && errorTriggered != null) {
                 errorRendererComponent.requestRenderError(
-                    createAccountViewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
+                        createAccountViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
                 )
             }
         }
@@ -75,9 +74,9 @@ class CreateAccountFragment : BaseFragment() {
     private fun handleClickValidateCreation() {
         create_account_validate.setOnClickListener {
             createAccountViewModel.createNewUser(
-                create_account_pseudo.text.toString(),
-                create_account_email.text.toString(),
-                create_account_password.text.toString()
+                    create_account_pseudo.text.toString(),
+                    create_account_email.text.toString(),
+                    create_account_password.text.toString()
             )
         }
     }

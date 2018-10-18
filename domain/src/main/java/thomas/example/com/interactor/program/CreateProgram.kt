@@ -1,8 +1,9 @@
 package thomas.example.com.interactor.program
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import io.reactivex.Completable
+import io.reactivex.Single
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
+import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
@@ -10,15 +11,14 @@ import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class CreateProgram @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var programRepository: ProgramRepository,
-    private var userRepository: UserRepository
-) : UseCase<Boolean, CreateProgram.Params>(threadExecutor) {
+        private var programRepository: ProgramRepository,
+        private var userRepository: UserRepository
+) : CompletableParametrizedUseCase<CreateProgram.Params>() {
 
-    override fun buildUseCaseObservable(params: CreateProgram.Params): Observable<Boolean> {
+    override fun build(params: Params): Completable {
         return userRepository.getIdUserInSharedPrefs().map {
             params.program.idUser = it
-        }.flatMap {
+        }.flatMapCompletable {
             programRepository.createProgram(params.program, params.exercisesList)
         }
     }

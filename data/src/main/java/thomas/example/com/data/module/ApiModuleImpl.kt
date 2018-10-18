@@ -3,7 +3,9 @@ package thomas.example.com.data.module
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.scottyab.aescrypt.AESCrypt
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,7 +48,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         apiService = retrofit.create(APIServiceInterface::class.java)
     }
 
-    override fun connectUser(userRemoteEntity: UserRemoteEntity): Observable<UserRemoteEntity> {
+    override fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity> {
         userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
         return apiService.connectUser(userRemoteEntity).map {
             if (it.body() != null) {
@@ -57,7 +59,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveUserById(idUser: String): Observable<UserRemoteEntity> {
+    override fun retrieveUserById(idUser: String): Single<UserRemoteEntity> {
         return apiService.retrieveUserById(idUser).map {
             if (it.isSuccessful && it.body() != null) {
                 it.body()
@@ -67,15 +69,9 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Observable<String> {
+    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable {
         userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
-        return apiService.createNewUser(userRemoteEntity).map {
-            if (it.isSuccessful && it.body() != null) {
-                (it.body() as UserResponseRemoteEntity).getCreatedId()
-            } else {
-                throw Exception(ConstantErrors.ERROR_CREATION_USER)
-            }
-        }
+        return apiService.createNewUser(userRemoteEntity)
     }
 
     override fun suppressAccount(idUser: String): Observable<Boolean> {
@@ -101,7 +97,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveProgramFromId(idProgram: String): Observable<ProgramRemoteEntity> {
+    override fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity> {
         return apiService.retrieveProgramFromId(idProgram).map {
             if (it.body() != null) {
                 it.body()
@@ -111,9 +107,9 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Observable<String> {
+    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String> {
         return apiService.createProgram(programRemoteEntity).map {
-            if (it.isSuccessful && it.body() != null) {
+            if (it.isSuccessful && it.body() != null) { // TODO : Check this if / else
                 (it.body() as ProgramResponseRemoteEntity).getCreatedId()
             } else {
                 throw Exception(ConstantErrors.ERROR_CREATION_PROGRAM)
@@ -121,34 +117,16 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
-        return apiService.createExercise(listRemoteEntities).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_CREATION_EXERCISE)
-            }
-        }
+    override fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Completable {
+        return apiService.createExercise(listRemoteEntities)
     }
 
-    override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Observable<Boolean> {
-        return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_UPDATE_PROGRAM)
-            }
-        }
+    override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Completable {
+        return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity)
     }
 
-    override fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Boolean> {
-        return apiService.updateExercise(exerciseRemoteEntities).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_UPDATE_EXERCISE)
-            }
-        }
+    override fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable {
+        return apiService.updateExercise(exerciseRemoteEntities)
     }
 
     override fun removeProgram(idProgram: String): Observable<Boolean> {
@@ -161,14 +139,8 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Boolean> {
-        return apiService.removeExercises(exercisesRemoteEntitiesToBeRemoved).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_REMOVE_EXERCISE)
-            }
-        }
+    override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable {
+        return apiService.removeExercises(exercisesRemoteEntitiesToBeRemoved)
     }
 
     override fun retrieveSongsListByUserId(
@@ -194,24 +166,12 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun createSong(songRemoteEntity: SongRemoteEntity): Observable<String> {
-        return apiService.createSong(songRemoteEntity).map {
-            if (it.isSuccessful && it.body() != null) {
-                (it.body() as SongResponseRemoteEntity).getCreatedId()
-            } else {
-                throw Exception(ConstantErrors.ERROR_CREATION_SONG)
-            }
-        }
+    override fun createSong(songRemoteEntity: SongRemoteEntity): Completable {
+        return apiService.createSong(songRemoteEntity)
     }
 
-    override fun updateSong(songRemoteEntity: SongRemoteEntity): Observable<Boolean> {
-        return apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_UPDATE_SONG)
-            }
-        }
+    override fun updateSong(songRemoteEntity: SongRemoteEntity): Completable {
+        return apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity)
     }
 
     override fun removeSong(idSong: String): Observable<Boolean> {

@@ -2,7 +2,6 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.Disposable
 import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
@@ -20,15 +19,13 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
 
     /** For ViewSate **/
     data class LoginHomeViewState(
-        var displayingLoading: Boolean = false
+            var displayingLoading: Boolean = false
     )
 
     /** For ErrorState **/
     data class LoginHomeErrorEvent(
-        val ERROR_TRIGGERED: Boolean = false
+            val ERROR_TRIGGERED: Boolean = false
     )
-
-    private var disposable: Disposable? = null
 
     fun connectUser(pseudoUser: String, password: String) {
 
@@ -36,22 +33,21 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
 
         val user = User(null, pseudoUser, null, password)
 
-        disposable = connectUser.execute(
-            onComplete = {
-                viewState.postValue(LoginHomeViewState(false))
-            },
-            onError = {
-                errorThrowable = it
-                errorEvent.postValue(LoginHomeErrorEvent(ERROR_TRIGGERED = true))
-            },
-            onNext = {
-                retrievedUser.postValue(it)
-            }, params = ConnectUser.Params.forLogin(user)
+        connectUser.subscribe(
+                params = ConnectUser.Params.forLogin(user),
+                onSuccess = {
+                    retrievedUser.postValue(it)
+                    viewState.postValue(LoginHomeViewState(false))
+                },
+                onError = {
+                    errorThrowable = it
+                    errorEvent.postValue(LoginHomeErrorEvent(ERROR_TRIGGERED = true))
+                }
         )
     }
 
     override fun onCleared() {
         super.onCleared()
-        disposable?.dispose()
+        connectUser.unsubscribe()
     }
 }

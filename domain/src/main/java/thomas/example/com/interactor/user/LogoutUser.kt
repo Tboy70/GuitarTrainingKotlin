@@ -1,17 +1,13 @@
 package thomas.example.com.interactor.user
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import io.reactivex.Completable
+import thomas.example.com.interactor.base.CompletableUseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class LogoutUser @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var userRepository: UserRepository
-) : UseCase<Boolean, Unit>(threadExecutor) {
+class LogoutUser @Inject constructor(private var userRepository: UserRepository) : CompletableUseCase() {
 
-    override fun buildUseCaseObservable(params: Unit): Observable<Boolean> {
+    override fun build(): Completable {
         return userRepository.logoutUser()
     }
 }

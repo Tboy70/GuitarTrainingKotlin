@@ -1,19 +1,20 @@
 package thomas.example.com.interactor.program
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import thomas.example.com.interactor.base.UseCase
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
 import javax.inject.Inject
 
 class UpdateProgram @Inject constructor(
-    threadExecutor: ThreadExecutor,
     private var programRepository: ProgramRepository
-) : UseCase<Boolean, UpdateProgram.Params>(threadExecutor) {
+) : CompletableParametrizedUseCase<UpdateProgram.Params>() {
 
-    override fun buildUseCaseObservable(params: UpdateProgram.Params): Observable<Boolean> {
+    override fun build(params: UpdateProgram.Params): Completable {
         return programRepository.updateProgram(params.program, params.exercisesToBeRemoved)
     }
 

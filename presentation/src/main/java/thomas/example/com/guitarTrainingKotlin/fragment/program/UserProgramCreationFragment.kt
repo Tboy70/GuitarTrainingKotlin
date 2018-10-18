@@ -72,32 +72,31 @@ class UserProgramCreationFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
+
         userProgramCreationViewModel.creationProgramSuccess.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
-                fragmentManager?.popBackStack()
-            } else if (it != null && it == false) {
-                if (userProgramCreationViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        userProgramCreationViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
-                }
-                fragmentManager?.popBackStack()
+            fragmentManager?.popBackStack()
+        }
+
+        userProgramCreationViewModel.viewState.observeSafe(this) {
+            if (it.displayingLoading) {
+                materialDialogComponent.showProgressDialog(
+                        getString(R.string.dialog_login_title),
+                        getString(R.string.dialog_login_content),
+                        R.color.colorPrimary
+                )
+            } else {
+                materialDialogComponent.dismissDialog()
             }
         }
 
-        userProgramCreationViewModel.creationProgramNotLaunch.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
-            if (it != null && it == true) {
-                if (userProgramCreationViewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        Exception(getString(R.string.error_field_not_filled)),
+        userProgramCreationViewModel.errorEvent.observeSafe(this) {
+            val errorTriggered = userProgramCreationViewModel.errorThrowable
+            if (it.ERROR_TRIGGERED && errorTriggered != null) {
+                errorRendererComponent.requestRenderError(
+                        userProgramCreationViewModel.errorThrowable as Throwable,
                         ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                         view
-                    )
-                }
+                )
             }
         }
     }
@@ -111,20 +110,16 @@ class UserProgramCreationFragment : BaseFragment() {
 
     private fun handleClickCreateProgram() {
         fragment_user_program_creation_validation.setOnClickListener {
-            materialDialogComponent.showProgressDialog(
-                getString(R.string.dialog_creation_program_title),
-                getString(R.string.dialog_creation_program_content),
-                R.color.colorPrimary
-            )
+            // TODO : Check if it's not too long
             val exercises = SparseArray<String>()
             for (i in 0 until fragment_user_program_creation_exercises.childCount) {
                 val key =
                     (((fragment_user_program_creation_exercises.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(
-                        0
+                            0
                     ) as Button).text.toString()
                 val value =
                     (((fragment_user_program_creation_exercises.getChildAt(i) as LinearLayout).getChildAt(0) as LinearLayout).getChildAt(
-                        1
+                            1
                     ) as EditText).text.toString()
 
                 exercises.append(ExerciseUtils.getTypeExerciseIdByName(key, activity as UserPanelActivity), value)
@@ -132,17 +127,17 @@ class UserProgramCreationFragment : BaseFragment() {
 
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(
-                prefs.getString(
-                    ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                    ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
-                )
+                    prefs.getString(
+                            ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
+                            ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                    )
             ).toString()
 
             userProgramCreationViewModel.checkInformationAndValidateCreation(
-                fragment_user_program_creation_name.text.toString(),
-                fragment_user_program_creation_description.text.toString(),
-                exercises,
-                instrumentMode
+                    fragment_user_program_creation_name.text.toString(),
+                    fragment_user_program_creation_description.text.toString(),
+                    exercises,
+                    instrumentMode
             )
         }
     }
@@ -156,24 +151,24 @@ class UserProgramCreationFragment : BaseFragment() {
                     val items = exercisesArray.toList()
 
                     materialDialogComponent.showSingleChoiceDialog(
-                        title,
-                        items,
-                        selectedItem,
-                        R.color.colorPrimary,
-                        true,
-                        object : SingleChoiceMaterialDialogListener {
-                            override fun onItemSelected(selectedItem: String) {
-                                this@UserProgramCreationFragment.selectedItem = selectedItem
-                                buttonTypeExercise.text = selectedItem
-                                enableCreationAddExerciseButton(true)
-                            }
+                            title,
+                            items,
+                            selectedItem,
+                            R.color.colorPrimary,
+                            true,
+                            object : SingleChoiceMaterialDialogListener {
+                                override fun onItemSelected(selectedItem: String) {
+                                    this@UserProgramCreationFragment.selectedItem = selectedItem
+                                    buttonTypeExercise.text = selectedItem
+                                    enableCreationAddExerciseButton(true)
+                                }
 
-                            override fun getPositionSelected(which: Int) {
-                            }
+                                override fun getPositionSelected(which: Int) {
+                                }
 
-                            override fun onCancelClick() {
-                            }
-                        })
+                                override fun onCancelClick() {
+                                }
+                            })
                 }
 
                 override fun onRemoveView() {
@@ -187,8 +182,8 @@ class UserProgramCreationFragment : BaseFragment() {
     private fun getStringArrayGivenInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return if (prefs.getString(
-                ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                    ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
+                    ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
             ) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
         ) {
             resources.getStringArray(R.array.list_exercises_guitar)
@@ -201,19 +196,19 @@ class UserProgramCreationFragment : BaseFragment() {
         if (enableButton) {
             fragment_user_program_creation_add_exercise.isEnabled = true
             fragment_user_program_creation_add_exercise.setBackgroundColor(
-                ContextCompat.getColor(
-                    activity as UserPanelActivity,
-                    R.color.colorPrimary
-                )
+                    ContextCompat.getColor(
+                            activity as UserPanelActivity,
+                            R.color.colorPrimary
+                    )
             )
             fragment_user_program_creation_add_exercise.alpha = FULL_ALPHA
         } else {
             fragment_user_program_creation_add_exercise.isEnabled = false
             fragment_user_program_creation_add_exercise.setBackgroundColor(
-                ContextCompat.getColor(
-                    activity as UserPanelActivity,
-                    R.color.colorGrey
-                )
+                    ContextCompat.getColor(
+                            activity as UserPanelActivity,
+                            R.color.colorGrey
+                    )
             )
             fragment_user_program_creation_add_exercise.alpha = HALF_ALPHA
         }

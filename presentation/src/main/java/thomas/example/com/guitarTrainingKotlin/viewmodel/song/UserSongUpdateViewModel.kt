@@ -19,24 +19,25 @@ class UserSongUpdateViewModel @Inject constructor(private var updateSong: Update
             song.titleSong = titleSong
             song.artistSong = artistSong
 
-            updateSong.execute(
-                onComplete = {
-
-                },
-                onError = {
-                    errorThrowable = it
-                    updateSongSuccess.postValue(false)
-                },
-                onNext = {
-                    if (it) {
+            updateSong.subscribe(
+                    params = UpdateSong.Params.toUpdate(song),
+                    onComplete = {
                         updateSongSuccess.postValue(true)
+                    },
+                    onError = {
+                        errorThrowable = it
+                        updateSongSuccess.postValue(false)
                     }
-                }, params = UpdateSong.Params.toUpdate(song)
             )
         }
     }
 
     private fun checkInformation(nameSong: String): Boolean {
         return !nameSong.isEmpty()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        updateSong.unsubscribe()
     }
 }

@@ -3,6 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 import android.util.SparseArray
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.program.CreateProgram
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
@@ -11,13 +12,27 @@ import javax.inject.Inject
 
 class UserProgramCreationViewModel @Inject constructor(private var createProgram: CreateProgram) : ViewModel() {
 
-    val creationProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val creationProgramNotLaunch: MutableLiveData<Boolean> = MutableLiveData()
-
     var errorThrowable: Throwable? = null
 
-    fun checkInformationAndValidateCreation(nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>, instrumentMode: String) {
+    val creationProgramSuccess = MutableLiveData<Boolean>()
+    val viewState = MutableLiveData<UserProgramCreationViewState>()
+    val errorEvent = SingleLiveEvent<UserProgramCreationErrorEvent>()
 
+    data class UserProgramCreationViewState(
+            var displayingLoading: Boolean = false
+    )
+
+    data class UserProgramCreationErrorEvent(
+            val ERROR_TRIGGERED: Boolean = false,
+            val ERROR_CREATION_NOT_LAUNCH: Boolean = false
+    )
+
+
+    fun checkInformationAndValidateCreation(
+            nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>, instrumentMode: String
+    ) {
+
+        viewState.postValue(UserProgramCreationViewState(true))
         if (checkInformation(nameProgram, exercises)) {
 
             val program = Program()
@@ -36,21 +51,20 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
                 exercisesList.add(exercise)
             }
 
-            createProgram.execute(
-                onComplete = {
-                },
-                onError = {
-                    errorThrowable = it
-                    creationProgramSuccess.postValue(false)
-                },
-                onNext = {
-                    if (it) {
+            createProgram.subscribe(
+                    params = CreateProgram.Params.toCreate(program, exercisesList),
+                    onComplete = {
                         creationProgramSuccess.postValue(true)
+                        viewState.postValue(UserProgramCreationViewState(false))
+                    },
+                    onError = {
+                        errorThrowable = it
+                        errorEvent.postValue(UserProgramCreationErrorEvent(true, false))
                     }
-                }, params = CreateProgram.Params.toCreate(program, exercisesList)
             )
         } else {
-            creationProgramNotLaunch.postValue(true)
+            errorEvent.postValue(UserProgramCreationErrorEvent(false, true))
+            viewState.postValue(UserProgramCreationViewState(false))
         }
     }
 
@@ -68,5 +82,10 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
             }
             return true
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        createProgram.unsubscribe()
     }
 }

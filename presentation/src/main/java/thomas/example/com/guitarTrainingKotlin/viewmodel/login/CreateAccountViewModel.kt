@@ -11,16 +11,16 @@ class CreateAccountViewModel @Inject constructor(private val createNewUser: Crea
 
     var errorThrowable: Throwable? = null
 
-    val creationSuccess = MutableLiveData<String>()
+    val creationSuccess = MutableLiveData<Boolean>()
     val viewState = MutableLiveData<CreateAccountViewState>()
     val errorEvent = SingleLiveEvent<CreateAccountErrorEvent>()
 
     data class CreateAccountViewState(
-        var displayingLoading: Boolean = false
+            var displayingLoading: Boolean = false
     )
 
     data class CreateAccountErrorEvent(
-        val ERROR_TRIGGERED: Boolean = false
+            val ERROR_TRIGGERED: Boolean = false
     )
 
     fun createNewUser(pseudoUser: String, emailUser: String, passwordUser: String) {
@@ -29,17 +29,23 @@ class CreateAccountViewModel @Inject constructor(private val createNewUser: Crea
 
         val user = User(null, pseudoUser, emailUser, passwordUser)
 
-        createNewUser.execute(
-            onComplete = {
-                viewState.postValue(CreateAccountViewState(false))
-            },
-            onError = {
-                errorThrowable = it
-                errorEvent.postValue(CreateAccountErrorEvent(ERROR_TRIGGERED = true))
-            },
-            onNext = { success ->
-                creationSuccess.postValue(success)
-            }, params = CreateNewUser.Params.toCreate(user)
+        createNewUser.subscribe(
+                params = CreateNewUser.Params.toCreate(user),
+
+                onComplete = {
+                    creationSuccess.postValue(true)
+                    viewState.postValue(CreateAccountViewState(false))
+                },
+
+                onError = {
+                    errorThrowable = it
+                    errorEvent.postValue(CreateAccountErrorEvent(ERROR_TRIGGERED = true))
+                }
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        createNewUser.unsubscribe()
     }
 }

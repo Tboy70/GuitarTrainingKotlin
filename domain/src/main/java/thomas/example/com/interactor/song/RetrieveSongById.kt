@@ -2,7 +2,7 @@ package thomas.example.com.interactor.song
 
 import io.reactivex.Observable
 import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.UseCase
+import thomas.example.com.interactor.base.UseCase
 import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject

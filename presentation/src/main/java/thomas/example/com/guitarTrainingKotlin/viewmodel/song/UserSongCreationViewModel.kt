@@ -20,20 +20,15 @@ class UserSongCreationViewModel @Inject constructor(private var createSong: Crea
             song.artistSong = artistSong
             song.idInstrument = instrumentMode
 
-            createSong.execute(
-                onComplete = {
-
-                },
-                onError = {
-                    errorThrowable = it
-                    creationSongSuccess.postValue(false)
-
-                },
-                onNext = {
-                    if (!it.isEmpty()) {
+            createSong.subscribe(
+                    params = CreateSong.Params.toCreate(song),
+                    onComplete = {
                         creationSongSuccess.postValue(true)
+                    },
+                    onError = {
+                        errorThrowable = it
+                        creationSongSuccess.postValue(false)
                     }
-                }, params = CreateSong.Params.toCreate(song)
             )
         } else {
             creationSongNotLaunch.postValue(true)
@@ -42,5 +37,10 @@ class UserSongCreationViewModel @Inject constructor(private var createSong: Crea
 
     private fun checkInformation(titleSong: String): Boolean {
         return !titleSong.isEmpty()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        createSong.unsubscribe()
     }
 }

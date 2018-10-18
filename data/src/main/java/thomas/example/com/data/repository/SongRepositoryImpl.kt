@@ -1,5 +1,6 @@
 package thomas.example.com.data.repository
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import thomas.example.com.data.mapper.ScoreEntityDataMapper
 import thomas.example.com.data.mapper.ScoreFeedbackEntityDataMapper
@@ -38,14 +39,14 @@ class SongRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun createSong(song: Song): Observable<String> {
-        return Observable.defer {
+    override fun createSong(song: Song): Completable {
+        return Completable.defer {
             apiClient.createSong(songEntityDataMapper.transformModelToEntity(song))
         }
     }
 
-    override fun updateSong(song: Song): Observable<Boolean> {
-        return Observable.defer {
+    override fun updateSong(song: Song): Completable {
+        return Completable.defer {
             apiClient.updateSong(songEntityDataMapper.transformModelToEntity(song))
         }
     }

@@ -1,6 +1,8 @@
 package thomas.example.com.data.repository.client
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import thomas.example.com.data.module.ModuleSharedPrefs
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import javax.inject.Inject
@@ -18,16 +20,16 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
         }
     }
 
-    fun getIdInSharedPrefs(): Observable<String> {
-        return Observable.just(moduleSharedPrefs.getIdUserInSharedPrefs())
+    fun getIdInSharedPrefs(): Single<String> {
+        return Single.just(moduleSharedPrefs.getIdUserInSharedPrefs())
     }
 
-    fun deleteIdInSharedPrefs(): Observable<Boolean> {
+    fun deleteIdInSharedPrefs(): Completable {
         return try {
             moduleSharedPrefs.deleteIdUserInSharedPrefs()
-            Observable.just(true)
+            Completable.complete()
         } catch (e: Exception) {
-            Observable.error(e)
+            Completable.error(e)
         }
     }
 

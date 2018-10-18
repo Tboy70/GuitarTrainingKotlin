@@ -13,7 +13,10 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
 
     var errorThrowable: Throwable? = null
 
-    fun checkInformationAndValidateUpdate(idProgram: String, nameProgram: String, descriptionProgram: String, programListExercises: MutableList<Exercise>, exercisesToBeRemoved: MutableList<Exercise>) {
+    fun checkInformationAndValidateUpdate(
+            idProgram: String, nameProgram: String, descriptionProgram: String,
+            programListExercises: MutableList<Exercise>, exercisesToBeRemoved: MutableList<Exercise>
+    ) {
         if (checkInformation(nameProgram, programListExercises)) {
             val program = Program()
             program.idProgram = idProgram
@@ -22,19 +25,16 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
             program.defaultProgram = false
             program.exercises = programListExercises
 
-            updateProgram.execute(
-                onComplete = {
+            updateProgram.subscribe(
+                    params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved),
 
-                },
-                onError = {
-                    errorThrowable = it
-                    updateProgramSuccess.postValue(false)
-                },
-                onNext = {
-                    if (it) {
+                    onComplete = {
                         updateProgramSuccess.postValue(true)
+                    },
+                    onError = {
+                        errorThrowable = it
+                        updateProgramSuccess.postValue(false)
                     }
-                }, params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved)
             )
         }
     }
@@ -52,5 +52,10 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
             }
             return true
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        updateProgram.unsubscribe()
     }
 }

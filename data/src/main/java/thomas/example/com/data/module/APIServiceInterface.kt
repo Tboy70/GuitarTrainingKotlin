@@ -1,6 +1,8 @@
 package thomas.example.com.data.module
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.*
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
@@ -16,13 +18,13 @@ import thomas.example.com.data.entity.remote.user.UserResponseRemoteEntity
 interface APIServiceInterface {
 
     @POST("connect")
-    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserRemoteEntity>>
+    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Single<Response<UserRemoteEntity>>
 
     @GET("user/{idUser}")
-    fun retrieveUserById(@Path("idUser") idUser: String): Observable<Response<UserRemoteEntity>>
+    fun retrieveUserById(@Path("idUser") idUser: String): Single<Response<UserRemoteEntity>>
 
     @POST("user")
-    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Observable<Response<UserResponseRemoteEntity>>
+    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Completable
 
     @DELETE("user/{idUser}")
     fun suppressAccount(@Path("idUser") idUser: String): Observable<Response<Void>>
@@ -31,25 +33,25 @@ interface APIServiceInterface {
     fun retrieveProgramsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
-    fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Observable<Response<ProgramRemoteEntity>>
+    fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Single<Response<ProgramRemoteEntity>>
 
     @POST("program")
-    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<ProgramResponseRemoteEntity>>
+    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Single<Response<ProgramResponseRemoteEntity>>
 
     @POST("exercise")
-    fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+    fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Completable
 
     @PATCH("program/{idProgram}")
-    fun updateProgram(@Path("idProgram") idProgram: String, @Body programRemoteEntity: ProgramRemoteEntity): Observable<Response<Void>>
+    fun updateProgram(@Path("idProgram") idProgram: String, @Body programRemoteEntity: ProgramRemoteEntity): Completable
 
     @PATCH("exercise")
-    fun updateExercise(@Body exerciseRemoteEntities: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+    fun updateExercise(@Body exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable
 
     @DELETE("program/{idProgram}")
     fun removeProgram(@Path("idProgram") idProgram: String): Observable<Response<Void>>
 
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
-    fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Observable<Response<Void>>
+    fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
     @GET("songs/{idUser}/{instrumentMode}")
     fun retrieveSongsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Observable<Response<List<SongRemoteEntity>>>
@@ -58,10 +60,10 @@ interface APIServiceInterface {
     fun retrieveSongFromId(@Path("idSong") idSong: String): Observable<Response<SongRemoteEntity>>
 
     @POST("song")
-    fun createSong(@Body songRemoteEntity: SongRemoteEntity): Observable<Response<SongResponseRemoteEntity>>
+    fun createSong(@Body songRemoteEntity: SongRemoteEntity): Completable
 
     @PATCH("song/{idSong}")
-    fun updateSong(@Path("idSong") idSong: String, @Body songRemoteEntity: SongRemoteEntity): Observable<Response<Void>>
+    fun updateSong(@Path("idSong") idSong: String, @Body songRemoteEntity: SongRemoteEntity): Completable
 
     @DELETE("song/{idSong}")
     fun removeSong(@Path("idSong") idProgram: String): Observable<Response<Void>>
