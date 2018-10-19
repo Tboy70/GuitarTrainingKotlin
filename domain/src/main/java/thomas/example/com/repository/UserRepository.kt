@@ -19,7 +19,7 @@ interface UserRepository {
 
     fun retrieveUserById(idUser: String): Single<User>
 
-    fun setInstrumentModeInSharedPrefs(): Observable<Boolean>
+    fun setInstrumentModeInSharedPrefs(): Completable
 
-    fun suppressAccount(idUser: String): Observable<Boolean>
+    fun suppressAccount(idUser: String): Completable
 }

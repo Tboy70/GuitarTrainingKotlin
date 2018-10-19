@@ -11,16 +11,19 @@ class StartViewModel @Inject constructor(private var getIdInSharedPrefs: GetIdIn
 
     /** Using of lambdas ! **/
     fun getUserPrefIsConnected() {
-        getIdInSharedPrefs.execute(
-            onComplete = {
+        getIdInSharedPrefs.subscribe(
+                onSuccess = {
+                    idUserPref.postValue(it)
+                },
 
-            },
-            onError = {
-                idUserPref.postValue(GetIdInSharedPrefs.ID_USER_DEFAULT)
-            },
-            onNext = {
-                idUserPref.postValue(it)
-            }, params = ""
+                onError = {
+                    idUserPref.postValue(GetIdInSharedPrefs.ID_USER_DEFAULT)
+                }
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getIdInSharedPrefs.unsubscribe()
     }
 }

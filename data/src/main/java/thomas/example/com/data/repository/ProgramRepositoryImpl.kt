@@ -21,8 +21,8 @@ class ProgramRepositoryImpl @Inject constructor(
     private val exerciseEntityDataMapper: ExerciseEntityDataMapper
 ) : ProgramRepository {
 
-    override fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>> {
-        return Observable.defer {
+    override fun retrieveProgramsListByUserId(idUser: String): Single<List<Program>> {
+        return Single.defer {
             apiClient.retrieveProgramsListByUserId(idUser).map {
                 programEntityDataMapper.transformListEntitiesToListModels(it)
             }
@@ -58,8 +58,8 @@ class ProgramRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun removeProgram(idProgram: String): Observable<Boolean> {
-        return Observable.defer {
+    override fun removeProgram(idProgram: String): Completable {
+        return Completable.defer {
             apiClient.removeProgram(idProgram)
         }
     }

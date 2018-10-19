@@ -7,7 +7,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.view_user_songs_list_item.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 
@@ -18,12 +18,12 @@ class SongViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHo
 
     private val currentView: View = itemView
 
-    fun bindSong(songObjectWrapper: SongObjectWrapper, userSongsListAdapterListener: UserSongsListAdapterListener) {
-        view_user_songs_list_item_title.text = songObjectWrapper.song.titleSong
-        view_user_songs_list_item_artist.text = songObjectWrapper.song.artistSong
+    fun bindSong(songViewDataWrapper: SongViewDataWrapper, userSongsListAdapterListener: UserSongsListAdapterListener) {
+        view_user_songs_list_item_title.text = songViewDataWrapper.getTitleSong()
+        view_user_songs_list_item_artist.text = songViewDataWrapper.getArtistSong()
 
-        val averageScoreSong = songObjectWrapper.song.averageScoreSong
-        val nbPlay = songObjectWrapper.song.nbPlay
+        val averageScoreSong = songViewDataWrapper.getAverageScoreSong()
+        val nbPlay = songViewDataWrapper.getNbPlay()
         view_user_songs_list_item_nb_play.text =
                 String.format(context.getString(R.string.user_songs_list_nb_play), nbPlay)
         if ((averageScoreSong == 0.0f && nbPlay == 0) || nbPlay == 0) {
@@ -39,7 +39,7 @@ class SongViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHo
             )
         }
 
-        val lastPlay = songObjectWrapper.song.lastPlay
+        val lastPlay = songViewDataWrapper.getLastPlay()
         if (lastPlay.isEmpty()) {
             view_user_songs_list_item_last_play.text = String.format(
                 context.getString(R.string.user_songs_list_last_play),
@@ -52,7 +52,7 @@ class SongViewHolder(itemView: View, var context: Context) : RecyclerView.ViewHo
         }
 
         currentView.setOnClickListener {
-            userSongsListAdapterListener.onSongClick(songObjectWrapper.song.idSong)
+            userSongsListAdapterListener.onSongClick(songViewDataWrapper.getIdSong())
         }
     }
 }

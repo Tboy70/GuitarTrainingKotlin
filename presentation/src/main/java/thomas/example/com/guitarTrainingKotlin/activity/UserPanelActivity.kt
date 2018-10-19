@@ -187,8 +187,8 @@ class UserPanelActivity : BaseActivity() {
         }
 
         userPanelViewModel.userRetrieved.observeSafe(this) {
-            view_drawer_header_pseudo.text = it.pseudoUser
-            view_drawer_header_email.text = it.emailUser
+            view_drawer_header_pseudo.text = it.getPseudoUser()
+            view_drawer_header_email.text = it.getEmailUser()
         }
     }
 

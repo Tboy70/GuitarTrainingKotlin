@@ -1,18 +1,16 @@
 package thomas.example.com.interactor.song
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.UseCase
+import io.reactivex.Single
+import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.model.Score
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
 class RetrieveSongScoreHistoric @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var songRepository: SongRepository
-) : UseCase<List<Score>, RetrieveSongScoreHistoric.Params>(threadExecutor) {
+        private var songRepository: SongRepository
+) : SingleParametrizedUseCase<List<Score>, RetrieveSongScoreHistoric.Params>() {
 
-    override fun buildUseCaseObservable(params: Params): Observable<List<Score>> {
+    override fun build(params: Params): Single<List<Score>> {
         return songRepository.retrieveSongScoreHistoric(params.idSong)
     }
 

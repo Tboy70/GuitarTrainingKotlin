@@ -29,8 +29,8 @@ class UserRepositoryImpl @Inject constructor(
         return Observable.defer { Observable.just(true) }
     }
 
-    override fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
-        return Observable.defer {
+    override fun setInstrumentModeInSharedPrefs(): Completable {
+        return Completable.defer {
             contentClient.setInstrumentModeInSharedPrefs()
         }
     }
@@ -59,9 +59,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun suppressAccount(idUser: String): Observable<Boolean> {
-        return Observable.defer {
-            apiClient.suppressAccount(idUser).doOnNext {
+    override fun suppressAccount(idUser: String): Completable {
+        return Completable.defer {
+            apiClient.suppressAccount(idUser).doOnComplete {
                 contentClient.deleteIdInSharedPrefs()
             }
         }

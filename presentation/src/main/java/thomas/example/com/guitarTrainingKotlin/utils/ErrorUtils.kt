@@ -5,22 +5,17 @@ import retrofit2.HttpException
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.utils.ConstantErrors
 import java.net.ConnectException
+import java.net.UnknownHostException
 
 object ErrorUtils {
-
-    private const val HTTP_EXCEPTION_401 = 401
 
     fun translateException(context: Context, throwable: Throwable): String {
         when (throwable) {
             is HttpException -> {
-                when (throwable.code()) {
-                    HTTP_EXCEPTION_401 -> if (throwable.message() == context.getString(R.string.wrong_login_error_value_from_API)) {
-                        return context.getString(R.string.snackbar_error_wrong_login)
-                    }
-                    else -> return context.getString(R.string.snackbar_error_unknown_error)
-                }
+                return throwable.message()
             }
             is ConnectException -> return context.getString(R.string.snackbar_error_connection_problem)
+            is UnknownHostException -> return context.getString(R.string.snackbar_error_server_connection_problem)
             is Exception -> {
                 return when (throwable.message) {
                     ConstantErrors.ERROR_CONNECT_USER -> context.getString(R.string.error_connect_user)
@@ -42,13 +37,12 @@ object ErrorUtils {
                     ConstantErrors.ERROR_REMOVE_SONG -> context.getString(R.string.error_remove_song)
                     ConstantErrors.ERROR_SEND_FEEDBACK_SONG -> context.getString(R.string.error_send_feedback_song)
                     ConstantErrors.ERROR_RETRIEVE_SCORE_SONG_HISTORIC -> context.getString(R.string.error_retrieve_song_score_historic)
-                    else -> context.getString(R.string.snackbar_error_unknown_error)
+                    else -> throwable.message.toString()
                 }
 
             }
             else -> return context.getString(R.string.snackbar_error_unknown_error)
         }
-        return throwable.message.toString()
     }
 
 }

@@ -23,7 +23,7 @@ import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoice
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramUpdateViewModel
@@ -47,7 +47,7 @@ class UserProgramUpdateFragment : BaseFragment() {
 
     private lateinit var exercisesArray: Array<String>
 
-    private var programObjectWrapper: ProgramObjectWrapper? = null
+    private var programViewDataWrapper: ProgramViewDataWrapper? = null
 
     private var selectedItem: String = ConstValues.EMPTY_STRING
 
@@ -73,7 +73,7 @@ class UserProgramUpdateFragment : BaseFragment() {
         val bundle = arguments
         if (bundle != null) {
             if (bundle.containsKey(PROGRAM_OBJECT_WRAPPER_KEY)) {
-                programObjectWrapper = bundle.getSerializable(PROGRAM_OBJECT_WRAPPER_KEY) as ProgramObjectWrapper
+                programViewDataWrapper = bundle.getSerializable(PROGRAM_OBJECT_WRAPPER_KEY) as ProgramViewDataWrapper
             }
         }
 
@@ -101,12 +101,12 @@ class UserProgramUpdateFragment : BaseFragment() {
     }
 
     private fun initEditText() {
-        fragment_user_program_update_name.setText(programObjectWrapper?.program?.nameProgram)
-        fragment_user_program_update_description.setText(programObjectWrapper?.program?.descriptionProgram)
+        fragment_user_program_update_name.setText(programViewDataWrapper?.getName())
+        fragment_user_program_update_description.setText(programViewDataWrapper?.getDescription())
     }
 
     private fun initExercisesList() {
-        for (exercise in programObjectWrapper?.program?.exercises.orEmpty()) {
+        for (exercise in programViewDataWrapper?.getExercises().orEmpty()) {
             val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(
                 object : ExercisesUIComponentListener {
 
@@ -177,8 +177,6 @@ class UserProgramUpdateFragment : BaseFragment() {
                             R.color.colorPrimary
                         )
 
-                        val currentProgram = programObjectWrapper?.program
-
                         for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
 
                             val exerciseName =
@@ -190,19 +188,20 @@ class UserProgramUpdateFragment : BaseFragment() {
                                     0
                                 ) as LinearLayout).getChildAt(1) as EditText).text.toString()
 
-                            currentProgram?.exercises?.get(i)?.typeExercise =
+                            programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
                                     ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
-                            currentProgram?.exercises?.get(i)?.durationExercise = exerciseDurationValue.toInt()
+                            programViewDataWrapper?.getExercises()?.get(i)?.durationExercise = exerciseDurationValue.toInt()
                         }
 
-                        currentProgram?.exercises?.removeAll(exercisesToBeRemoved)
+                        programViewDataWrapper?.getExercises()?.removeAll(exercisesToBeRemoved)
 
-                        if (currentProgram != null) {
+                        // TODO : Check that ! Too many ? and !! (?)
+                        if (programViewDataWrapper != null) {
                             userProgramUpdateViewModel.checkInformationAndValidateUpdate(
-                                currentProgram.idProgram,
+                                    programViewDataWrapper!!.getId(),
                                 fragment_user_program_update_name.text.toString(),
                                 fragment_user_program_update_description.text.toString(),
-                                currentProgram.exercises,
+                                    programViewDataWrapper!!.getExercises(),
                                 exercisesToBeRemoved
                             )
                         }

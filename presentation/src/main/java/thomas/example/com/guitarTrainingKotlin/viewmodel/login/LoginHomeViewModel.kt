@@ -42,6 +42,7 @@ class LoginHomeViewModel @Inject constructor(private val connectUser: ConnectUse
                 onError = {
                     errorThrowable = it
                     errorEvent.postValue(LoginHomeErrorEvent(ERROR_TRIGGERED = true))
+                    viewState.postValue(LoginHomeViewState(false))
                 }
         )
     }

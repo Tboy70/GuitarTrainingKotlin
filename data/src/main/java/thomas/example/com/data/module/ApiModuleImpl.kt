@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.scottyab.aescrypt.AESCrypt
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -18,9 +17,7 @@ import thomas.example.com.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.example.com.data.entity.remote.score.ScoreRemoteEntity
 import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
-import thomas.example.com.data.entity.remote.song.SongResponseRemoteEntity
 import thomas.example.com.data.entity.remote.user.UserRemoteEntity
-import thomas.example.com.data.entity.remote.user.UserResponseRemoteEntity
 import thomas.example.com.utils.ConstantErrors
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -54,7 +51,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             if (it.body() != null) {
                 it.body()
             } else {
-                throw Exception(ConstantErrors.ERROR_CONNECT_USER)
+                throw Exception(it.raw().message())
             }
         }
     }
@@ -64,7 +61,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
             if (it.isSuccessful && it.body() != null) {
                 it.body()
             } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_USER)
+                throw Exception(it.raw().message())
             }
         }
     }
@@ -74,20 +71,14 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         return apiService.createNewUser(userRemoteEntity)
     }
 
-    override fun suppressAccount(idUser: String): Observable<Boolean> {
-        return apiService.suppressAccount(idUser).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_REMOVE_USER)
-            }
-        }
+    override fun suppressAccount(idUser: String): Completable {
+        return apiService.suppressAccount(idUser)
     }
 
     override fun retrieveProgramsListByUserId(
-        idUser: String,
-        instrumentModeValue: Int
-    ): Observable<List<ProgramRemoteEntity>> {
+            idUser: String,
+            instrumentModeValue: Int
+    ): Single<List<ProgramRemoteEntity>> {
         return apiService.retrieveProgramsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
@@ -129,14 +120,8 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         return apiService.updateExercise(exerciseRemoteEntities)
     }
 
-    override fun removeProgram(idProgram: String): Observable<Boolean> {
-        return apiService.removeProgram(idProgram).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_REMOVE_PROGRAM)
-            }
-        }
+    override fun removeProgram(idProgram: String): Completable {
+        return apiService.removeProgram(idProgram)
     }
 
     override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable {
@@ -144,9 +129,9 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
     }
 
     override fun retrieveSongsListByUserId(
-        idUser: String,
-        instrumentModeValue: Int
-    ): Observable<List<SongRemoteEntity>> {
+            idUser: String,
+            instrumentModeValue: Int
+    ): Single<List<SongRemoteEntity>> {
         return apiService.retrieveSongsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
@@ -156,7 +141,7 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         }
     }
 
-    override fun retrieveSongFromId(idSong: String): Observable<SongRemoteEntity> {
+    override fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity> {
         return apiService.retrieveSongFromId(idSong).map {
             if (it.body() != null) {
                 it.body()
@@ -174,30 +159,18 @@ class ApiModuleImpl @Inject constructor() : ApiModule {
         return apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity)
     }
 
-    override fun removeSong(idSong: String): Observable<Boolean> {
-        return apiService.removeSong(idSong).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_REMOVE_SONG)
-            }
-        }
+    override fun removeSong(idSong: String): Completable {
+        return apiService.removeSong(idSong)
     }
 
     override fun sendScoreFeedback(
-        scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
-        idSong: String
-    ): Observable<Boolean> {
-        return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong).map {
-            if (it.isSuccessful) {
-                it.isSuccessful
-            } else {
-                throw Exception(ConstantErrors.ERROR_SEND_FEEDBACK_SONG)
-            }
-        }
+            scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
+            idSong: String
+    ): Completable {
+        return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong)
     }
 
-    override fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreRemoteEntity>> {
+    override fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreRemoteEntity>> {
         return apiService.retrieveSongScoreHistoric(idSong).map {
             if (it.isSuccessful && it.body() != null) {
                 it.body()

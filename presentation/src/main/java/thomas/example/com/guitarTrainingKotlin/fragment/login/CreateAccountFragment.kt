@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -44,6 +46,13 @@ class CreateAccountFragment : BaseFragment() {
         createAccountViewModel.creationSuccess.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             fragmentManager?.popBackStack()
+            val snackbar = Snackbar.make(
+                    activity!!.findViewById(android.R.id.content),
+                    getString(R.string.success_create_account),
+                    Snackbar.LENGTH_LONG
+            )
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.colorSuccess))
+            snackbar.show()
         }
 
         createAccountViewModel.viewState.observeSafe(this) {
@@ -80,5 +89,4 @@ class CreateAccountFragment : BaseFragment() {
             )
         }
     }
-
 }

@@ -40,11 +40,11 @@ class APIClient @Inject constructor(
         return apiModule.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
     }
 
-    fun suppressAccount(idUser: String): Observable<Boolean> {
+    fun suppressAccount(idUser: String): Completable {
         return apiModule.suppressAccount(idUser)
     }
 
-    fun retrieveProgramsListByUserId(idUser: String): Observable<List<ProgramEntity>> {
+    fun retrieveProgramsListByUserId(idUser: String): Single<List<ProgramEntity>> {
         return apiModule.retrieveProgramsListByUserId(
                 idUser,
                 InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
@@ -93,11 +93,11 @@ class APIClient @Inject constructor(
         )
     }
 
-    fun removeProgram(idProgram: String): Observable<Boolean> {
+    fun removeProgram(idProgram: String): Completable {
         return apiModule.removeProgram(idProgram)
     }
 
-    fun retrieveSongsListByUserId(idUser: String): Observable<List<SongEntity>> {
+    fun retrieveSongsListByUserId(idUser: String): Single<List<SongEntity>> {
         return apiModule.retrieveSongsListByUserId(
                 idUser,
                 InstrumentModeUtils.getIntValueFromInstrumentMode(moduleSharedPrefsImpl.getInstrumentModeInSharedPrefs())
@@ -106,7 +106,7 @@ class APIClient @Inject constructor(
         }
     }
 
-    fun retrieveSongFromId(idSong: String): Observable<SongEntity> {
+    fun retrieveSongFromId(idSong: String): Single<SongEntity> {
         return apiModule.retrieveSongFromId(idSong).map {
             songRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
         }
@@ -116,7 +116,7 @@ class APIClient @Inject constructor(
         return apiModule.createSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
     }
 
-    fun removeSong(idSong: String): Observable<Boolean> {
+    fun removeSong(idSong: String): Completable {
         return apiModule.removeSong(idSong)
     }
 
@@ -124,7 +124,7 @@ class APIClient @Inject constructor(
         return apiModule.updateSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
     }
 
-    fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Observable<Boolean> {
+    fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Completable {
         return apiModule.sendScoreFeedback(
                 scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(
                         scoreFeedbackEntity
@@ -132,7 +132,7 @@ class APIClient @Inject constructor(
         )
     }
 
-    fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreEntity>> {
+    fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreEntity>> {
         return apiModule.retrieveSongScoreHistoric(idSong).map {
             scoreRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
         }

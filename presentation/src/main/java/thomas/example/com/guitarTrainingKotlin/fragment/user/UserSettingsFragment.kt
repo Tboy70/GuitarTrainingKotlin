@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
 import thomas.example.com.guitarTrainingKotlin.R
@@ -67,20 +69,15 @@ class UserSettingsFragment : BaseFragment() {
 
         suppress_account.setOnClickListener {
             materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
-                getString(R.string.dialog_suppress_account_confirm_content),
-                R.color.colorPrimary,
-                object : MultipleChoiceMaterialDialogListener {
-                    override fun onYesSelected() {
-                        materialDialogComponent.showProgressDialog(
-                            getString(R.string.dialog_suppress_account_title),
-                            getString(R.string.dialog_suppress_account_content),
-                            R.color.colorPrimary
-                        )
-                        if (!idUser.isEmpty()) {
-                            userSettingsViewModel.suppressAccount(idUser)
+                    getString(R.string.dialog_suppress_account_confirm_content),
+                    R.color.colorPrimary,
+                    object : MultipleChoiceMaterialDialogListener {
+                        override fun onYesSelected() {
+                            if (!idUser.isEmpty()) {
+                                userSettingsViewModel.suppressAccount(idUser)
+                            }
                         }
-                    }
-                })
+                    })
         }
     }
 
@@ -90,27 +87,29 @@ class UserSettingsFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        userSettingsViewModel.finishSetInstrumentsModeInSharedPrefs.observeSafe(this) {
-            if (it == false) {
-                errorRendererComponent.requestRenderError(
-                    userSettingsViewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
+
+        userSettingsViewModel.viewState.observeSafe(this) {
+            if (it.displayingLoading) {
+                materialDialogComponent.showProgressDialog(
+                        getString(R.string.dialog_suppress_account_title),
+                        getString(R.string.dialog_suppress_account_content),
+                        R.color.colorPrimary
                 )
+            } else {
+                materialDialogComponent.dismissDialog()
             }
         }
 
-        userSettingsViewModel.finishSuppressAccount.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
-            if (it == true) {
-                activity?.finish()
-            } else {
-                errorRendererComponent.requestRenderError(
+        userSettingsViewModel.errorEvent.observeSafe(this) {
+            errorRendererComponent.requestRenderError(
                     userSettingsViewModel.errorThrowable as Throwable,
                     ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                     view
-                )
-            }
+            )
+        }
+
+        userSettingsViewModel.finishSuppressAccount.observeSafe(this) {
+            activity?.finish()
         }
     }
 

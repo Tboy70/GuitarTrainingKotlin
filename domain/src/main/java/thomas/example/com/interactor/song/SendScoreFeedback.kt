@@ -1,18 +1,19 @@
 package thomas.example.com.interactor.song
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.interactor.base.UseCase
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.model.ScoreFeedback
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
 class SendScoreFeedback @Inject constructor(
-    threadExecutor: ThreadExecutor,
     private var songRepository: SongRepository
-) : UseCase<Boolean, SendScoreFeedback.Params>(threadExecutor) {
+) : CompletableParametrizedUseCase<SendScoreFeedback.Params>() {
 
-    override fun buildUseCaseObservable(params: SendScoreFeedback.Params): Observable<Boolean> {
+    override fun build(params: SendScoreFeedback.Params): Completable {
         return songRepository.sendScoreFeedback(params.scoreFeedback, params.idSong)
     }
 

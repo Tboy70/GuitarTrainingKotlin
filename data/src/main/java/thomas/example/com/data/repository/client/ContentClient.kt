@@ -33,12 +33,12 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
         }
     }
 
-    fun setInstrumentModeInSharedPrefs(): Observable<Boolean> {
+    fun setInstrumentModeInSharedPrefs(): Completable {
         return try {
             moduleSharedPrefs.setInstrumentModeInSharedPrefs()
-            Observable.just(true)
+            Completable.complete()
         } catch (e: Exception) {
-            Observable.error(e)
+            Completable.error(e)
         }
     }
 }

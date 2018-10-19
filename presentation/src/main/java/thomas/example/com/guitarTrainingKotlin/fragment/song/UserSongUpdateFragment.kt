@@ -13,7 +13,7 @@ import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
 
@@ -29,7 +29,7 @@ class UserSongUpdateFragment : BaseFragment() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
 
-    private var songObjectWrapper: SongObjectWrapper? = null
+    private var songViewDataWrapper: SongViewDataWrapper? = null
 
     companion object {
         const val SONG_OBJECT_WRAPPER_KEY =
@@ -48,8 +48,8 @@ class UserSongUpdateFragment : BaseFragment() {
         val bundle = arguments
         if (bundle != null) {
             if (bundle.containsKey(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY)) {
-                songObjectWrapper =
-                        bundle.getSerializable(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY) as SongObjectWrapper
+                songViewDataWrapper =
+                        bundle.getSerializable(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY) as SongViewDataWrapper
             }
         }
 
@@ -66,9 +66,9 @@ class UserSongUpdateFragment : BaseFragment() {
             } else if (it != null && it == false) {
                 if (userSongUpdateViewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(
-                        userSongUpdateViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
+                            userSongUpdateViewModel.errorThrowable as Throwable,
+                            ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                            view
                     )
                 }
             }
@@ -76,36 +76,32 @@ class UserSongUpdateFragment : BaseFragment() {
     }
 
     private fun initEditText() {
-        fragment_user_song_update_name.setText(songObjectWrapper?.song?.titleSong)
-        fragment_user_song_update_description.setText(songObjectWrapper?.song?.artistSong)
+        fragment_user_song_update_name.setText(songViewDataWrapper?.getTitleSong())
+        fragment_user_song_update_description.setText(songViewDataWrapper?.getArtistSong())
     }
 
     private fun handleClickValidateUpdateButton() {
         fragment_user_song_update_validate_button.setOnClickListener {
 
             materialDialogComponent.showMultiChoiceDialog(
-                getString(R.string.dialog_update_song_title),
-                getString(R.string.dialog_update_song_confirm_content),
-                R.color.colorPrimary,
-                object : MultipleChoiceMaterialDialogListener {
-                    override fun onYesSelected() {
-                        materialDialogComponent.showProgressDialog(
-                            getString(R.string.dialog_update_song_title),
-                            getString(R.string.dialog_update_song_content),
-                            R.color.colorPrimary
-                        )
+                    getString(R.string.dialog_update_song_title),
+                    getString(R.string.dialog_update_song_confirm_content),
+                    R.color.colorPrimary,
+                    object : MultipleChoiceMaterialDialogListener {
+                        override fun onYesSelected() {
+                            materialDialogComponent.showProgressDialog(
+                                    getString(R.string.dialog_update_song_title),
+                                    getString(R.string.dialog_update_song_content),
+                                    R.color.colorPrimary
+                            )
 
-                        val currentSong = songObjectWrapper?.song
-
-                        if (currentSong != null) {
                             userSongUpdateViewModel.checkInformationAndValidateUpdate(
-                                currentSong.idSong,
-                                fragment_user_song_update_name.text.toString(),
-                                fragment_user_song_update_description.text.toString()
+                                    songViewDataWrapper?.getIdSong()!!, // TODO : Check that
+                                    fragment_user_song_update_name.text.toString(),
+                                    fragment_user_song_update_description.text.toString()
                             )
                         }
-                    }
-                })
+                    })
         }
     }
 

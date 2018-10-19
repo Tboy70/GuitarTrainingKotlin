@@ -7,7 +7,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.view_user_programs_list_item.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.util.*
 
@@ -17,15 +17,16 @@ class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.Vie
 
     private val currentView: View = itemView
 
-    fun bindProgram(programObjectWrapper: ProgramObjectWrapper, userProgramsListAdapterListener: UserProgramsListAdapterListener) {
-        view_user_programs_list_item_name.text = programObjectWrapper.program.nameProgram
+    // TODO : Format in view data wrapper instead !!
+    fun bindProgram(programViewDataWrapper: ProgramViewDataWrapper, userProgramsListAdapterListener: UserProgramsListAdapterListener) {
+        view_user_programs_list_item_name.text = programViewDataWrapper.getName()
         view_user_programs_list_item_nb_exercises.text = String.format(
             Locale.FRANCE,
             context.getString(R.string.user_programs_list_nb_exercises_text),
-            programObjectWrapper.program.exercises.size.toString()
+            programViewDataWrapper.getExercises().size.toString()
         )
 
-        val totalDurationProgram: Int = calculateTotalDurationProgram(programObjectWrapper)
+        val totalDurationProgram: Int = calculateTotalDurationProgram(programViewDataWrapper)
         if (totalDurationProgram < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
             view_user_programs_list_item_total_duration_exercises.text = String.format(
                 Locale.FRANCE,
@@ -43,13 +44,13 @@ class ProgramViewHolder(itemView: View, var context: Context) : RecyclerView.Vie
         }
 
         currentView.setOnClickListener {
-            userProgramsListAdapterListener.onProgramClick(programObjectWrapper.program.idProgram)
+            userProgramsListAdapterListener.onProgramClick(programViewDataWrapper.getId())
         }
     }
 
-    private fun calculateTotalDurationProgram(programObjectWrapper: ProgramObjectWrapper): Int {
+    private fun calculateTotalDurationProgram(programViewDataWrapper: ProgramViewDataWrapper): Int {
         var totalDuration = 0
-        for (exercise in programObjectWrapper.program.exercises) {
+        for (exercise in programViewDataWrapper.getExercises()) {
             totalDuration += exercise.durationExercise
         }
         return totalDuration

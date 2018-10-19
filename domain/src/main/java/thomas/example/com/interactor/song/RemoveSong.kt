@@ -1,17 +1,15 @@
 package thomas.example.com.interactor.song
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.UseCase
+import io.reactivex.Completable
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
 class RemoveSong @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var songRepository: SongRepository
-) : UseCase<Boolean, RemoveSong.Params>(threadExecutor) {
+        private var songRepository: SongRepository
+) : CompletableParametrizedUseCase<RemoveSong.Params>() {
 
-    override fun buildUseCaseObservable(params: RemoveSong.Params): Observable<Boolean> {
+    override fun build(params: RemoveSong.Params): Completable {
         return songRepository.removeSong(params.idSong)
     }
 

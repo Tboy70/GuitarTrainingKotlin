@@ -6,40 +6,58 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.user.RetrieveSongsListByUserId
-import thomas.example.com.model.Song
 import javax.inject.Inject
 
 class UserSongsListViewModel @Inject constructor(private val retrieveSongsListByUserId: RetrieveSongsListByUserId) :
-    ViewModel() {
+        ViewModel() {
 
-    val finishRetrieveSongs: MutableLiveData<Boolean> = MutableLiveData()
-    val refreshList: MutableLiveData<Boolean> = MutableLiveData()
-
-    var userSongs: List<Song> = ArrayList()
+    var userSongs = MutableLiveData<List<SongViewDataWrapper>>()
+    val viewState = MutableLiveData<UserSongsListViewState>()
+    val errorEvent = SingleLiveEvent<UserSongsListErrorEvent>()
     var errorThrowable: Throwable? = null
 
-    fun retrieveSongsListByUserId(idUser: String) {
-        refreshList.postValue(true)
-        retrieveSongsListByUserId.execute(
-            onComplete = {
-                refreshList.postValue(false)
-            },
-            onError = {
-                errorThrowable = it
-                refreshList.postValue(false)
-                finishRetrieveSongs.postValue(false)
-            },
-            onNext = {
-                userSongs = it
-                finishRetrieveSongs.postValue(true)
+    data class UserSongsListViewState(
+            var refreshList: Boolean = false
+    )
 
-            }, params = RetrieveSongsListByUserId.Params.forList(idUser)
+    data class UserSongsListErrorEvent(
+            val ERROR_TRIGGERED: Boolean = false
+    )
+
+    init {
+        // TODO : Launch method here ? Same for other view models ?
+    }
+
+    fun retrieveSongsListByUserId(idUser: String) {
+
+        viewState.postValue(UserSongsListViewState(true))
+
+        retrieveSongsListByUserId.subscribe(
+                params = RetrieveSongsListByUserId.Params.forList(idUser),
+                onSuccess = {
+                    userSongs.postValue(it.map { song ->
+                        SongViewDataWrapper(song)
+                    })
+                    viewState.postValue(UserSongsListViewState(false))
+                },
+                onError = {
+                    errorThrowable = it
+                    errorEvent.postValue(UserSongsListErrorEvent(true))
+                    viewState.postValue(UserSongsListViewState(false))
+                }
         )
     }
 
     fun getIdUser(context: Context): String {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        retrieveSongsListByUserId.unsubscribe()
     }
 }

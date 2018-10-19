@@ -1,21 +1,19 @@
 package thomas.example.com.interactor.sharedprefs
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.UseCase
+import io.reactivex.Single
+import thomas.example.com.interactor.base.SingleUseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class GetIdInSharedPrefs @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var userRepository: UserRepository
-) : UseCase<String, String>(threadExecutor) {
+        private var userRepository: UserRepository
+) : SingleUseCase<String>() {
 
     companion object {
         var ID_USER_DEFAULT = "ID_USER_DEFAULT"
     }
 
-    override fun buildUseCaseObservable(params: String): Observable<String> {
+    override fun build(): Single<String> {
         return userRepository.getIdUserInSharedPrefs()
     }
 }

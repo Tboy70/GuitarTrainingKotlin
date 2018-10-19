@@ -2,6 +2,7 @@ package thomas.example.com.repository
 
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
 import thomas.example.com.model.Song
@@ -10,15 +11,15 @@ interface SongRepository {
 
     fun createSong(song: Song): Completable
 
-    fun retrieveSongsListByUserId(idUser: String): Observable<List<Song>>
+    fun retrieveSongsListByUserId(idUser: String): Single<List<Song>>
 
-    fun retrieveSongById(idSong: String): Observable<Song>
+    fun retrieveSongById(idSong: String): Single<Song>
 
     fun updateSong(song: Song): Completable
 
-    fun removeSong(idSong: String): Observable<Boolean>
+    fun removeSong(idSong: String): Completable
 
-    fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Observable<Boolean>
+    fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Completable
 
-    fun retrieveSongScoreHistoric(idSong: String): Observable<List<Score>>
+    fun retrieveSongScoreHistoric(idSong: String): Single<List<Score>>
 }

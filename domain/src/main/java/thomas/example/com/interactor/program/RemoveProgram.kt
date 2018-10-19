@@ -1,17 +1,15 @@
 package thomas.example.com.interactor.program
 
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.UseCase
+import io.reactivex.Completable
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.repository.ProgramRepository
 import javax.inject.Inject
 
 class RemoveProgram @Inject constructor(
-    threadExecutor: ThreadExecutor,
-    private var programRepository: ProgramRepository
-) : UseCase<Boolean, RemoveProgram.Params>(threadExecutor) {
+        private var programRepository: ProgramRepository
+) : CompletableParametrizedUseCase<RemoveProgram.Params>() {
 
-    override fun buildUseCaseObservable(params: RemoveProgram.Params): Observable<Boolean> {
+    override fun build(params: RemoveProgram.Params): Completable {
         return programRepository.removeProgram(params.idProgram)
     }
 

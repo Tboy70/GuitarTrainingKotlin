@@ -18,7 +18,7 @@ interface ApiModule {
 
     fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable
 
-    fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<ProgramRemoteEntity>>
+    fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>
 
     fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity>
 
@@ -30,23 +30,23 @@ interface ApiModule {
 
     fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable
 
-    fun removeProgram(idProgram: String): Observable<Boolean>
+    fun removeProgram(idProgram: String): Completable
 
     fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
-    fun retrieveSongsListByUserId(idUser: String, instrumentModeValue: Int): Observable<List<SongRemoteEntity>>
+    fun retrieveSongsListByUserId(idUser: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
 
-    fun retrieveSongFromId(idSong: String): Observable<SongRemoteEntity>
+    fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity>
 
     fun createSong(songRemoteEntity: SongRemoteEntity): Completable
 
     fun updateSong(songRemoteEntity: SongRemoteEntity): Completable
 
-    fun removeSong(idSong: String): Observable<Boolean>
+    fun removeSong(idSong: String): Completable
 
-    fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Observable<Boolean>
+    fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Completable
 
-    fun retrieveSongScoreHistoric(idSong: String): Observable<List<ScoreRemoteEntity>>
+    fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreRemoteEntity>>
 
-    fun suppressAccount(idUser: String): Observable<Boolean>
+    fun suppressAccount(idUser: String): Completable
 }

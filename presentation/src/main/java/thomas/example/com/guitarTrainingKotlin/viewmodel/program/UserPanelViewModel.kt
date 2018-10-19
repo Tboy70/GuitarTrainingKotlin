@@ -6,10 +6,10 @@ import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.UserViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.user.LogoutUser
 import thomas.example.com.interactor.user.RetrieveUserById
-import thomas.example.com.model.User
 import javax.inject.Inject
 
 class UserPanelViewModel @Inject constructor(
@@ -17,12 +17,12 @@ class UserPanelViewModel @Inject constructor(
         private val retrieveUserById: RetrieveUserById
 ) : ViewModel() {
 
-    var errorThrowable: Throwable? = null
-
     val logoutSucceed = MutableLiveData<Boolean>()
-    val userRetrieved = MutableLiveData<User>() //TODO : Use ViewDataWrapper
+    val userRetrieved = MutableLiveData<UserViewDataWrapper>()
     val viewState = MutableLiveData<UserPanelViewState>()
     val errorEvent = SingleLiveEvent<UserPanelErrorEvent>()
+
+    var errorThrowable: Throwable? = null
 
     data class UserPanelViewState(
             var displayingLoading: Boolean = false
@@ -52,9 +52,10 @@ class UserPanelViewModel @Inject constructor(
                 params = RetrieveUserById.Params.toRetrieve(idUser),
                 onError = {
                     errorThrowable = it
+                    errorEvent.postValue(UserPanelErrorEvent(ERROR_TRIGGERED = true))
                 },
-                onSuccess = {   // TODO : Use ViewDataWrapper instead
-                    userRetrieved.postValue(it)
+                onSuccess = {
+                    userRetrieved.postValue(UserViewDataWrapper(it))
                 }
         )
     }

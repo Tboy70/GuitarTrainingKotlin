@@ -6,15 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.SongObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.ui.viewholder.SongViewHolder
-import thomas.example.com.model.Song
 import javax.inject.Inject
 
 class UserSongsListAdapter @Inject constructor(activity: BaseActivity) : RecyclerView.Adapter<SongViewHolder>() {
 
     private val activity: Activity
-    private val songsList: MutableList<Song>
+    private val songsList: MutableList<SongViewDataWrapper>
     private lateinit var userSongsListAdapterListener: UserSongsListAdapterListener
 
     init {
@@ -28,7 +27,7 @@ class UserSongsListAdapter @Inject constructor(activity: BaseActivity) : Recycle
     }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        holder.bindSong(SongObjectWrapper(songsList[position]), userSongsListAdapterListener)
+        holder.bindSong(songsList[position], userSongsListAdapterListener)
     }
 
     override fun getItemCount(): Int {
@@ -39,12 +38,12 @@ class UserSongsListAdapter @Inject constructor(activity: BaseActivity) : Recycle
         this.userSongsListAdapterListener = userSongsListAdapterListener
     }
 
-    fun updateSongsList(songs: List<Song>?) {
+    fun updateSongsList(
+            songs: List<SongViewDataWrapper>
+    ) {
         clearList()
-        if (songs != null) {
-            songsList.addAll(songs)
-            notifyDataSetChanged()
-        }
+        songsList.addAll(songs)
+        notifyDataSetChanged()
     }
 
     private fun clearList() {

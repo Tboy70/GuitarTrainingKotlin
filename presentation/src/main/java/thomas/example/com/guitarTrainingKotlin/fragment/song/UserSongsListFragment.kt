@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,9 +21,9 @@ import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapterListener
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
-import thomas.example.com.model.Song
 import javax.inject.Inject
 
 class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
@@ -62,20 +62,22 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
 
         this.idUser = userSongsListViewModel.getIdUser(activity as UserPanelActivity)
 
-        userSongsListViewModel.finishRetrieveSongs.observeSafe(this) {
-            if (it == true) {
-                displayRetrievedSongs(userSongsListViewModel)
-            } else {
-                errorRendererComponent.requestRenderError(
-                    userSongsListViewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
-            }
+        userSongsListViewModel.userSongs.observeSafe(this) {
+            displayRetrievedSongs(it)
         }
 
-        userSongsListViewModel.refreshList.observeSafe(this) {
-            swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
+        userSongsListViewModel.viewState.observeSafe(this) {
+            swipeRefreshLayout.isRefreshing = it.refreshList == true && !swipeRefreshLayout.isRefreshing
+        }
+
+        userSongsListViewModel.errorEvent.observeSafe(this) {
+            if (it.ERROR_TRIGGERED && userSongsListViewModel.errorThrowable != null) {
+                errorRendererComponent.requestRenderError(
+                        userSongsListViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
+                )
+            }
         }
 
         handleAddNewSong()
@@ -102,14 +104,13 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
 
     private fun handleAddNewSong() {
         fragment_user_songs_floating_action_button.setOnClickListener {
-            val host =
-                activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as NavHostFragment
-            NavHostFragment.findNavController(host).navigate(R.id.add_song, null, null)
+            val host = activity?.findViewById(R.id.user_panel_nav_host_fragment) as View
+            findNavController(host).navigate(R.id.add_song, null, null)
         }
     }
 
-    private fun displayRetrievedSongs(userSongsListViewModel: UserSongsListViewModel) {
-        val userSongs: List<Song> = userSongsListViewModel.userSongs
+    private fun displayRetrievedSongs(userSongsList: List<SongViewDataWrapper>) {
+        val userSongs: List<SongViewDataWrapper> = userSongsList
 
         userSongsListAdapter.updateSongsList(userSongs)
         if (userSongs.isEmpty()) {

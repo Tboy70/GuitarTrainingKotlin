@@ -266,6 +266,7 @@
     <string name="error_field_not_filled">Veuillez remplir tous les champs</string>
     <string name="error_count_down_not_initialized">CountDown not initialized</string>
     <string name="snackbar_error_connection_problem">Problème de connexion internet</string>
+    <string name="snackbar_error_server_connection_problem">Problème de connexion au serveur</string>
 
     <string name="error_connect_user">Problème lors de la connexion au compte</string>
     <string name="error_creation_user">Erreur lors de la création de l\'utilisateur</string>
@@ -288,8 +289,12 @@
     <string name="error_update_song">Erreur pendant la mise à jour de la chanson</string>
     <string name="error_remove_song">Erreur pendant la suppression de la chanson</string>
     <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
-    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson
-    </string>
+    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson</string>
+
+    <!-- ======================================================================================= -->
+    <!-- ====================================== ERRORS ========================================= -->
+    <!-- ======================================================================================= -->
+    <string name="success_create_account">Compte créé avec succès ! Vous pouvez d\'ores et déjà l\'utiliser.</string>
 
 
     <!-- ======================================================================================= -->

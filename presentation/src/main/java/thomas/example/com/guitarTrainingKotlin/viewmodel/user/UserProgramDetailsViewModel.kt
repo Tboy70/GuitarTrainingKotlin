@@ -2,52 +2,76 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.UserViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
 import thomas.example.com.interactor.program.RemoveProgram
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject
 
 class UserProgramDetailsViewModel @Inject constructor(
-    private val retrieveProgramById: RetrieveProgramById,
-    private val removeProgram: RemoveProgram
+        private val retrieveProgramById: RetrieveProgramById,
+        private val removeProgram: RemoveProgram
 ) : ViewModel() {
 
-    lateinit var userProgramObjectWrapper: ProgramObjectWrapper
+    lateinit var userProgramViewDataWrapper: ProgramViewDataWrapper
 
-    val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val finishRetrieveProgramForDetails: MutableLiveData<Boolean> = MutableLiveData()
+    val programDetailsRetrieved = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
+    val viewState = MutableLiveData<UserProgramDetailsViewState>()
+    val errorEvent = SingleLiveEvent<UserProgramDetailsErrorEvent>()
+
+    var errorThrowable: Throwable? = null
+
+    data class UserProgramDetailsViewState(
+            var displayingLoadingGetProgram: Boolean = false,
+            var displayLoadingRemoveProgram: Boolean = false
+    )
+
+    data class UserProgramDetailsErrorEvent(
+            val ERROR_TRIGGERED: Boolean = false
+    )
 
     fun getProgramById(idProgram: String) {
-        retrieveProgramById.execute(
-            onComplete = {
-                finishLoading.postValue(true)
-            },
-            onError = {
-                finishRetrieveProgramForDetails.postValue(false)
-            },
-            onNext = {
-                userProgramObjectWrapper = ProgramObjectWrapper(it)
-                finishRetrieveProgramForDetails.postValue(true)
 
-            }, params = RetrieveProgramById.Params.toRetrieve(idProgram)
+        viewState.postValue(UserProgramDetailsViewState(true, false))
+
+        retrieveProgramById.subscribe(
+                params = RetrieveProgramById.Params.toRetrieve(idProgram),
+                onSuccess = {
+                    programDetailsRetrieved.postValue(ProgramViewDataWrapper(it))
+                    viewState.postValue(UserProgramDetailsViewState(false, false))
+                },
+                onError = {
+                    errorThrowable = it
+                    errorEvent.postValue(UserProgramDetailsErrorEvent(true))
+                    viewState.postValue(UserProgramDetailsViewState(false, false))
+                }
         )
     }
 
     fun removeProgram(idProgram: String) {
-        removeProgram.execute(
-            onComplete = {
-                finishLoading.postValue(true)
-            },
-            onError = {
-                finishProgramDeletion.postValue(false)
-            },
-            onNext = {
-                if (it) {
-                    finishProgramDeletion.postValue(true)
-                }
 
-            }, params = RemoveProgram.Params.toRemove(idProgram)
+        viewState.postValue(UserProgramDetailsViewState(false, true ))
+
+        removeProgram.subscribe(
+                params = RemoveProgram.Params.toRemove(idProgram),
+                onComplete = {
+                    finishProgramDeletion.postValue(true)
+                    viewState.postValue(UserProgramDetailsViewState(false, false))
+                },
+                onError = {
+                    errorThrowable = it
+                    errorEvent.postValue(UserProgramDetailsErrorEvent(true))
+                    viewState.postValue(UserProgramDetailsViewState(false, false))
+                }
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        retrieveProgramById.unsubscribe()
+        removeProgram.unsubscribe()
     }
 }

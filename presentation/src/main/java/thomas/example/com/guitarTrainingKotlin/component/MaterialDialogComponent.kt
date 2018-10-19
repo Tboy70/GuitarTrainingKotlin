@@ -24,8 +24,8 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
     }
 
     fun showSingleChoiceDialog(
-        title: String, items: List<String>, selectedItem: String?, color: Int, cancelable: Boolean,
-        singleChoiceMaterialDialogListener: SingleChoiceMaterialDialogListener
+            title: String, items: List<String>, selectedItem: String?, color: Int, cancelable: Boolean,
+            singleChoiceMaterialDialogListener: SingleChoiceMaterialDialogListener
     ) {
 
         val selectedIndex = getSelectedItemIndex(items, selectedItem)
@@ -71,6 +71,8 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
     }
 
     fun dismissDialog() {
-        materialDialog.dismiss()
+        if (materialDialog != null) {
+            materialDialog.dismiss()
+        }
     }
 }

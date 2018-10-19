@@ -43,7 +43,7 @@ class ProgramActivity : BaseActivity() {
         }
 
         programViewModel.programRetrieved.observeSafe(this) {
-            exercisesOfProgram = it.program.exercises
+            exercisesOfProgram = it.getExercises()
             startExercise(rankExercise)
         }
 

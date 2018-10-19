@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.ui.viewholder.ProgramViewHolder
 import thomas.example.com.model.Program
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class UserProgramsListAdapter @Inject constructor(activity: BaseActivity) : RecyclerView.Adapter<ProgramViewHolder>() {
 
     private val activity: Activity
-    private val programList: MutableList<Program>
+    private val programList: MutableList<ProgramViewDataWrapper>
     private lateinit var userProgramsListAdapterListener: UserProgramsListAdapterListener
 
     init {
@@ -28,7 +28,7 @@ class UserProgramsListAdapter @Inject constructor(activity: BaseActivity) : Recy
     }
 
     override fun onBindViewHolder(holder: ProgramViewHolder, position: Int) {
-        holder.bindProgram(ProgramObjectWrapper(programList[position]), userProgramsListAdapterListener)
+        holder.bindProgram(programList[position], userProgramsListAdapterListener)
     }
 
     override fun getItemCount(): Int {
@@ -39,12 +39,10 @@ class UserProgramsListAdapter @Inject constructor(activity: BaseActivity) : Recy
         this.userProgramsListAdapterListener = userProgramsListAdapterListener
     }
 
-    fun updateProgramsList(programs: List<Program>?) {
+    fun updateProgramsList(programs: List<ProgramViewDataWrapper>) {
         clearList()
-        if (programs != null) {
-            programList.addAll(programs)
-            notifyDataSetChanged()
-        }
+        programList.addAll(programs)
+        notifyDataSetChanged()
     }
 
     private fun clearList() {

@@ -1,7 +1,6 @@
 package thomas.example.com.interactor.program
 
 import io.reactivex.Single
-import thomas.example.com.executor.ThreadExecutor
 import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository

@@ -8,7 +8,7 @@ import thomas.example.com.model.Program
 
 interface ProgramRepository {
 
-    fun retrieveProgramsListByUserId(idUser: String): Observable<List<Program>>
+    fun retrieveProgramsListByUserId(idUser: String): Single<List<Program>>
 
     fun retrieveProgramById(idProgram: String): Single<Program>
 
@@ -16,5 +16,5 @@ interface ProgramRepository {
 
     fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Completable
 
-    fun removeProgram(idProgram: String): Observable<Boolean>
+    fun removeProgram(idProgram: String): Completable
 }

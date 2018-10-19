@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.ui.objectwrapper.ProgramObjectWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject
@@ -11,7 +11,7 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
 
     var errorThrowable: Throwable? = null
 
-    val programRetrieved = MutableLiveData<ProgramObjectWrapper>()
+    val programRetrieved = MutableLiveData<ProgramViewDataWrapper>()
     val errorEvent = SingleLiveEvent<ProgramErrorEvent>()
 
     data class ProgramErrorEvent(
@@ -26,7 +26,7 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
                     errorEvent.postValue(ProgramErrorEvent(ERROR_TRIGGERED = true))
                 },
                 onSuccess = {
-                    programRetrieved.postValue(ProgramObjectWrapper(it))
+                    programRetrieved.postValue(ProgramViewDataWrapper(it))
                 }
         )
     }

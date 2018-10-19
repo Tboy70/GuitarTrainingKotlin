@@ -21,9 +21,9 @@ import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapter
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserProgramsListAdapterListener
+import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
-import thomas.example.com.model.Program
 import javax.inject.Inject
 
 class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener {
@@ -63,20 +63,22 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
         this.idUser = userProgramsListViewModel.getIdUser(activity as UserPanelActivity)
 
-        userProgramsListViewModel.finishRetrievePrograms.observeSafe(this) {
-            if (it == true) {
-                displayRetrievedPrograms(userProgramsListViewModel)
-            } else {
-                errorRendererComponent.requestRenderError(
-                    userProgramsListViewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
+        userProgramsListViewModel.userPrograms.observeSafe(this) {
+                displayRetrievedPrograms(it)
             }
+
+        userProgramsListViewModel.viewState.observeSafe(this) {
+            swipeRefreshLayout.isRefreshing = it.refreshList == true && !swipeRefreshLayout.isRefreshing
         }
 
-        userProgramsListViewModel.refreshList.observeSafe(this) {
-            swipeRefreshLayout.isRefreshing = it == true && !swipeRefreshLayout.isRefreshing
+        userProgramsListViewModel.errorEvent.observeSafe(this) {
+            if (it.ERROR_TRIGGERED && userProgramsListViewModel.errorThrowable != null) {
+                errorRendererComponent.requestRenderError(
+                        userProgramsListViewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
+                )
+            }
         }
 
         handleAddNewProgramButton()
@@ -101,15 +103,15 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
 
     private fun handleAddNewProgramButton() {
         fragment_user_programs_floating_action_button.setOnClickListener {
-            val host = activity?.supportFragmentManager?.findFragmentById(R.id.user_panel_nav_host_fragment) as View
+            val host = activity?.findViewById(R.id.user_panel_nav_host_fragment) as View
             findNavController(host).navigate(R.id.add_program, null, null)
         }
     }
 
-    private fun displayRetrievedPrograms(userProgramsListViewModel: UserProgramsListViewModel) {
-        val userPrograms: List<Program> = userProgramsListViewModel.userPrograms
+    private fun displayRetrievedPrograms(userProgramsList: List<ProgramViewDataWrapper>) {
+        val userPrograms: List<ProgramViewDataWrapper> = userProgramsList
 
-        userProgramsListAdapter.updateProgramsList(userPrograms)
+        userProgramsListAdapter.updateProgramsList(userProgramsList)
         if (userPrograms.isEmpty()) {
             fragment_user_programs_list_no_program_placeholder.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
