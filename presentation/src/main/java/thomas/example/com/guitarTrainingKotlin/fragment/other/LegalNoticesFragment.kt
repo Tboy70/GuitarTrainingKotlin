@@ -1,18 +1,14 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.other
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.viewmodel.other.LegalNoticesViewModel
 
-class LegalNoticesFragment : BaseFragment() {
+class LegalNoticesFragment : BaseFragment<LegalNoticesViewModel>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_legal_notices, container, false)
-    }
+    override val viewModelClass = LegalNoticesViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_legal_notices
 
     override fun onStart() {
         super.onStart()

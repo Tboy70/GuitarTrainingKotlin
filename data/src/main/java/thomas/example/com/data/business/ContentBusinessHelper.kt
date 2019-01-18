@@ -1,32 +1,31 @@
-package thomas.example.com.data.repository.client
+package thomas.example.com.data.business
 
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import thomas.example.com.data.module.ModuleSharedPrefs
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManager
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl) {
+@Singleton
+class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: SharedPrefsManager) {
 
-    private var moduleSharedPrefs: ModuleSharedPrefs = moduleSharedPrefs
+    fun getUserIdInSharedPrefs(): Single<String> {
+        return Single.just(sharedPrefsManager.getUserIdInSharedPrefs())
+    }
 
     fun setIdInSharedPrefs(idUser: String?): Observable<Boolean> {
         return try {
-            moduleSharedPrefs.setIdUserInSharedPrefs(idUser)
+            sharedPrefsManager.setIdUserInSharedPrefs(idUser)
             Observable.just(true)
         } catch (e: Exception) {
             Observable.error(e)
         }
     }
 
-    fun getIdInSharedPrefs(): Single<String> {
-        return Single.just(moduleSharedPrefs.getIdUserInSharedPrefs())
-    }
-
     fun deleteIdInSharedPrefs(): Completable {
         return try {
-            moduleSharedPrefs.deleteIdUserInSharedPrefs()
+            sharedPrefsManager.deleteIdUserInSharedPrefs()
             Completable.complete()
         } catch (e: Exception) {
             Completable.error(e)
@@ -35,7 +34,7 @@ class ContentClient @Inject constructor(moduleSharedPrefs: ModuleSharedPrefsImpl
 
     fun setInstrumentModeInSharedPrefs(): Completable {
         return try {
-            moduleSharedPrefs.setInstrumentModeInSharedPrefs()
+            sharedPrefsManager.setInstrumentModeInSharedPrefs()
             Completable.complete()
         } catch (e: Exception) {
             Completable.error(e)

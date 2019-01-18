@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -12,8 +11,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.example.com.guitarTrainingKotlin.R
@@ -32,11 +29,10 @@ import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramDetails
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 
-class UserProgramDetailsFragment : BaseFragment() {
+class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userProgramDetailsViewModel: UserProgramDetailsViewModel
+    override val viewModelClass = UserProgramDetailsViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_program_details
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
@@ -45,14 +41,6 @@ class UserProgramDetailsFragment : BaseFragment() {
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     private lateinit var idProgram: String
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_user_program_details, container, false)
-
-        userProgramDetailsViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserProgramDetailsViewModel::class.java)
-
-        return rootView
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,7 +60,7 @@ class UserProgramDetailsFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        userProgramDetailsViewModel.getProgramById(idProgram)
+        viewModel.getProgramById(idProgram)
     }
 
     private fun checkProgramAndHideButtons(idProgram: String?) {
@@ -99,11 +87,11 @@ class UserProgramDetailsFragment : BaseFragment() {
 
     private fun handleLiveData(view: View) {
 
-        userProgramDetailsViewModel.programDetailsRetrieved.observeSafe(this) {
+        viewModel.programDetailsRetrieved.observeSafe(this) {
             displayInformation(it)
         }
 
-        userProgramDetailsViewModel.viewState.observeSafe(this) {
+        viewModel.viewState.observeSafe(this) {
             when {
                 it.displayingLoadingGetProgram -> materialDialogComponent.showProgressDialog(
                         getString(R.string.dialog_details_program_title),
@@ -119,8 +107,8 @@ class UserProgramDetailsFragment : BaseFragment() {
             }
         }
 
-        userProgramDetailsViewModel.errorEvent.observeSafe(this) {
-            val errorTriggered = userProgramDetailsViewModel.errorThrowable
+        viewModel.errorEvent.observeSafe(this) {
+            val errorTriggered = viewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
                 errorRendererComponent.requestRenderError(
                         errorTriggered,
@@ -130,7 +118,7 @@ class UserProgramDetailsFragment : BaseFragment() {
             }
         }
 
-        userProgramDetailsViewModel.finishProgramDeletion.observeSafe(this) {
+        viewModel.finishProgramDeletion.observeSafe(this) {
             activity?.finish()
         }
     }
@@ -149,7 +137,7 @@ class UserProgramDetailsFragment : BaseFragment() {
             val bundle = Bundle()
             bundle.putSerializable(
                     UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
-                    userProgramDetailsViewModel.userProgramViewDataWrapper
+                    viewModel.userProgramViewDataWrapper
             )
 
             val host = activity?.findViewById(R.id.user_program_nav_host_fragment) as View
@@ -165,7 +153,7 @@ class UserProgramDetailsFragment : BaseFragment() {
                     R.color.colorPrimary,
                     object : MultipleChoiceMaterialDialogListener {
                         override fun onYesSelected() {
-                            userProgramDetailsViewModel.removeProgram(idProgram)
+                            viewModel.removeProgram(idProgram)
                         }
                     })
         }

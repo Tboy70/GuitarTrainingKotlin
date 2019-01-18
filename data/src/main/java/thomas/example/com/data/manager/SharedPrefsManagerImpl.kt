@@ -1,4 +1,4 @@
-package thomas.example.com.data.module
+package thomas.example.com.data.manager
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ModuleSharedPrefsImpl @Inject constructor(context: Context) : ModuleSharedPrefs {
+class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefsManager {
 
     companion object {
         const val CURRENT_USER_ID: String = "CURRENT_USER_ID"
@@ -23,7 +23,7 @@ class ModuleSharedPrefsImpl @Inject constructor(context: Context) : ModuleShared
         sharedPreferences.edit().putString(CURRENT_USER_ID, idUser).apply()
     }
 
-    override fun getIdUserInSharedPrefs(): String {
+    override fun getUserIdInSharedPrefs(): String {
         return sharedPreferences.getString(CURRENT_USER_ID, null)
     }
 

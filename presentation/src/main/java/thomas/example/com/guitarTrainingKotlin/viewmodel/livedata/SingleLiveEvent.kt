@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.viewmodel
+package thomas.example.com.guitarTrainingKotlin.viewmodel.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

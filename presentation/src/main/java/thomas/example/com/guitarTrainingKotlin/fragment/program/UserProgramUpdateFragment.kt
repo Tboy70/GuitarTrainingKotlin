@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -27,14 +27,14 @@ import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDat
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramUpdateViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 
-class UserProgramUpdateFragment : BaseFragment() {
+class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userProgramUpdateViewModel: UserProgramUpdateViewModel
+    override val viewModelClass = UserProgramUpdateViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_program_update
 
     @Inject
     lateinit var exercisesUIComponent: ExerciseUIComponent
@@ -58,15 +58,8 @@ class UserProgramUpdateFragment : BaseFragment() {
             "thomas.example.com.guitarTrainingKotlin.fragment.program.PROGRAM_OBJECT_WRAPPER_KEY"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_program_update, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userProgramUpdateViewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(UserProgramUpdateViewModel::class.java)
 
         exercisesArray = getInstrumentMode()
 
@@ -84,14 +77,14 @@ class UserProgramUpdateFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        userProgramUpdateViewModel.updateProgramSuccess.observeSafe(this) {
+        viewModel.updateProgramSuccess.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
             } else if (it != null && it == false) {
-                if (userProgramUpdateViewModel.errorThrowable != null) {
+                if (viewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(
-                        userProgramUpdateViewModel.errorThrowable as Throwable,
+                        viewModel.errorThrowable as Throwable,
                         ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                         view
                     )
@@ -152,9 +145,9 @@ class UserProgramUpdateFragment : BaseFragment() {
     private fun getInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return if (prefs.getString(
-                ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
-            ) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
+                SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
+            ) == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
         ) {
             resources.getStringArray(R.array.list_exercises_guitar)
         } else {
@@ -197,7 +190,7 @@ class UserProgramUpdateFragment : BaseFragment() {
 
                         // TODO : Check that ! Too many ? and !! (?)
                         if (programViewDataWrapper != null) {
-                            userProgramUpdateViewModel.checkInformationAndValidateUpdate(
+                            viewModel.checkInformationAndValidateUpdate(
                                     programViewDataWrapper!!.getId(),
                                 fragment_user_program_update_name.text.toString(),
                                 fragment_user_program_update_description.text.toString(),

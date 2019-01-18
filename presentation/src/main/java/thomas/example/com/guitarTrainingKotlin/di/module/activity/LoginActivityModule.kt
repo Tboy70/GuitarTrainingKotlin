@@ -5,8 +5,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.LoginActivity
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
-import thomas.example.com.guitarTrainingKotlin.di.PerFragment
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.login.CreateAccountFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.login.LoginHomeFragment
 

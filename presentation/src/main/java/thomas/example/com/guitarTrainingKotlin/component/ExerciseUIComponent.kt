@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 import javax.inject.Inject
 
 @PerActivity

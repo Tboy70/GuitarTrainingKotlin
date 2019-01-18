@@ -7,9 +7,9 @@ import thomas.example.com.model.User
 
 interface UserRepository {
 
-    fun getIdUserInSharedPrefs(): Single<String>
+    fun getUserIdInSharedPrefs(): Single<String>
 
-    fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean>
+    fun setUserIdInSharedPrefs(userId: String?): Observable<Boolean>
 
     fun connectUser(user: User): Single<User>
 

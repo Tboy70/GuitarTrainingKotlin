@@ -3,13 +3,9 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -19,11 +15,10 @@ import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongCreationViewModel
 import javax.inject.Inject
 
-class UserSongCreationFragment : BaseFragment() {
+class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userSongCreationViewModel: UserSongCreationViewModel
+    override val viewModelClass = UserSongCreationViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_song_creation
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
@@ -31,29 +26,22 @@ class UserSongCreationFragment : BaseFragment() {
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_song_creation, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userSongCreationViewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(UserSongCreationViewModel::class.java)
 
         handleLiveData(view)
         handleClickCreateSong()
     }
 
     private fun handleLiveData(view: View) {
-        userSongCreationViewModel.creationSongSuccess.observeSafe(this) {
+        viewModel.creationSongSuccess.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
             } else if (it != null && it == false) {
-                if (userSongCreationViewModel.errorThrowable != null) {
+                if (viewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(
-                        userSongCreationViewModel.errorThrowable as Throwable,
+                        viewModel.errorThrowable as Throwable,
                         ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                         view
                     )
@@ -62,10 +50,10 @@ class UserSongCreationFragment : BaseFragment() {
             }
         }
 
-        userSongCreationViewModel.creationSongNotLaunch.observeSafe(this) {
+        viewModel.creationSongNotLaunch.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
-                if (userSongCreationViewModel.errorThrowable != null) {
+                if (viewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(
                         Exception(getString(R.string.error_field_not_filled)),
                         ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
@@ -87,11 +75,11 @@ class UserSongCreationFragment : BaseFragment() {
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(
                 prefs.getString(
-                    ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                    ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                    SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
+                    SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
                 )
             ).toString()
-            userSongCreationViewModel.checkInformationAndValidateCreation(
+            viewModel.checkInformationAndValidateCreation(
                 fragment_user_song_creation_name.text.toString(),
                 fragment_user_song_creation_artist.text.toString(),
                 instrumentMode

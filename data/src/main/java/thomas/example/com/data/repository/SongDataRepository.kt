@@ -1,13 +1,12 @@
 package thomas.example.com.data.repository
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.data.mapper.ScoreEntityDataMapper
 import thomas.example.com.data.mapper.ScoreFeedbackEntityDataMapper
 import thomas.example.com.data.mapper.SongEntityDataMapper
-import thomas.example.com.data.repository.client.APIClient
-import thomas.example.com.data.repository.client.SongClient
+import thomas.example.com.data.business.APIBusinessHelper
+import thomas.example.com.data.business.SongBusinessHelper
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
 import thomas.example.com.model.Song
@@ -16,9 +15,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SongRepositoryImpl @Inject constructor(
-    private val songClient: SongClient,
-    private val apiClient: APIClient,
+class SongDataRepository @Inject constructor(
+    private val songBusinessHelper: SongBusinessHelper,
+    private val apiBusinessHelper: APIBusinessHelper,
     private val songEntityDataMapper: SongEntityDataMapper,
     private val scoreFeedbackEntityDataMapper: ScoreFeedbackEntityDataMapper,
     private val scoreEntityDataMapper: ScoreEntityDataMapper
@@ -26,7 +25,7 @@ class SongRepositoryImpl @Inject constructor(
 
     override fun retrieveSongsListByUserId(idUser: String): Single<List<Song>> {
         return Single.defer {
-            apiClient.retrieveSongsListByUserId(idUser).map {
+            apiBusinessHelper.retrieveSongsListByUserId(idUser).map {
                 songEntityDataMapper.transformListEntitiesToListModels(it)
             }
         }
@@ -34,7 +33,7 @@ class SongRepositoryImpl @Inject constructor(
 
     override fun retrieveSongById(idSong: String): Single<Song> {
         return Single.defer {
-            apiClient.retrieveSongFromId(idSong).map {
+            apiBusinessHelper.retrieveSongFromId(idSong).map {
                 songEntityDataMapper.transformEntityToModel(it)
             }
         }
@@ -42,31 +41,31 @@ class SongRepositoryImpl @Inject constructor(
 
     override fun createSong(song: Song): Completable {
         return Completable.defer {
-            apiClient.createSong(songEntityDataMapper.transformModelToEntity(song))
+            apiBusinessHelper.createSong(songEntityDataMapper.transformModelToEntity(song))
         }
     }
 
     override fun updateSong(song: Song): Completable {
         return Completable.defer {
-            apiClient.updateSong(songEntityDataMapper.transformModelToEntity(song))
+            apiBusinessHelper.updateSong(songEntityDataMapper.transformModelToEntity(song))
         }
     }
 
     override fun removeSong(idSong: String): Completable {
         return Completable.defer {
-            apiClient.removeSong(idSong)
+            apiBusinessHelper.removeSong(idSong)
         }
     }
 
     override fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Completable {
         return Completable.defer {
-            apiClient.sendScoreFeedback(scoreFeedbackEntityDataMapper.transformModelToEntity(scoreFeedback), idSong)
+            apiBusinessHelper.sendScoreFeedback(scoreFeedbackEntityDataMapper.transformModelToEntity(scoreFeedback), idSong)
         }
     }
 
     override fun retrieveSongScoreHistoric(idSong: String): Single<List<Score>> {
         return Single.defer {
-            apiClient.retrieveSongScoreHistoric(idSong).map {
+            apiBusinessHelper.retrieveSongScoreHistoric(idSong).map {
                 scoreEntityDataMapper.transformListEntitiesToListModels(it)
             }
         }

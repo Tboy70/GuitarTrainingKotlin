@@ -1,0 +1,2 @@
+Dans les view model :
+    - Use case en val et pas var

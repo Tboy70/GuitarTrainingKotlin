@@ -12,12 +12,13 @@ import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMa
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseModeViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import javax.inject.Inject
 
 class ExerciseModeFragment : AbstractExerciseFragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var exerciseModeViewModel: ExerciseModeViewModel
 
     private lateinit var items: List<String>

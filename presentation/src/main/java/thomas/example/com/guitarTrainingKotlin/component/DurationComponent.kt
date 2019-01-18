@@ -3,7 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.component
 import android.os.Build
 import android.text.Html
 import android.widget.TextView
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import java.util.*
 import javax.inject.Inject

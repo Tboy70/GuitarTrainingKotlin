@@ -1,7 +1,6 @@
-package thomas.example.com.data.module
+package thomas.example.com.data.manager
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
@@ -10,7 +9,7 @@ import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
 import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 
-interface ApiModule {
+interface ApiManager {
 
     fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
 

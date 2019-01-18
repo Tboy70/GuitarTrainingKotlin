@@ -1,9 +1,7 @@
 package thomas.example.com.interactor.program
 
 import io.reactivex.Completable
-import io.reactivex.Single
 import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
-import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
@@ -16,7 +14,7 @@ class CreateProgram @Inject constructor(
 ) : CompletableParametrizedUseCase<CreateProgram.Params>() {
 
     override fun build(params: Params): Completable {
-        return userRepository.getIdUserInSharedPrefs().map {
+        return userRepository.getUserIdInSharedPrefs().map {
             params.program.idUser = it
         }.flatMapCompletable {
             programRepository.createProgram(params.program, params.exercisesList)

@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.RetrieveSongsListByUserId
 import javax.inject.Inject
 
@@ -16,7 +16,8 @@ class UserSongsListViewModel @Inject constructor(private val retrieveSongsListBy
 
     var userSongs = MutableLiveData<List<SongViewDataWrapper>>()
     val viewState = MutableLiveData<UserSongsListViewState>()
-    val errorEvent = SingleLiveEvent<UserSongsListErrorEvent>()
+    val errorEvent =
+        SingleLiveEvent<UserSongsListErrorEvent>()
     var errorThrowable: Throwable? = null
 
     data class UserSongsListViewState(
@@ -53,7 +54,7 @@ class UserSongsListViewModel @Inject constructor(private val retrieveSongsListBy
 
     fun getIdUser(context: Context): String {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
+        return prefs.getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
     }
 
     override fun onCleared() {

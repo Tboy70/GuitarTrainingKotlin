@@ -3,7 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 import android.util.SparseArray
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.program.CreateProgram
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
@@ -16,7 +16,8 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
 
     val creationProgramSuccess = MutableLiveData<Boolean>()
     val viewState = MutableLiveData<UserProgramCreationViewState>()
-    val errorEvent = SingleLiveEvent<UserProgramCreationErrorEvent>()
+    val errorEvent =
+        SingleLiveEvent<UserProgramCreationErrorEvent>()
 
     data class UserProgramCreationViewState(
             var displayingLoading: Boolean = false

@@ -1,11 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -17,11 +13,10 @@ import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWr
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
 
-class UserSongUpdateFragment : BaseFragment() {
+class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userSongUpdateViewModel: UserSongUpdateViewModel
+    override val viewModelClass = UserSongUpdateViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_song_update
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -36,14 +31,8 @@ class UserSongUpdateFragment : BaseFragment() {
             "thomas.example.com.guitarTrainingKotlin.fragment.song.SONG_OBJECT_WRAPPER_KEY"
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_song_update, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userSongUpdateViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserSongUpdateViewModel::class.java)
 
         val bundle = arguments
         if (bundle != null) {
@@ -59,16 +48,16 @@ class UserSongUpdateFragment : BaseFragment() {
     }
 
     private fun handleLiveData(view: View) {
-        userSongUpdateViewModel.updateSongSuccess.observeSafe(this) {
+        viewModel.updateSongSuccess.observeSafe(this) {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
             } else if (it != null && it == false) {
-                if (userSongUpdateViewModel.errorThrowable != null) {
+                if (viewModel.errorThrowable != null) {
                     errorRendererComponent.requestRenderError(
-                            userSongUpdateViewModel.errorThrowable as Throwable,
-                            ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                            view
+                        viewModel.errorThrowable as Throwable,
+                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                        view
                     )
                 }
             }
@@ -84,24 +73,24 @@ class UserSongUpdateFragment : BaseFragment() {
         fragment_user_song_update_validate_button.setOnClickListener {
 
             materialDialogComponent.showMultiChoiceDialog(
-                    getString(R.string.dialog_update_song_title),
-                    getString(R.string.dialog_update_song_confirm_content),
-                    R.color.colorPrimary,
-                    object : MultipleChoiceMaterialDialogListener {
-                        override fun onYesSelected() {
-                            materialDialogComponent.showProgressDialog(
-                                    getString(R.string.dialog_update_song_title),
-                                    getString(R.string.dialog_update_song_content),
-                                    R.color.colorPrimary
-                            )
+                getString(R.string.dialog_update_song_title),
+                getString(R.string.dialog_update_song_confirm_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_update_song_title),
+                            getString(R.string.dialog_update_song_content),
+                            R.color.colorPrimary
+                        )
 
-                            userSongUpdateViewModel.checkInformationAndValidateUpdate(
-                                    songViewDataWrapper?.getIdSong()!!, // TODO : Check that
-                                    fragment_user_song_update_name.text.toString(),
-                                    fragment_user_song_update_description.text.toString()
-                            )
-                        }
-                    })
+                        viewModel.checkInformationAndValidateUpdate(
+                            songViewDataWrapper?.getIdSong()!!, // TODO : Check that
+                            fragment_user_song_update_name.text.toString(),
+                            fragment_user_song_update_description.text.toString()
+                        )
+                    }
+                })
         }
     }
 

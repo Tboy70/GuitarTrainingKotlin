@@ -12,6 +12,7 @@ import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.exercise.AbstractExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
+import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class ProgramActivity : BaseActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var programViewModel: ProgramViewModel
 
     @Inject

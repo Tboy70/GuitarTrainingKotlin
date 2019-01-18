@@ -1,4 +1,4 @@
-package thomas.example.com.data.module
+package thomas.example.com.data.manager
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,7 +23,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApiModuleImpl @Inject constructor() : ApiModule {
+class ApiManagerImpl @Inject constructor() : ApiManager {
     private var apiService: APIServiceInterface
 
     companion object {

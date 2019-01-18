@@ -2,8 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
-import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.sharedprefs.SetInstrumentsModeInSharedPrefs
 import thomas.example.com.interactor.user.SuppressAccount
 import javax.inject.Inject
@@ -14,7 +13,8 @@ class UserSettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val viewState = MutableLiveData<UserSettingsViewState>()
-    val errorEvent = SingleLiveEvent<UserSettingsErrorEvent>()
+    val errorEvent =
+        SingleLiveEvent<UserSettingsErrorEvent>()
 
     val finishSuppressAccount: MutableLiveData<Boolean> = MutableLiveData()
 

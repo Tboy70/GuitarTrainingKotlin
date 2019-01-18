@@ -3,9 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.UserViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
-import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.program.RemoveProgram
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject
@@ -20,7 +18,8 @@ class UserProgramDetailsViewModel @Inject constructor(
     val programDetailsRetrieved = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
     val viewState = MutableLiveData<UserProgramDetailsViewState>()
-    val errorEvent = SingleLiveEvent<UserProgramDetailsErrorEvent>()
+    val errorEvent =
+        SingleLiveEvent<UserProgramDetailsErrorEvent>()
 
     var errorThrowable: Throwable? = null
 

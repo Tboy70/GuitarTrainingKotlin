@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.di
+package thomas.example.com.guitarTrainingKotlin.di.annotation
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

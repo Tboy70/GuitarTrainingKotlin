@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.StartActivity
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 
 @Module(includes = [BaseActivityModule::class])
 abstract class StartActivityModule {

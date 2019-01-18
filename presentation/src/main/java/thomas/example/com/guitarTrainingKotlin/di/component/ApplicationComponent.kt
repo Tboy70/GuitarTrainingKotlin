@@ -4,7 +4,9 @@ import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import thomas.example.com.data.di.DataComponent
 import thomas.example.com.guitarTrainingKotlin.GuitarTrainingApplication
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerApplication
 import thomas.example.com.guitarTrainingKotlin.di.module.ActivityInjectorModule
 import thomas.example.com.guitarTrainingKotlin.di.module.ApplicationModule
 import thomas.example.com.guitarTrainingKotlin.di.module.viewmodel.ViewModelModule
@@ -24,13 +26,15 @@ import javax.inject.Singleton
  * Provides any related objects, so we won't have any Module for Fragments
  */
 
-@Singleton
+@PerApplication
 @Component(
     modules = [
         ApplicationModule::class,
         AndroidSupportInjectionModule::class,
         ActivityInjectorModule::class,
         ViewModelModule::class
+    ], dependencies = [
+        DataComponent::class
     ]
 )
 interface ApplicationComponent {
@@ -53,6 +57,8 @@ interface ApplicationComponent {
          **/
         @BindsInstance
         abstract fun application(application: Application): Builder
+
+        abstract fun dataComponent(dataComponent: DataComponent): Builder
 
         abstract fun build(): ApplicationComponent
     }

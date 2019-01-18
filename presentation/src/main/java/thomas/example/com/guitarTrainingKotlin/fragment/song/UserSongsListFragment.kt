@@ -2,16 +2,10 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
@@ -26,11 +20,10 @@ import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongsListViewModel
 import javax.inject.Inject
 
-class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
+class UserSongsListFragment : BaseFragment<UserSongsListViewModel>(), UserSongsListAdapterListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userSongsListViewModel: UserSongsListViewModel
+    override val viewModelClass = UserSongsListViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_songs_list
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
@@ -39,43 +32,31 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     lateinit var userSongsListAdapter: UserSongsListAdapter
 
     private lateinit var idUser: String
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView: View = inflater.inflate(R.layout.fragment_user_songs_list, container, false)
-
-        recyclerView = rootView.findViewById(R.id.fragment_user_songs_list_recycler_view)
-        swipeRefreshLayout = rootView.findViewById(R.id.fragment_user_songs_list_swipe_refresh_layout)
-
-        userSongsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserSongsListViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         userSongsListAdapter.setUserSongsListAdapter(this)
 
         initRecyclerView()
 
-        return rootView
-    }
+        this.idUser = viewModel.getIdUser(activity as UserPanelActivity)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        this.idUser = userSongsListViewModel.getIdUser(activity as UserPanelActivity)
-
-        userSongsListViewModel.userSongs.observeSafe(this) {
+        viewModel.userSongs.observeSafe(this) {
             displayRetrievedSongs(it)
         }
 
-        userSongsListViewModel.viewState.observeSafe(this) {
-            swipeRefreshLayout.isRefreshing = it.refreshList == true && !swipeRefreshLayout.isRefreshing
+        viewModel.viewState.observeSafe(this) {
+            fragment_user_songs_list_swipe_refresh_layout.isRefreshing = it.refreshList == true &&
+                    !fragment_user_songs_list_swipe_refresh_layout.isRefreshing
         }
 
-        userSongsListViewModel.errorEvent.observeSafe(this) {
-            if (it.ERROR_TRIGGERED && userSongsListViewModel.errorThrowable != null) {
+        viewModel.errorEvent.observeSafe(this) {
+            if (it.ERROR_TRIGGERED && viewModel.errorThrowable != null) {
                 errorRendererComponent.requestRenderError(
-                        userSongsListViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
+                    viewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
                 )
             }
         }
@@ -86,20 +67,25 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
     override fun onStart() {
         super.onStart()
         (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_songs))
-        userSongsListViewModel.retrieveSongsListByUserId(idUser)
+        viewModel.retrieveSongsListByUserId(idUser)
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(activity)
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, layoutManager.orientation))
-        recyclerView.adapter = userSongsListAdapter
+        fragment_user_songs_list_recycler_view.layoutManager = layoutManager
+        fragment_user_songs_list_recycler_view.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation
+            )
+        )
+        fragment_user_songs_list_recycler_view.adapter = userSongsListAdapter
 
-        swipeRefreshLayout.setOnRefreshListener {
-            userSongsListViewModel.retrieveSongsListByUserId(idUser)
+        fragment_user_songs_list_swipe_refresh_layout.setOnRefreshListener {
+            viewModel.retrieveSongsListByUserId(idUser)
         }
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+        fragment_user_songs_list_swipe_refresh_layout.setColorSchemeResources(R.color.colorPrimary)
     }
 
     private fun handleAddNewSong() {
@@ -115,10 +101,10 @@ class UserSongsListFragment : BaseFragment(), UserSongsListAdapterListener {
         userSongsListAdapter.updateSongsList(userSongs)
         if (userSongs.isEmpty()) {
             fragment_user_songs_list_no_program_placeholder.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
+            fragment_user_songs_list_recycler_view.visibility = View.GONE
         } else {
             fragment_user_songs_list_no_program_placeholder.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
+            fragment_user_songs_list_recycler_view.visibility = View.VISIBLE
         }
     }
 

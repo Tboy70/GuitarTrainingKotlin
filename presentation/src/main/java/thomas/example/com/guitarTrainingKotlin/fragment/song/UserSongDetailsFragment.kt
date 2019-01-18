@@ -2,11 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.os.Bundle
 import android.util.LongSparseArray
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -28,11 +24,10 @@ import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongDetailsViewModel
 import javax.inject.Inject
 
-class UserSongDetailsFragment : BaseFragment() {
+class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userSongDetailsViewModel: UserSongDetailsViewModel
+    override val viewModelClass = UserSongDetailsViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_song_details
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
@@ -44,15 +39,6 @@ class UserSongDetailsFragment : BaseFragment() {
 
     private var mSelectedItem: String? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_user_song_details, container, false)
-
-        userSongDetailsViewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(UserSongDetailsViewModel::class.java)
-
-        return rootView
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bundle = requireActivity().intent.extras
@@ -62,7 +48,7 @@ class UserSongDetailsFragment : BaseFragment() {
             }
         }
 
-        userSongDetailsViewModel.retrieveSongScoreHistoric(idSong)
+        viewModel.retrieveSongScoreHistoric(idSong)
 
         handleLiveData(view)
         handleStartSong()
@@ -73,55 +59,55 @@ class UserSongDetailsFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         materialDialogComponent.showProgressDialog(
-                getString(R.string.dialog_details_song_title),
-                getString(R.string.dialog_details_song_content),
-                R.color.colorPrimary
+            getString(R.string.dialog_details_song_title),
+            getString(R.string.dialog_details_song_content),
+            R.color.colorPrimary
         )
-        userSongDetailsViewModel.getSongById(idSong)
+        viewModel.getSongById(idSong)
     }
 
     private fun handleLiveData(view: View) {
-        userSongDetailsViewModel.finishRetrieveSongForDetails.observeSafe(this) {
+        viewModel.finishRetrieveSongForDetails.observeSafe(this) {
             if (it == true) {
-                val userSongObjectWrapper = userSongDetailsViewModel.userSongViewDataWrapper
+                val userSongObjectWrapper = viewModel.userSongViewDataWrapper
                 displayInformation(userSongObjectWrapper)
-                userSongDetailsViewModel.finishRetrieveSongForDetails.removeObservers(this)
+                viewModel.finishRetrieveSongForDetails.removeObservers(this)
             }
         }
 
-        userSongDetailsViewModel.finishLoading.observeSafe(this) {
+        viewModel.finishLoading.observeSafe(this) {
             if (it != null) {
                 materialDialogComponent.dismissDialog()
             }
         }
 
-        userSongDetailsViewModel.finishSongDeletion.observeSafe(this) {
+        viewModel.finishSongDeletion.observeSafe(this) {
             if (it != null && it == true) {
                 activity?.finish()
             }
         }
 
-        userSongDetailsViewModel.finishFeedbackSending.observeSafe(this) {
+        viewModel.finishFeedbackSending.observeSafe(this) {
             if (it != null && it == true) {
                 activity?.finish()
             } else {
                 errorRendererComponent.requestRenderError(
-                        userSongDetailsViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
+                    viewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
                 )
                 activity?.finish()
             }
         }
 
-        userSongDetailsViewModel.finishRetrieveSongScoreHistoric.observeSafe(this) {
+        viewModel.finishRetrieveSongScoreHistoric.observeSafe(this) {
             if (it != null && it == true) {
-                displayHistoricValues(userSongDetailsViewModel.timestampKeyList)
+                displayHistoricValues(viewModel.timestampKeyList)
             } else {
                 errorRendererComponent.requestRenderError(
-                        userSongDetailsViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
+                    viewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
                 )
             }
         }
@@ -151,7 +137,7 @@ class UserSongDetailsFragment : BaseFragment() {
                 dataValues.add(Entry(key.toFloat(), timestampKeyList.get(key)))
             }
 
-            val xAxisFormatter = HourAxisValueFormatter(userSongDetailsViewModel.referenceTimestamp)
+            val xAxisFormatter = HourAxisValueFormatter(viewModel.referenceTimestamp)
             val xAxis = fragment_user_song_chart.xAxis
             xAxis.valueFormatter = xAxisFormatter
             xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -164,7 +150,7 @@ class UserSongDetailsFragment : BaseFragment() {
             fragment_user_song_chart.axisRight.isEnabled = false
 
             val chartMarkerView =
-                ChartMarkerView(context, R.layout.chart_marker_view_layout, userSongDetailsViewModel.referenceTimestamp)
+                ChartMarkerView(context, R.layout.chart_marker_view_layout, viewModel.referenceTimestamp)
             chartMarkerView.chartView = fragment_user_song_chart
             fragment_user_song_chart.marker = chartMarkerView
 
@@ -175,27 +161,27 @@ class UserSongDetailsFragment : BaseFragment() {
     private fun handleStartSong() {
         fragment_user_song_details_start_button.setOnClickListener {
             materialDialogComponent.showSingleChoiceDialog(
-                    getString(R.string.dialog_details_song_score_title),
-                    resources.getStringArray(R.array.list_scores).toMutableList(),
-                    mSelectedItem,
-                    R.color.colorPrimary,
-                    true,
-                    object : SingleChoiceMaterialDialogListener {
+                getString(R.string.dialog_details_song_score_title),
+                resources.getStringArray(R.array.list_scores).toMutableList(),
+                mSelectedItem,
+                R.color.colorPrimary,
+                true,
+                object : SingleChoiceMaterialDialogListener {
 
-                        override fun onItemSelected(selectedItem: String) {
-                            materialDialogComponent.showProgressDialog(
-                                    getString(R.string.dialog_send_feedback_title),
-                                    getString(R.string.dialog_send_feedback_content),
-                                    R.color.colorPrimary
-                            )
-                            mSelectedItem = selectedItem
-                            userSongDetailsViewModel.sendSongFeedback(selectedItem.toInt(), idSong)
-                        }
+                    override fun onItemSelected(selectedItem: String) {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_send_feedback_title),
+                            getString(R.string.dialog_send_feedback_content),
+                            R.color.colorPrimary
+                        )
+                        mSelectedItem = selectedItem
+                        viewModel.sendSongFeedback(selectedItem.toInt(), idSong)
+                    }
 
-                        override fun onCancelClick() {}
+                    override fun onCancelClick() {}
 
-                        override fun getPositionSelected(which: Int) {}
-                    })
+                    override fun getPositionSelected(which: Int) {}
+                })
         }
     }
 
@@ -203,8 +189,8 @@ class UserSongDetailsFragment : BaseFragment() {
         fragment_user_song_details_update_button.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable(
-                    UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY,
-                    userSongDetailsViewModel.userSongViewDataWrapper
+                UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY,
+                viewModel.userSongViewDataWrapper
             )
 
             val host = activity?.findViewById(R.id.user_song_nav_host_fragment) as View
@@ -215,19 +201,19 @@ class UserSongDetailsFragment : BaseFragment() {
     private fun handleRemoveSong() {
         fragment_user_song_details_remove_button.setOnClickListener {
             materialDialogComponent.showMultiChoiceDialog(
-                    getString(R.string.dialog_remove_song_title),
-                    getString(R.string.dialog_remove_song_confirm_content),
-                    R.color.colorPrimary,
-                    object : MultipleChoiceMaterialDialogListener {
-                        override fun onYesSelected() {
-                            materialDialogComponent.showProgressDialog(
-                                    getString(R.string.dialog_remove_song_title),
-                                    getString(R.string.dialog_remove_song_content),
-                                    R.color.colorPrimary
-                            )
-                            userSongDetailsViewModel.removeSong(idSong)
-                        }
-                    })
+                getString(R.string.dialog_remove_song_title),
+                getString(R.string.dialog_remove_song_confirm_content),
+                R.color.colorPrimary,
+                object : MultipleChoiceMaterialDialogListener {
+                    override fun onYesSelected() {
+                        materialDialogComponent.showProgressDialog(
+                            getString(R.string.dialog_remove_song_title),
+                            getString(R.string.dialog_remove_song_content),
+                            R.color.colorPrimary
+                        )
+                        viewModel.removeSong(idSong)
+                    }
+                })
         }
     }
 }

@@ -2,16 +2,11 @@ package thomas.example.com.guitarTrainingKotlin.fragment.program
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
@@ -26,11 +21,10 @@ import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
 import javax.inject.Inject
 
-class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener {
+class UserProgramsListFragment : BaseFragment<UserProgramsListViewModel>(), UserProgramsListAdapterListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userProgramsListViewModel: UserProgramsListViewModel
+    override val viewModelClass = UserProgramsListViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_programs_list
 
     @Inject
     lateinit var userProgramsListAdapter: UserProgramsListAdapter
@@ -39,44 +33,34 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     lateinit var errorRendererComponent: ErrorRendererComponent
 
     private lateinit var idUser: String
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView: View = inflater.inflate(R.layout.fragment_user_programs_list, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = rootView.findViewById(R.id.fragment_user_programs_list_recycler_view)
-        swipeRefreshLayout = rootView.findViewById(R.id.fragment_user_programs_list_swipe_refresh_layout)
-
-        userProgramsListViewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(UserProgramsListViewModel::class.java)
+        viewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(viewModel::class.java)
 
         userProgramsListAdapter.setUserProgramsListAdapter(this)
 
         initRecyclerView()
 
-        return rootView
-    }
+        this.idUser = viewModel.getIdUser(activity as UserPanelActivity)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        this.idUser = userProgramsListViewModel.getIdUser(activity as UserPanelActivity)
-
-        userProgramsListViewModel.userPrograms.observeSafe(this) {
-                displayRetrievedPrograms(it)
-            }
-
-        userProgramsListViewModel.viewState.observeSafe(this) {
-            swipeRefreshLayout.isRefreshing = it.refreshList == true && !swipeRefreshLayout.isRefreshing
+        viewModel.userPrograms.observeSafe(this) {
+            displayRetrievedPrograms(it)
         }
 
-        userProgramsListViewModel.errorEvent.observeSafe(this) {
-            if (it.ERROR_TRIGGERED && userProgramsListViewModel.errorThrowable != null) {
+        viewModel.viewState.observeSafe(this) {
+            fragment_user_programs_list_swipe_refresh_layout.isRefreshing = it.refreshList == true &&
+                    !fragment_user_programs_list_swipe_refresh_layout.isRefreshing
+        }
+
+        viewModel.errorEvent.observeSafe(this) {
+            if (it.ERROR_TRIGGERED && viewModel.errorThrowable != null) {
                 errorRendererComponent.requestRenderError(
-                        userProgramsListViewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
+                    viewModel.errorThrowable as Throwable,
+                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
+                    view
                 )
             }
         }
@@ -87,18 +71,27 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
     override fun onStart() {
         super.onStart()
         (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_programs))
-        userProgramsListViewModel.retrieveProgramsListByUserId(idUser)
+        viewModel.retrieveProgramsListByUserId(idUser)
     }
 
     private fun initRecyclerView() {
         val layoutManager = LinearLayoutManager(activity)
 
-        recyclerView.layoutManager = layoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(activity, layoutManager.orientation))
-        recyclerView.adapter = userProgramsListAdapter
+        fragment_user_programs_list_recycler_view.layoutManager = layoutManager
+        fragment_user_programs_list_recycler_view.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                layoutManager.orientation
+            )
+        )
+        fragment_user_programs_list_recycler_view.adapter = userProgramsListAdapter
 
-        swipeRefreshLayout.setOnRefreshListener { userProgramsListViewModel.retrieveProgramsListByUserId(idUser) }
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+        fragment_user_programs_list_swipe_refresh_layout.setOnRefreshListener {
+            viewModel.retrieveProgramsListByUserId(
+                idUser
+            )
+        }
+        fragment_user_programs_list_swipe_refresh_layout.setColorSchemeResources(R.color.colorPrimary)
     }
 
     private fun handleAddNewProgramButton() {
@@ -114,10 +107,10 @@ class UserProgramsListFragment : BaseFragment(), UserProgramsListAdapterListener
         userProgramsListAdapter.updateProgramsList(userProgramsList)
         if (userPrograms.isEmpty()) {
             fragment_user_programs_list_no_program_placeholder.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
+            fragment_user_programs_list_recycler_view.visibility = View.GONE
         } else {
             fragment_user_programs_list_no_program_placeholder.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
+            fragment_user_programs_list_recycler_view.visibility = View.VISIBLE
         }
     }
 

@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
@@ -27,14 +27,14 @@ import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
+import thomas.example.com.guitarTrainingKotlin.viewmodel.other.LegalNoticesViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramCreationViewModel
 import javax.inject.Inject
 
-class UserProgramCreationFragment : BaseFragment() {
+class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userProgramCreationViewModel: UserProgramCreationViewModel
+    override val viewModelClass = UserProgramCreationViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_program_creation
 
     @Inject
     lateinit var exercisesUIComponent: ExerciseUIComponent
@@ -54,15 +54,8 @@ class UserProgramCreationFragment : BaseFragment() {
         const val HALF_ALPHA = 0.5f
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_program_creation, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        userProgramCreationViewModel =
-                ViewModelProviders.of(this, viewModelFactory).get(UserProgramCreationViewModel::class.java)
 
         exercisesArray = getStringArrayGivenInstrumentMode()
 
@@ -73,11 +66,11 @@ class UserProgramCreationFragment : BaseFragment() {
 
     private fun handleLiveData(view: View) {
 
-        userProgramCreationViewModel.creationProgramSuccess.observeSafe(this) {
+        viewModel.creationProgramSuccess.observeSafe(this) {
             fragmentManager?.popBackStack()
         }
 
-        userProgramCreationViewModel.viewState.observeSafe(this) {
+        viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
                 materialDialogComponent.showProgressDialog(
                         getString(R.string.dialog_login_title),
@@ -89,11 +82,11 @@ class UserProgramCreationFragment : BaseFragment() {
             }
         }
 
-        userProgramCreationViewModel.errorEvent.observeSafe(this) {
-            val errorTriggered = userProgramCreationViewModel.errorThrowable
+        viewModel.errorEvent.observeSafe(this) {
+            val errorTriggered = viewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
                 errorRendererComponent.requestRenderError(
-                        userProgramCreationViewModel.errorThrowable as Throwable,
+                        viewModel.errorThrowable as Throwable,
                         ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                         view
                 )
@@ -128,12 +121,12 @@ class UserProgramCreationFragment : BaseFragment() {
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(
                     prefs.getString(
-                            ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                            ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                            SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
+                            SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
                     )
             ).toString()
 
-            userProgramCreationViewModel.checkInformationAndValidateCreation(
+            viewModel.checkInformationAndValidateCreation(
                     fragment_user_program_creation_name.text.toString(),
                     fragment_user_program_creation_description.text.toString(),
                     exercises,
@@ -182,9 +175,9 @@ class UserProgramCreationFragment : BaseFragment() {
     private fun getStringArrayGivenInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return if (prefs.getString(
-                    ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                    ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
-            ) == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                    SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
+                    SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
+            ) == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
         ) {
             resources.getStringArray(R.array.list_exercises_guitar)
         } else {

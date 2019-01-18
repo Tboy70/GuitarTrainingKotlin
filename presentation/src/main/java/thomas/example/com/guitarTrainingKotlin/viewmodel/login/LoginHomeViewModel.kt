@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
 import javax.inject.Inject

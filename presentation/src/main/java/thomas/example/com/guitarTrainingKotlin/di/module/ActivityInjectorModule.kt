@@ -3,7 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.di.module
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import thomas.example.com.guitarTrainingKotlin.activity.*
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 import thomas.example.com.guitarTrainingKotlin.di.module.activity.*
 
 @Module

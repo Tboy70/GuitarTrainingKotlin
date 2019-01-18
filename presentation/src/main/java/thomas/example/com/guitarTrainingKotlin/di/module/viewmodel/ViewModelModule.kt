@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import thomas.example.com.guitarTrainingKotlin.di.ViewModelKey
-import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
+import thomas.example.com.guitarTrainingKotlin.di.annotation.ViewModelKey
+import thomas.example.com.guitarTrainingKotlin.viewmodel.StartActivityViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseModeViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.exercise.ExerciseScaleViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.CreateAccountViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.ProgramViewModel
@@ -23,12 +24,9 @@ import thomas.example.com.guitarTrainingKotlin.viewmodel.user.*
 abstract class ViewModelModule {
 
     @Binds
-    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
     @IntoMap
-    @ViewModelKey(StartViewModel::class)
-    abstract fun bindStartViewModel(startViewModel: StartViewModel): ViewModel
+    @ViewModelKey(StartActivityViewModel::class)
+    abstract fun bindStartActivityViewModel(startActivityViewModel: StartActivityViewModel): ViewModel
 
     @Binds
     @IntoMap

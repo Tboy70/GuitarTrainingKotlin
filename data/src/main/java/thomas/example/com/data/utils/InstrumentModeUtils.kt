@@ -1,13 +1,13 @@
 package thomas.example.com.data.utils
 
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 
 object InstrumentModeUtils {
 
     fun getIntValueFromInstrumentMode(instrumentMode: String): Int {
         return when (instrumentMode) {
-            ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR -> 1
-            ModuleSharedPrefsImpl.INSTRUMENT_MODE_BASS -> 2
+            SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR -> 1
+            SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS -> 2
             else -> 1
         }
     }

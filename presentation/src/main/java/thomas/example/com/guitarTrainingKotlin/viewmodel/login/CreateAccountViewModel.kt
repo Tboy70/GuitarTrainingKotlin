@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.CreateNewUser
 import thomas.example.com.model.User
 import javax.inject.Inject
@@ -13,7 +13,8 @@ class CreateAccountViewModel @Inject constructor(private val createNewUser: Crea
 
     val creationSuccess = MutableLiveData<Boolean>()
     val viewState = MutableLiveData<CreateAccountViewState>()
-    val errorEvent = SingleLiveEvent<CreateAccountErrorEvent>()
+    val errorEvent =
+        SingleLiveEvent<CreateAccountErrorEvent>()
 
     data class CreateAccountViewState(
             var displayingLoading: Boolean = false

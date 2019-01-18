@@ -1,7 +1,6 @@
-package thomas.example.com.data.module
+package thomas.example.com.data.manager
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.*

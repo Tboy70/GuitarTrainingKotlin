@@ -8,12 +8,13 @@ import thomas.example.com.guitarTrainingKotlin.component.DurationComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
+import thomas.example.com.guitarTrainingKotlin.fragment.BaseExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import javax.inject.Inject
 
-abstract class AbstractExerciseFragment : BaseFragment() {
+abstract class AbstractExerciseFragment : BaseExerciseFragment() {
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent

@@ -3,16 +3,10 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Switch
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_settings.*
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
@@ -23,11 +17,10 @@ import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSettingsViewModel
 import javax.inject.Inject
 
-class UserSettingsFragment : BaseFragment() {
+class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var userSettingsViewModel: UserSettingsViewModel
+    override val viewModelClass = UserSettingsViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_user_settings
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
@@ -35,24 +28,18 @@ class UserSettingsFragment : BaseFragment() {
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_settings, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userSettingsViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserSettingsViewModel::class.java)
-
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         val currentInstrumentMode =
-            prefs.getString(ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE, ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR)
-        val idUser = prefs.getString(ModuleSharedPrefsImpl.CURRENT_USER_ID, "0")
+            prefs.getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
+        val idUser = prefs.getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
 
-        if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR) {
+        if (currentInstrumentMode == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
             settings_guitar_switch.isChecked = true
             settings_bass_switch.isChecked = false
-        } else if (currentInstrumentMode == ModuleSharedPrefsImpl.INSTRUMENT_MODE_BASS) {
+        } else if (currentInstrumentMode == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
             settings_guitar_switch.isChecked = false
             settings_bass_switch.isChecked = true
         }
@@ -74,7 +61,7 @@ class UserSettingsFragment : BaseFragment() {
                     object : MultipleChoiceMaterialDialogListener {
                         override fun onYesSelected() {
                             if (!idUser.isEmpty()) {
-                                userSettingsViewModel.suppressAccount(idUser)
+                                viewModel.suppressAccount(idUser)
                             }
                         }
                     })
@@ -88,7 +75,7 @@ class UserSettingsFragment : BaseFragment() {
 
     private fun handleLiveData(view: View) {
 
-        userSettingsViewModel.viewState.observeSafe(this) {
+        viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
                 materialDialogComponent.showProgressDialog(
                         getString(R.string.dialog_suppress_account_title),
@@ -100,15 +87,15 @@ class UserSettingsFragment : BaseFragment() {
             }
         }
 
-        userSettingsViewModel.errorEvent.observeSafe(this) {
+        viewModel.errorEvent.observeSafe(this) {
             errorRendererComponent.requestRenderError(
-                    userSettingsViewModel.errorThrowable as Throwable,
+                    viewModel.errorThrowable as Throwable,
                     ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
                     view
             )
         }
 
-        userSettingsViewModel.finishSuppressAccount.observeSafe(this) {
+        viewModel.finishSuppressAccount.observeSafe(this) {
             activity?.finish()
         }
     }
@@ -116,7 +103,7 @@ class UserSettingsFragment : BaseFragment() {
     private fun handleSwitch(switch: Switch, isChecked: Boolean) {
         switch.isChecked = !isChecked
         if (isChecked) {
-            userSettingsViewModel.updateInstrumentMode()
+            viewModel.updateInstrumentMode()
         }
     }
 }

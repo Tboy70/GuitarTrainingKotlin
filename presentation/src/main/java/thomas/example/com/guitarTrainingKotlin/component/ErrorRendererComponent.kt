@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.di.PerActivity
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 import thomas.example.com.guitarTrainingKotlin.utils.ErrorUtils
 import javax.inject.Inject
 

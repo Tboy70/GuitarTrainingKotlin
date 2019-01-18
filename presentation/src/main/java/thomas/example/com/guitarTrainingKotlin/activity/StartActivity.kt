@@ -2,46 +2,38 @@ package thomas.example.com.guitarTrainingKotlin.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
-import thomas.example.com.guitarTrainingKotlin.viewmodel.StartViewModel
-import thomas.example.com.interactor.sharedprefs.GetIdInSharedPrefs
+import thomas.example.com.guitarTrainingKotlin.viewmodel.StartActivityViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import javax.inject.Inject
 
 class StartActivity : BaseActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var startViewModel: StartViewModel
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var startActivityViewModel: StartActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        startViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartViewModel::class.java)
+        startActivityViewModel = ViewModelProviders.of(this, viewModelFactory).get(StartActivityViewModel::class.java)
 
-        /** Check the user ID in shared prefs to know what should be the right activity to launch. **/
-        startViewModel.idUserPref.observeSafe(this) {
-            if (it.equals(GetIdInSharedPrefs.ID_USER_DEFAULT)) {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+        initiateViewModelObserver()
+    }
+
+    private fun initiateViewModelObserver() {
+        startActivityViewModel.retrievedUserIdLiveData.observeSafe(this) { userId ->
+            val intent = if (userId == StartActivityViewModel.USER_ID_DEFAULT) {
+                Intent(this, LoginActivity::class.java)
             } else {
-                val intent = Intent(this, UserPanelActivity::class.java)
-                startActivity(intent)
-                finish()
+                Intent(this, UserPanelActivity::class.java)
             }
+            startActivity(intent)
+            finish()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        getUserPrefIsConnected()
-    }
-
-    private fun getUserPrefIsConnected() {
-        startViewModel.getUserPrefIsConnected()
     }
 }

@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.data.module.ModuleSharedPrefsImpl
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.UserViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.viewmodel.SingleLiveEvent
+import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.LogoutUser
 import thomas.example.com.interactor.user.RetrieveUserById
 import javax.inject.Inject
@@ -64,8 +64,8 @@ class UserPanelViewModel @Inject constructor(
         // TODO : Use a use case too ?
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(
-                ModuleSharedPrefsImpl.CURRENT_INSTRUMENT_MODE,
-                ModuleSharedPrefsImpl.INSTRUMENT_MODE_GUITAR
+                SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
+                SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
         )
     }
 

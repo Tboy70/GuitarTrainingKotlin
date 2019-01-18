@@ -14,6 +14,7 @@ import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogD
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.utils.ConstantTags
 
+// TODO : DEPRECATED !!
 class TimerDialogFragment : DialogFragment() {
 
     enum class TimerStatus {

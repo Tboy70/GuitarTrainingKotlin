@@ -1,9 +1,6 @@
 package thomas.example.com.interactor.song
 
 import io.reactivex.Completable
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.UseCase
 import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
@@ -17,7 +14,7 @@ class CreateSong @Inject constructor(
         CompletableParametrizedUseCase<CreateSong.Params>() {
 
     override fun build(params: CreateSong.Params): Completable {
-        return userRepository.getIdUserInSharedPrefs().map {
+        return userRepository.getUserIdInSharedPrefs().map {
             params.song.idUser = it
         }.flatMapCompletable {
             songRepository.createSong(params.song)

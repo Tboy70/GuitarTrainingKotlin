@@ -4,50 +4,50 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.data.mapper.UserEntityDataMapper
-import thomas.example.com.data.repository.client.APIClient
-import thomas.example.com.data.repository.client.ContentClient
+import thomas.example.com.data.business.APIBusinessHelper
+import thomas.example.com.data.business.ContentBusinessHelper
 import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepositoryImpl @Inject constructor(
+class UserDataRepository @Inject constructor(
     private val userEntityDataMapper: UserEntityDataMapper,
-    private val contentClient: ContentClient,
-    private val apiClient: APIClient
+    private val contentBusinessHelper: ContentBusinessHelper,
+    private val apiBusinessHelper: APIBusinessHelper
 ) : UserRepository {
 
     /**
      * No need of try / catch anymore !
      */
-    override fun getIdUserInSharedPrefs(): Single<String> {
-        return Single.defer { contentClient.getIdInSharedPrefs() }
+    override fun getUserIdInSharedPrefs(): Single<String> {
+        return Single.defer { contentBusinessHelper.getUserIdInSharedPrefs() }
     }
 
-    override fun setIdUserInSharedPrefs(idUser: String?): Observable<Boolean> {
+    override fun setUserIdInSharedPrefs(userId: String?): Observable<Boolean> {
         return Observable.defer { Observable.just(true) }
     }
 
     override fun setInstrumentModeInSharedPrefs(): Completable {
         return Completable.defer {
-            contentClient.setInstrumentModeInSharedPrefs()
+            contentBusinessHelper.setInstrumentModeInSharedPrefs()
         }
     }
 
     override fun connectUser(user: User): Single<User> {
         return Single.defer {
-            apiClient.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
+            apiBusinessHelper.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
                 userEntityDataMapper.transformEntityToModel(it)
             }?.doOnSuccess {
-                contentClient.setIdInSharedPrefs(it.idUser)
+                contentBusinessHelper.setIdInSharedPrefs(it.idUser)
             }
         }
     }
 
     override fun retrieveUserById(idUser: String): Single<User> {
         return Single.defer {
-            apiClient.retrieveUserById(idUser).map {
+            apiBusinessHelper.retrieveUserById(idUser).map {
                 userEntityDataMapper.transformEntityToModel(it)
             }
         }
@@ -55,21 +55,21 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun createNewUser(user: User): Completable {
         return Completable.defer {
-            apiClient.createNewUser(userEntityDataMapper.transformModelToEntity(user))
+            apiBusinessHelper.createNewUser(userEntityDataMapper.transformModelToEntity(user))
         }
     }
 
     override fun suppressAccount(idUser: String): Completable {
         return Completable.defer {
-            apiClient.suppressAccount(idUser).doOnComplete {
-                contentClient.deleteIdInSharedPrefs()
+            apiBusinessHelper.suppressAccount(idUser).doOnComplete {
+                contentBusinessHelper.deleteIdInSharedPrefs()
             }
         }
     }
 
     override fun logoutUser(): Completable {
         return Completable.defer {
-            contentClient.deleteIdInSharedPrefs()
+            contentBusinessHelper.deleteIdInSharedPrefs()
         }
     }
 }
