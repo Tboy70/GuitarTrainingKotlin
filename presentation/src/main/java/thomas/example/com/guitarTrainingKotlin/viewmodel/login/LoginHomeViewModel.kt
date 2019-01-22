@@ -3,7 +3,6 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 import androidx.lifecycle.MutableLiveData
 import thomas.example.com.guitarTrainingKotlin.view.LoginFragmentViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User
 import javax.inject.Inject
@@ -14,17 +13,23 @@ class LoginHomeViewModel @Inject constructor(
 
     override val currentViewState = LoginFragmentViewState()
 
-    var errorThrowable: Throwable? = null
+    val retrievedUserLiveData = MutableLiveData<Boolean>()
+    val savedUserPseudoLiveData = MutableLiveData<String>()
+    val savedUserPasswordLiveData = MutableLiveData<String>()
 
-    /** ViewData, ViewState and ErrorState **/
-    val retrievedUser = MutableLiveData<Boolean>()
+    private var userPseudo: String = ""
+    private var userPassword: String = ""
+
+    override fun onCleared() {
+        super.onCleared()
+        connectUser.unsubscribe()
+    }
 
     fun connectUser(userPseudo: String, userPassword: String) {
 
         viewState.update {
             loading = true
         }
-//        viewState.postValue(LoginHomeViewState(true))
 
         val user = User(
             userPseudo = userPseudo,
@@ -34,26 +39,30 @@ class LoginHomeViewModel @Inject constructor(
         connectUser.subscribe(
             params = ConnectUser.Params.forLogin(user),
             onSuccess = {
-                retrievedUser.postValue(true)
+                retrievedUserLiveData.postValue(true)
                 viewState.update {
                     loading = false
                 }
-//                viewState.postValue(LoginHomeViewState(false))
             },
             onError = {
                 errorLiveEvent.postValue(it)
                 viewState.update {
                     loading = false
                 }
-//                errorThrowable = it
-//                errorEvent.postValue(LoginHomeErrorEvent(ERROR_TRIGGERED = true))
-//                viewState.postValue(LoginHomeViewState(false))
             }
         )
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        connectUser.unsubscribe()
+    fun saveUserPseudoValue(userPseudo: String) {
+        this.userPseudo = userPseudo
+    }
+
+    fun saveUserPasswordValue(userPassword: String) {
+        this.userPassword = userPassword
+    }
+
+    fun retrieveSavedValues() {
+        savedUserPseudoLiveData.postValue(userPseudo)
+        savedUserPasswordLiveData.postValue(userPassword)
     }
 }

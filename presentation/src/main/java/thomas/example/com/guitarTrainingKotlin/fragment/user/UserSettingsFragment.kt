@@ -10,7 +10,7 @@ import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -26,7 +26,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +55,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
         }
 
         suppress_account.setOnClickListener {
-            materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
+            materialDialogComponentImpl.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
                     getString(R.string.dialog_suppress_account_confirm_content),
                     R.color.colorPrimary,
                     object : MultipleChoiceMaterialDialogListener {
@@ -77,13 +77,13 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 
         viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-                materialDialogComponent.showProgressDialog(
+                materialDialogComponentImpl.showProgressDialog(
                         getString(R.string.dialog_suppress_account_title),
                         getString(R.string.dialog_suppress_account_content),
                         R.color.colorPrimary
                 )
             } else {
-                materialDialogComponent.dismissDialog()
+                materialDialogComponentImpl.dismissDialog()
             }
         }
 

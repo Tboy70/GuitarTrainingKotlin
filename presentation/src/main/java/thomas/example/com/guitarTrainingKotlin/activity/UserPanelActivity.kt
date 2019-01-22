@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
@@ -33,7 +33,7 @@ class UserPanelActivity : BaseActivity() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     private lateinit var idUser: String
     private lateinit var instrumentMode: String
@@ -159,13 +159,13 @@ class UserPanelActivity : BaseActivity() {
 
         userPanelViewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-                materialDialogComponent.showProgressDialog(
+                materialDialogComponentImpl.showProgressDialog(
                     getString(R.string.dialog_logout_title),
                     getString(R.string.dialog_logout_content),
                     R.color.colorPrimary
                 )
             } else {
-                materialDialogComponent.dismissDialog()
+                materialDialogComponentImpl.dismissDialog()
             }
         }
 
@@ -243,7 +243,7 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun logoutUser() {
-        materialDialogComponent.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
+        materialDialogComponentImpl.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
             getString(R.string.dialog_logout_confirm_content),
             R.color.colorPrimary,
             object : MultipleChoiceMaterialDialogListener {

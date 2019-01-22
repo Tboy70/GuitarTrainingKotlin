@@ -2,18 +2,21 @@ package thomas.example.com.guitarTrainingKotlin.component
 
 import com.afollestad.materialdialogs.MaterialDialog
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
+import thomas.example.com.guitarTrainingKotlin.component.listener.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 import javax.inject.Inject
 
 @PerActivity
-class MaterialDialogComponent @Inject constructor(private val activity: BaseActivity) {
+class MaterialDialogComponentImpl @Inject constructor(
+    private val baseActivity: BaseActivity
+) : MaterialDialogComponent {
 
     private lateinit var materialDialog: MaterialDialog
 
-    fun showProgressDialog(title: String, content: String, color: Int) {
-        materialDialog = MaterialDialog.Builder(activity)
+    override fun showProgressDialog(title: String, content: String, color: Int) {
+        materialDialog = MaterialDialog.Builder(baseActivity)
             .title(title)
             .content(content)
             .progress(true, 0)
@@ -23,13 +26,13 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
             .show()
     }
 
-    fun showSingleChoiceDialog(
+    override fun showSingleChoiceDialog(
             title: String, items: List<String>, selectedItem: String?, color: Int, cancelable: Boolean,
             singleChoiceMaterialDialogListener: SingleChoiceMaterialDialogListener
     ) {
 
         val selectedIndex = getSelectedItemIndex(items, selectedItem)
-        materialDialog = MaterialDialog.Builder(activity)
+        materialDialog = MaterialDialog.Builder(baseActivity)
             .title(title)
             .items(items)
             .itemsCallbackSingleChoice(selectedIndex) { _, _, which, _ ->
@@ -50,29 +53,34 @@ class MaterialDialogComponent @Inject constructor(private val activity: BaseActi
         materialDialog.show()
     }
 
-    private fun getSelectedItemIndex(items: List<String>, selectedItem: String?): Int {
-        return if (selectedItem != null && selectedItem.isNotEmpty()) {
-            items.indexOf(selectedItem)
-        } else -1
-    }
-
-    fun showMultiChoiceDialog(title: String, content: String, color: Int, multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener) {
-        materialDialog = MaterialDialog.Builder(activity)
+    override fun showMultiChoiceDialog(
+        title: String,
+        content: String,
+        color: Int,
+        multipleChoiceMaterialDialogListener: MultipleChoiceMaterialDialogListener
+    ) {
+        materialDialog = MaterialDialog.Builder(baseActivity)
             .title(title)
             .content(content)
             .canceledOnTouchOutside(false)
-            .positiveText(activity.getString(android.R.string.yes))
+            .positiveText(baseActivity.getString(android.R.string.yes))
             .positiveColorRes(color)
             .onPositive { _, _ -> multipleChoiceMaterialDialogListener.onYesSelected() }
-            .negativeText(activity.getString(android.R.string.no))
+            .negativeText(baseActivity.getString(android.R.string.no))
             .negativeColorRes(color)
             .onNegative { dialog, _ -> dialog.dismiss() }
             .show()
     }
 
-    fun dismissDialog() {
+    override fun dismissDialog() {
         if (materialDialog != null) {
             materialDialog.dismiss()
         }
+    }
+
+    private fun getSelectedItemIndex(items: List<String>, selectedItem: String?): Int {
+        return if (selectedItem != null && selectedItem.isNotEmpty()) {
+            items.indexOf(selectedItem)
+        } else -1
     }
 }

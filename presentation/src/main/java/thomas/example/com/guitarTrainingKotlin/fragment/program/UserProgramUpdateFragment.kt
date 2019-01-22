@@ -13,7 +13,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
@@ -35,7 +35,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     lateinit var exercisesUIComponent: ExerciseUIComponent
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -73,7 +73,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
     private fun handleLiveData(view: View) {
         viewModel.updateProgramSuccess.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
             } else if (it != null && it == false) {
@@ -102,7 +102,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                         val title = getString(R.string.generic_exercise_choice_creation_program)
                         val items = exercisesArray.toList()
 
-                        materialDialogComponent.showSingleChoiceDialog(
+                        materialDialogComponentImpl.showSingleChoiceDialog(
                             title,
                             items,
                             selectedItem,
@@ -153,13 +153,13 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_program_update_validate_button.setOnClickListener {
 
-            materialDialogComponent.showMultiChoiceDialog(
+            materialDialogComponentImpl.showMultiChoiceDialog(
                 getString(R.string.dialog_update_program_title),
                 getString(R.string.dialog_update_program_confirm_content),
                 R.color.colorPrimary,
                 object : MultipleChoiceMaterialDialogListener {
                     override fun onYesSelected() {
-                        materialDialogComponent.showProgressDialog(
+                        materialDialogComponentImpl.showProgressDialog(
                             getString(R.string.dialog_update_program_title),
                             getString(R.string.dialog_update_program_content),
                             R.color.colorPrimary

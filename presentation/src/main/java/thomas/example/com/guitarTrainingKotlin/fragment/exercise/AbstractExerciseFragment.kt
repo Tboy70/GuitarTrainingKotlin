@@ -5,11 +5,10 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.DurationComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseExerciseFragment
-import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import javax.inject.Inject
@@ -17,7 +16,7 @@ import javax.inject.Inject
 abstract class AbstractExerciseFragment : BaseExerciseFragment() {
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     @Inject
     lateinit var dialogComponent: DialogComponent
@@ -64,7 +63,7 @@ abstract class AbstractExerciseFragment : BaseExerciseFragment() {
 
     fun startNextExercise() {
         if (durationLeft.compareTo(0.0) != 0) {
-            materialDialogComponent.showMultiChoiceDialog(getString(R.string.confirm_next_exercise_title),
+            materialDialogComponentImpl.showMultiChoiceDialog(getString(R.string.confirm_next_exercise_title),
                 getString(R.string.confirm_next_exercise_content),
                 R.color.colorPrimary,
                 object : MultipleChoiceMaterialDialogListener {

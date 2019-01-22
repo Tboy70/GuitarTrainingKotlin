@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.CreateAccountViewModel
@@ -22,7 +22,7 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +33,7 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
 
     private fun handleLiveData(view: View) {
         viewModel.creationSuccess.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             fragmentManager?.popBackStack()
             val snackbar = Snackbar.make(
                 activity!!.findViewById(android.R.id.content),
@@ -46,18 +46,18 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
 
         viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-                materialDialogComponent.showProgressDialog(
+                materialDialogComponentImpl.showProgressDialog(
                     getString(R.string.dialog_create_account_title),
                     getString(R.string.dialog_create_account_content),
                     R.color.colorPrimary
                 )
             } else {
-                materialDialogComponent.dismissDialog()
+                materialDialogComponentImpl.dismissDialog()
             }
         }
 
         viewModel.errorEvent.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             val errorTriggered = viewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
 //                errorRendererComponent.requestRenderError(

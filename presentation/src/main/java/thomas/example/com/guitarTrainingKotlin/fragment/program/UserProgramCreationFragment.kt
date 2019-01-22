@@ -16,7 +16,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -38,7 +38,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     private var selectedItem: String = ConstValues.EMPTY_STRING
 
@@ -67,13 +67,13 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
 
         viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-                materialDialogComponent.showProgressDialog(
+                materialDialogComponentImpl.showProgressDialog(
                         getString(R.string.dialog_login_title),
                         getString(R.string.dialog_login_content),
                         R.color.colorPrimary
                 )
             } else {
-                materialDialogComponent.dismissDialog()
+                materialDialogComponentImpl.dismissDialog()
             }
         }
 
@@ -138,7 +138,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
                     val title = getString(R.string.generic_exercise_choice_creation_program)
                     val items = exercisesArray.toList()
 
-                    materialDialogComponent.showSingleChoiceDialog(
+                    materialDialogComponentImpl.showSingleChoiceDialog(
                             title,
                             items,
                             selectedItem,

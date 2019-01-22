@@ -62,6 +62,13 @@
                     android:inputType="textPassword"
                     tools:ignore="Autofill"/>
 
+            <ProgressBar
+                    android:id="@+id/fragment_login_home_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:visibility="invisible"/>
+
         </LinearLayout>
 
         <LinearLayout

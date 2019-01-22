@@ -9,7 +9,7 @@ import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongCreationViewModel
@@ -24,7 +24,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +35,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
 
     private fun handleLiveData(view: View) {
         viewModel.creationSongSuccess.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             if (it != null && it == true) {
                 fragmentManager?.popBackStack()
             } else if (it != null && it == false) {
@@ -51,7 +51,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
         }
 
         viewModel.creationSongNotLaunch.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             if (it != null && it == true) {
                 if (viewModel.errorThrowable != null) {
 //                    errorRendererComponent.requestRenderError(
@@ -66,7 +66,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
 
     private fun handleClickCreateSong() {
         fragment_user_song_creation_validation.setOnClickListener {
-            materialDialogComponent.showProgressDialog(
+            materialDialogComponentImpl.showProgressDialog(
                 getString(R.string.dialog_creation_song_title),
                 getString(R.string.dialog_creation_song_content),
                 R.color.colorPrimary

@@ -5,7 +5,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -19,7 +19,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_update
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -49,7 +49,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
 
     private fun handleLiveData(view: View) {
         viewModel.updateSongSuccess.observeSafe(this) {
-            materialDialogComponent.dismissDialog()
+            materialDialogComponentImpl.dismissDialog()
             if (it != null && it == true) {
                 activity?.finish()
             } else if (it != null && it == false) {
@@ -72,13 +72,13 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_song_update_validate_button.setOnClickListener {
 
-            materialDialogComponent.showMultiChoiceDialog(
+            materialDialogComponentImpl.showMultiChoiceDialog(
                 getString(R.string.dialog_update_song_title),
                 getString(R.string.dialog_update_song_confirm_content),
                 R.color.colorPrimary,
                 object : MultipleChoiceMaterialDialogListener {
                     override fun onYesSelected() {
-                        materialDialogComponent.showProgressDialog(
+                        materialDialogComponentImpl.showProgressDialog(
                             getString(R.string.dialog_update_song_title),
                             getString(R.string.dialog_update_song_content),
                             R.color.colorPrimary

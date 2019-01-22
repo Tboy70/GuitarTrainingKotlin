@@ -17,7 +17,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -38,7 +38,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
+    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
 
     private lateinit var idProgram: String
 
@@ -93,17 +93,17 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
         viewModel.viewState.observeSafe(this) {
             when {
-                it.displayingLoadingGetProgram -> materialDialogComponent.showProgressDialog(
+                it.displayingLoadingGetProgram -> materialDialogComponentImpl.showProgressDialog(
                         getString(R.string.dialog_details_program_title),
                         getString(R.string.dialog_details_program_content),
                         R.color.colorPrimary
                 )
-                it.displayLoadingRemoveProgram -> materialDialogComponent.showProgressDialog(
+                it.displayLoadingRemoveProgram -> materialDialogComponentImpl.showProgressDialog(
                         getString(R.string.dialog_remove_program_title),
                         getString(R.string.dialog_remove_program_content),
                         R.color.colorPrimary
                 )
-                else -> materialDialogComponent.dismissDialog()
+                else -> materialDialogComponentImpl.dismissDialog()
             }
         }
 
@@ -147,7 +147,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
     private fun handleRemoveProgram() {
         fragment_user_program_details_remove_button.setOnClickListener {
-            materialDialogComponent.showMultiChoiceDialog(
+            materialDialogComponentImpl.showMultiChoiceDialog(
                     getString(R.string.dialog_remove_program_title),
                     getString(R.string.dialog_remove_program_confirm_content),
                     R.color.colorPrimary,

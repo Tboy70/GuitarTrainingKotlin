@@ -8,9 +8,9 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
-import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.extension.*
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.LoginHomeViewModel
@@ -22,7 +22,7 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_login_home
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponentImpl
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -34,6 +34,8 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
         initiateToolbar()
         initiateViews()
         initiateViewModelObservers()
+
+        viewModel.retrieveSavedValues()
     }
 
     private fun initiateToolbar() {
@@ -42,6 +44,14 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
     }
 
     private fun initiateViews() {
+
+        fragment_login_home_username.addTextChangedListener(textChangedListener {
+            viewModel.saveUserPseudoValue(fragment_login_home_username.getInput())
+        })
+
+        fragment_login_home_password.addTextChangedListener(textChangedListener {
+            viewModel.saveUserPasswordValue(fragment_login_home_password.getInput())
+        })
 
         // Create account button
         fragment_login_home_create_account.setOnClickListener {
@@ -59,36 +69,39 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
             }
 
             viewModel.connectUser(
-                fragment_login_home_username.text.toString(),
-                fragment_login_home_password.text.toString()
+                fragment_login_home_username.getInput(),
+                fragment_login_home_password.getInput()
             )
         }
     }
 
     private fun initiateViewModelObservers() {
 
-        viewModel.retrievedUser.observeSafe(this) {
+        viewModel.retrievedUserLiveData.observeSafe(this) {
             if (it) {
                 connectSuccess()
             }
         }
 
+        viewModel.savedUserPseudoLiveData.observeSafe(this) { retrievedPseudo ->
+            fragment_login_home_username.setText(retrievedPseudo)
+        }
+
+        viewModel.savedUserPasswordLiveData.observeSafe(this) { retrievedPassword ->
+            fragment_login_home_password.setText(retrievedPassword)
+        }
+
         viewModel.viewState.observeSafe(this) {
             if (it.loading) {
-                materialDialogComponent.showProgressDialog(
-                    getString(R.string.dialog_login_title),
-                    getString(R.string.dialog_login_content),
-                    R.color.colorPrimary
-                )
+                fragment_login_home_progress_bar.show()
             } else {
-                materialDialogComponent.dismissDialog()
+                fragment_login_home_progress_bar.hide()
             }
         }
 
         viewModel.errorLiveEvent.observeSafe(this) {
             errorRendererComponent.displayError(it)
         }
-
     }
 
     private fun connectSuccess() {

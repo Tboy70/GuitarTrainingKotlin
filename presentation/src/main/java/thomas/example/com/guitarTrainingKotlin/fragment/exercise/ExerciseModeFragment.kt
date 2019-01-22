@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_mode.*
 import thomas.example.com.guitarTrainingKotlin.R
@@ -84,7 +83,7 @@ class ExerciseModeFragment : AbstractExerciseFragment() {
         val title = getString(R.string.exercise_mode_dialog_choice_mode_text)
         items = resources.getStringArray(R.array.list_modes).asList()
 
-        materialDialogComponent.showSingleChoiceDialog(
+        materialDialogComponentImpl.showSingleChoiceDialog(
             title,
             items,
             mSelectedItem,
