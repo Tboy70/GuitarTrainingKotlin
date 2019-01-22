@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.fragment_user_song_creation.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -21,7 +21,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_creation
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -40,11 +40,11 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
                 fragmentManager?.popBackStack()
             } else if (it != null && it == false) {
                 if (viewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        viewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
+//                    errorRendererComponent.requestRenderError(
+//                        viewModel.errorThrowable as Throwable,
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        view
+//                    )
                 }
                 fragmentManager?.popBackStack()
             }
@@ -54,11 +54,11 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
             materialDialogComponent.dismissDialog()
             if (it != null && it == true) {
                 if (viewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        Exception(getString(R.string.error_field_not_filled)),
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
+//                    errorRendererComponent.requestRenderError(
+//                        Exception(getString(R.string.error_field_not_filled)),
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        view
+//                    )
                 }
             }
         }

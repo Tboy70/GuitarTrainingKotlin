@@ -46,14 +46,15 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity> {
-        userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
-        return apiService.connectUser(userRemoteEntity).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(it.raw().message())
-            }
-        }
+//        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
+//        return apiService.connectUser(userRemoteEntity).map {
+//            if (it.body() != null) {
+//                it.body()
+//            } else {
+//                throw Exception(it.raw().message())
+//            }
+//        }
+        return apiService.connectUser(userRemoteEntity)
     }
 
     override fun retrieveUserById(idUser: String): Single<UserRemoteEntity> {
@@ -67,7 +68,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable {
-        userRemoteEntity.passwordUser = AESCrypt.encrypt(userRemoteEntity.pseudoUser, userRemoteEntity.passwordUser)
+        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
         return apiService.createNewUser(userRemoteEntity)
     }
 

@@ -37,10 +37,10 @@ class UserDataRepository @Inject constructor(
 
     override fun connectUser(user: User): Single<User> {
         return Single.defer {
-            apiBusinessHelper.connectUser(userEntityDataMapper.transformModelToEntity(user))?.map {
+            apiBusinessHelper.connectUser(userEntityDataMapper.transformModelToEntity(user)).map {
                 userEntityDataMapper.transformEntityToModel(it)
             }?.doOnSuccess {
-                contentBusinessHelper.setIdInSharedPrefs(it.idUser)
+                contentBusinessHelper.setIdInSharedPrefs(it.userId)
             }
         }
     }

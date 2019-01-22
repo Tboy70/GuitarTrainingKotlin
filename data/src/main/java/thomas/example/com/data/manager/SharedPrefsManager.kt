@@ -2,9 +2,9 @@ package thomas.example.com.data.manager
 
 interface SharedPrefsManager {
 
-    fun setIdUserInSharedPrefs(idUser: String?)
-
+    // Shared prefs
     fun getUserIdInSharedPrefs(): String
+    fun setIdUserInSharedPrefs(idUser: String?)
 
     fun deleteIdUserInSharedPrefs()
 

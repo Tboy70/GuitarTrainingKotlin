@@ -2,12 +2,11 @@ package thomas.example.com.guitarTrainingKotlin.activity
 
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.activity_program.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.exercise.AbstractExerciseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -24,7 +23,7 @@ class ProgramActivity : BaseActivity() {
     private lateinit var programViewModel: ProgramViewModel
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     private lateinit var exercisesOfProgram: List<Exercise>
     private var rankExercise = 0
@@ -51,11 +50,11 @@ class ProgramActivity : BaseActivity() {
         programViewModel.errorEvent.observeSafe(this) {
             val errorTriggered = programViewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
-                errorRendererComponent.requestRenderError(
-                        errorTriggered,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        findViewById(android.R.id.content)
-                )
+//                errorRendererComponent.requestRenderError(
+//                        errorTriggered,
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        findViewById(android.R.id.content)
+//                )
             }
         }
 

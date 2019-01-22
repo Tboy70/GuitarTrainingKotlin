@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 
 @Module
@@ -17,4 +19,8 @@ class BaseActivityModule {
     @Provides
     @PerActivity
     fun appCompatActivity(baseActivity: BaseActivity) = baseActivity as AppCompatActivity
+
+    @Provides
+    @PerActivity
+    fun errorRendererComponent(errorRendererComponent: ErrorRendererComponentImpl): ErrorRendererComponent = errorRendererComponent
 }

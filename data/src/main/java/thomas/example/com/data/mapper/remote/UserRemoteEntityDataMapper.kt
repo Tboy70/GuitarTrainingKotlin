@@ -10,10 +10,10 @@ class UserRemoteEntityDataMapper @Inject constructor() {
 
     fun transformRemoteEntityToEntity(userRemoteEntity: UserRemoteEntity): UserEntity {
         return UserEntity(
-            userRemoteEntity.idUser,
-            userRemoteEntity.pseudoUser,
-            userRemoteEntity.emailUser,
-            userRemoteEntity.passwordUser
+            userRemoteEntity.userId,
+            userRemoteEntity.userPseudo,
+            userRemoteEntity.userEmail,
+            userRemoteEntity.userPassword
         )
     }
 
@@ -28,10 +28,10 @@ class UserRemoteEntityDataMapper @Inject constructor() {
 
     fun transformEntityToRemoteEntity(userEntity: UserEntity): UserRemoteEntity {
         return UserRemoteEntity(
-            userEntity.idUser,
-            userEntity.pseudoUser,
-            userEntity.emailUser,
-            userEntity.passwordUser
+            userEntity.userId,
+            userEntity.userPseudo,
+            userEntity.userEmail,
+            userEntity.userPassword
         )
     }
 

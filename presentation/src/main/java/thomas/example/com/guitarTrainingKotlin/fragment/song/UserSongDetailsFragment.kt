@@ -11,7 +11,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.fragment_user_song_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
@@ -30,7 +30,7 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_details
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -91,11 +91,11 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
             if (it != null && it == true) {
                 activity?.finish()
             } else {
-                errorRendererComponent.requestRenderError(
-                    viewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
+//                errorRendererComponent.requestRenderError(
+//                    viewModel.errorThrowable as Throwable,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    view
+//                )
                 activity?.finish()
             }
         }
@@ -104,11 +104,11 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
             if (it != null && it == true) {
                 displayHistoricValues(viewModel.timestampKeyList)
             } else {
-                errorRendererComponent.requestRenderError(
-                    viewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
+//                errorRendererComponent.requestRenderError(
+//                    viewModel.errorThrowable as Throwable,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    view
+//                )
             }
         }
     }

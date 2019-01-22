@@ -6,7 +6,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -19,7 +19,7 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_create_account
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -60,11 +60,11 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
             materialDialogComponent.dismissDialog()
             val errorTriggered = viewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
-                errorRendererComponent.requestRenderError(
-                    viewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
+//                errorRendererComponent.requestRenderError(
+//                    viewModel.errorThrowable as Throwable,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    view
+//                )
             }
         }
     }

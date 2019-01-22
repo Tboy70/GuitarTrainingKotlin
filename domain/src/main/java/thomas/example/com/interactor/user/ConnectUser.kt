@@ -7,7 +7,7 @@ import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class ConnectUser @Inject constructor(
-        private var userRepository: UserRepository
+        private val userRepository: UserRepository
 ) : SingleParametrizedUseCase<User, ConnectUser.Params>() {
 
     override fun build(params: Params): Single<User> {

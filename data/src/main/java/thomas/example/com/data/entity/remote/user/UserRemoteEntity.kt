@@ -3,9 +3,9 @@ package thomas.example.com.data.entity.remote.user
 import com.google.gson.annotations.SerializedName
 
 data class UserRemoteEntity(
-    @SerializedName("idUser") val idUser: String?,
-    @SerializedName("pseudoUser") val pseudoUser: String,
-    @SerializedName("emailUser") val emailUser: String?,
-    @SerializedName("passwordUser") var passwordUser: String?
+    @SerializedName("userId") val userId: String? = null,
+    @SerializedName("userPseudo") val userPseudo: String = "",
+    @SerializedName("userEmail") val userEmail: String? = null,
+    @SerializedName("userPassword") var userPassword: String = ""
 )
 

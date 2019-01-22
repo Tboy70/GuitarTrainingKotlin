@@ -26,7 +26,7 @@ class StartActivity : BaseActivity() {
     }
 
     private fun initiateViewModelObserver() {
-        startActivityViewModel.retrievedUserIdLiveData.observeSafe(this) { userId ->
+        startActivityViewModel.retrievedUserIdLiveEvent.observeSafe(this) { userId ->
             val intent = if (userId == StartActivityViewModel.USER_ID_DEFAULT) {
                 Intent(this, LoginActivity::class.java)
             } else {

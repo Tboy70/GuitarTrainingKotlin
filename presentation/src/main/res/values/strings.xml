@@ -43,8 +43,7 @@
 
     <string name="dialog_update_program_title">Mise à jour du programme</string>
     <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?
-    </string>
+    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?</string>
 
     <string name="dialog_remove_program_title">Supression du programme</string>
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
@@ -289,7 +288,8 @@
     <string name="error_update_song">Erreur pendant la mise à jour de la chanson</string>
     <string name="error_remove_song">Erreur pendant la suppression de la chanson</string>
     <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
-    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson</string>
+    <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson
+    </string>
 
     <!-- ======================================================================================= -->
     <!-- ====================================== ERRORS ========================================= -->

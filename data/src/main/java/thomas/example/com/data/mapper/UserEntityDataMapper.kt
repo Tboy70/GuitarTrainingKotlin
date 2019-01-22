@@ -9,7 +9,11 @@ import javax.inject.Singleton
 class UserEntityDataMapper @Inject constructor() {
 
     fun transformEntityToModel(userEntity: UserEntity): User {
-        return User(userEntity.idUser, userEntity.pseudoUser, userEntity.emailUser, userEntity.passwordUser)
+        return User(
+            userEntity.userId,
+            userEntity.userPseudo,
+            userEntity.userEmail,
+            userEntity.userPassword)
     }
 
     fun transformListEntitiesToListModels(userEntityList: List<UserEntity>): List<User> {
@@ -23,10 +27,10 @@ class UserEntityDataMapper @Inject constructor() {
 
     fun transformModelToEntity(user: User): UserEntity {
         return UserEntity(
-            user.idUser,
-            user.pseudoUser,
-            user.emailUser,
-            user.passwordUser
+            user.userId,
+            user.userPseudo,
+            user.userEmail,
+            user.userPassword
         )
     }
 

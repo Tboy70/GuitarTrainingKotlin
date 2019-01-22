@@ -11,6 +11,7 @@ import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 
 interface ApiManager {
 
+    // User
     fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
 
     fun retrieveUserById(idUser: String): Single<UserRemoteEntity>

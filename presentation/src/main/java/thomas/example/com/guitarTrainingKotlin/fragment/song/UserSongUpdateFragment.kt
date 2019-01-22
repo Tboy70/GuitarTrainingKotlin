@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -22,7 +22,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     private var songViewDataWrapper: SongViewDataWrapper? = null
 
@@ -54,11 +54,11 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
                 activity?.finish()
             } else if (it != null && it == false) {
                 if (viewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        viewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
+//                    errorRendererComponent.requestRenderError(
+//                        viewModel.errorThrowable as Throwable,
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        view
+//                    )
                 }
             }
         }

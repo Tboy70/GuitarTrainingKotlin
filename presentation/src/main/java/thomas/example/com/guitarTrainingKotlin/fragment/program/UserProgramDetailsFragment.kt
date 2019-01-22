@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -35,7 +35,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_program_details
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -110,11 +110,11 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
         viewModel.errorEvent.observeSafe(this) {
             val errorTriggered = viewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
-                errorRendererComponent.requestRenderError(
-                        errorTriggered,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                )
+//                errorRendererComponent.requestRenderError(
+//                        errorTriggered,
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        view
+//                )
             }
         }
 

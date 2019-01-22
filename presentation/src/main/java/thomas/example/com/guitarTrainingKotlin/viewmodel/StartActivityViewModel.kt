@@ -5,27 +5,28 @@ import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEven
 import thomas.example.com.interactor.sharedprefs.GetUserIdInSharedPrefs
 import javax.inject.Inject
 
-class StartActivityViewModel @Inject constructor(private val getUserUserIdInSharedPrefs: GetUserIdInSharedPrefs) : ViewModel() {
+class StartActivityViewModel @Inject constructor(private val getUserIdInSharedPrefs: GetUserIdInSharedPrefs) : ViewModel() {
 
-    val retrievedUserIdLiveData = SingleLiveEvent<String>()
+    val retrievedUserIdLiveEvent = SingleLiveEvent<String>()
 
     init {
         getUserIdInSharedPrefs()
     }
 
+    /** To unsubscribe usecase **/
     override fun onCleared() {
         super.onCleared()
-        getUserUserIdInSharedPrefs.unsubscribe()
+        getUserIdInSharedPrefs.unsubscribe()
     }
 
     /** Using of lambdas ! **/
     private fun getUserIdInSharedPrefs() {
-        getUserUserIdInSharedPrefs.subscribe(
+        getUserIdInSharedPrefs.subscribe(
             onSuccess = { userId ->
-                retrievedUserIdLiveData.postValue(userId)
+                retrievedUserIdLiveEvent.postValue(userId)
             },
             onError = {
-                retrievedUserIdLiveData.postValue(USER_ID_DEFAULT)
+                retrievedUserIdLiveEvent.postValue(USER_ID_DEFAULT)
             }
         )
     }

@@ -15,19 +15,19 @@ import thomas.example.com.data.entity.remote.user.UserRemoteEntity
 interface APIServiceInterface {
 
     @POST("connect")
-    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Single<Response<UserRemoteEntity>>
+    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
 
-    @GET("user/{idUser}")
-    fun retrieveUserById(@Path("idUser") idUser: String): Single<Response<UserRemoteEntity>>
+    @GET("user/{userId}")
+    fun retrieveUserById(@Path("userId") idUser: String): Single<Response<UserRemoteEntity>>
 
     @POST("user")
     fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Completable
 
-    @DELETE("user/{idUser}")
-    fun suppressAccount(@Path("idUser") idUser: String): Completable
+    @DELETE("user/{userId}")
+    fun suppressAccount(@Path("userId") idUser: String): Completable
 
-    @GET("programs/{idUser}/{instrumentMode}")
-    fun retrieveProgramsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<ProgramRemoteEntity>>>
+    @GET("programs/{userId}/{instrumentMode}")
+    fun retrieveProgramsListByUserId(@Path("userId") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
     fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Single<Response<ProgramRemoteEntity>>
@@ -50,8 +50,8 @@ interface APIServiceInterface {
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
     fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
-    @GET("songs/{idUser}/{instrumentMode}")
-    fun retrieveSongsListByUserId(@Path("idUser") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<SongRemoteEntity>>>
+    @GET("songs/{userId}/{instrumentMode}")
+    fun retrieveSongsListByUserId(@Path("userId") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<SongRemoteEntity>>>
 
     @GET("song/{idSong}")
     fun retrieveSongFromId(@Path("idSong") idSong: String): Single<Response<SongRemoteEntity>>

@@ -7,10 +7,11 @@ import thomas.example.com.model.User
 
 interface UserRepository {
 
+    // Shared prefs
     fun getUserIdInSharedPrefs(): Single<String>
-
     fun setUserIdInSharedPrefs(userId: String?): Observable<Boolean>
 
+    // User
     fun connectUser(user: User): Single<User>
 
     fun createNewUser(user: User): Completable

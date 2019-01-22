@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -30,7 +30,7 @@ class UserPanelActivity : BaseActivity() {
     private lateinit var userPanelViewModel: UserPanelViewModel
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -172,11 +172,11 @@ class UserPanelActivity : BaseActivity() {
         userPanelViewModel.errorEvent.observeSafe(this) {
             val errorTriggered = userPanelViewModel.errorThrowable
             if (it.ERROR_TRIGGERED && errorTriggered != null) {
-                errorRendererComponent.requestRenderError(
-                    errorTriggered,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    window.decorView.rootView
-                )
+//                errorRendererComponent.requestRenderError(
+//                    errorTriggered,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    window.decorView.rootView
+//                )
             }
         }
 

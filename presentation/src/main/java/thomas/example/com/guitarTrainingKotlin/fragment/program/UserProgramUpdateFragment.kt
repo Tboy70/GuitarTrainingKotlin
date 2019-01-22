@@ -3,19 +3,15 @@ package thomas.example.com.guitarTrainingKotlin.fragment.program
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
@@ -27,7 +23,6 @@ import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDat
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramUpdateViewModel
-import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserProgramsListViewModel
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 
@@ -43,7 +38,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     lateinit var materialDialogComponent: MaterialDialogComponent
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     private lateinit var exercisesArray: Array<String>
 
@@ -83,11 +78,11 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                 activity?.finish()
             } else if (it != null && it == false) {
                 if (viewModel.errorThrowable != null) {
-                    errorRendererComponent.requestRenderError(
-                        viewModel.errorThrowable as Throwable,
-                        ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                        view
-                    )
+//                    errorRendererComponent.requestRenderError(
+//                        viewModel.errorThrowable as Throwable,
+//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                        view
+//                    )
                 }
             }
         }

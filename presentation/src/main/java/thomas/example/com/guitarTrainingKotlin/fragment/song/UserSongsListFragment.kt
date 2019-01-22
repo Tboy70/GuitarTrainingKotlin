@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.adapter.UserSongsListAdapter
@@ -26,7 +26,7 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>(), UserSongsL
     override fun getLayoutId(): Int = R.layout.fragment_user_songs_list
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var userSongsListAdapter: UserSongsListAdapter
@@ -53,11 +53,11 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>(), UserSongsL
 
         viewModel.errorEvent.observeSafe(this) {
             if (it.ERROR_TRIGGERED && viewModel.errorThrowable != null) {
-                errorRendererComponent.requestRenderError(
-                    viewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-                )
+//                errorRendererComponent.requestRenderError(
+//                    viewModel.errorThrowable as Throwable,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    view
+//                )
             }
         }
 

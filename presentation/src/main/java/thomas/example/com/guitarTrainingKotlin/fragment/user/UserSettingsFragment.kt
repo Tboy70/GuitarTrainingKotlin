@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -23,7 +23,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_settings
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponent
+    lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var materialDialogComponent: MaterialDialogComponent
@@ -88,11 +88,11 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
         }
 
         viewModel.errorEvent.observeSafe(this) {
-            errorRendererComponent.requestRenderError(
-                    viewModel.errorThrowable as Throwable,
-                    ErrorRendererComponent.ERROR_DISPLAY_MODE_SNACKBAR,
-                    view
-            )
+//            errorRendererComponent.requestRenderError(
+//                    viewModel.errorThrowable as Throwable,
+//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
+//                    view
+//            )
         }
 
         viewModel.finishSuppressAccount.observeSafe(this) {

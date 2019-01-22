@@ -22,7 +22,7 @@ class APIBusinessHelper @Inject constructor(
     private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper
 ) {
 
-    fun connectUser(userEntity: UserEntity): Single<UserEntity>? {
+    fun connectUser(userEntity: UserEntity): Single<UserEntity> {
         return apiManager.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
             .map {
                 userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
