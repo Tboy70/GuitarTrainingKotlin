@@ -15,7 +15,7 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
         return sharedPreferences.getString(CURRENT_USER_ID, null)
     }
 
-    override fun setIdUserInSharedPrefs(idUser: String?) {
+    override fun setIdUserInSharedPrefs(idUser: String) {
         sharedPreferences.edit().putString(CURRENT_USER_ID, idUser).apply()
     }
 

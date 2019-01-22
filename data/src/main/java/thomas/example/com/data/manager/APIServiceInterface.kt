@@ -17,11 +17,11 @@ interface APIServiceInterface {
     @POST("connect")
     fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
 
-    @GET("user/{userId}")
-    fun retrieveUserById(@Path("userId") idUser: String): Single<Response<UserRemoteEntity>>
-
     @POST("user")
     fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Completable
+
+    @GET("user/{userId}")
+    fun retrieveUserById(@Path("userId") idUser: String): Single<Response<UserRemoteEntity>>
 
     @DELETE("user/{userId}")
     fun suppressAccount(@Path("userId") idUser: String): Completable

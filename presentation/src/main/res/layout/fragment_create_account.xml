@@ -17,6 +17,7 @@
                 android:background="@color/colorPrimary"
                 app:title="@string/create_account_title"
                 app:titleTextColor="@android:color/white"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -40,13 +41,13 @@
                 android:layout_height="0dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/create_account_validate"
+                app:layout_constraintBottom_toTopOf="@+id/fragment_create_account_validate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title">
 
             <EditText
-                    android:id="@+id/create_account_pseudo"
+                    android:id="@+id/fragment_create_account_pseudo"
                     android:layout_width="@dimen/edit_text_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_account_pseudo_hint"
@@ -57,31 +58,42 @@
                     tools:ignore="Autofill"/>
 
             <EditText
-                    android:id="@+id/create_account_email"
+                    android:id="@+id/fragment_create_account_email"
                     android:layout_width="@dimen/edit_text_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_account_email_hint"
                     android:inputType="textEmailAddress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_account_pseudo"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_pseudo"
                     tools:ignore="Autofill"/>
 
             <EditText
-                    android:id="@+id/create_account_password"
+                    android:id="@+id/fragment_create_account_password"
                     android:layout_width="@dimen/edit_text_width"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_account_password_hint"
                     android:inputType="textPassword"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/create_account_email"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_email"
                     tools:ignore="Autofill"/>
 
         </LinearLayout>
 
+        <ProgressBar
+                android:id="@+id/fragment_create_account_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fragment_create_account_progress_bar"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/fragment_create_account_validate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
+
         <Button
-                android:id="@+id/create_account_validate"
+                android:id="@+id/fragment_create_account_validate"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:background="@drawable/button_drawable"

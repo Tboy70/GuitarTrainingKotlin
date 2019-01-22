@@ -62,14 +62,18 @@
                     android:inputType="textPassword"
                     tools:ignore="Autofill"/>
 
-            <ProgressBar
-                    android:id="@+id/fragment_login_home_progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:visibility="invisible"/>
-
         </LinearLayout>
+
+        <ProgressBar
+                android:id="@+id/fragment_login_home_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fragment_login_home_progress_bar"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/fragment_login_home_action_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"/>
 
         <LinearLayout
                 android:id="@+id/fragment_login_home_action_layout"

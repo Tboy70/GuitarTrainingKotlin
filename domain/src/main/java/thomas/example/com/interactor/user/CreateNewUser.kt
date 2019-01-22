@@ -7,7 +7,7 @@ import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class CreateNewUser @Inject constructor(
-        private var userRepository: UserRepository
+    private var userRepository: UserRepository
 ) : CompletableParametrizedUseCase<CreateNewUser.Params>() {
 
     override fun build(params: Params): Completable {

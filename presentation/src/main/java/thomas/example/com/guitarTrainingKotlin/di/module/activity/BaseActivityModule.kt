@@ -7,8 +7,10 @@ import dagger.Provides
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.SnackbarComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MaterialDialogComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.SnackbarComponent
 import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
 
 @Module
@@ -24,9 +26,15 @@ class BaseActivityModule {
 
     @Provides
     @PerActivity
-    fun errorRendererComponent(errorRendererComponent: ErrorRendererComponentImpl): ErrorRendererComponent = errorRendererComponent
+    fun errorRendererComponent(errorRendererComponent: ErrorRendererComponentImpl): ErrorRendererComponent =
+        errorRendererComponent
 
     @Provides
     @PerActivity
-    fun materialDialogComponent(materialDialogComponent: MaterialDialogComponentImpl): MaterialDialogComponent = materialDialogComponent
+    fun materialDialogComponent(materialDialogComponent: MaterialDialogComponentImpl): MaterialDialogComponent =
+        materialDialogComponent
+
+    @Provides
+    @PerActivity
+    fun snackbarComponent(snackbarComponent: SnackbarComponentImpl): SnackbarComponent = snackbarComponent
 }

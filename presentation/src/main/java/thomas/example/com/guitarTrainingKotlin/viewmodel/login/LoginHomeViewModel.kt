@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
-import thomas.example.com.guitarTrainingKotlin.view.LoginFragmentViewState
+import thomas.example.com.guitarTrainingKotlin.view.state.LoginFragmentViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.interactor.user.ConnectUser
 import thomas.example.com.model.User

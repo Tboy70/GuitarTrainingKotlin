@@ -24,10 +24,6 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
 
-    @Inject
-    lateinit var materialDialogComponent: MaterialDialogComponent
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -95,7 +91,7 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
             if (it.loading) {
                 fragment_login_home_progress_bar.show()
             } else {
-                fragment_login_home_progress_bar.hide()
+                fragment_login_home_progress_bar.gone()
             }
         }
 

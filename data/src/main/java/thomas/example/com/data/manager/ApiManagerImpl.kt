@@ -46,15 +46,13 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity> {
-//        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
-//        return apiService.connectUser(userRemoteEntity).map {
-//            if (it.body() != null) {
-//                it.body()
-//            } else {
-//                throw Exception(it.raw().message())
-//            }
-//        }
+        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
         return apiService.connectUser(userRemoteEntity)
+    }
+
+    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable {
+        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
+        return apiService.createNewUser(userRemoteEntity)
     }
 
     override fun retrieveUserById(idUser: String): Single<UserRemoteEntity> {
@@ -67,18 +65,13 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         }
     }
 
-    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable {
-        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
-        return apiService.createNewUser(userRemoteEntity)
-    }
-
     override fun suppressAccount(idUser: String): Completable {
         return apiService.suppressAccount(idUser)
     }
 
     override fun retrieveProgramsListByUserId(
-            idUser: String,
-            instrumentModeValue: Int
+        idUser: String,
+        instrumentModeValue: Int
     ): Single<List<ProgramRemoteEntity>> {
         return apiService.retrieveProgramsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
@@ -130,8 +123,8 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun retrieveSongsListByUserId(
-            idUser: String,
-            instrumentModeValue: Int
+        idUser: String,
+        instrumentModeValue: Int
     ): Single<List<SongRemoteEntity>> {
         return apiService.retrieveSongsListByUserId(idUser, instrumentModeValue).map {
             if (it.body() != null) {
@@ -165,8 +158,8 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun sendScoreFeedback(
-            scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
-            idSong: String
+        scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
+        idSong: String
     ): Completable {
         return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong)
     }

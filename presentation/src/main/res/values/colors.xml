@@ -6,6 +6,7 @@
     <color name="colorAccent">#EF5350</color>
     <color name="colorGrey">#CECECE</color>
     <color name="colorSuccess">#2AA300</color>
+    <color name="colorFailed">#EF5350</color>
 
     <!-- USER PANEL COLORS -->
     <color name="placeholder_text_color">#E0E0E0</color>

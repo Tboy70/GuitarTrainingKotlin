@@ -1,14 +1,19 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.login
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.SnackbarComponent
+import thomas.example.com.guitarTrainingKotlin.extension.getInput
+import thomas.example.com.guitarTrainingKotlin.extension.gone
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.extension.show
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.login.CreateAccountViewModel
 import javax.inject.Inject
@@ -19,63 +24,71 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_create_account
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponentImpl
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var snackbarComponent: SnackbarComponent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handleLiveData(view)
-        handleClickValidateCreation()
+        initiateToolbar()
+        initiateViews()
+        initiateViewModelObservers()
     }
 
-    private fun handleLiveData(view: View) {
-        viewModel.creationSuccess.observeSafe(this) {
-            materialDialogComponentImpl.dismissDialog()
-            fragmentManager?.popBackStack()
-            val snackbar = Snackbar.make(
-                activity!!.findViewById(android.R.id.content),
-                getString(R.string.success_create_account),
-                Snackbar.LENGTH_LONG
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().popBackStack()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initiateToolbar() {
+        setHasOptionsMenu(true)
+        (activity as AppCompatActivity).setSupportActionBar(fragment_create_account_toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun initiateViews() {
+
+        // Account creation validation
+        fragment_create_account_validate.setOnClickListener {
+            viewModel.createNewUser(
+                fragment_create_account_pseudo.getInput(),
+                fragment_create_account_email.getInput(),
+                fragment_create_account_password.getInput()
             )
-            snackbar.view.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.colorSuccess))
-            snackbar.show()
+        }
+    }
+
+    private fun initiateViewModelObservers() {
+        viewModel.userCreationLiveData.observeSafe(this) {
+            fragmentManager?.popBackStack()
+
+            activity?.let { activity ->
+                snackbarComponent.displaySnackbar(
+                    activity.findViewById(android.R.id.content),
+                    getString(R.string.success_create_account),
+                    Snackbar.LENGTH_LONG,
+                    true
+                )
+            }
         }
 
         viewModel.viewState.observeSafe(this) {
-            if (it.displayingLoading) {
-                materialDialogComponentImpl.showProgressDialog(
-                    getString(R.string.dialog_create_account_title),
-                    getString(R.string.dialog_create_account_content),
-                    R.color.colorPrimary
-                )
+            if (it.loading) {
+                fragment_create_account_progress_bar.show()
             } else {
-                materialDialogComponentImpl.dismissDialog()
+                fragment_create_account_progress_bar.gone()
             }
         }
 
-        viewModel.errorEvent.observeSafe(this) {
-            materialDialogComponentImpl.dismissDialog()
-            val errorTriggered = viewModel.errorThrowable
-            if (it.ERROR_TRIGGERED && errorTriggered != null) {
-//                errorRendererComponent.requestRenderError(
-//                    viewModel.errorThrowable as Throwable,
-//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                    view
-//                )
-            }
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
         }
     }
 
-    private fun handleClickValidateCreation() {
-        create_account_validate.setOnClickListener {
-            viewModel.createNewUser(
-                create_account_pseudo.text.toString(),
-                create_account_email.text.toString(),
-                create_account_password.text.toString()
-            )
-        }
-    }
 }

@@ -14,9 +14,10 @@ interface ApiManager {
     // User
     fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
 
-    fun retrieveUserById(idUser: String): Single<UserRemoteEntity>
-
     fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable
+
+
+    fun retrieveUserById(idUser: String): Single<UserRemoteEntity>
 
     fun retrieveProgramsListByUserId(idUser: String, instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>
 

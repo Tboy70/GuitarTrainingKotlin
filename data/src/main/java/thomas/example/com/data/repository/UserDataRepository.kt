@@ -3,9 +3,9 @@ package thomas.example.com.data.repository
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
-import thomas.example.com.data.mapper.UserEntityDataMapper
 import thomas.example.com.data.business.APIBusinessHelper
 import thomas.example.com.data.business.ContentBusinessHelper
+import thomas.example.com.data.mapper.UserEntityDataMapper
 import thomas.example.com.model.User
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
@@ -25,10 +25,6 @@ class UserDataRepository @Inject constructor(
         return Single.defer { contentBusinessHelper.getUserIdInSharedPrefs() }
     }
 
-    override fun setUserIdInSharedPrefs(userId: String?): Observable<Boolean> {
-        return Observable.defer { Observable.just(true) }
-    }
-
     override fun setInstrumentModeInSharedPrefs(): Completable {
         return Completable.defer {
             contentBusinessHelper.setInstrumentModeInSharedPrefs()
@@ -40,8 +36,16 @@ class UserDataRepository @Inject constructor(
             apiBusinessHelper.connectUser(userEntityDataMapper.transformModelToEntity(user)).map {
                 userEntityDataMapper.transformEntityToModel(it)
             }?.doOnSuccess {
-                contentBusinessHelper.setIdInSharedPrefs(it.userId)
+                it.userId?.let { userId ->
+                    contentBusinessHelper.setIdInSharedPrefs(userId)
+                }
             }
+        }
+    }
+
+    override fun createNewUser(user: User): Completable {
+        return Completable.defer {
+            apiBusinessHelper.createNewUser(userEntityDataMapper.transformModelToEntity(user))
         }
     }
 
@@ -50,12 +54,6 @@ class UserDataRepository @Inject constructor(
             apiBusinessHelper.retrieveUserById(idUser).map {
                 userEntityDataMapper.transformEntityToModel(it)
             }
-        }
-    }
-
-    override fun createNewUser(user: User): Completable {
-        return Completable.defer {
-            apiBusinessHelper.createNewUser(userEntityDataMapper.transformModelToEntity(user))
         }
     }
 

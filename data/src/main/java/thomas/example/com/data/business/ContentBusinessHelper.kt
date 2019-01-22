@@ -14,13 +14,9 @@ class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: 
         return Single.just(sharedPrefsManager.getUserIdInSharedPrefs())
     }
 
-    fun setIdInSharedPrefs(idUser: String?): Observable<Boolean> {
-        return try {
-            sharedPrefsManager.setIdUserInSharedPrefs(idUser)
-            Observable.just(true)
-        } catch (e: Exception) {
-            Observable.error(e)
-        }
+    fun setIdInSharedPrefs(userId: String): Observable<Boolean> {
+        sharedPrefsManager.setIdUserInSharedPrefs(userId)
+        return Observable.just(true)
     }
 
     fun deleteIdInSharedPrefs(): Completable {

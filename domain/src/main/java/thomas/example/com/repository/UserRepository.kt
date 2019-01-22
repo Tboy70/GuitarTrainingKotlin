@@ -9,18 +9,18 @@ interface UserRepository {
 
     // Shared prefs
     fun getUserIdInSharedPrefs(): Single<String>
-    fun setUserIdInSharedPrefs(userId: String?): Observable<Boolean>
+
+    fun setInstrumentModeInSharedPrefs(): Completable
+
 
     // User
     fun connectUser(user: User): Single<User>
 
     fun createNewUser(user: User): Completable
 
-    fun logoutUser(): Completable
-
     fun retrieveUserById(idUser: String): Single<User>
 
-    fun setInstrumentModeInSharedPrefs(): Completable
-
     fun suppressAccount(idUser: String): Completable
+
+    fun logoutUser(): Completable
 }
