@@ -1,6 +1,7 @@
 package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.ExerciseEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import thomas.example.com.model.Exercise
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,39 +9,47 @@ import javax.inject.Singleton
 @Singleton
 class ExerciseEntityDataMapper @Inject constructor() {
 
-    fun transformEntityToModel(exerciseEntity: ExerciseEntity): Exercise {
-        val exercise = Exercise()
-        exercise.idExercise = exerciseEntity.idExercise
-        exercise.durationExercise = exerciseEntity.durationExercise
-        exercise.idProgram = exerciseEntity.idProgram
-        exercise.typeExercise = exerciseEntity.typeExercise
-        return exercise
-    }
-
-    fun transformListEntitiesToListModels(exerciseEntityList: List<ExerciseEntity>): MutableList<Exercise> {
-        val exerciseList: MutableList<Exercise> = mutableListOf()
-
-        for (exerciseEntity: ExerciseEntity in exerciseEntityList) {
-            exerciseList.add(transformEntityToModel(exerciseEntity))
+    fun transformFromEntity(exerciseEntityList: List<ExerciseEntity>) = exerciseEntityList.mapNotNull { exerciseEntity ->
+        try {
+            transformFromEntity(exerciseEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return exerciseList
     }
 
-    fun transformModelToEntity(exercise: Exercise): ExerciseEntity {
-        val exerciseEntity = ExerciseEntity()
-        exerciseEntity.idExercise = exercise.idExercise
-        exerciseEntity.durationExercise = exercise.durationExercise
-        exerciseEntity.idProgram = exercise.idProgram
-        exerciseEntity.typeExercise = exercise.typeExercise
-        return exerciseEntity
-    }
-
-    fun transformListModelsToListEntities(exerciseModelList: List<Exercise>): MutableList<ExerciseEntity> {
-        val exerciseEntityList: MutableList<ExerciseEntity> = mutableListOf()
-
-        for (exerciseModel: Exercise in exerciseModelList) {
-            exerciseEntityList.add(transformModelToEntity(exerciseModel))
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(exerciseEntity: ExerciseEntity): Exercise {
+        try {
+            return Exercise(
+                idExercise = exerciseEntity.idExercise,
+                durationExercise = exerciseEntity.durationExercise,
+                idProgram = exerciseEntity.idProgram,
+                typeExercise = exerciseEntity.typeExercise
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return exerciseEntityList
+    }
+
+    fun transformToEntity(exerciseList: List<Exercise>) = exerciseList.mapNotNull { exercise ->
+        try {
+            transformToEntity(exercise)
+        } catch (e: DataMappingException) {
+            null
+        }
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformToEntity(exercise: Exercise): ExerciseEntity {
+        try {
+            return ExerciseEntity(
+                idExercise = exercise.idExercise,
+                durationExercise = exercise.durationExercise,
+                idProgram = exercise.idProgram,
+                typeExercise = exercise.typeExercise
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 }

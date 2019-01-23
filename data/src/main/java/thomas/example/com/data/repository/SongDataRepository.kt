@@ -26,7 +26,7 @@ class SongDataRepository @Inject constructor(
     override fun retrieveSongsListByUserId(idUser: String): Single<List<Song>> {
         return Single.defer {
             apiBusinessHelper.retrieveSongsListByUserId(idUser).map {
-                songEntityDataMapper.transformListEntitiesToListModels(it)
+                songEntityDataMapper.transformFromEntity(it)
             }
         }
     }
@@ -34,20 +34,20 @@ class SongDataRepository @Inject constructor(
     override fun retrieveSongById(idSong: String): Single<Song> {
         return Single.defer {
             apiBusinessHelper.retrieveSongFromId(idSong).map {
-                songEntityDataMapper.transformEntityToModel(it)
+                songEntityDataMapper.transformFromEntity(it)
             }
         }
     }
 
     override fun createSong(song: Song): Completable {
         return Completable.defer {
-            apiBusinessHelper.createSong(songEntityDataMapper.transformModelToEntity(song))
+            apiBusinessHelper.createSong(songEntityDataMapper.transformToEntity(song))
         }
     }
 
     override fun updateSong(song: Song): Completable {
         return Completable.defer {
-            apiBusinessHelper.updateSong(songEntityDataMapper.transformModelToEntity(song))
+            apiBusinessHelper.updateSong(songEntityDataMapper.transformToEntity(song))
         }
     }
 
@@ -66,7 +66,7 @@ class SongDataRepository @Inject constructor(
     override fun retrieveSongScoreHistoric(idSong: String): Single<List<Score>> {
         return Single.defer {
             apiBusinessHelper.retrieveSongScoreHistoric(idSong).map {
-                scoreEntityDataMapper.transformListEntitiesToListModels(it)
+                scoreEntityDataMapper.transformFromEntity(it)
             }
         }
     }

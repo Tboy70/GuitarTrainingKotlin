@@ -1,7 +1,6 @@
 package thomas.example.com.data.repository
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.data.business.APIBusinessHelper
 import thomas.example.com.data.business.ContentBusinessHelper
@@ -33,8 +32,8 @@ class UserDataRepository @Inject constructor(
 
     override fun connectUser(user: User): Single<User> {
         return Single.defer {
-            apiBusinessHelper.connectUser(userEntityDataMapper.transformModelToEntity(user)).map {
-                userEntityDataMapper.transformEntityToModel(it)
+            apiBusinessHelper.connectUser(userEntityDataMapper.transformToEntity(user)).map {
+                userEntityDataMapper.transformFromEntity(it)
             }?.doOnSuccess {
                 it.userId?.let { userId ->
                     contentBusinessHelper.setIdInSharedPrefs(userId)
@@ -45,14 +44,14 @@ class UserDataRepository @Inject constructor(
 
     override fun createNewUser(user: User): Completable {
         return Completable.defer {
-            apiBusinessHelper.createNewUser(userEntityDataMapper.transformModelToEntity(user))
+            apiBusinessHelper.createNewUser(userEntityDataMapper.transformToEntity(user))
         }
     }
 
     override fun retrieveUserById(idUser: String): Single<User> {
         return Single.defer {
             apiBusinessHelper.retrieveUserById(idUser).map {
-                userEntityDataMapper.transformEntityToModel(it)
+                userEntityDataMapper.transformFromEntity(it)
             }
         }
     }

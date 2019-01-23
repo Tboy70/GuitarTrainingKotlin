@@ -23,7 +23,7 @@ class ProgramDataRepository @Inject constructor(
     override fun retrieveProgramsListByUserId(idUser: String): Single<List<Program>> {
         return Single.defer {
             apiBusinessHelper.retrieveProgramsListByUserId(idUser).map {
-                programEntityDataMapper.transformListEntitiesToListModels(it)
+                programEntityDataMapper.transformFromEntity(it)
             }
         }
     }
@@ -31,19 +31,19 @@ class ProgramDataRepository @Inject constructor(
     override fun retrieveProgramById(idProgram: String): Single<Program> {
         return Single.defer {
             apiBusinessHelper.retrieveProgramFromId(idProgram).map {
-                programEntityDataMapper.transformEntityToModel(it)
+                programEntityDataMapper.transformFromEntity(it)
             }
         }
     }
 
     override fun createProgram(program: Program, exercisesList: List<Exercise>): Completable {
         return Completable.defer {
-            apiBusinessHelper.createProgram(programEntityDataMapper.transformModelToEntity(program)).map {
+            apiBusinessHelper.createProgram(programEntityDataMapper.transformToEntity(program)).map {
                 for (exercise in exercisesList) {
                     exercise.idProgram = it
                 }
             }.flatMapCompletable {
-                apiBusinessHelper.createExercise(exerciseEntityDataMapper.transformListModelsToListEntities(exercisesList))
+                apiBusinessHelper.createExercise(exerciseEntityDataMapper.transformToEntity(exercisesList))
             }
         }
     }
@@ -51,8 +51,8 @@ class ProgramDataRepository @Inject constructor(
     override fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Completable {
         return Completable.defer {
             apiBusinessHelper.updateProgram(
-                programEntityDataMapper.transformModelToEntity(program),
-                exerciseEntityDataMapper.transformListModelsToListEntities(exercisesToBeRemoved)
+                programEntityDataMapper.transformToEntity(program),
+                exerciseEntityDataMapper.transformToEntity(exercisesToBeRemoved)
             )
         }
     }

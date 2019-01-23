@@ -1,6 +1,7 @@
 package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.ProgramEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import thomas.example.com.model.Program
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,45 +9,53 @@ import javax.inject.Singleton
 @Singleton
 class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityDataMapper: ExerciseEntityDataMapper) {
 
-    fun transformEntityToModel(programEntity: ProgramEntity): Program {
-        val program = Program()
-        program.idProgram = programEntity.idProgram
-        program.nameProgram = programEntity.nameProgram
-        program.descriptionProgram = programEntity.descriptionProgram
-        program.defaultProgram = programEntity.defaultProgram
-        program.idUser = programEntity.idUser
-        program.exercises = exerciseEntityDataMapper.transformListEntitiesToListModels(programEntity.exerciseEntities)
-        program.idInstrument = programEntity.idInstrument
-        return program
-    }
-
-    fun transformListEntitiesToListModels(programEntityList: List<ProgramEntity>): List<Program> {
-        val programList: MutableList<Program> = mutableListOf()
-
-        for (programEntity: ProgramEntity in programEntityList) {
-            programList.add(transformEntityToModel(programEntity))
+    fun transformFromEntity(programEntityList: List<ProgramEntity>) = programEntityList.mapNotNull { programEntity ->
+        try {
+            transformFromEntity(programEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return programList
     }
 
-    fun transformModelToEntity(program: Program): ProgramEntity {
-        val programEntity = ProgramEntity()
-        programEntity.idProgram = program.idProgram
-        programEntity.nameProgram = program.nameProgram
-        programEntity.descriptionProgram = program.descriptionProgram
-        programEntity.defaultProgram = program.defaultProgram
-        programEntity.idUser = program.idUser
-        programEntity.exerciseEntities = exerciseEntityDataMapper.transformListModelsToListEntities(program.exercises)
-        programEntity.idInstrument = program.idInstrument
-        return programEntity
-    }
-
-    fun transformListModelsToListEntities(programModelsList: List<Program>): List<ProgramEntity> {
-        val programEntitiesList: MutableList<ProgramEntity> = mutableListOf()
-
-        for (program: Program in programModelsList) {
-            programEntitiesList.add(transformModelToEntity(program))
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(programEntity: ProgramEntity): Program {
+        try {
+            return Program(
+                idProgram = programEntity.idProgram,
+                nameProgram = programEntity.nameProgram,
+                descriptionProgram = programEntity.descriptionProgram,
+                defaultProgram = programEntity.defaultProgram,
+                idUser = programEntity.idUser,
+                exercises = exerciseEntityDataMapper.transformFromEntity(programEntity.exerciseEntities).toMutableList(),
+                idInstrument = programEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return programEntitiesList
+    }
+
+    fun transformToEntity(programList: List<Program>) = programList.mapNotNull { program ->
+        try {
+            transformToEntity(program)
+        } catch (e: DataMappingException) {
+            null
+        }
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformToEntity(program: Program): ProgramEntity {
+        try {
+            return ProgramEntity(
+                idProgram = program.idProgram,
+                nameProgram = program.nameProgram,
+                descriptionProgram = program.descriptionProgram,
+                defaultProgram = program.defaultProgram,
+                idUser = program.idUser,
+                exerciseEntities = exerciseEntityDataMapper.transformToEntity(program.exercises),
+                idInstrument = program.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 }

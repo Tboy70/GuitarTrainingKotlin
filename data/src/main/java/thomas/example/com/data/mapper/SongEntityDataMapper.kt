@@ -1,6 +1,7 @@
 package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.SongEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import thomas.example.com.model.Song
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,52 +9,57 @@ import javax.inject.Singleton
 @Singleton
 class SongEntityDataMapper @Inject constructor() {
 
-    fun transformEntityToModel(songEntity: SongEntity): Song {
-        val song = Song()
-        song.idSong = songEntity.idSong
-        song.titleSong = songEntity.titleSong
-        song.artistSong = songEntity.artistSong
-        song.averageScoreSong = songEntity.averageScoreSong
-        song.totalScoreSong = songEntity.totalScoreSong
-        song.nbPlay = songEntity.nbPlay
-        song.lastPlay = songEntity.lastPlay
-        song.idUser = songEntity.idUser
-        song.idInstrument = songEntity.idInstrument
-
-        return song
-    }
-
-    fun transformListEntitiesToListModels(songEntityList: List<SongEntity>): List<Song> {
-        val songList: MutableList<Song> = mutableListOf()
-
-        for (songEntity: SongEntity in songEntityList) {
-            songList.add(transformEntityToModel(songEntity))
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(songEntity: SongEntity): Song {
+        try {
+            return Song(
+                idSong = songEntity.idSong,
+                titleSong = songEntity.titleSong,
+                artistSong = songEntity.artistSong,
+                averageScoreSong = songEntity.averageScoreSong,
+                totalScoreSong = songEntity.totalScoreSong,
+                nbPlay = songEntity.nbPlay,
+                lastPlay = songEntity.lastPlay,
+                idUser = songEntity.idUser,
+                idInstrument = songEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return songList
     }
 
-    fun transformModelToEntity(song: Song): SongEntity {
-        val songEntity = SongEntity()
-
-        songEntity.idSong = song.idSong
-        songEntity.titleSong = song.titleSong
-        songEntity.artistSong = song.artistSong
-        songEntity.averageScoreSong = song.averageScoreSong
-        songEntity.totalScoreSong = song.totalScoreSong
-        songEntity.nbPlay = song.nbPlay
-        songEntity.lastPlay = song.lastPlay
-        songEntity.idUser = song.idUser
-        songEntity.idInstrument = song.idInstrument
-
-        return songEntity
-    }
-
-    fun transformListModelsToListEntities(songModelsList: List<Song>): List<SongEntity> {
-        val songEntitiesList: MutableList<SongEntity> = mutableListOf()
-
-        for (song: Song in songModelsList) {
-            songEntitiesList.add(transformModelToEntity(song))
+    fun transformFromEntity(songEntityList: List<SongEntity>) = songEntityList.mapNotNull { songEntity ->
+        try {
+            transformFromEntity(songEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return songEntitiesList
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformToEntity(song: Song): SongEntity {
+        try {
+            return SongEntity(
+                idSong = song.idSong,
+                titleSong = song.titleSong,
+                artistSong = song.artistSong,
+                averageScoreSong = song.averageScoreSong,
+                totalScoreSong = song.totalScoreSong,
+                nbPlay = song.nbPlay,
+                lastPlay = song.lastPlay,
+                idUser = song.idUser,
+                idInstrument = song.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
+    }
+
+    fun transformToEntity(songList: List<Song>) = songList.mapNotNull { song ->
+        try {
+            transformToEntity(song)
+        } catch (e: DataMappingException) {
+            null
+        }
     }
 }

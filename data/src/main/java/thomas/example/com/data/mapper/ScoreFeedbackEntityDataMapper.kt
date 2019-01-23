@@ -1,6 +1,7 @@
 package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.ScoreFeedbackEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import thomas.example.com.model.ScoreFeedback
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,16 +9,25 @@ import javax.inject.Singleton
 @Singleton
 class ScoreFeedbackEntityDataMapper @Inject constructor() {
 
-    fun transformEntityToModel(scoreFeedbackEntity: ScoreFeedbackEntity): ScoreFeedback {
-        val scoreFeedback = ScoreFeedback()
-        scoreFeedback.scoreFeedback = scoreFeedbackEntity.scoreFeedback
-        return scoreFeedback
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(scoreFeedbackEntity: ScoreFeedbackEntity): ScoreFeedback {
+        try {
+            return ScoreFeedback(
+                scoreFeedback = scoreFeedbackEntity.scoreFeedback
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 
-
+    @Throws(DataMappingException::class)
     fun transformModelToEntity(scoreFeedback: ScoreFeedback): ScoreFeedbackEntity {
-        val scoreFeedbackEntity = ScoreFeedbackEntity()
-        scoreFeedbackEntity.scoreFeedback = scoreFeedback.scoreFeedback
-        return scoreFeedbackEntity
+        try {
+            return ScoreFeedbackEntity(
+                scoreFeedback = scoreFeedback.scoreFeedback
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 }

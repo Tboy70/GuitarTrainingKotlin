@@ -1,6 +1,7 @@
 package thomas.example.com.data.mapper
 
 import thomas.example.com.data.entity.UserEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import thomas.example.com.model.User
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -8,38 +9,47 @@ import javax.inject.Singleton
 @Singleton
 class UserEntityDataMapper @Inject constructor() {
 
-    fun transformEntityToModel(userEntity: UserEntity): User {
-        return User(
-            userEntity.userId,
-            userEntity.userPseudo,
-            userEntity.userEmail,
-            userEntity.userPassword)
-    }
-
-    fun transformListEntitiesToListModels(userEntityList: List<UserEntity>): List<User> {
-        val userList: MutableList<User> = mutableListOf()
-
-        for (userEntity: UserEntity in userEntityList) {
-            userList.add(transformEntityToModel(userEntity))
+    fun transformFromEntity(userEntityList: List<UserEntity>) = userEntityList.mapNotNull { userEntity ->
+        try {
+            transformFromEntity(userEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return userList
     }
 
-    fun transformModelToEntity(user: User): UserEntity {
-        return UserEntity(
-            user.userId,
-            user.userPseudo,
-            user.userEmail,
-            user.userPassword
-        )
-    }
-
-    fun transformListModelsToListEntities(userList: List<User>): List<UserEntity> {
-        val userEntityList: MutableList<UserEntity> = mutableListOf()
-
-        for (user: User in userList) {
-            userEntityList.add(transformModelToEntity(user))
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(userEntity: UserEntity): User {
+        try {
+            return User(
+                userId = userEntity.userId,
+                userPseudo = userEntity.userPseudo,
+                userEmail = userEntity.userEmail,
+                userPassword = userEntity.userPassword
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return userEntityList
+    }
+
+    fun transformToEntity(userList: List<User>) = userList.mapNotNull { user ->
+        try {
+            transformToEntity(user)
+        } catch (e: DataMappingException) {
+            null
+        }
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformToEntity(user: User): UserEntity {
+        try {
+            return UserEntity(
+                userId = user.userId,
+                userPseudo = user.userPseudo,
+                userEmail = user.userEmail,
+                userPassword = user.userPassword
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 }
