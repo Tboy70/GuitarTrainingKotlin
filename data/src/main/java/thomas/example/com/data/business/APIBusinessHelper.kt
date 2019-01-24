@@ -29,8 +29,8 @@ class APIBusinessHelper @Inject constructor(
             }
     }
 
-    fun retrieveUserById(idUser: String): Single<UserEntity> {
-        return apiManager.retrieveUserById(idUser).map {
+    fun retrieveUserById(userId: String): Single<UserEntity> {
+        return apiManager.retrieveUserById(userId).map {
             userRemoteEntityDataMapper.transformToEntity(it)
         }
     }
@@ -39,8 +39,8 @@ class APIBusinessHelper @Inject constructor(
         return apiManager.createNewUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
     }
 
-    fun suppressAccount(idUser: String): Completable {
-        return apiManager.suppressAccount(idUser)
+    fun suppressAccount(userId: String): Completable {
+        return apiManager.suppressAccount(userId)
     }
 
     fun retrieveProgramsListByUserId(idUser: String): Single<List<ProgramEntity>> {

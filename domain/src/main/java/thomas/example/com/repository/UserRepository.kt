@@ -1,7 +1,6 @@
 package thomas.example.com.repository
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.model.User
 

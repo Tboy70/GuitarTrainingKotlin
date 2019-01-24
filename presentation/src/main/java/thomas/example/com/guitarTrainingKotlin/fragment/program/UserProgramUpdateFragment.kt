@@ -13,7 +13,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
@@ -35,7 +35,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     lateinit var exercisesUIComponent: ExerciseUIComponent
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -102,25 +102,25 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                         val title = getString(R.string.generic_exercise_choice_creation_program)
                         val items = exercisesArray.toList()
 
-                        materialDialogComponentImpl.showSingleChoiceDialog(
-                            title,
-                            items,
-                            selectedItem,
-                            R.color.colorPrimary,
-                            true,
-                            object : SingleChoiceMaterialDialogListener {
-                                override fun onItemSelected(selectedItem: String) {
-                                    this@UserProgramUpdateFragment.selectedItem = selectedItem
-                                    buttonTypeExercise.text = selectedItem
-                                }
-
-                                override fun getPositionSelected(which: Int) {
-                                }
-
-                                override fun onCancelClick() {
-                                }
-
-                            })
+//                        materialDialogComponentImpl.showSingleChoiceDialog(
+//                            title,
+//                            items,
+//                            selectedItem,
+//                            R.color.colorPrimary,
+//                            true,
+//                            object : SingleChoiceMaterialDialogListener {
+//                                override fun onItemSelected(selectedItem: String) {
+//                                    this@UserProgramUpdateFragment.selectedItem = selectedItem
+//                                    buttonTypeExercise.text = selectedItem
+//                                }
+//
+//                                override fun getPositionSelected(which: Int) {
+//                                }
+//
+//                                override fun onCancelClick() {
+//                                }
+//
+//                            })
                     }
 
                     override fun onRemoveView() {
@@ -153,48 +153,48 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_program_update_validate_button.setOnClickListener {
 
-            materialDialogComponentImpl.showMultiChoiceDialog(
-                getString(R.string.dialog_update_program_title),
-                getString(R.string.dialog_update_program_confirm_content),
-                R.color.colorPrimary,
-                object : MultipleChoiceMaterialDialogListener {
-                    override fun onYesSelected() {
-                        materialDialogComponentImpl.showProgressDialog(
-                            getString(R.string.dialog_update_program_title),
-                            getString(R.string.dialog_update_program_content),
-                            R.color.colorPrimary
-                        )
-
-                        for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
-
-                            val exerciseName =
-                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
-                                    0
-                                ) as LinearLayout).getChildAt(0) as Button).text.toString()
-                            val exerciseDurationValue =
-                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
-                                    0
-                                ) as LinearLayout).getChildAt(1) as EditText).text.toString()
-
-                            programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
-                                    ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
-                            programViewDataWrapper?.getExercises()?.get(i)?.durationExercise = exerciseDurationValue.toInt()
-                        }
-
-                        programViewDataWrapper?.getExercises()?.removeAll(exercisesToBeRemoved)
-
-                        // TODO : Check that ! Too many ? and !! (?)
-                        if (programViewDataWrapper != null) {
-                            viewModel.checkInformationAndValidateUpdate(
-                                    programViewDataWrapper!!.getId(),
-                                fragment_user_program_update_name.text.toString(),
-                                fragment_user_program_update_description.text.toString(),
-                                    programViewDataWrapper!!.getExercises(),
-                                exercisesToBeRemoved
-                            )
-                        }
-                    }
-                })
+//            materialDialogComponentImpl.showMultiChoiceDialog(
+//                getString(R.string.dialog_update_program_title),
+//                getString(R.string.dialog_update_program_confirm_content),
+//                R.color.colorPrimary,
+//                object : MultipleChoiceMaterialDialogListener {
+//                    override fun onYesSelected() {
+//                        materialDialogComponentImpl.showProgressDialog(
+//                            getString(R.string.dialog_update_program_title),
+//                            getString(R.string.dialog_update_program_content),
+//                            R.color.colorPrimary
+//                        )
+//
+//                        for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
+//
+//                            val exerciseName =
+//                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
+//                                    0
+//                                ) as LinearLayout).getChildAt(0) as Button).text.toString()
+//                            val exerciseDurationValue =
+//                                (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout).getChildAt(
+//                                    0
+//                                ) as LinearLayout).getChildAt(1) as EditText).text.toString()
+//
+//                            programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
+//                                    ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
+//                            programViewDataWrapper?.getExercises()?.get(i)?.durationExercise = exerciseDurationValue.toInt()
+//                        }
+//
+//                        programViewDataWrapper?.getExercises()?.removeAll(exercisesToBeRemoved)
+//
+//                        // TODO : Check that ! Too many ? and !! (?)
+//                        if (programViewDataWrapper != null) {
+//                            viewModel.checkInformationAndValidateUpdate(
+//                                    programViewDataWrapper!!.getId(),
+//                                fragment_user_program_update_name.text.toString(),
+//                                fragment_user_program_update_description.text.toString(),
+//                                    programViewDataWrapper!!.getExercises(),
+//                                exercisesToBeRemoved
+//                            )
+//                        }
+//                    }
+//                })
         }
     }
 }

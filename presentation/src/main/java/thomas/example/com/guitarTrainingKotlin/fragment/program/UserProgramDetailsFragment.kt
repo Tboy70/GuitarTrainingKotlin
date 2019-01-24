@@ -17,7 +17,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -38,7 +38,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     private lateinit var idProgram: String
 
@@ -91,21 +91,21 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
             displayInformation(it)
         }
 
-        viewModel.viewState.observeSafe(this) {
-            when {
-                it.displayingLoadingGetProgram -> materialDialogComponentImpl.showProgressDialog(
-                        getString(R.string.dialog_details_program_title),
-                        getString(R.string.dialog_details_program_content),
-                        R.color.colorPrimary
-                )
-                it.displayLoadingRemoveProgram -> materialDialogComponentImpl.showProgressDialog(
-                        getString(R.string.dialog_remove_program_title),
-                        getString(R.string.dialog_remove_program_content),
-                        R.color.colorPrimary
-                )
-                else -> materialDialogComponentImpl.dismissDialog()
-            }
-        }
+//        viewModel.viewState.observeSafe(this) {
+//            when {
+//                it.displayingLoadingGetProgram -> materialDialogComponentImpl.showProgressDialog(
+//                        getString(R.string.dialog_details_program_title),
+//                        getString(R.string.dialog_details_program_content),
+//                        R.color.colorPrimary
+//                )
+//                it.displayLoadingRemoveProgram -> materialDialogComponentImpl.showProgressDialog(
+//                        getString(R.string.dialog_remove_program_title),
+//                        getString(R.string.dialog_remove_program_content),
+//                        R.color.colorPrimary
+//                )
+//                else -> materialDialogComponentImpl.dismissDialog()
+//            }
+//        }
 
         viewModel.errorEvent.observeSafe(this) {
             val errorTriggered = viewModel.errorThrowable
@@ -147,15 +147,15 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
     private fun handleRemoveProgram() {
         fragment_user_program_details_remove_button.setOnClickListener {
-            materialDialogComponentImpl.showMultiChoiceDialog(
-                    getString(R.string.dialog_remove_program_title),
-                    getString(R.string.dialog_remove_program_confirm_content),
-                    R.color.colorPrimary,
-                    object : MultipleChoiceMaterialDialogListener {
-                        override fun onYesSelected() {
-                            viewModel.removeProgram(idProgram)
-                        }
-                    })
+//            materialDialogComponentImpl.showMultiChoiceDialog(
+//                    getString(R.string.dialog_remove_program_title),
+//                    getString(R.string.dialog_remove_program_confirm_content),
+//                    R.color.colorPrimary,
+//                    object : MultipleChoiceMaterialDialogListener {
+//                        override fun onYesSelected() {
+//                            viewModel.removeProgram(idProgram)
+//                        }
+//                    })
         }
     }
 

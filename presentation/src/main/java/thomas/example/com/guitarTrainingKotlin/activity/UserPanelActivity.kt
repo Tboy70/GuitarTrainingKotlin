@@ -1,7 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -15,8 +14,8 @@ import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
+import thomas.example.com.guitarTrainingKotlin.component.listener.DialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
@@ -28,71 +27,66 @@ class UserPanelActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var userPanelViewModel: UserPanelViewModel
-
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponentImpl
-
+    lateinit var errorRendererComponent: ErrorRendererComponent
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var dialogComponent: DialogComponent
 
-    private lateinit var idUser: String
-    private lateinit var instrumentMode: String
-    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private var userId: String? = null
+    // TODO : Refactor --> Why string and int !?
+    private var instrumentMode: String = SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
+    private var drawerToggle: ActionBarDrawerToggle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
-        initDrawerMenu()
 
-        drawerToggle.setToolbarNavigationClickListener {
-            if (!drawerToggle.isDrawerIndicatorEnabled) {
-                onBackPressed()
+        userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
+
+        initiateDrawerMenu()
+        initiateViewModelObservers()
+
+        userId = PreferenceManager.getDefaultSharedPreferences(this)
+            .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
+
+        userId?.let { userId ->
+            if (!userId.isEmpty() && userId != "0") {
+                userPanelViewModel.getUserById(userId)
+            } else {
+                backToLogin()
             }
         }
+
+        this.instrumentMode = userPanelViewModel.getInstrumentMode(this)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        drawerToggle.syncState()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
-
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        this.idUser = prefs.getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
-
-        if (!idUser.isEmpty() && idUser != "0") {
-            userPanelViewModel.getUserById(idUser)
-        } else {
-            backToLogin()
-        }
-
-        this.instrumentMode = userPanelViewModel.getInstrumentMode(this)
-
-        handleLiveData()
+        drawerToggle?.syncState()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item)
+        drawerToggle?.let {
+            return it.onOptionsItemSelected(item) || super.onOptionsItemSelected(item)
+        } ?: return false
     }
 
+    // TODO : Useful ?
     override fun onSupportNavigateUp() =
         findNavController(this, R.id.user_panel_nav_host_fragment).navigateUp()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         // Pass any configuration change to the drawer toggles
-        drawerToggle.onConfigurationChanged(newConfig)
+        drawerToggle?.onConfigurationChanged(newConfig)
     }
 
     fun setToolbar(toolbarName: String) {
         view_toolbar.title = toolbarName
     }
 
-    private fun initDrawerMenu() {
+    private fun initiateDrawerMenu() {
         // Setup drawer view
         setupDrawerContent(activity_user_panel_navigation_view)
 
@@ -102,8 +96,15 @@ class UserPanelActivity : BaseActivity() {
         // Find our drawer view
         drawerToggle = setupDrawerToggle()
 
-        // Tie DrawerLayout events to the ActionBarToggle
-        activity_main_drawer_layout.addDrawerListener(drawerToggle)
+        drawerToggle?.run {
+            // Tie DrawerLayout events to the ActionBarToggle
+            activity_main_drawer_layout.addDrawerListener(this)
+            this.setToolbarNavigationClickListener {
+                if (!this.isDrawerIndicatorEnabled) {
+                    onBackPressed()
+                }
+            }
+        }
     }
 
     private fun setupDrawerContent(navigationView: NavigationView) {
@@ -146,7 +147,7 @@ class UserPanelActivity : BaseActivity() {
         return true
     }
 
-    private fun handleLiveData() {
+    private fun initiateViewModelObservers() {
 
         userPanelViewModel.logoutSucceed.observeSafe(this) {
             if (it != null && it == true) {
@@ -157,32 +158,13 @@ class UserPanelActivity : BaseActivity() {
             }
         }
 
-        userPanelViewModel.viewState.observeSafe(this) {
-            if (it.displayingLoading) {
-                materialDialogComponentImpl.showProgressDialog(
-                    getString(R.string.dialog_logout_title),
-                    getString(R.string.dialog_logout_content),
-                    R.color.colorPrimary
-                )
-            } else {
-                materialDialogComponentImpl.dismissDialog()
-            }
+        userPanelViewModel.userRetrievedLiveEvent.observeSafe(this) {
+            view_drawer_header_pseudo.text = it.getUserPseudo()
+            view_drawer_header_email.text = it.getUserEmail()
         }
 
-        userPanelViewModel.errorEvent.observeSafe(this) {
-            val errorTriggered = userPanelViewModel.errorThrowable
-            if (it.ERROR_TRIGGERED && errorTriggered != null) {
-//                errorRendererComponent.requestRenderError(
-//                    errorTriggered,
-//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                    window.decorView.rootView
-//                )
-            }
-        }
-
-        userPanelViewModel.userRetrieved.observeSafe(this) {
-            view_drawer_header_pseudo.text = it.getPseudoUser()
-            view_drawer_header_email.text = it.getEmailUser()
+        userPanelViewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
         }
     }
 
@@ -243,14 +225,14 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun logoutUser() {
-        materialDialogComponentImpl.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
-            getString(R.string.dialog_logout_confirm_content),
-            R.color.colorPrimary,
-            object : MultipleChoiceMaterialDialogListener {
-                override fun onYesSelected() {
-                    userPanelViewModel.logoutUser()
-                }
-            })
+//        dialogComponent.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
+//            getString(R.string.dialog_logout_confirm_content),
+//            R.color.colorPrimary,
+//            object : MultipleChoiceMaterialDialogListener {
+//                override fun onYesSelected() {
+//                    userPanelViewModel.logoutUser()
+//                }
+//            })
     }
 
     private fun backToLogin() {

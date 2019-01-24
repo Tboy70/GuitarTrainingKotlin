@@ -21,13 +21,13 @@ interface APIServiceInterface {
     fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Completable
 
     @GET("user/{userId}")
-    fun retrieveUserById(@Path("userId") idUser: String): Single<Response<UserRemoteEntity>>
+    fun retrieveUserById(@Path("userId") userId: String): Single<UserRemoteEntity>
 
     @DELETE("user/{userId}")
-    fun suppressAccount(@Path("userId") idUser: String): Completable
+    fun suppressAccount(@Path("userId") userId: String): Completable
 
     @GET("programs/{userId}/{instrumentMode}")
-    fun retrieveProgramsListByUserId(@Path("userId") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<ProgramRemoteEntity>>>
+    fun retrieveProgramsListByUserId(@Path("userId") userId: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<ProgramRemoteEntity>>>
 
     @GET("program/{idProgram}")
     fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Single<Response<ProgramRemoteEntity>>
@@ -51,7 +51,7 @@ interface APIServiceInterface {
     fun removeExercises(@Body exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
     @GET("songs/{userId}/{instrumentMode}")
-    fun retrieveSongsListByUserId(@Path("userId") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<SongRemoteEntity>>>
+    fun retrieveSongsListByUserId(@Path("userId") userId: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<SongRemoteEntity>>>
 
     @GET("song/{idSong}")
     fun retrieveSongFromId(@Path("idSong") idSong: String): Single<Response<SongRemoteEntity>>

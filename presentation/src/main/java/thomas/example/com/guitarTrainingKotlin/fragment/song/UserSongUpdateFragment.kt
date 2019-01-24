@@ -5,7 +5,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
@@ -19,7 +19,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_update
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -72,25 +72,25 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_song_update_validate_button.setOnClickListener {
 
-            materialDialogComponentImpl.showMultiChoiceDialog(
-                getString(R.string.dialog_update_song_title),
-                getString(R.string.dialog_update_song_confirm_content),
-                R.color.colorPrimary,
-                object : MultipleChoiceMaterialDialogListener {
-                    override fun onYesSelected() {
-                        materialDialogComponentImpl.showProgressDialog(
-                            getString(R.string.dialog_update_song_title),
-                            getString(R.string.dialog_update_song_content),
-                            R.color.colorPrimary
-                        )
-
-                        viewModel.checkInformationAndValidateUpdate(
-                            songViewDataWrapper?.getIdSong()!!, // TODO : Check that
-                            fragment_user_song_update_name.text.toString(),
-                            fragment_user_song_update_description.text.toString()
-                        )
-                    }
-                })
+//            materialDialogComponentImpl.showMultiChoiceDialog(
+//                getString(R.string.dialog_update_song_title),
+//                getString(R.string.dialog_update_song_confirm_content),
+//                R.color.colorPrimary,
+//                object : MultipleChoiceMaterialDialogListener {
+//                    override fun onYesSelected() {
+////                        materialDialogComponentImpl.showProgressDialog(
+////                            getString(R.string.dialog_update_song_title),
+////                            getString(R.string.dialog_update_song_content),
+////                            R.color.colorPrimary
+////                        )
+//
+//                        viewModel.checkInformationAndValidateUpdate(
+//                            songViewDataWrapper?.getIdSong()!!, // TODO : Check that
+//                            fragment_user_song_update_name.text.toString(),
+//                            fragment_user_song_update_description.text.toString()
+//                        )
+//                    }
+//                })
         }
     }
 

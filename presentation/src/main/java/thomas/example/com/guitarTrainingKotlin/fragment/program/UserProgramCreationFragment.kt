@@ -16,7 +16,7 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -38,7 +38,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     private var selectedItem: String = ConstValues.EMPTY_STRING
 
@@ -67,11 +67,11 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
 
         viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-                materialDialogComponentImpl.showProgressDialog(
-                        getString(R.string.dialog_login_title),
-                        getString(R.string.dialog_login_content),
-                        R.color.colorPrimary
-                )
+//                materialDialogComponentImpl.showProgressDialog(
+//                        getString(R.string.dialog_login_title),
+//                        getString(R.string.dialog_login_content),
+//                        R.color.colorPrimary
+//                )
             } else {
                 materialDialogComponentImpl.dismissDialog()
             }
@@ -138,25 +138,25 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
                     val title = getString(R.string.generic_exercise_choice_creation_program)
                     val items = exercisesArray.toList()
 
-                    materialDialogComponentImpl.showSingleChoiceDialog(
-                            title,
-                            items,
-                            selectedItem,
-                            R.color.colorPrimary,
-                            true,
-                            object : SingleChoiceMaterialDialogListener {
-                                override fun onItemSelected(selectedItem: String) {
-                                    this@UserProgramCreationFragment.selectedItem = selectedItem
-                                    buttonTypeExercise.text = selectedItem
-                                    enableCreationAddExerciseButton(true)
-                                }
-
-                                override fun getPositionSelected(which: Int) {
-                                }
-
-                                override fun onCancelClick() {
-                                }
-                            })
+//                    materialDialogComponentImpl.showSingleChoiceDialog(
+//                            title,
+//                            items,
+//                            selectedItem,
+//                            R.color.colorPrimary,
+//                            true,
+//                            object : SingleChoiceMaterialDialogListener {
+//                                override fun onItemSelected(selectedItem: String) {
+//                                    this@UserProgramCreationFragment.selectedItem = selectedItem
+//                                    buttonTypeExercise.text = selectedItem
+//                                    enableCreationAddExerciseButton(true)
+//                                }
+//
+//                                override fun getPositionSelected(which: Int) {
+//                                }
+//
+//                                override fun onCancelClick() {
+//                                }
+//                            })
                 }
 
                 override fun onRemoveView() {

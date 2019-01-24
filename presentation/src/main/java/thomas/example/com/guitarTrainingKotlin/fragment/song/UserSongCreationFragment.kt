@@ -9,7 +9,7 @@ import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongCreationViewModel
@@ -24,7 +24,7 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,11 +66,11 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
 
     private fun handleClickCreateSong() {
         fragment_user_song_creation_validation.setOnClickListener {
-            materialDialogComponentImpl.showProgressDialog(
-                getString(R.string.dialog_creation_song_title),
-                getString(R.string.dialog_creation_song_content),
-                R.color.colorPrimary
-            )
+//            materialDialogComponentImpl.showProgressDialog(
+//                getString(R.string.dialog_creation_song_title),
+//                getString(R.string.dialog_creation_song_content),
+//                R.color.colorPrimary
+//            )
 
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(

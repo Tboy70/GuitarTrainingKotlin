@@ -48,9 +48,9 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-    override fun retrieveUserById(idUser: String): Single<User> {
+    override fun retrieveUserById(userId: String): Single<User> {
         return Single.defer {
-            apiBusinessHelper.retrieveUserById(idUser).map {
+            apiBusinessHelper.retrieveUserById(userId).map {
                 userEntityDataMapper.transformFromEntity(it)
             }
         }

@@ -83,23 +83,23 @@ class ExerciseModeFragment : AbstractExerciseFragment() {
         val title = getString(R.string.exercise_mode_dialog_choice_mode_text)
         items = resources.getStringArray(R.array.list_modes).asList()
 
-        materialDialogComponentImpl.showSingleChoiceDialog(
-            title,
-            items,
-            mSelectedItem,
-            R.color.colorPrimary,
-            true,
-            object : SingleChoiceMaterialDialogListener {
-
-                override fun onItemSelected(selectedItem: String) {
-                    mSelectedItem = selectedItem
-                    displaySelectedChoice(mSelectedItem)
-                }
-
-                override fun onCancelClick() {}
-
-                override fun getPositionSelected(which: Int) {}
-            })
+//        materialDialogComponentImpl.showSingleChoiceDialog(
+//            title,
+//            items,
+//            mSelectedItem,
+//            R.color.colorPrimary,
+//            true,
+//            object : SingleChoiceMaterialDialogListener {
+//
+//                override fun onItemSelected(selectedItem: String) {
+//                    mSelectedItem = selectedItem
+//                    displaySelectedChoice(mSelectedItem)
+//                }
+//
+//                override fun onCancelClick() {}
+//
+//                override fun getPositionSelected(which: Int) {}
+//            })
     }
 
     private fun displaySelectedChoice(selectedItem: String?) {

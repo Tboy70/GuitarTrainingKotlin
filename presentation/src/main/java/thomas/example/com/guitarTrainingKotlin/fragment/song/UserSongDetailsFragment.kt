@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_user_song_details.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.MaterialDialogComponentImpl
+import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
@@ -33,7 +33,7 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: MaterialDialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponentImpl
 
     private lateinit var idSong: String
 
@@ -58,11 +58,11 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
 
     override fun onStart() {
         super.onStart()
-        materialDialogComponentImpl.showProgressDialog(
-            getString(R.string.dialog_details_song_title),
-            getString(R.string.dialog_details_song_content),
-            R.color.colorPrimary
-        )
+//        materialDialogComponentImpl.showProgressDialog(
+//            getString(R.string.dialog_details_song_title),
+//            getString(R.string.dialog_details_song_content),
+//            R.color.colorPrimary
+//        )
         viewModel.getSongById(idSong)
     }
 
@@ -160,28 +160,28 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
 
     private fun handleStartSong() {
         fragment_user_song_details_start_button.setOnClickListener {
-            materialDialogComponentImpl.showSingleChoiceDialog(
-                getString(R.string.dialog_details_song_score_title),
-                resources.getStringArray(R.array.list_scores).toMutableList(),
-                mSelectedItem,
-                R.color.colorPrimary,
-                true,
-                object : SingleChoiceMaterialDialogListener {
-
-                    override fun onItemSelected(selectedItem: String) {
-                        materialDialogComponentImpl.showProgressDialog(
-                            getString(R.string.dialog_send_feedback_title),
-                            getString(R.string.dialog_send_feedback_content),
-                            R.color.colorPrimary
-                        )
-                        mSelectedItem = selectedItem
-                        viewModel.sendSongFeedback(selectedItem.toInt(), idSong)
-                    }
-
-                    override fun onCancelClick() {}
-
-                    override fun getPositionSelected(which: Int) {}
-                })
+//            materialDialogComponentImpl.showSingleChoiceDialog(
+//                getString(R.string.dialog_details_song_score_title),
+//                resources.getStringArray(R.array.list_scores).toMutableList(),
+//                mSelectedItem,
+//                R.color.colorPrimary,
+//                true,
+//                object : SingleChoiceMaterialDialogListener {
+//
+//                    override fun onItemSelected(selectedItem: String) {
+//                        materialDialogComponentImpl.showProgressDialog(
+//                            getString(R.string.dialog_send_feedback_title),
+//                            getString(R.string.dialog_send_feedback_content),
+//                            R.color.colorPrimary
+//                        )
+//                        mSelectedItem = selectedItem
+//                        viewModel.sendSongFeedback(selectedItem.toInt(), idSong)
+//                    }
+//
+//                    override fun onCancelClick() {}
+//
+//                    override fun getPositionSelected(which: Int) {}
+//                })
         }
     }
 
@@ -200,20 +200,20 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
 
     private fun handleRemoveSong() {
         fragment_user_song_details_remove_button.setOnClickListener {
-            materialDialogComponentImpl.showMultiChoiceDialog(
-                getString(R.string.dialog_remove_song_title),
-                getString(R.string.dialog_remove_song_confirm_content),
-                R.color.colorPrimary,
-                object : MultipleChoiceMaterialDialogListener {
-                    override fun onYesSelected() {
-                        materialDialogComponentImpl.showProgressDialog(
-                            getString(R.string.dialog_remove_song_title),
-                            getString(R.string.dialog_remove_song_content),
-                            R.color.colorPrimary
-                        )
-                        viewModel.removeSong(idSong)
-                    }
-                })
+//            materialDialogComponentImpl.showMultiChoiceDialog(
+//                getString(R.string.dialog_remove_song_title),
+//                getString(R.string.dialog_remove_song_confirm_content),
+//                R.color.colorPrimary,
+//                object : MultipleChoiceMaterialDialogListener {
+//                    override fun onYesSelected() {
+//                        materialDialogComponentImpl.showProgressDialog(
+//                            getString(R.string.dialog_remove_song_title),
+//                            getString(R.string.dialog_remove_song_content),
+//                            R.color.colorPrimary
+//                        )
+//                        viewModel.removeSong(idSong)
+//                    }
+//                })
         }
     }
 }

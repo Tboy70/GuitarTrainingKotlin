@@ -55,25 +55,19 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return apiService.createNewUser(userRemoteEntity)
     }
 
-    override fun retrieveUserById(idUser: String): Single<UserRemoteEntity> {
-        return apiService.retrieveUserById(idUser).map {
-            if (it.isSuccessful && it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(it.raw().message())
-            }
-        }
+    override fun retrieveUserById(userId: String): Single<UserRemoteEntity> {
+        return apiService.retrieveUserById(userId)
     }
 
-    override fun suppressAccount(idUser: String): Completable {
-        return apiService.suppressAccount(idUser)
+    override fun suppressAccount(userId: String): Completable {
+        return apiService.suppressAccount(userId)
     }
 
     override fun retrieveProgramsListByUserId(
-        idUser: String,
+        userId: String,
         instrumentModeValue: Int
     ): Single<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(idUser, instrumentModeValue).map {
+        return apiService.retrieveProgramsListByUserId(userId, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
             } else {
@@ -123,10 +117,10 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun retrieveSongsListByUserId(
-        idUser: String,
+        userId: String,
         instrumentModeValue: Int
     ): Single<List<SongRemoteEntity>> {
-        return apiService.retrieveSongsListByUserId(idUser, instrumentModeValue).map {
+        return apiService.retrieveSongsListByUserId(userId, instrumentModeValue).map {
             if (it.body() != null) {
                 it.body()
             } else {
