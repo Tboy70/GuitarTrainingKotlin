@@ -102,24 +102,24 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         }
     }
 
-    override fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Completable {
-        return apiService.createExercise(listRemoteEntities)
+    override fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable {
+        return apiService.createExercise(exerciseRemoteEntityList)
     }
 
     override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Completable {
         return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity)
     }
 
-    override fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable {
-        return apiService.updateExercise(exerciseRemoteEntities)
+    override fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable {
+        return apiService.updateExercise(exerciseRemoteEntityList)
     }
 
     override fun removeProgram(idProgram: String): Completable {
         return apiService.removeProgram(idProgram)
     }
 
-    override fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable {
-        return apiService.removeExercises(exercisesRemoteEntitiesToBeRemoved)
+    override fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable {
+        return apiService.removeExercises(exerciseRemoteEntityListToBeRemoved)
     }
 
     override fun retrieveSongsListByUserId(

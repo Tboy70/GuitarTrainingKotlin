@@ -2,47 +2,54 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.ScoreEntity
 import thomas.example.com.data.entity.remote.score.ScoreRemoteEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ScoreRemoteEntityDataMapper @Inject constructor() {
 
-    fun transformRemoteEntityToEntity(scoreRemoteEntity: ScoreRemoteEntity): ScoreEntity {
-        val scoreEntity = ScoreEntity()
-        scoreEntity.idScore = scoreRemoteEntity.idSong
-        scoreEntity.valueScore = scoreRemoteEntity.valueScore
-        scoreEntity.dateScore = scoreRemoteEntity.dateScore
-        scoreEntity.idSong = scoreRemoteEntity.idSong
-
-        return scoreEntity
-    }
-
-    fun transformListRemoteEntitiesToListEntities(scoreRemoteEntitiesList: List<ScoreRemoteEntity>): List<ScoreEntity> {
-        val scoreEntitiesList: MutableList<ScoreEntity> = mutableListOf()
-
-        for (scoreRemoteEntity: ScoreRemoteEntity in scoreRemoteEntitiesList) {
-            scoreEntitiesList.add(transformRemoteEntityToEntity(scoreRemoteEntity))
+    @Throws(DataMappingException::class)
+    fun transformToEntity(scoreRemoteEntity: ScoreRemoteEntity): ScoreEntity {
+        try {
+            return ScoreEntity(
+                idScore = scoreRemoteEntity.idSong,
+                valueScore = scoreRemoteEntity.valueScore,
+                dateScore = scoreRemoteEntity.dateScore,
+                idSong = scoreRemoteEntity.idSong
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return scoreEntitiesList
     }
 
-    fun transformEntityToRemoteEntity(scoreEntity: ScoreEntity): ScoreRemoteEntity {
-        val scoreRemoteEntity = ScoreRemoteEntity()
-        scoreRemoteEntity.idScore = scoreEntity.idScore
-        scoreRemoteEntity.valueScore = scoreEntity.valueScore
-        scoreRemoteEntity.dateScore = scoreEntity.dateScore
-        scoreRemoteEntity.idSong = scoreEntity.idSong
-
-        return scoreRemoteEntity
-    }
-
-    fun transformListEntitiesToListRemoteEntities(scoreEntitiesList: List<ScoreEntity>): List<ScoreRemoteEntity> {
-        val scoreRemoteEntitiesList: MutableList<ScoreRemoteEntity> = mutableListOf()
-
-        for (scoreEntity: ScoreEntity in scoreEntitiesList) {
-            scoreRemoteEntitiesList.add(transformEntityToRemoteEntity(scoreEntity))
+    fun transformToEntity(scoreRemoteEntityList: List<ScoreRemoteEntity>) = scoreRemoteEntityList.mapNotNull { scoreRemoteEntity ->
+        try {
+            transformToEntity(scoreRemoteEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return scoreRemoteEntitiesList
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(scoreEntity: ScoreEntity): ScoreRemoteEntity {
+        try {
+            return ScoreRemoteEntity(
+                idScore = scoreEntity.idSong,
+                valueScore = scoreEntity.valueScore,
+                dateScore = scoreEntity.dateScore,
+                idSong = scoreEntity.idSong
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
+    }
+
+    fun transformFromEntity(scoreEntityList: List<ScoreEntity>) = scoreEntityList.mapNotNull { scoreEntity ->
+        try {
+            transformFromEntity(scoreEntity)
+        } catch (e: DataMappingException) {
+            null
+        }
     }
 }

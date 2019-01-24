@@ -2,57 +2,64 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.SongEntity
 import thomas.example.com.data.entity.remote.song.SongRemoteEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class SongRemoteEntityDataMapper @Inject constructor() {
 
-    fun transformRemoteEntityToEntity(songRemoteEntity: SongRemoteEntity): SongEntity {
-        val songEntity = SongEntity()
-        songEntity.idSong = songRemoteEntity.idSong
-        songEntity.titleSong = songRemoteEntity.titleSong
-        songEntity.artistSong = songRemoteEntity.artistSong
-        songEntity.averageScoreSong = songRemoteEntity.averageScoreSong
-        songEntity.totalScoreSong = songRemoteEntity.totalScoreSong
-        songEntity.nbPlay = songRemoteEntity.nbPlay
-        songEntity.lastPlay = songRemoteEntity.lastPlay
-        songEntity.idUser = songRemoteEntity.idUser
-        songEntity.idInstrument = songRemoteEntity.idInstrument
-
-        return songEntity
-    }
-
-    fun transformListRemoteEntitiesToListEntities(songRemoteEntitiesList: List<SongRemoteEntity>): List<SongEntity> {
-        val songEntitiesList: MutableList<SongEntity> = mutableListOf()
-
-        for (songRemoteEntity: SongRemoteEntity in songRemoteEntitiesList) {
-            songEntitiesList.add(transformRemoteEntityToEntity(songRemoteEntity))
+    @Throws(DataMappingException::class)
+    fun transformToEntity(songRemoteEntity: SongRemoteEntity): SongEntity {
+        try {
+            return SongEntity(
+                idSong = songRemoteEntity.idSong,
+                titleSong = songRemoteEntity.titleSong,
+                artistSong = songRemoteEntity.artistSong,
+                averageScoreSong = songRemoteEntity.averageScoreSong,
+                totalScoreSong = songRemoteEntity.totalScoreSong,
+                nbPlay = songRemoteEntity.nbPlay,
+                lastPlay = songRemoteEntity.lastPlay,
+                idUser = songRemoteEntity.idUser,
+                idInstrument = songRemoteEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return songEntitiesList
     }
 
-    fun transformEntityToRemoteEntity(songEntity: SongEntity): SongRemoteEntity {
-        val songRemoteEntity = SongRemoteEntity()
-        songRemoteEntity.idSong = songEntity.idSong
-        songRemoteEntity.titleSong = songEntity.titleSong
-        songRemoteEntity.artistSong = songEntity.artistSong
-        songRemoteEntity.averageScoreSong = songEntity.averageScoreSong
-        songRemoteEntity.totalScoreSong = songEntity.totalScoreSong
-        songRemoteEntity.nbPlay = songEntity.nbPlay
-        songRemoteEntity.lastPlay = songEntity.lastPlay
-        songRemoteEntity.idUser = songEntity.idUser
-        songRemoteEntity.idInstrument = songEntity.idInstrument
-
-        return songRemoteEntity
-    }
-
-    fun transformListEntitiesToListRemoteEntities(songEntitiesList: List<SongEntity>): List<SongRemoteEntity> {
-        val songRemoteEntitiesList: MutableList<SongRemoteEntity> = mutableListOf()
-
-        for (songEntity: SongEntity in songEntitiesList) {
-            songRemoteEntitiesList.add(transformEntityToRemoteEntity(songEntity))
+    fun transformToEntity(songRemoteEntityList: List<SongRemoteEntity>) = songRemoteEntityList.mapNotNull { songRemoteEntity ->
+        try {
+            transformToEntity(songRemoteEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return songRemoteEntitiesList
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(songEntity: SongEntity): SongRemoteEntity {
+        try {
+            return SongRemoteEntity(
+                idSong = songEntity.idSong,
+                titleSong = songEntity.titleSong,
+                artistSong = songEntity.artistSong,
+                averageScoreSong = songEntity.averageScoreSong,
+                totalScoreSong = songEntity.totalScoreSong,
+                nbPlay = songEntity.nbPlay,
+                lastPlay = songEntity.lastPlay,
+                idUser = songEntity.idUser,
+                idInstrument = songEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
+    }
+
+    fun transformFromEntity(songEntityList: List<SongEntity>) = songEntityList.mapNotNull { songEntity ->
+        try {
+            transformFromEntity(songEntity)
+        } catch (e: DataMappingException) {
+            null
+        }
     }
 }

@@ -2,45 +2,54 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.UserEntity
 import thomas.example.com.data.entity.remote.user.UserRemoteEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserRemoteEntityDataMapper @Inject constructor() {
 
-    fun transformRemoteEntityToEntity(userRemoteEntity: UserRemoteEntity): UserEntity {
-        return UserEntity(
-            userRemoteEntity.userId,
-            userRemoteEntity.userPseudo,
-            userRemoteEntity.userEmail,
-            userRemoteEntity.userPassword
-        )
-    }
-
-    fun transformListRemoteEntitiesToListEntities(userRemoteEntityList: List<UserRemoteEntity>): List<UserEntity> {
-        val userEntityList: MutableList<UserEntity> = mutableListOf()
-
-        for (userRemoteEntity: UserRemoteEntity in userRemoteEntityList) {
-            userEntityList.add(transformRemoteEntityToEntity(userRemoteEntity))
+    @Throws(DataMappingException::class)
+    fun transformToEntity(userRemoteEntity: UserRemoteEntity): UserEntity {
+        try {
+            return UserEntity(
+                userId = userRemoteEntity.userId,
+                userPseudo = userRemoteEntity.userPseudo,
+                userEmail = userRemoteEntity.userEmail,
+                userPassword = userRemoteEntity.userPassword
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return userEntityList
     }
 
-    fun transformEntityToRemoteEntity(userEntity: UserEntity): UserRemoteEntity {
-        return UserRemoteEntity(
-            userEntity.userId,
-            userEntity.userPseudo,
-            userEntity.userEmail,
-            userEntity.userPassword
-        )
-    }
-
-    fun transformListEntitiesToListRemoteEntities(userEntityList: List<UserEntity>): List<UserRemoteEntity> {
-        val userRemoteEntityList: MutableList<UserRemoteEntity> = mutableListOf()
-
-        for (userEntity: UserEntity in userEntityList) {
-            userRemoteEntityList.add(transformEntityToRemoteEntity(userEntity))
+    fun transformToEntity(userRemoteEntityList: List<UserRemoteEntity>) = userRemoteEntityList.mapNotNull { userRemoteEntity ->
+        try {
+            transformToEntity(userRemoteEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return userRemoteEntityList
+    }
+
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(userEntity: UserEntity): UserRemoteEntity {
+        try {
+            return UserRemoteEntity(
+                userId = userEntity.userId,
+                userPseudo = userEntity.userPseudo,
+                userEmail = userEntity.userEmail,
+                userPassword = userEntity.userPassword
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
+    }
+
+    fun transformFromEntity(userEntityList: List<UserEntity>) = userEntityList.mapNotNull { userEntity ->
+        try {
+            transformFromEntity(userEntity)
+        } catch (e: DataMappingException) {
+            null
+        }
     }
 }

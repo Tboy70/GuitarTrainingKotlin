@@ -23,20 +23,20 @@ class APIBusinessHelper @Inject constructor(
 ) {
 
     fun connectUser(userEntity: UserEntity): Single<UserEntity> {
-        return apiManager.connectUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
+        return apiManager.connectUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
             .map {
-                userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+                userRemoteEntityDataMapper.transformToEntity(it)
             }
     }
 
     fun retrieveUserById(idUser: String): Single<UserEntity> {
         return apiManager.retrieveUserById(idUser).map {
-            userRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+            userRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
     fun createNewUser(userEntity: UserEntity): Completable {
-        return apiManager.createNewUser(userRemoteEntityDataMapper.transformEntityToRemoteEntity(userEntity))
+        return apiManager.createNewUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
     }
 
     fun suppressAccount(idUser: String): Completable {
@@ -48,45 +48,45 @@ class APIBusinessHelper @Inject constructor(
                 idUser,
                 InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
-            programRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
+            programRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
     fun retrieveProgramFromId(idProgram: String): Single<ProgramEntity> {
         return apiManager.retrieveProgramFromId(idProgram).map {
-            programRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+            programRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
     fun createProgram(programEntity: ProgramEntity): Single<String> {
-        return apiManager.createProgram(programRemoteEntityDataMapper.transformEntityToRemoteEntity(programEntity)).map {
+        return apiManager.createProgram(programRemoteEntityDataMapper.transformFromEntity(programEntity)).map {
             it
         }
     }
 
-    fun createExercise(listExercisesEntities: List<ExerciseEntity>): Completable {
+    fun createExercise(exerciseEntityList: List<ExerciseEntity>): Completable {
         return apiManager.createExercise(
-                exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
-                        listExercisesEntities
+                exerciseRemoteEntityDataMapper.transformFromEntity(
+                        exerciseEntityList
                 )
         )
     }
 
     fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Completable {
         return apiManager.removeExercises(
-                exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
+                exerciseRemoteEntityDataMapper.transformFromEntity(
                         exerciseEntityList
                 )
         ).concatWith(
                 apiManager.updateProgram(
-                        programRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                        programRemoteEntityDataMapper.transformFromEntity(
                                 programEntity
                         )
                 )
         ).concatWith(
                 apiManager.updateExercise(
-                        exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(
-                                programEntity.exerciseEntities
+                        exerciseRemoteEntityDataMapper.transformFromEntity(
+                                programEntity.exerciseEntityList
                         )
                 )
         )
@@ -101,18 +101,18 @@ class APIBusinessHelper @Inject constructor(
                 idUser,
                 InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
-            songRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
+            songRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
     fun retrieveSongFromId(idSong: String): Single<SongEntity> {
         return apiManager.retrieveSongFromId(idSong).map {
-            songRemoteEntityDataMapper.transformRemoteEntityToEntity(it)
+            songRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
     fun createSong(songEntity: SongEntity): Completable {
-        return apiManager.createSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
+        return apiManager.createSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
     }
 
     fun removeSong(idSong: String): Completable {
@@ -120,12 +120,12 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun updateSong(songEntity: SongEntity): Completable {
-        return apiManager.updateSong(songRemoteEntityDataMapper.transformEntityToRemoteEntity(songEntity))
+        return apiManager.updateSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
     }
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Completable {
         return apiManager.sendScoreFeedback(
-                scoreFeedbackRemoteEntityDataMapper.transformEntityToRemoteEntity(
+                scoreFeedbackRemoteEntityDataMapper.transformFromEntity(
                         scoreFeedbackEntity
                 ), idSong
         )
@@ -133,7 +133,7 @@ class APIBusinessHelper @Inject constructor(
 
     fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreEntity>> {
         return apiManager.retrieveSongScoreHistoric(idSong).map {
-            scoreRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(it)
+            scoreRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 }

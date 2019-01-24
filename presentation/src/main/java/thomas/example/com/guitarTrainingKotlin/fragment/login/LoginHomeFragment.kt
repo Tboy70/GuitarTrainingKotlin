@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
-import thomas.example.com.guitarTrainingKotlin.component.listener.MaterialDialogComponent
 import thomas.example.com.guitarTrainingKotlin.extension.*
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.KeyboardUtils

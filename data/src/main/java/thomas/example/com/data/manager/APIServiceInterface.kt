@@ -42,13 +42,13 @@ interface APIServiceInterface {
     fun updateProgram(@Path("idProgram") idProgram: String, @Body programRemoteEntity: ProgramRemoteEntity): Completable
 
     @PATCH("exercise")
-    fun updateExercise(@Body exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable
+    fun updateExercise(@Body exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
 
     @DELETE("program/{idProgram}")
     fun removeProgram(@Path("idProgram") idProgram: String): Completable
 
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
-    fun removeExercises(@Body exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable
+    fun removeExercises(@Body exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
     @GET("songs/{userId}/{instrumentMode}")
     fun retrieveSongsListByUserId(@Path("userId") idUser: String, @Path("instrumentMode") instrumentModeValue: Int): Single<Response<List<SongRemoteEntity>>>

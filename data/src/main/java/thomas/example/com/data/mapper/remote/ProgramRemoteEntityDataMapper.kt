@@ -2,56 +2,62 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.ProgramEntity
 import thomas.example.com.data.entity.remote.program.ProgramRemoteEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProgramRemoteEntityDataMapper @Inject constructor(private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper) {
+class ProgramRemoteEntityDataMapper @Inject constructor(
+    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper
+) {
 
-    fun transformRemoteEntityToEntity(programRemoteEntity: ProgramRemoteEntity): ProgramEntity {
-        val programEntity = ProgramEntity()
-        programEntity.idProgram = programRemoteEntity.idProgram
-        programEntity.nameProgram = programRemoteEntity.nameProgram
-        programEntity.descriptionProgram = programRemoteEntity.descriptionProgram
-        programEntity.defaultProgram = programRemoteEntity.defaultProgram
-        programEntity.idUser = programRemoteEntity.idUser
-        programEntity.exerciseEntities =
-                exerciseRemoteEntityDataMapper.transformListRemoteEntitiesToListEntities(programRemoteEntity.exerciseRemoteEntities)
-        programEntity.idInstrument = programRemoteEntity.idInstrument
-
-        return programEntity
-    }
-
-    fun transformListRemoteEntitiesToListEntities(programRemoteEntitiesList: List<ProgramRemoteEntity>): List<ProgramEntity> {
-        val programEntitiesList: MutableList<ProgramEntity> = mutableListOf()
-
-        for (programRemoteEntity: ProgramRemoteEntity in programRemoteEntitiesList) {
-            programEntitiesList.add(transformRemoteEntityToEntity(programRemoteEntity))
+    @Throws(DataMappingException::class)
+    fun transformToEntity(programRemoteEntity: ProgramRemoteEntity): ProgramEntity {
+        try {
+            return ProgramEntity(
+                idProgram = programRemoteEntity.idProgram,
+                nameProgram = programRemoteEntity.nameProgram,
+                descriptionProgram = programRemoteEntity.descriptionProgram,
+                defaultProgram = programRemoteEntity.defaultProgram,
+                idUser = programRemoteEntity.idUser,
+                exerciseEntityList = exerciseRemoteEntityDataMapper.transformToEntity(programRemoteEntity.exerciseRemoteEntityList),
+                idInstrument = programRemoteEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
         }
-        return programEntitiesList
     }
 
-    fun transformEntityToRemoteEntity(programEntity: ProgramEntity): ProgramRemoteEntity {
-        val programRemoteEntity = ProgramRemoteEntity()
-        programRemoteEntity.idProgram = programEntity.idProgram
-        programRemoteEntity.nameProgram = programEntity.nameProgram
-        programRemoteEntity.descriptionProgram = programEntity.descriptionProgram
-        programRemoteEntity.defaultProgram = programEntity.defaultProgram
-        programRemoteEntity.idUser = programEntity.idUser
-        programRemoteEntity.exerciseRemoteEntities =
-                exerciseRemoteEntityDataMapper.transformListEntitiesToListRemoteEntities(programEntity.exerciseEntities)
-        programRemoteEntity.idInstrument = programEntity.idInstrument
-
-        return programRemoteEntity
-    }
-
-    fun transformListEntitiesToListRemoteEntities(programEntitiesList: List<ProgramEntity>): List<ProgramRemoteEntity> {
-        val programRemoteEntitiesList: MutableList<ProgramRemoteEntity> = mutableListOf()
-
-        for (programEntity: ProgramEntity in programEntitiesList) {
-            programRemoteEntitiesList.add(transformEntityToRemoteEntity(programEntity))
+    fun transformToEntity(programRemoteEntityList: List<ProgramRemoteEntity>) = programRemoteEntityList.mapNotNull { programRemoteEntity ->
+        try {
+            transformToEntity(programRemoteEntity)
+        } catch (e: DataMappingException) {
+            null
         }
-        return programRemoteEntitiesList
     }
 
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(programEntity: ProgramEntity): ProgramRemoteEntity {
+        try {
+            return ProgramRemoteEntity(
+                idProgram = programEntity.idProgram,
+                nameProgram = programEntity.nameProgram,
+                descriptionProgram = programEntity.descriptionProgram,
+                defaultProgram = programEntity.defaultProgram,
+                idUser = programEntity.idUser,
+                exerciseRemoteEntityList = exerciseRemoteEntityDataMapper.transformFromEntity(programEntity.exerciseEntityList),
+                idInstrument = programEntity.idInstrument
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
+    }
+
+    fun transformFromEntity(programEntityList: List<ProgramEntity>) = programEntityList.mapNotNull { programEntity ->
+        try {
+            transformFromEntity(programEntity)
+        } catch (e: DataMappingException) {
+            null
+        }
+    }
 }

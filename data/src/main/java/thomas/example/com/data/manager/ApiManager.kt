@@ -25,15 +25,15 @@ interface ApiManager {
 
     fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String>
 
-    fun createExercise(listRemoteEntities: List<ExerciseRemoteEntity>): Completable
+    fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
 
     fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Completable
 
-    fun updateExercise(exerciseRemoteEntities: List<ExerciseRemoteEntity>): Completable
+    fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
 
     fun removeProgram(idProgram: String): Completable
 
-    fun removeExercises(exercisesRemoteEntitiesToBeRemoved: List<ExerciseRemoteEntity>): Completable
+    fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
     fun retrieveSongsListByUserId(idUser: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
 

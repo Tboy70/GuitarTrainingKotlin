@@ -2,21 +2,32 @@ package thomas.example.com.data.mapper.remote
 
 import thomas.example.com.data.entity.ScoreFeedbackEntity
 import thomas.example.com.data.entity.remote.song.ScoreFeedbackRemoteEntity
+import thomas.example.com.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ScoreFeedbackRemoteEntityDataMapper @Inject constructor() {
 
-    fun transformRemoteEntityToEntity(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity): ScoreFeedbackEntity {
-        val scoreFeedbackEntity = ScoreFeedbackEntity()
-        scoreFeedbackEntity.scoreFeedback = scoreFeedbackRemoteEntity.scoreFeedback
-        return scoreFeedbackEntity
+    @Throws(DataMappingException::class)
+    fun transformToEntity(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity): ScoreFeedbackEntity {
+        try {
+            return ScoreFeedbackEntity(
+                scoreFeedback = scoreFeedbackRemoteEntity.scoreFeedback
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 
-    fun transformEntityToRemoteEntity(scoreFeedbackEntity: ScoreFeedbackEntity): ScoreFeedbackRemoteEntity {
-        val scoreFeedbackRemoteEntity = ScoreFeedbackRemoteEntity()
-        scoreFeedbackRemoteEntity.scoreFeedback = scoreFeedbackEntity.scoreFeedback
-        return scoreFeedbackRemoteEntity
+    @Throws(DataMappingException::class)
+    fun transformFromEntity(scoreFeedbackEntity: ScoreFeedbackEntity): ScoreFeedbackRemoteEntity {
+        try {
+            return ScoreFeedbackRemoteEntity(
+                scoreFeedback = scoreFeedbackEntity.scoreFeedback
+            )
+        } catch (e: Exception) {
+            throw DataMappingException()
+        }
     }
 }

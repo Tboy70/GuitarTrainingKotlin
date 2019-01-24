@@ -26,7 +26,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
                 descriptionProgram = programEntity.descriptionProgram,
                 defaultProgram = programEntity.defaultProgram,
                 idUser = programEntity.idUser,
-                exercises = exerciseEntityDataMapper.transformFromEntity(programEntity.exerciseEntities).toMutableList(),
+                exercises = exerciseEntityDataMapper.transformFromEntity(programEntity.exerciseEntityList).toMutableList(),
                 idInstrument = programEntity.idInstrument
             )
         } catch (e: Exception) {
@@ -51,7 +51,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
                 descriptionProgram = program.descriptionProgram,
                 defaultProgram = program.defaultProgram,
                 idUser = program.idUser,
-                exerciseEntities = exerciseEntityDataMapper.transformToEntity(program.exercises),
+                exerciseEntityList = exerciseEntityDataMapper.transformToEntity(program.exercises),
                 idInstrument = program.idInstrument
             )
         } catch (e: Exception) {
