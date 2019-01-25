@@ -11,10 +11,10 @@ class RetrieveUserById @Inject constructor(
 ) : SingleParametrizedUseCase<User, RetrieveUserById.Params>() {
 
     override fun build(params: Params): Single<User> {
-        return userRepository.retrieveUserById(params.idUser)
+        return userRepository.retrieveUserById(params.userId)
     }
 
-    class Params(val idUser: String) {
+    class Params(val userId: String) {
 
         companion object {
             fun toRetrieve(idUser: String): Params {

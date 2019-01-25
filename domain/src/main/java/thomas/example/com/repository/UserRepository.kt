@@ -17,9 +17,10 @@ interface UserRepository {
 
     fun createNewUser(user: User): Completable
 
-    fun retrieveUserById(idUser: String): Single<User>
+    fun retrieveUserById(userId: String): Single<User>
+
+    fun logoutUser(): Completable
 
     fun suppressAccount(idUser: String): Completable
 
-    fun logoutUser(): Completable
 }

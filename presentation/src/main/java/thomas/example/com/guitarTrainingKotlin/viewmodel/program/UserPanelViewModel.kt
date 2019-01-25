@@ -1,31 +1,76 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
-import android.content.Context
-import android.content.SharedPreferences
+import android.app.Application
 import android.preference.PreferenceManager
-import androidx.lifecycle.MutableLiveData
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.UserViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.view.state.UserPanelActivityViewState
-import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
+import thomas.example.com.guitarTrainingKotlin.viewmodel.base.AndroidStateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.LogoutUser
 import thomas.example.com.interactor.user.RetrieveUserById
 import javax.inject.Inject
 
 class UserPanelViewModel @Inject constructor(
+    application: Application,
+    /** On n'injecte pas de context directement,on préfère injecter l'objet Application. **/
     private val logoutUser: LogoutUser,
     private val retrieveUserById: RetrieveUserById
-) : StateViewModel<UserPanelActivityViewState>() {
+) : AndroidStateViewModel<UserPanelActivityViewState>(application) {
 
     override val currentViewState = UserPanelActivityViewState()
 
-    val logoutSucceed = MutableLiveData<Boolean>()
+    private var currentUserId: String? = null
+    // TODO : Refactor --> Why string and int !?
+    private var instrumentMode: String? = SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
+
+    val logoutSucceedLiveEvent = SingleLiveEvent<Boolean>()
+    val userNotRetrievedLiveEvent = SingleLiveEvent<Boolean>()
     val userRetrievedLiveEvent = SingleLiveEvent<UserViewDataWrapper>()
 
     var errorThrowable: Throwable? = null
 
-    fun getUserById(userId: String) {
+    init {
+        retrieveUserId()
+        retrieveInstrumentMode()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        logoutUser.unsubscribe()
+        retrieveUserById.unsubscribe()
+    }
+
+    fun logoutUser() {
+        logoutUser.subscribe(
+            onComplete = {
+                logoutSucceedLiveEvent.postValue(true)
+            },
+            onError = {
+                errorLiveEvent.postValue(it)
+            }
+        )
+    }
+
+    private fun retrieveUserId() {
+        currentUserId = PreferenceManager.getDefaultSharedPreferences(getApplication())
+            .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
+
+        currentUserId?.let { userId ->
+            if (!userId.isEmpty() && userId != "0") {
+                getUserById(userId)
+            } else {
+                userNotRetrievedLiveEvent.postValue(true)
+            }
+        }
+    }
+
+    private fun retrieveInstrumentMode() {
+        instrumentMode = PreferenceManager.getDefaultSharedPreferences(getApplication())
+            .getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
+    }
+
+    private fun getUserById(userId: String) {
         retrieveUserById.subscribe(
             params = RetrieveUserById.Params.toRetrieve(userId),
             onError = {
@@ -35,33 +80,5 @@ class UserPanelViewModel @Inject constructor(
                 userRetrievedLiveEvent.postValue(UserViewDataWrapper(it))
             }
         )
-    }
-
-    fun logoutUser() {
-//        viewState.postValue(UserPanelViewState(true))
-        logoutUser.subscribe(
-            onComplete = {
-                logoutSucceed.postValue(true)
-//                    viewState.postValue(UserPanelViewState(false))
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-            }
-        )
-    }
-
-    fun getInstrumentMode(context: Context): String {
-        // TODO : Use a use case too ?
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(
-            SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
-            SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
-        )
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        logoutUser.unsubscribe()
-        retrieveUserById.unsubscribe()
     }
 }

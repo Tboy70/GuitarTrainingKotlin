@@ -1,2 +1,4 @@
 Dans les view model :
     - Use case en val et pas var
+    - On n'injecte pas de context directement,on préfère injecter l'objet Application. Car le VM survit à l'activity. Donc l'activité n'est jamais détruite
+      vu qu'elle est référencée dans le VM

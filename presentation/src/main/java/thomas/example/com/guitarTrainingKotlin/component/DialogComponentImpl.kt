@@ -1,6 +1,5 @@
 package thomas.example.com.guitarTrainingKotlin.component
 
-import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
 import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
@@ -13,10 +12,6 @@ import javax.inject.Inject
 class DialogComponentImpl @Inject constructor(
     private val baseActivity: BaseActivity
 ) : DialogComponent {
-
-    //    private lateinit var materialDialog: MaterialDialog
-    override fun showTimerDialog(programActivity: ProgramActivity, durationLeft: Long, onTimerDialogDismiss: OnTimerDialogDismiss) {
-    }
 
 //    override fun showProgressDialog(title: String, content: String, color: Int) {
 //        materialDialog = MaterialDialog.Builder(baseActivity)
@@ -99,104 +94,46 @@ class DialogComponentImpl @Inject constructor(
 
     override fun displaySingleChoiceDialog(title: Int, content: Int, positiveText: Int, onPositive: () -> Unit) {
         dismissDialog()
-        materialDialog = MaterialDialog(baseActivity)
-            .title(title)
-            .message(content)
-            .positiveButton(positiveText) { onPositive() }
-            .negativeButton(android.R.string.cancel) { it.dismiss() }
-            .apply { show() }
+        materialDialog = MaterialDialog(baseActivity).show {
+            title(title)
+            message(content)
+            positiveButton(res = positiveText) {
+                onPositive()
+            }
+            negativeButton(android.R.string.cancel) {
+                it.dismiss()
+            }
+        }
+
     }
 
     override fun displayDualChoiceDialog(
-        title: Int,
-        content: Int,
-        positiveText: Int,
-        negativeText: Int,
-        onPositive: () -> Unit,
-        onNegative: () -> Unit
+        title: Int, content: Int, positiveText: Int, negativeText: Int, onPositive: () -> Unit, onNegative: () -> Unit
     ) {
-//        dismissDialog()
-//        materialDialog = MaterialDialog(baseActivity)
-//            .title(title)
-//            .message(content)
-//            .positiveButton(positiveText) { onPositive() }
-//            .negativeButton(negativeText) { onNegative() }
-//            .apply { show() }
-    }
-
-    override fun displayInputDialog(
-        titleRessourceId: Int,
-        hintRessourceId: Int,
-        positiveTextRessourceId: Int,
-        onPositive: (String) -> Unit,
-        oneLine: Boolean
-    ) {
-//        dismissDialog()
-//        materialDialog = if (oneLine) {
-//            MaterialDialog(baseActivity)
-//                .title(titleRessourceId)
-//                .input(hintRes = hintRessourceId, inputType = InputType.TYPE_CLASS_TEXT) { _, text ->
-//                    onPositive(text.toString())
-//                }
-//        } else {
-//            MaterialDialog(baseActivity)
-//                .title(titleRessourceId)
-//                .input(hintRes = hintRessourceId, inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE) { _, text ->
-//                    onPositive(text.toString())
-//                }
-//        }
-//        materialDialog?.apply {
-//            this.positiveButton(positiveTextRessourceId)
-//                .negativeButton(android.R.string.cancel) { it.dismiss() }
-//                .apply { show() }
-//        }
-    }
-
-    override fun displayInputDialogWithPrefilledMessage(
-        titleRessourceId: Int,
-        prefilledText: String,
-        positiveTextRessourceId: Int,
-        onPositive: (String) -> Unit,
-        oneLine: Boolean
-    ) {
-//        dismissDialog()
-//        materialDialog = if (oneLine) {
-//            MaterialDialog(baseActivity)
-//                .title(titleRessourceId)
-//                .input(inputType = InputType.TYPE_CLASS_TEXT, prefill = prefilledText) { _, text ->
-//                    onPositive(text.toString())
-//                }
-//        } else {
-//            MaterialDialog(baseActivity)
-//                .title(titleRessourceId)
-//                .input(inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE, prefill = prefilledText) { _, text ->
-//                    onPositive(text.toString())
-//                }
-//        }
-//        materialDialog?.apply {
-//            this.positiveButton(positiveTextRessourceId)
-//                .negativeButton(android.R.string.cancel) { it.dismiss() }
-//                .apply { show() }
-//        }
-    }
-
-    override fun displayTextDialog(title: Int?, content: String) {
         dismissDialog()
-        materialDialog = MaterialDialog(baseActivity)
-            .message(null, content)
-            .positiveButton(android.R.string.ok)
-            .apply {
-                title?.let { title(it) }
-                show()
-            }
-    }
-
-    override fun displayTextDialog(title: Int?, content: Int) {
-        dismissDialog()
-        materialDialog?.show {
+        materialDialog = MaterialDialog(baseActivity).show {
             title(title)
             message(content)
-            positiveButton(android.R.string.ok)
+            positiveButton(res = positiveText) {
+                onPositive()
+            }
+            negativeButton(res = negativeText) {
+                onNegative()
+            }
         }
+    }
+
+    override fun showTimerDialog(durationLeft: Long, onTimerDialogDismiss: OnTimerDialogDismiss) {
+        dismissDialog()
+        materialDialog = MaterialDialog(baseActivity).show {
+
+        }
+//            .title(title)
+//            .content(content)
+//            .progress(true, 0)
+//            .widgetColorRes(color)
+//            .canceledOnTouchOutside(false)
+//            .cancelable(false)
+//            .show()
     }
 }

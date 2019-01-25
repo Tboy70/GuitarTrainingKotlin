@@ -19,13 +19,8 @@ class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: 
         return Observable.just(true)
     }
 
-    fun deleteIdInSharedPrefs(): Completable {
-        return try {
-            sharedPrefsManager.deleteIdUserInSharedPrefs()
-            Completable.complete()
-        } catch (e: Exception) {
-            Completable.error(e)
-        }
+    fun deleteIdInSharedPrefs() {
+        sharedPrefsManager.deleteIdUserInSharedPrefs()
     }
 
     fun setInstrumentModeInSharedPrefs(): Completable {

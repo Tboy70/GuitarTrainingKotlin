@@ -49,7 +49,7 @@ abstract class AbstractExerciseFragment : BaseExerciseFragment() {
 
     fun launchTimer(textViewToUpdate: TextView) {
         if (activity is ProgramActivity) {
-            dialogComponent.showTimerDialog(activity as ProgramActivity, durationLeft, object : OnTimerDialogDismiss {
+            dialogComponent.showTimerDialog(durationLeft, object : OnTimerDialogDismiss {
                 override fun onDismiss(timeCountInMilliseconds: Long) {
                     durationLeft = durationComponent.setDurationLeft(
                         textViewToUpdate,

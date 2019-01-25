@@ -56,17 +56,18 @@ class UserDataRepository @Inject constructor(
         }
     }
 
+    override fun logoutUser(): Completable {
+        return Completable.defer {
+            contentBusinessHelper.deleteIdInSharedPrefs()
+            Completable.complete()
+        }
+    }
+
     override fun suppressAccount(idUser: String): Completable {
         return Completable.defer {
             apiBusinessHelper.suppressAccount(idUser).doOnComplete {
                 contentBusinessHelper.deleteIdInSharedPrefs()
             }
-        }
-    }
-
-    override fun logoutUser(): Completable {
-        return Completable.defer {
-            contentBusinessHelper.deleteIdInSharedPrefs()
         }
     }
 }

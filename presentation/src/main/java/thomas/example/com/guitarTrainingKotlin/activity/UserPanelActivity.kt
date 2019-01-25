@@ -3,7 +3,6 @@ package thomas.example.com.guitarTrainingKotlin.activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.ViewModelProviders
@@ -12,11 +11,9 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
-import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.DialogComponent
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
@@ -26,38 +23,22 @@ class UserPanelActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var userPanelViewModel: UserPanelViewModel
+    private lateinit var viewModel: UserPanelViewModel
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
     @Inject
     lateinit var dialogComponent: DialogComponent
 
-    private var userId: String? = null
-    // TODO : Refactor --> Why string and int !?
-    private var instrumentMode: String = SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
     private var drawerToggle: ActionBarDrawerToggle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
 
-        userPanelViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
 
         initiateDrawerMenu()
         initiateViewModelObservers()
-
-        userId = PreferenceManager.getDefaultSharedPreferences(this)
-            .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
-
-        userId?.let { userId ->
-            if (!userId.isEmpty() && userId != "0") {
-                userPanelViewModel.getUserById(userId)
-            } else {
-                backToLogin()
-            }
-        }
-
-        this.instrumentMode = userPanelViewModel.getInstrumentMode(this)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -149,21 +130,24 @@ class UserPanelActivity : BaseActivity() {
 
     private fun initiateViewModelObservers() {
 
-        userPanelViewModel.logoutSucceed.observeSafe(this) {
+        viewModel.userNotRetrievedLiveEvent.observeSafe(this) {
+            backToLogin()
+        }
+
+        viewModel.logoutSucceedLiveEvent.observeSafe(this) {
             if (it != null && it == true) {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-                userPanelViewModel.logoutSucceed.removeObservers(this)
             }
         }
 
-        userPanelViewModel.userRetrievedLiveEvent.observeSafe(this) {
+        viewModel.userRetrievedLiveEvent.observeSafe(this) {
             view_drawer_header_pseudo.text = it.getUserPseudo()
             view_drawer_header_email.text = it.getUserEmail()
         }
 
-        userPanelViewModel.errorLiveEvent.observeSafe(this) {
+        viewModel.errorLiveEvent.observeSafe(this) {
             errorRendererComponent.displayError(it)
         }
     }
@@ -225,14 +209,16 @@ class UserPanelActivity : BaseActivity() {
     }
 
     private fun logoutUser() {
-//        dialogComponent.showMultiChoiceDialog(getString(R.string.dialog_logout_title),
-//            getString(R.string.dialog_logout_confirm_content),
-//            R.color.colorPrimary,
-//            object : MultipleChoiceMaterialDialogListener {
-//                override fun onYesSelected() {
-//                    userPanelViewModel.logoutUser()
-//                }
-//            })
+        dialogComponent.displayDualChoiceDialog(
+            R.string.dialog_logout_title,
+            R.string.dialog_logout_confirm_content,
+            android.R.string.yes,
+            android.R.string.no,
+            onPositive = {
+                viewModel.logoutUser()
+            },
+            onNegative = {}
+        )
     }
 
     private fun backToLogin() {

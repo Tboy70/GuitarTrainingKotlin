@@ -60,8 +60,8 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 //                    R.color.colorPrimary,
 //                    object : MultipleChoiceMaterialDialogListener {
 //                        override fun onYesSelected() {
-//                            if (!idUser.isEmpty()) {
-//                                viewModel.suppressAccount(idUser)
+//                            if (!userId.isEmpty()) {
+//                                viewModel.suppressAccount(userId)
 //                            }
 //                        }
 //                    })

@@ -20,7 +20,7 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
     }
 
     override fun deleteIdUserInSharedPrefs() {
-        return sharedPreferences.edit().remove(CURRENT_USER_ID).apply()
+        sharedPreferences.edit().remove(CURRENT_USER_ID).apply()
     }
 
     override fun setInstrumentModeInSharedPrefs() {
