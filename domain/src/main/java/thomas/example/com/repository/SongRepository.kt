@@ -11,7 +11,7 @@ interface SongRepository {
 
     fun createSong(song: Song): Completable
 
-    fun retrieveSongsListByUserId(idUser: String): Single<List<Song>>
+    fun retrieveSongListByUserId(userId: String): Single<List<Song>>
 
     fun retrieveSongById(idSong: String): Single<Song>
 

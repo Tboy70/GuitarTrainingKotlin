@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tool="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content"
-                                                   android:paddingStart="@dimen/padding_start_end"
-                                                   android:paddingTop="@dimen/padding_top_bottom"
-                                                   android:paddingEnd="@dimen/padding_start_end"
-                                                   android:paddingBottom="@dimen/padding_top_bottom">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_start_end"
+        android:paddingTop="@dimen/padding_top_bottom"
+        android:paddingEnd="@dimen/padding_start_end"
+        android:paddingBottom="@dimen/padding_top_bottom">
 
     <LinearLayout
             android:id="@+id/linearLayout"
@@ -37,7 +38,7 @@
                 android:id="@+id/view_user_songs_list_item_last_play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/user_songs_list_last_play"
+                android:text="@string/user_song_list_last_play"
                 android:textSize="@dimen/text_default"
                 tool:text="Joué la dernière fois : 28/09/2018"/>
 
@@ -58,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="@string/user_songs_list_nb_play"
+                android:text="@string/user_song_list_nb_play"
                 android:textSize="@dimen/text_default"
                 tool:text="Joué : 56 fois"/>
 
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="@string/user_songs_list_score"
+                android:text="@string/user_song_list_score"
                 android:textSize="@dimen/text_default"
                 tool:text="Note : 4.5"/>
 

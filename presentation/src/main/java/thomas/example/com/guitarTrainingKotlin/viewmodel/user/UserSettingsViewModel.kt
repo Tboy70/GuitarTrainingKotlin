@@ -1,63 +1,86 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
+import android.app.Application
+import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import thomas.example.com.data.manager.SharedPrefsManagerImpl
+import thomas.example.com.guitarTrainingKotlin.view.state.UserSettingsViewState
+import thomas.example.com.guitarTrainingKotlin.viewmodel.base.AndroidStateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.sharedprefs.SetInstrumentsModeInSharedPrefs
 import thomas.example.com.interactor.user.SuppressAccount
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
-        private val setInstrumentsModeInSharedPrefs: SetInstrumentsModeInSharedPrefs,
-        private val suppressAccount: SuppressAccount
-) : ViewModel() {
+    application: Application,
+    private val suppressAccount: SuppressAccount,
+    private val getInstrumentsModeInSharedPrefs: RetrIn,
+    private val setInstrumentsModeInSharedPrefs: SetInstrumentsModeInSharedPrefs
+) : AndroidStateViewModel<UserSettingsViewState>(application) {
 
-    val viewState = MutableLiveData<UserSettingsViewState>()
-    val errorEvent =
-        SingleLiveEvent<UserSettingsErrorEvent>()
+    override val currentViewState = UserSettingsViewState()
 
-    val finishSuppressAccount: MutableLiveData<Boolean> = MutableLiveData()
+    private var userId: String? = null
+    private var currentInstrumentMode: String? = null
 
-    var errorThrowable: Throwable? = null
+    val suppressedAccountLiveEvent = SingleLiveEvent<Boolean>()
+    val retrievedInstrumentModeLiveData = MutableLiveData<String>()
 
-    data class UserSettingsViewState(
-            val displayingLoading: Boolean = false
-    )
-
-    data class UserSettingsErrorEvent(
-            val ERROR_TRIGGERED: Boolean = false
-    )
-
-    fun updateInstrumentMode() {
-        setInstrumentsModeInSharedPrefs.subscribe(
-                onComplete = {
-                },
-                onError = {
-                    errorThrowable = it
-                    errorEvent.postValue(UserSettingsErrorEvent(true))
-                }
-        )
-    }
-
-    fun suppressAccount(idUser: String) {
-        viewState.postValue(UserSettingsViewState(true))
-        suppressAccount.subscribe(
-                params = SuppressAccount.Params.toSuppress(idUser),
-                onComplete = {
-                    finishSuppressAccount.postValue(true)
-                    viewState.postValue(UserSettingsViewState(false))
-                },
-                onError = {
-                    errorThrowable = it
-                    errorEvent.postValue(UserSettingsErrorEvent(true))
-                    viewState.postValue(UserSettingsViewState(false))
-                }
-        )
+    init {
+        retrieveCurrentInstrumentMode()
     }
 
     override fun onCleared() {
         super.onCleared()
         setInstrumentsModeInSharedPrefs.unsubscribe()
         suppressAccount.unsubscribe()
+    }
+
+    fun updateInstrumentMode() {
+        currentInstrumentMode?.let {
+            setInstrumentsModeInSharedPrefs.subscribe(
+                onComplete = {
+                },
+                onError = {
+
+                },
+                params = SetInstrumentsModeInSharedPrefs.Params.toSet(it)
+            )
+        }
+    }
+
+    fun suppressAccount() {
+        userId?.let { userId ->
+            viewState.update {
+                loading = true
+            }
+            suppressAccount.subscribe(
+                params = SuppressAccount.Params.toSuppress(userId),
+                onComplete = {
+                    suppressedAccountLiveEvent.postValue(true)
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    viewState.update {
+                        loading = false
+                    }
+                }
+            )
+        }
+    }
+
+    fun setUserId(userId: String?) {
+        this.userId = userId
+    }
+
+    private fun retrieveCurrentInstrumentMode() {
+        PreferenceManager.getDefaultSharedPreferences(getApplication())
+            .getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
+            ?.let { currentInstrumentMode ->
+                this.currentInstrumentMode = currentInstrumentMode
+                retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)
+            }
     }
 }

@@ -8,6 +8,6 @@ data class SongEntity(
     var totalScoreSong: Int = 0,
     var nbPlay: Int = 0,
     var lastPlay: String = "",
-    var idUser: String = "",
+    var userId: String = "",
     var idInstrument: String = ""
 )

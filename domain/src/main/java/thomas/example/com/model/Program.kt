@@ -5,7 +5,7 @@ data class Program(
     var nameProgram: String = "",
     var descriptionProgram: String = "",
     var defaultProgram: Boolean = true,
-    var idUser: String? = "",
+    var userId: String? = "",
     var exercises: MutableList<Exercise> = mutableListOf(),
     var idInstrument: String = ""
 )

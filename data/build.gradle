@@ -41,15 +41,15 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     // DAGGER
-    kapt 'com.google.dagger:dagger-compiler:2.15'
+    kapt 'com.google.dagger:dagger-compiler:2.16'
     implementation 'com.google.dagger:dagger:2.16'
-    implementation 'com.google.dagger:dagger-android-support:2.15'
+    implementation 'com.google.dagger:dagger-android-support:2.16'
 
     // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
 
     // OkHttp
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
     implementation 'com.scottyab:aescrypt:0.0.1'
 

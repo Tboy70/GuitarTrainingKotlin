@@ -6,10 +6,9 @@ import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
 
@@ -85,7 +84,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
 ////                        )
 //
 //                        viewModel.checkInformationAndValidateUpdate(
-//                            songViewDataWrapper?.getIdSong()!!, // TODO : Check that
+//                            songViewDataWrapper?.getId()!!, // TODO : Check that
 //                            fragment_user_song_update_name.text.toString(),
 //                            fragment_user_song_update_description.text.toString()
 //                        )

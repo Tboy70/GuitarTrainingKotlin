@@ -25,7 +25,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
                 nameProgram = programEntity.nameProgram,
                 descriptionProgram = programEntity.descriptionProgram,
                 defaultProgram = programEntity.defaultProgram,
-                idUser = programEntity.idUser,
+                userId = programEntity.userId,
                 exercises = exerciseEntityDataMapper.transformFromEntity(programEntity.exerciseEntityList).toMutableList(),
                 idInstrument = programEntity.idInstrument
             )
@@ -50,7 +50,7 @@ class ProgramEntityDataMapper @Inject constructor(private val exerciseEntityData
                 nameProgram = program.nameProgram,
                 descriptionProgram = program.descriptionProgram,
                 defaultProgram = program.defaultProgram,
-                idUser = program.idUser,
+                userId = program.userId,
                 exerciseEntityList = exerciseEntityDataMapper.transformToEntity(program.exercises),
                 idInstrument = program.idInstrument
             )

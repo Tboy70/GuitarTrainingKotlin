@@ -3,9 +3,9 @@ package thomas.example.com.data.business
 import io.reactivex.Completable
 import io.reactivex.Single
 import thomas.example.com.data.entity.*
-import thomas.example.com.data.mapper.remote.*
 import thomas.example.com.data.manager.ApiManager
 import thomas.example.com.data.manager.SharedPrefsManager
+import thomas.example.com.data.mapper.remote.*
 import thomas.example.com.data.utils.InstrumentModeUtils
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,10 +43,10 @@ class APIBusinessHelper @Inject constructor(
         return apiManager.suppressAccount(userId)
     }
 
-    fun retrieveProgramsListByUserId(idUser: String): Single<List<ProgramEntity>> {
+    fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
         return apiManager.retrieveProgramsListByUserId(
-                idUser,
-                InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+            userId,
+            InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
             programRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -66,29 +66,29 @@ class APIBusinessHelper @Inject constructor(
 
     fun createExercise(exerciseEntityList: List<ExerciseEntity>): Completable {
         return apiManager.createExercise(
-                exerciseRemoteEntityDataMapper.transformFromEntity(
-                        exerciseEntityList
-                )
+            exerciseRemoteEntityDataMapper.transformFromEntity(
+                exerciseEntityList
+            )
         )
     }
 
     fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Completable {
         return apiManager.removeExercises(
+            exerciseRemoteEntityDataMapper.transformFromEntity(
+                exerciseEntityList
+            )
+        ).concatWith(
+            apiManager.updateProgram(
+                programRemoteEntityDataMapper.transformFromEntity(
+                    programEntity
+                )
+            )
+        ).concatWith(
+            apiManager.updateExercise(
                 exerciseRemoteEntityDataMapper.transformFromEntity(
-                        exerciseEntityList
+                    programEntity.exerciseEntityList
                 )
-        ).concatWith(
-                apiManager.updateProgram(
-                        programRemoteEntityDataMapper.transformFromEntity(
-                                programEntity
-                        )
-                )
-        ).concatWith(
-                apiManager.updateExercise(
-                        exerciseRemoteEntityDataMapper.transformFromEntity(
-                                programEntity.exerciseEntityList
-                        )
-                )
+            )
         )
     }
 
@@ -96,10 +96,10 @@ class APIBusinessHelper @Inject constructor(
         return apiManager.removeProgram(idProgram)
     }
 
-    fun retrieveSongsListByUserId(idUser: String): Single<List<SongEntity>> {
-        return apiManager.retrieveSongsListByUserId(
-                idUser,
-                InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+    fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
+        return apiManager.retrieveSongListByUserId(
+            userId,
+            InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
             songRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -125,9 +125,9 @@ class APIBusinessHelper @Inject constructor(
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Completable {
         return apiManager.sendScoreFeedback(
-                scoreFeedbackRemoteEntityDataMapper.transformFromEntity(
-                        scoreFeedbackEntity
-                ), idSong
+            scoreFeedbackRemoteEntityDataMapper.transformFromEntity(
+                scoreFeedbackEntity
+            ), idSong
         )
     }
 

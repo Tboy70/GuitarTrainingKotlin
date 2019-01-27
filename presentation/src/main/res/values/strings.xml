@@ -126,10 +126,10 @@
     </string>
 
     <!-- USER SONGS LIST -->
-    <string name="user_songs_list_score">Note : %1$s/5</string>
-    <string name="user_songs_list_nb_play">Joué : %1$d fois</string>
-    <string name="user_songs_list_last_play">Joué la dernière fois : %1$s</string>
-    <string name="user_songs_list_no_program_text">Aucune chanson disponible</string>
+    <string name="user_song_list_score">Note : %1$s/5</string>
+    <string name="user_song_list_nb_play">Joué : %1$d fois</string>
+    <string name="user_song_list_last_play">Joué la dernière fois : %1$s</string>
+    <string name="user_song_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER PROGRAM DETAILS -->
     <string name="user_details_program_exercises_text">Exercises</string>

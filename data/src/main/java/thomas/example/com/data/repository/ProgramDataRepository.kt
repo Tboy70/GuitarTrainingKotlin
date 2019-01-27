@@ -5,7 +5,6 @@ import io.reactivex.Single
 import thomas.example.com.data.mapper.ExerciseEntityDataMapper
 import thomas.example.com.data.mapper.ProgramEntityDataMapper
 import thomas.example.com.data.business.APIBusinessHelper
-import thomas.example.com.data.business.ProgramBusinessHelper
 import thomas.example.com.model.Exercise
 import thomas.example.com.model.Program
 import thomas.example.com.repository.ProgramRepository
@@ -14,15 +13,14 @@ import javax.inject.Singleton
 
 @Singleton
 class ProgramDataRepository @Inject constructor(
-    private val programBusinessHelper: ProgramBusinessHelper,
     private val apiBusinessHelper: APIBusinessHelper,
     private val programEntityDataMapper: ProgramEntityDataMapper,
     private val exerciseEntityDataMapper: ExerciseEntityDataMapper
 ) : ProgramRepository {
 
-    override fun retrieveProgramsListByUserId(idUser: String): Single<List<Program>> {
+    override fun retrieveProgramListByUserId(userId: String): Single<List<Program>> {
         return Single.defer {
-            apiBusinessHelper.retrieveProgramsListByUserId(idUser).map {
+            apiBusinessHelper.retrieveProgramListByUserId(userId).map {
                 programEntityDataMapper.transformFromEntity(it)
             }
         }

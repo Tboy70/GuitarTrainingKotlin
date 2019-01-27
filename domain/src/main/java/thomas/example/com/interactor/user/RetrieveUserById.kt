@@ -17,8 +17,8 @@ class RetrieveUserById @Inject constructor(
     class Params(val userId: String) {
 
         companion object {
-            fun toRetrieve(idUser: String): Params {
-                return Params(idUser)
+            fun toRetrieve(userId: String): Params {
+                return Params(userId)
             }
         }
     }

@@ -15,7 +15,7 @@ class CreateSong @Inject constructor(
 
     override fun build(params: CreateSong.Params): Completable {
         return userRepository.getUserIdInSharedPrefs().map {
-            params.song.idUser = it
+            params.song.userId = it
         }.flatMapCompletable {
             songRepository.createSong(params.song)
         }

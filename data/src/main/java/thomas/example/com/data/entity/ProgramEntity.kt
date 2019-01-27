@@ -5,7 +5,7 @@ data class ProgramEntity(
     var nameProgram: String = "",
     var descriptionProgram: String = "",
     var defaultProgram: Boolean = false,
-    var idUser: String? = "",
+    var userId: String? = "",
     var exerciseEntityList: List<ExerciseEntity> = emptyList(),
     var idInstrument: String = ""
 )

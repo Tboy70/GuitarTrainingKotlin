@@ -9,13 +9,13 @@ import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class CreateProgram @Inject constructor(
-        private var programRepository: ProgramRepository,
-        private var userRepository: UserRepository
+        private val programRepository: ProgramRepository,
+        private val userRepository: UserRepository
 ) : CompletableParametrizedUseCase<CreateProgram.Params>() {
 
     override fun build(params: Params): Completable {
         return userRepository.getUserIdInSharedPrefs().map {
-            params.program.idUser = it
+            params.program.userId = it
         }.flatMapCompletable {
             programRepository.createProgram(params.program, params.exercisesList)
         }

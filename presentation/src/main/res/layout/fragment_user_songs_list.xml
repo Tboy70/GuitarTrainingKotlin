@@ -17,7 +17,9 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fragment_user_songs_list_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/view_user_songs_list_item"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
@@ -46,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/user_songs_list_no_program_text"
+                android:text="@string/user_song_list_no_program_text"
                 android:textAllCaps="true"
                 android:textColor="@color/placeholder_text_color"
                 android:textSize="@dimen/user_programs_list_placeholder_text_size"

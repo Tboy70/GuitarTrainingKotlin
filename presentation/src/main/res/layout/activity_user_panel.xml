@@ -37,8 +37,7 @@
                     app:defaultNavHost="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:navGraph="@navigation/user_panel_nav_graph"/>
+                    app:layout_constraintStart_toStartOf="parent"/>
         </LinearLayout>
 
         <!-- The navigation drawer that comes from the left -->

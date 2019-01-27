@@ -1,12 +1,14 @@
 package thomas.example.com.guitarTrainingKotlin.activity
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -15,6 +17,11 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.listener.DialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.ErrorRendererComponent
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment
+import thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.factory.ViewModelFactory
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
@@ -23,7 +30,6 @@ class UserPanelActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var viewModel: UserPanelViewModel
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
     @Inject
@@ -31,14 +37,19 @@ class UserPanelActivity : BaseActivity() {
 
     private var drawerToggle: ActionBarDrawerToggle? = null
 
+    private lateinit var viewModel: UserPanelViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
 
+        initiateToolbar()
         initiateDrawerMenu()
         initiateViewModelObservers()
+
+        viewModel.retrieveUserId()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -53,18 +64,17 @@ class UserPanelActivity : BaseActivity() {
         } ?: return false
     }
 
-    // TODO : Useful ?
     override fun onSupportNavigateUp() =
         findNavController(this, R.id.user_panel_nav_host_fragment).navigateUp()
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Pass any configuration change to the drawer toggles
-        drawerToggle?.onConfigurationChanged(newConfig)
+    fun setToolbar(toolbarName: String?) {
+        toolbarName?.let {
+            view_toolbar.title = it
+        }
     }
 
-    fun setToolbar(toolbarName: String) {
-        view_toolbar.title = toolbarName
+    private fun initiateToolbar() {
+        setSupportActionBar(view_toolbar)
     }
 
     private fun initiateDrawerMenu() {
@@ -110,12 +120,12 @@ class UserPanelActivity : BaseActivity() {
     private fun selectDrawerItem(menuItem: MenuItem): Boolean {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         when (menuItem.itemId) {
-            R.id.menu_drawer_programs -> displayUserProgramsFragment()
-            R.id.menu_drawer_songs -> displayUserSongsFragment()
+            R.id.menu_drawer_programs -> getActionForUserProgramsDestination()
+            R.id.menu_drawer_songs -> getActionForUserSongsDestination()
+            R.id.menu_drawer_settings -> getActionForSettingsDestination()
+            R.id.menu_drawer_legal_notices -> getActionForLegalNoticesDestination()
             R.id.menu_drawer_logout -> logoutUser()
-            R.id.menu_drawer_settings -> displayUserSettings()
-            R.id.menu_drawer_legal_notices -> displayLegalNotices()
-            else -> displayUserProgramsFragment()
+            else -> getActionForUserProgramsDestination()
         }
 
         // Highlight the selected item has been done by NavigationView
@@ -145,6 +155,9 @@ class UserPanelActivity : BaseActivity() {
         viewModel.userRetrievedLiveEvent.observeSafe(this) {
             view_drawer_header_pseudo.text = it.getUserPseudo()
             view_drawer_header_email.text = it.getUserEmail()
+            viewModel.getUserId()?.let { userId ->
+                initiateNavGraph(userId)
+            }
         }
 
         viewModel.errorLiveEvent.observeSafe(this) {
@@ -152,60 +165,13 @@ class UserPanelActivity : BaseActivity() {
         }
     }
 
-    private fun displayUserSongsFragment() {
-//        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-//            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_programs_list_to_user_songs_list
-//            )
-//            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_user_settings_to_user_songs_list
-//            )
-//            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_legal_notices_to_user_songs_list
-//            )
-//        }
-    }
-
-    private fun displayUserProgramsFragment() {
-//        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-//            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_songs_list_to_user_programs_list
-//            )
-//            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_user_settings_to_user_programs_list
-//            )
-//            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_legal_notices_to_user_programs_list
-//            )
-//        }
-    }
-
-    private fun displayUserSettings() {
-//        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-//            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_programs_list_to_action_user_settings
-//            )
-//            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_songs_list_to_action_user_settings
-//            )
-//            LegalNoticesFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_legal_notices_to_action_user_settings
-//            )
-//        }
-    }
-
-    private fun displayLegalNotices() {
-//        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).fragmentClass.simpleName) {
-//            UserProgramsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_programs_list_to_action_legal_notices
-//            )
-//            UserSongsListFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_user_songs_list_to_action_legal_notices
-//            )
-//            UserSettingsFragment::class.java.simpleName -> findNavController(R.id.user_panel_nav_host_fragment).navigate(
-//                    R.id.action_action_user_settings_to_action_legal_notices
-//            )
-//        }
+    private fun initiateNavGraph(userId: String) {
+        val navHostFragment = user_panel_nav_host_fragment as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.user_panel_nav_graph)
+        val bundle = Bundle()
+        bundle.putString(ConstValues.USER_ID, userId)
+        navHostFragment.navController.setGraph(graph, bundle)
     }
 
     private fun logoutUser() {
@@ -225,5 +191,57 @@ class UserPanelActivity : BaseActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    /*************** NAVIGATION PART ***************/
+
+    private fun getActionForUserSongsDestination() {
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
+            UserProgramsListFragment::class.java.name -> R.id.action_user_programs_list_to_user_songs_list
+            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_songs_list
+            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_songs_list
+            else -> null
+        }?.let { chosenDestination ->
+            navigate(chosenDestination)
+        }
+    }
+
+    private fun getActionForUserProgramsDestination() {
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
+            UserSongsListFragment::class.java.name -> R.id.action_user_songs_list_to_user_programs_list
+            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_programs_list
+            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_programs_list
+            else -> null
+        }?.let { chosenDestination ->
+            navigate(chosenDestination)
+        }
+    }
+
+    private fun getActionForSettingsDestination() {
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
+            UserProgramsListFragment::class.java.name -> R.id.action_user_programs_list_to_action_user_settings
+            UserSongsListFragment::class.java.name -> R.id.action_user_songs_list_to_action_user_settings
+            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_action_user_settings
+            else -> null
+        }?.let { chosenDestination ->
+            navigate(chosenDestination)
+        }
+    }
+
+    private fun getActionForLegalNoticesDestination() {
+        when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
+            UserProgramsListFragment::class.java.name -> R.id.action_user_programs_list_to_action_legal_notices
+            UserSongsListFragment::class.java.name -> R.id.action_user_songs_list_to_action_legal_notices
+            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_action_legal_notices
+            else -> null
+        }?.let { chosenDestination ->
+            navigate(chosenDestination)
+        }
+    }
+
+    private fun navigate(destinationId: Int) {
+        val bundle = Bundle()
+        bundle.putString(ConstValues.USER_ID, viewModel.getUserId())
+        findNavController(R.id.user_panel_nav_host_fragment).navigate(destinationId, bundle)
     }
 }

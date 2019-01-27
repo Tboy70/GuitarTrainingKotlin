@@ -4,10 +4,10 @@ interface SharedPrefsManager {
 
     // Shared prefs
     fun getUserIdInSharedPrefs(): String
-    fun setIdUserInSharedPrefs(idUser: String)
-    fun deleteIdUserInSharedPrefs()
+    fun setUserIdInSharedPrefs(userId: String)
+    fun deleteUserIdInSharedPrefs()
 
-    fun setInstrumentModeInSharedPrefs()
+    fun setInstrumentModeInSharedPrefs(instrumentMode: String)
 
     fun getInstrumentModeInSharedPrefs(): String
 }

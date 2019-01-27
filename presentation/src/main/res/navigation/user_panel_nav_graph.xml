@@ -12,7 +12,7 @@
         <action
                 android:id="@+id/action_user_programs_list_to_user_songs_list"
                 app:destination="@id/user_songs_list"
-                app:popUpTo="@id/user_programs_list"
+                app:popUpTo="@+id/user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_user_programs_list_to_action_user_settings"

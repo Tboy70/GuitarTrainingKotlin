@@ -18,10 +18,9 @@ import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
@@ -134,14 +133,14 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
     private fun handleUpdateProgram() {
         fragment_user_program_details_update_button.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putSerializable(
-                    UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
-                    viewModel.userProgramViewDataWrapper
-            )
-
-            val host = activity?.findViewById(R.id.user_program_nav_host_fragment) as View
-            findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
+//            val bundle = Bundle()
+//            bundle.putSerializable(
+//                    UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
+//                    viewModel.userProgramViewDataWrapper
+//            )
+//
+//            val host = activity?.findViewById(R.id.user_program_nav_host_fragment) as View
+//            findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
         }
     }
 

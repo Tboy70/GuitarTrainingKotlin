@@ -3,7 +3,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 import android.util.LongSparseArray
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
 import thomas.example.com.interactor.song.RemoveSong

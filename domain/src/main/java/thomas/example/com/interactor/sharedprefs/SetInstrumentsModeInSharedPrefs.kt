@@ -1,19 +1,24 @@
 package thomas.example.com.interactor.sharedprefs
 
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
-import io.reactivex.Observable
-import thomas.example.com.executor.ThreadExecutor
-import thomas.example.com.interactor.base.CompletableUseCase
-import thomas.example.com.interactor.base.UseCase
+import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
 class SetInstrumentsModeInSharedPrefs @Inject constructor(
-    private var userRepository: UserRepository
-) : CompletableUseCase() {
+    private val userRepository: UserRepository
+) : CompletableParametrizedUseCase<SetInstrumentsModeInSharedPrefs.Params>() {
 
-    override fun build(): Completable {
-        return userRepository.setInstrumentModeInSharedPrefs()
+    override fun build(params: Params): Completable {
+        return userRepository.setInstrumentModeInSharedPrefs(params.instrumentMode)
+    }
+
+    class Params(val instrumentMode: String) {
+
+        companion object {
+            fun toSet(instrumentMode: String): Params {
+                return Params(instrumentMode)
+            }
+        }
     }
 }

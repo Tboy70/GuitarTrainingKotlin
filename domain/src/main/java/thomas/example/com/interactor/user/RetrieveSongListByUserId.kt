@@ -6,19 +6,19 @@ import thomas.example.com.model.Song
 import thomas.example.com.repository.SongRepository
 import javax.inject.Inject
 
-class RetrieveSongsListByUserId @Inject constructor(
+class RetrieveSongListByUserId @Inject constructor(
         private var songRepository: SongRepository
-) : SingleParametrizedUseCase<List<Song>, RetrieveSongsListByUserId.Params>() {
+) : SingleParametrizedUseCase<List<Song>, RetrieveSongListByUserId.Params>() {
 
     override fun build(params: Params): Single<List<Song>> {
-        return songRepository.retrieveSongsListByUserId(params.idUser)
+        return songRepository.retrieveSongListByUserId(params.userId)
     }
 
-    class Params(val idUser: String) {
+    class Params(val userId: String) {
 
         companion object {
-            fun forList(idUser: String): Params {
-                return Params(idUser)
+            fun forList(userId: String): Params {
+                return Params(userId)
             }
         }
     }

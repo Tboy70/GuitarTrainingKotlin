@@ -9,7 +9,7 @@ interface UserRepository {
     // Shared prefs
     fun getUserIdInSharedPrefs(): Single<String>
 
-    fun setInstrumentModeInSharedPrefs(): Completable
+    fun setInstrumentModeInSharedPrefs(instrumentMode: String): Completable
 
 
     // User
@@ -21,6 +21,6 @@ interface UserRepository {
 
     fun logoutUser(): Completable
 
-    fun suppressAccount(idUser: String): Completable
+    fun suppressAccount(userId: String): Completable
 
 }

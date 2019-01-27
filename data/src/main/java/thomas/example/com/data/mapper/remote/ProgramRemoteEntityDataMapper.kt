@@ -19,7 +19,7 @@ class ProgramRemoteEntityDataMapper @Inject constructor(
                 nameProgram = programRemoteEntity.nameProgram,
                 descriptionProgram = programRemoteEntity.descriptionProgram,
                 defaultProgram = programRemoteEntity.defaultProgram,
-                idUser = programRemoteEntity.idUser,
+                userId = programRemoteEntity.userId,
                 exerciseEntityList = exerciseRemoteEntityDataMapper.transformToEntity(programRemoteEntity.exerciseRemoteEntityList),
                 idInstrument = programRemoteEntity.idInstrument
             )
@@ -44,7 +44,7 @@ class ProgramRemoteEntityDataMapper @Inject constructor(
                 nameProgram = programEntity.nameProgram,
                 descriptionProgram = programEntity.descriptionProgram,
                 defaultProgram = programEntity.defaultProgram,
-                idUser = programEntity.idUser,
+                userId = programEntity.userId,
                 exerciseRemoteEntityList = exerciseRemoteEntityDataMapper.transformFromEntity(programEntity.exerciseEntityList),
                 idInstrument = programEntity.idInstrument
             )

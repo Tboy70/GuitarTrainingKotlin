@@ -6,7 +6,6 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
@@ -15,11 +14,9 @@ import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentI
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
-import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.ExerciseUtils
 import thomas.example.com.guitarTrainingKotlin.viewmodel.program.UserProgramUpdateViewModel

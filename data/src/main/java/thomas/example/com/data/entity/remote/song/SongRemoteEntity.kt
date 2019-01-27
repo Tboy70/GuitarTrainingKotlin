@@ -10,6 +10,6 @@ data class SongRemoteEntity(
     @SerializedName("totalScoreSong") var totalScoreSong: Int = 0,
     @SerializedName("nbPlay") var nbPlay: Int = 0,
     @SerializedName("lastPlay") var lastPlay: String = "",
-    @SerializedName("userId") var idUser: String = "",
+    @SerializedName("userId") var userId: String = "",
     @SerializedName("idInstrument") var idInstrument: String = ""
 )

@@ -2,6 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import android.app.Application
 import android.preference.PreferenceManager
+import androidx.lifecycle.MutableLiveData
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.UserViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.view.state.UserPanelActivityViewState
@@ -20,7 +21,7 @@ class UserPanelViewModel @Inject constructor(
 
     override val currentViewState = UserPanelActivityViewState()
 
-    private var currentUserId: String? = null
+    private var userId: String? = null
     // TODO : Refactor --> Why string and int !?
     private var instrumentMode: String? = SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
 
@@ -31,7 +32,6 @@ class UserPanelViewModel @Inject constructor(
     var errorThrowable: Throwable? = null
 
     init {
-        retrieveUserId()
         retrieveInstrumentMode()
     }
 
@@ -52,11 +52,13 @@ class UserPanelViewModel @Inject constructor(
         )
     }
 
-    private fun retrieveUserId() {
-        currentUserId = PreferenceManager.getDefaultSharedPreferences(getApplication())
+    fun getUserId() = userId
+
+    fun retrieveUserId() {
+        userId = PreferenceManager.getDefaultSharedPreferences(getApplication())
             .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
 
-        currentUserId?.let { userId ->
+        userId?.let { userId ->
             if (!userId.isEmpty() && userId != "0") {
                 getUserById(userId)
             } else {
@@ -73,11 +75,12 @@ class UserPanelViewModel @Inject constructor(
     private fun getUserById(userId: String) {
         retrieveUserById.subscribe(
             params = RetrieveUserById.Params.toRetrieve(userId),
-            onError = {
-                errorLiveEvent.postValue(it)
-            },
             onSuccess = {
                 userRetrievedLiveEvent.postValue(UserViewDataWrapper(it))
+            },
+            onError = {
+                this.userId = null
+                errorLiveEvent.postValue(it)
             }
         )
     }

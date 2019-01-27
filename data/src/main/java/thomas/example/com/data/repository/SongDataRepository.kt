@@ -6,7 +6,6 @@ import thomas.example.com.data.mapper.ScoreEntityDataMapper
 import thomas.example.com.data.mapper.ScoreFeedbackEntityDataMapper
 import thomas.example.com.data.mapper.SongEntityDataMapper
 import thomas.example.com.data.business.APIBusinessHelper
-import thomas.example.com.data.business.SongBusinessHelper
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
 import thomas.example.com.model.Song
@@ -16,16 +15,15 @@ import javax.inject.Singleton
 
 @Singleton
 class SongDataRepository @Inject constructor(
-    private val songBusinessHelper: SongBusinessHelper,
     private val apiBusinessHelper: APIBusinessHelper,
     private val songEntityDataMapper: SongEntityDataMapper,
     private val scoreFeedbackEntityDataMapper: ScoreFeedbackEntityDataMapper,
     private val scoreEntityDataMapper: ScoreEntityDataMapper
 ) : SongRepository {
 
-    override fun retrieveSongsListByUserId(idUser: String): Single<List<Song>> {
+    override fun retrieveSongListByUserId(userId: String): Single<List<Song>> {
         return Single.defer {
-            apiBusinessHelper.retrieveSongsListByUserId(idUser).map {
+            apiBusinessHelper.retrieveSongListByUserId(userId).map {
                 songEntityDataMapper.transformFromEntity(it)
             }
         }

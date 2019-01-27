@@ -11,14 +11,14 @@ class RetrieveProgramsListByUserId @Inject constructor(
 ) : SingleParametrizedUseCase<List<Program>, RetrieveProgramsListByUserId.Params>() {
 
     override fun build(params: Params): Single<List<Program>> {
-        return programRepository.retrieveProgramsListByUserId(params.idUser)
+        return programRepository.retrieveProgramListByUserId(params.userId)
     }
 
-    class Params(val idUser: String) {
+    class Params(val userId: String) {
 
         companion object {
-            fun forList(idUser: String): Params {
-                return Params(idUser)
+            fun forList(userId: String): Params {
+                return Params(userId)
             }
         }
     }

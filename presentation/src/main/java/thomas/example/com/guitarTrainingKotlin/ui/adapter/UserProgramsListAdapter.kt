@@ -1,52 +1,39 @@
 package thomas.example.com.guitarTrainingKotlin.ui.adapter
 
-import android.app.Activity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.ui.viewholder.ProgramViewHolder
-import thomas.example.com.model.Program
+import thomas.example.com.guitarTrainingKotlin.di.annotation.PerFragment
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.ProgramViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.ui.viewholder.ProgramListViewHolder
 import javax.inject.Inject
 
-class UserProgramsListAdapter @Inject constructor(activity: BaseActivity) : RecyclerView.Adapter<ProgramViewHolder>() {
+@PerFragment
+class UserProgramsListAdapter @Inject constructor(
+    private val context: Context
+) : RecyclerView.Adapter<ProgramListViewHolder>() {
 
-    private val activity: Activity
-    private val programList: MutableList<ProgramViewDataWrapper>
-    private lateinit var userProgramsListAdapterListener: UserProgramsListAdapterListener
+    var onProgramSelectedListener: (programId: String) -> Unit = {}
 
-    init {
-        this.activity = activity
-        this.programList = ArrayList()
-    }
+    private val programList = mutableListOf<ProgramViewDataWrapper>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgramViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_user_programs_list_item, parent, false)
-        return ProgramViewHolder(view, activity)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ProgramListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_user_programs_list_item, parent, false), context)
 
-    override fun onBindViewHolder(holder: ProgramViewHolder, position: Int) {
-        holder.bindProgram(programList[position], userProgramsListAdapterListener)
+
+    override fun onBindViewHolder(holder: ProgramListViewHolder, position: Int) {
+        holder.bind(programList[position], onProgramSelectedListener)
     }
 
     override fun getItemCount(): Int {
         return programList.size
     }
 
-    fun setUserProgramsListAdapter(userProgramsListAdapterListener: UserProgramsListAdapterListener) {
-        this.userProgramsListAdapterListener = userProgramsListAdapterListener
-    }
-
-    fun updateProgramsList(programs: List<ProgramViewDataWrapper>) {
-        clearList()
-        programList.addAll(programs)
-        notifyDataSetChanged()
-    }
-
-    private fun clearList() {
-        programList.clear()
+    fun updateProgramList(programList: List<ProgramViewDataWrapper>) {
+        this.programList.clear()
+        this.programList.addAll(programList)
         notifyDataSetChanged()
     }
 }

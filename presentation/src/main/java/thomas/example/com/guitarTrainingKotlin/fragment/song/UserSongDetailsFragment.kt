@@ -13,13 +13,11 @@ import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
-import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.ui.chart.ChartMarkerView
 import thomas.example.com.guitarTrainingKotlin.ui.chart.HourAxisValueFormatter
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.SongViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSongDetailsViewModel
 import javax.inject.Inject

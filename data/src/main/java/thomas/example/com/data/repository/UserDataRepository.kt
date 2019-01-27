@@ -24,9 +24,10 @@ class UserDataRepository @Inject constructor(
         return Single.defer { contentBusinessHelper.getUserIdInSharedPrefs() }
     }
 
-    override fun setInstrumentModeInSharedPrefs(): Completable {
+    override fun setInstrumentModeInSharedPrefs(instrumentMode: String): Completable {
         return Completable.defer {
-            contentBusinessHelper.setInstrumentModeInSharedPrefs()
+            contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode)
+            Completable.complete()
         }
     }
 
@@ -52,6 +53,8 @@ class UserDataRepository @Inject constructor(
         return Single.defer {
             apiBusinessHelper.retrieveUserById(userId).map {
                 userEntityDataMapper.transformFromEntity(it)
+            }.doOnError {
+                contentBusinessHelper.deleteIdInSharedPrefs()
             }
         }
     }
@@ -63,9 +66,9 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-    override fun suppressAccount(idUser: String): Completable {
+    override fun suppressAccount(userId: String): Completable {
         return Completable.defer {
-            apiBusinessHelper.suppressAccount(idUser).doOnComplete {
+            apiBusinessHelper.suppressAccount(userId).doOnComplete {
                 contentBusinessHelper.deleteIdInSharedPrefs()
             }
         }

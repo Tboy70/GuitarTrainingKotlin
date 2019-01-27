@@ -8,7 +8,7 @@ import thomas.example.com.model.Program
 
 interface ProgramRepository {
 
-    fun retrieveProgramsListByUserId(idUser: String): Single<List<Program>>
+    fun retrieveProgramListByUserId(userId: String): Single<List<Program>>
 
     fun retrieveProgramById(idProgram: String): Single<Program>
 

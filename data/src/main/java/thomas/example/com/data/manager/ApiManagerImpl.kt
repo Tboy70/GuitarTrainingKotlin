@@ -63,17 +63,9 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return apiService.suppressAccount(userId)
     }
 
-    override fun retrieveProgramsListByUserId(
-        userId: String,
-        instrumentModeValue: Int
-    ): Single<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(userId, instrumentModeValue).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAMS)
-            }
-        }
+    override fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int)
+            : Single<List<ProgramRemoteEntity>> {
+        return apiService.retrieveProgramsListByUserId(userId, instrumentModeValue)
     }
 
     override fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity> {
@@ -116,17 +108,11 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return apiService.removeExercises(exerciseRemoteEntityListToBeRemoved)
     }
 
-    override fun retrieveSongsListByUserId(
+    override fun retrieveSongListByUserId(
         userId: String,
         instrumentModeValue: Int
     ): Single<List<SongRemoteEntity>> {
-        return apiService.retrieveSongsListByUserId(userId, instrumentModeValue).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_SONGS)
-            }
-        }
+        return apiService.retrieveSongListByUserId(userId, instrumentModeValue)
     }
 
     override fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity> {

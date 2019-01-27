@@ -19,6 +19,7 @@ interface ApiManager {
     fun retrieveUserById(userId: String): Single<UserRemoteEntity>
 
 
+    // Program
     fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>
 
     fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity>
@@ -35,7 +36,8 @@ interface ApiManager {
 
     fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
-    fun retrieveSongsListByUserId(userId: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
+    // Song
+    fun retrieveSongListByUserId(userId: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
 
     fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity>
 

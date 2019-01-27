@@ -1,6 +1,5 @@
 package thomas.example.com.data.business
 
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.data.manager.SharedPrefsManager
@@ -15,20 +14,15 @@ class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: 
     }
 
     fun setIdInSharedPrefs(userId: String): Observable<Boolean> {
-        sharedPrefsManager.setIdUserInSharedPrefs(userId)
+        sharedPrefsManager.setUserIdInSharedPrefs(userId)
         return Observable.just(true)
     }
 
     fun deleteIdInSharedPrefs() {
-        sharedPrefsManager.deleteIdUserInSharedPrefs()
+        sharedPrefsManager.deleteUserIdInSharedPrefs()
     }
 
-    fun setInstrumentModeInSharedPrefs(): Completable {
-        return try {
-            sharedPrefsManager.setInstrumentModeInSharedPrefs()
-            Completable.complete()
-        } catch (e: Exception) {
-            Completable.error(e)
-        }
+    fun setInstrumentModeInSharedPrefs(instrumentMode: String) {
+        sharedPrefsManager.setInstrumentModeInSharedPrefs(instrumentMode)
     }
 }

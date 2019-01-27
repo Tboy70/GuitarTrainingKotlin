@@ -1,19 +1,19 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.user
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.component.listener.MultipleChoiceMaterialDialogListener
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
+import thomas.example.com.guitarTrainingKotlin.extension.hide
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.extension.show
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.viewmodel.user.UserSettingsViewModel
 import javax.inject.Inject
 
@@ -26,76 +26,73 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: DialogComponentImpl
+    lateinit var dialogComponent: DialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val currentInstrumentMode =
-            prefs.getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
-        val idUser = prefs.getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
-
-        if (currentInstrumentMode == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
-            settings_guitar_switch.isChecked = true
-            settings_bass_switch.isChecked = false
-        } else if (currentInstrumentMode == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
-            settings_guitar_switch.isChecked = false
-            settings_bass_switch.isChecked = true
+        arguments?.let {
+            viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        handleLiveData(view)
-
-        settings_guitar_switch.setOnCheckedChangeListener { _, isChecked ->
-            handleSwitch(settings_bass_switch, isChecked)
-        }
-
-        settings_bass_switch.setOnCheckedChangeListener { _, isChecked ->
-            handleSwitch(settings_guitar_switch, isChecked)
-        }
-
-        suppress_account.setOnClickListener {
-//            materialDialogComponentImpl.showMultiChoiceDialog(getString(R.string.dialog_suppress_account_title),
-//                    getString(R.string.dialog_suppress_account_confirm_content),
-//                    R.color.colorPrimary,
-//                    object : MultipleChoiceMaterialDialogListener {
-//                        override fun onYesSelected() {
-//                            if (!userId.isEmpty()) {
-//                                viewModel.suppressAccount(userId)
-//                            }
-//                        }
-//                    })
-        }
+        initiateToolbar()
+        initiateView()
+        initiateViewModelObservers()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun initiateToolbar() {
         (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_settings))
     }
 
-    private fun handleLiveData(view: View) {
+    private fun initiateView() {
+        user_settings_guitar_switch.setOnCheckedChangeListener { _, isChecked ->
+            handleSwitch(user_settings_bass_switch, isChecked)
+        }
 
-        viewModel.viewState.observeSafe(this) {
-            if (it.displayingLoading) {
-//                materialDialogComponentImpl.showProgressDialog(
-//                        getString(R.string.dialog_suppress_account_title),
-//                        getString(R.string.dialog_suppress_account_content),
-//                        R.color.colorPrimary
-//                )
-            } else {
-                materialDialogComponentImpl.dismissDialog()
+        user_settings_bass_switch.setOnCheckedChangeListener { _, isChecked ->
+            handleSwitch(user_settings_guitar_switch, isChecked)
+        }
+
+
+        user_settings_suppress_account.setOnClickListener {
+            dialogComponent.displayDualChoiceDialog(
+                R.string.dialog_suppress_account_title,
+                R.string.dialog_suppress_account_confirm_content,
+                android.R.string.yes,
+                android.R.string.no,
+                onPositive = {
+                    viewModel.suppressAccount()
+                },
+                onNegative = {}
+            )
+        }
+    }
+
+    private fun initiateViewModelObservers() {
+
+        viewModel.retrievedInstrumentModeLiveData.observeSafe(this) {
+            if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
+                user_settings_guitar_switch.isChecked = true
+                user_settings_bass_switch.isChecked = false
+            } else if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
+                user_settings_guitar_switch.isChecked = false
+                user_settings_bass_switch.isChecked = true
             }
         }
 
-        viewModel.errorEvent.observeSafe(this) {
-//            errorRendererComponent.requestRenderError(
-//                    viewModel.errorThrowable as Throwable,
-//                    ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                    view
-//            )
+        viewModel.viewState.observeSafe(this) {
+            if (it.loading) {
+                user_settings_progress_bar.show()
+            } else {
+                user_settings_progress_bar.hide()
+            }
         }
 
-        viewModel.finishSuppressAccount.observeSafe(this) {
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
+        }
+
+        viewModel.suppressedAccountLiveEvent.observeSafe(this) {
             activity?.finish()
         }
     }

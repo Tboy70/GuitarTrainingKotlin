@@ -15,20 +15,16 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
         return sharedPreferences.getString(CURRENT_USER_ID, null)
     }
 
-    override fun setIdUserInSharedPrefs(idUser: String) {
-        sharedPreferences.edit().putString(CURRENT_USER_ID, idUser).apply()
+    override fun setUserIdInSharedPrefs(userId: String) {
+        sharedPreferences.edit().putString(CURRENT_USER_ID, userId).apply()
     }
 
-    override fun deleteIdUserInSharedPrefs() {
+    override fun deleteUserIdInSharedPrefs() {
         sharedPreferences.edit().remove(CURRENT_USER_ID).apply()
     }
 
-    override fun setInstrumentModeInSharedPrefs() {
-        if (sharedPreferences.getString(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR) == INSTRUMENT_MODE_GUITAR) {
-            sharedPreferences.edit().putString(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_BASS).apply()
-        } else {
-            sharedPreferences.edit().putString(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR).apply()
-        }
+    override fun setInstrumentModeInSharedPrefs(instrumentMode: String) {
+        sharedPreferences.edit().putString(CURRENT_INSTRUMENT_MODE, instrumentMode).apply()
     }
 
     override fun getInstrumentModeInSharedPrefs(): String {

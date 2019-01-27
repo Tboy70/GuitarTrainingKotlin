@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.ui.viewdatawrapper.ProgramViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.ProgramViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.program.RetrieveProgramById
 import javax.inject.Inject

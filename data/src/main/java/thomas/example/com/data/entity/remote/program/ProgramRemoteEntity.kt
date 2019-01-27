@@ -8,7 +8,7 @@ data class ProgramRemoteEntity(
     @SerializedName("nameProgram") var nameProgram: String = "",
     @SerializedName("descriptionProgram") var descriptionProgram: String = "",
     @SerializedName("defaultProgram") var defaultProgram: Boolean = false,
-    @SerializedName("userId") var idUser: String? = "",
+    @SerializedName("userId") var userId: String? = "",
     @SerializedName("exercises") var exerciseRemoteEntityList: List<ExerciseRemoteEntity> = emptyList(),
     @SerializedName("idInstrument") var idInstrument: String = ""
 )

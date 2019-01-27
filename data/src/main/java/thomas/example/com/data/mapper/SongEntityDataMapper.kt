@@ -20,7 +20,7 @@ class SongEntityDataMapper @Inject constructor() {
                 totalScoreSong = songEntity.totalScoreSong,
                 nbPlay = songEntity.nbPlay,
                 lastPlay = songEntity.lastPlay,
-                idUser = songEntity.idUser,
+                userId = songEntity.userId,
                 idInstrument = songEntity.idInstrument
             )
         } catch (e: Exception) {
@@ -47,7 +47,7 @@ class SongEntityDataMapper @Inject constructor() {
                 totalScoreSong = song.totalScoreSong,
                 nbPlay = song.nbPlay,
                 lastPlay = song.lastPlay,
-                idUser = song.idUser,
+                userId = song.userId,
                 idInstrument = song.idInstrument
             )
         } catch (e: Exception) {
