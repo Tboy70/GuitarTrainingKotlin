@@ -38,8 +38,6 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        viewModel.retrieveSongListByUserId()
-
         initiateToolbar()
         initiateView()
         initiateViewModelObservers()

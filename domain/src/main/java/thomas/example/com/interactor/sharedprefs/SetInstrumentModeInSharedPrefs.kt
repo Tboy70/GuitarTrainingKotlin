@@ -1,15 +1,15 @@
 package thomas.example.com.interactor.sharedprefs
 
-import io.reactivex.Completable
-import thomas.example.com.interactor.base.parametrized.CompletableParametrizedUseCase
+import io.reactivex.Single
+import thomas.example.com.interactor.base.parametrized.SingleParametrizedUseCase
 import thomas.example.com.repository.UserRepository
 import javax.inject.Inject
 
-class SetInstrumentsModeInSharedPrefs @Inject constructor(
+class SetInstrumentModeInSharedPrefs @Inject constructor(
     private val userRepository: UserRepository
-) : CompletableParametrizedUseCase<SetInstrumentsModeInSharedPrefs.Params>() {
+) : SingleParametrizedUseCase<String, SetInstrumentModeInSharedPrefs.Params>() {
 
-    override fun build(params: Params): Completable {
+    override fun build(params: Params): Single<String> {
         return userRepository.setInstrumentModeInSharedPrefs(params.instrumentMode)
     }
 

@@ -10,8 +10,7 @@ import javax.inject.Inject
 class CreateSong @Inject constructor(
     private var songRepository: SongRepository,
     private var userRepository: UserRepository
-) :
-        CompletableParametrizedUseCase<CreateSong.Params>() {
+) : CompletableParametrizedUseCase<CreateSong.Params>() {
 
     override fun build(params: CreateSong.Params): Completable {
         return userRepository.getUserIdInSharedPrefs().map {

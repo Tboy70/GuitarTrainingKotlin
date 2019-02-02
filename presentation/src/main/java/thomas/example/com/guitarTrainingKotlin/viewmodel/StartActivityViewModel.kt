@@ -2,10 +2,10 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
-import thomas.example.com.interactor.sharedprefs.GetUserIdInSharedPrefs
+import thomas.example.com.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
 import javax.inject.Inject
 
-class StartActivityViewModel @Inject constructor(private val getUserIdInSharedPrefs: GetUserIdInSharedPrefs) : ViewModel() {
+class StartActivityViewModel @Inject constructor(private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs) : ViewModel() {
 
     val retrievedUserIdLiveEvent = SingleLiveEvent<String>()
 
@@ -16,12 +16,12 @@ class StartActivityViewModel @Inject constructor(private val getUserIdInSharedPr
     /** To unsubscribe usecase **/
     override fun onCleared() {
         super.onCleared()
-        getUserIdInSharedPrefs.unsubscribe()
+        retrieveUserIdInSharedPrefs.unsubscribe()
     }
 
     /** Using of lambdas ! **/
     private fun getUserIdInSharedPrefs() {
-        getUserIdInSharedPrefs.subscribe(
+        retrieveUserIdInSharedPrefs.subscribe(
             onSuccess = { userId ->
                 retrievedUserIdLiveEvent.postValue(userId)
             },

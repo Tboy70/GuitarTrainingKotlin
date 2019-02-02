@@ -17,6 +17,10 @@ class UserSongsListViewModel @Inject constructor(
 
     var retrieveUserSongsLiveData = MutableLiveData<List<SongViewDataWrapper>>()
 
+    init {
+        retrieveSongListByUserId()
+    }
+
     override fun onCleared() {
         super.onCleared()
         retrieveSongListByUserId.unsubscribe()

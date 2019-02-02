@@ -1,7 +1,5 @@
 package thomas.example.com.data.business
 
-import io.reactivex.Observable
-import io.reactivex.Single
 import thomas.example.com.data.manager.SharedPrefsManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,20 +7,27 @@ import javax.inject.Singleton
 @Singleton
 class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: SharedPrefsManager) {
 
-    fun getUserIdInSharedPrefs(): Single<String> {
-        return Single.just(sharedPrefsManager.getUserIdInSharedPrefs())
+    fun getUserIdInSharedPrefs(): String {
+        return sharedPrefsManager.getUserIdInSharedPrefs()
     }
 
-    fun setIdInSharedPrefs(userId: String): Observable<Boolean> {
+    fun setIdInSharedPrefs(userId: String) {
         sharedPrefsManager.setUserIdInSharedPrefs(userId)
-        return Observable.just(true)
     }
 
     fun deleteIdInSharedPrefs() {
         sharedPrefsManager.deleteUserIdInSharedPrefs()
     }
 
-    fun setInstrumentModeInSharedPrefs(instrumentMode: String) {
-        sharedPrefsManager.setInstrumentModeInSharedPrefs(instrumentMode)
+    fun retrieveInstrumentModeInSharedPrefs(): String {
+        return sharedPrefsManager.getInstrumentModeInSharedPrefs()
+    }
+
+    fun setInstrumentModeInSharedPrefs(instrumentMode: String): String {
+        return sharedPrefsManager.setInstrumentModeInSharedPrefs(instrumentMode)
+    }
+
+    fun deleteInstrumentModeInSharedPrefs() {
+        sharedPrefsManager.deleteCurrentInstrumentInSharedPrefs()
     }
 }

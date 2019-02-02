@@ -1,21 +1,20 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import android.app.Application
-import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
-import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.view.state.UserSettingsViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.AndroidStateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
-import thomas.example.com.interactor.sharedprefs.SetInstrumentsModeInSharedPrefs
+import thomas.example.com.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
+import thomas.example.com.interactor.sharedprefs.SetInstrumentModeInSharedPrefs
 import thomas.example.com.interactor.user.SuppressAccount
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
     application: Application,
     private val suppressAccount: SuppressAccount,
-    private val getInstrumentsModeInSharedPrefs: RetrIn,
-    private val setInstrumentsModeInSharedPrefs: SetInstrumentsModeInSharedPrefs
+    private val retrieveInstrumentsModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs,
+    private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs
 ) : AndroidStateViewModel<UserSettingsViewState>(application) {
 
     override val currentViewState = UserSettingsViewState()
@@ -32,19 +31,21 @@ class UserSettingsViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        setInstrumentsModeInSharedPrefs.unsubscribe()
+        setInstrumentModeInSharedPrefs.unsubscribe()
         suppressAccount.unsubscribe()
     }
 
     fun updateInstrumentMode() {
         currentInstrumentMode?.let {
-            setInstrumentsModeInSharedPrefs.subscribe(
-                onComplete = {
+            setInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = { newInstrumentMode ->
+                    currentInstrumentMode = newInstrumentMode
+                    retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)
                 },
-                onError = {
-
+                onError = { throwable ->
+                    errorLiveEvent.postValue(throwable)
                 },
-                params = SetInstrumentsModeInSharedPrefs.Params.toSet(it)
+                params = SetInstrumentModeInSharedPrefs.Params.toSet(it)
             )
         }
     }
@@ -76,11 +77,14 @@ class UserSettingsViewModel @Inject constructor(
     }
 
     private fun retrieveCurrentInstrumentMode() {
-        PreferenceManager.getDefaultSharedPreferences(getApplication())
-            .getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
-            ?.let { currentInstrumentMode ->
-                this.currentInstrumentMode = currentInstrumentMode
-                retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)
+        retrieveInstrumentsModeInSharedPrefs.subscribe(
+            onSuccess = {
+                currentInstrumentMode = it
+                retrievedInstrumentModeLiveData.postValue(it)
+            },
+            onError = {
+                errorLiveEvent.postValue(it)
             }
+        )
     }
 }

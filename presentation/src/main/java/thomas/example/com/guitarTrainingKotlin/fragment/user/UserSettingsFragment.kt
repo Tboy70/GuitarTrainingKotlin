@@ -2,6 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.user
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
@@ -11,6 +12,7 @@ import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.extension.hide
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.extension.setCustomChecked
 import thomas.example.com.guitarTrainingKotlin.extension.show
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -72,11 +74,19 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 
         viewModel.retrievedInstrumentModeLiveData.observeSafe(this) {
             if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
-                user_settings_guitar_switch.isChecked = true
-                user_settings_bass_switch.isChecked = false
+                user_settings_guitar_switch.setCustomChecked(true, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
+                    handleSwitch(user_settings_guitar_switch, isChecked)
+                })
+                user_settings_bass_switch.setCustomChecked(false, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
+                    handleSwitch(user_settings_bass_switch, isChecked)
+                })
             } else if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
-                user_settings_guitar_switch.isChecked = false
-                user_settings_bass_switch.isChecked = true
+                user_settings_guitar_switch.setCustomChecked(false, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
+                    handleSwitch(user_settings_guitar_switch, isChecked)
+                })
+                user_settings_bass_switch.setCustomChecked(true, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
+                    handleSwitch(user_settings_bass_switch, isChecked)
+                })
             }
         }
 

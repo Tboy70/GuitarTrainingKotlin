@@ -21,13 +21,20 @@ class UserDataRepository @Inject constructor(
      * No need of try / catch anymore !
      */
     override fun getUserIdInSharedPrefs(): Single<String> {
-        return Single.defer { contentBusinessHelper.getUserIdInSharedPrefs() }
+        return Single.defer {
+            Single.just(contentBusinessHelper.getUserIdInSharedPrefs())
+        }
     }
 
-    override fun setInstrumentModeInSharedPrefs(instrumentMode: String): Completable {
-        return Completable.defer {
-            contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode)
-            Completable.complete()
+    override fun setInstrumentModeInSharedPrefs(instrumentMode: String): Single<String> {
+        return Single.defer {
+           Single.just(contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode))
+        }
+    }
+
+    override fun retrieveInstrumentModeInSharedPrefs(): Single<String> {
+        return Single.defer {
+            Single.just(contentBusinessHelper.retrieveInstrumentModeInSharedPrefs())
         }
     }
 
@@ -70,6 +77,7 @@ class UserDataRepository @Inject constructor(
         return Completable.defer {
             apiBusinessHelper.suppressAccount(userId).doOnComplete {
                 contentBusinessHelper.deleteIdInSharedPrefs()
+                contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
             }
         }
     }
