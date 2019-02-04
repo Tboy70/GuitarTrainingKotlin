@@ -1,7 +1,6 @@
 package thomas.example.com.repository
 
 import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.Single
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
@@ -21,5 +20,5 @@ interface SongRepository {
 
     fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Completable
 
-    fun retrieveSongScoreHistoric(idSong: String): Single<List<Score>>
+    fun retrieveSongScoreHistory(idSong: String): Single<List<Score>>
 }

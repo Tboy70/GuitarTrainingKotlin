@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.view.state.UserSongListViewState
+import thomas.example.com.guitarTrainingKotlin.view.state.song.UserSongListViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.interactor.user.RetrieveSongListByUserId
 import javax.inject.Inject
@@ -16,10 +16,6 @@ class UserSongsListViewModel @Inject constructor(
     private var userId: String? = null
 
     var retrieveUserSongsLiveData = MutableLiveData<List<SongViewDataWrapper>>()
-
-    init {
-        retrieveSongListByUserId()
-    }
 
     override fun onCleared() {
         super.onCleared()

@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
+import thomas.example.com.guitarTrainingKotlin.extension.*
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
+import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
@@ -18,79 +19,78 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_update
 
     @Inject
-    lateinit var materialDialogComponentImpl: DialogComponentImpl
+    lateinit var dialogComponent: DialogComponentImpl
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
-    private var songViewDataWrapper: SongViewDataWrapper? = null
-
-    companion object {
-        const val SONG_OBJECT_WRAPPER_KEY =
-            "thomas.example.com.guitarTrainingKotlin.fragment.song.SONG_OBJECT_WRAPPER_KEY"
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = arguments
-        if (bundle != null) {
-            if (bundle.containsKey(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY)) {
-                songViewDataWrapper =
-                        bundle.getSerializable(UserSongUpdateFragment.SONG_OBJECT_WRAPPER_KEY) as SongViewDataWrapper
-            }
-        }
-
-        handleLiveData(view)
-        initEditText()
-        handleClickValidateUpdateButton()
-    }
-
-    private fun handleLiveData(view: View) {
-        viewModel.updateSongSuccess.observeSafe(this) {
-            materialDialogComponentImpl.dismissDialog()
-            if (it != null && it == true) {
-                activity?.finish()
-            } else if (it != null && it == false) {
-                if (viewModel.errorThrowable != null) {
-//                    errorRendererComponent.requestRenderError(
-//                        viewModel.errorThrowable as Throwable,
-//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                        view
-//                    )
+        activity?.let {
+            it.intent.extras?.let { bundle ->
+                bundle.getString(ConstValues.ID_SONG)?.let { idSong ->
+                    viewModel.setIdSong(idSong)
                 }
             }
         }
+
+        viewModel.getSongById()
+
+        initiateToolbar()
+        initiateView()
+        initiateViewModelObservers()
     }
 
-    private fun initEditText() {
-        fragment_user_song_update_name.setText(songViewDataWrapper?.getTitleSong())
-        fragment_user_song_update_description.setText(songViewDataWrapper?.getArtistSong())
+    private fun initiateToolbar() {
+        activity?.setSupportActionBar(fragment_user_song_update_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
-    private fun handleClickValidateUpdateButton() {
+    private fun initiateView() {
         fragment_user_song_update_validate_button.setOnClickListener {
-
-//            materialDialogComponentImpl.showMultiChoiceDialog(
-//                getString(R.string.dialog_update_song_title),
-//                getString(R.string.dialog_update_song_confirm_content),
-//                R.color.colorPrimary,
-//                object : MultipleChoiceMaterialDialogListener {
-//                    override fun onYesSelected() {
-////                        materialDialogComponentImpl.showProgressDialog(
-////                            getString(R.string.dialog_update_song_title),
-////                            getString(R.string.dialog_update_song_content),
-////                            R.color.colorPrimary
-////                        )
-//
-//                        viewModel.checkInformationAndValidateUpdate(
-//                            songViewDataWrapper?.getId()!!, // TODO : Check that
-//                            fragment_user_song_update_name.text.toString(),
-//                            fragment_user_song_update_description.text.toString()
-//                        )
-//                    }
-//                })
+            dialogComponent.displayDualChoiceDialog(
+                R.string.dialog_update_song_title,
+                R.string.dialog_update_song_confirm_content,
+                android.R.string.yes,
+                android.R.string.cancel,
+                onPositive = {
+                    viewModel.checkInformationAndValidateUpdate(
+                        fragment_user_song_update_name.text.toString(),
+                        fragment_user_song_update_description.text.toString()
+                    )
+                },
+                onNegative = {}
+            )
         }
+    }
+
+    private fun initiateViewModelObservers() {
+        viewModel.songRetrievedLiveData.observeSafe(this) {
+            displaySongInformation(it)
+        }
+
+        viewModel.songUpdatedLiveEvent.observeSafe(this) {
+            activity?.finish()
+
+        }
+
+        viewModel.viewState.observeSafe(this) {
+            if (it.loading) {
+                fragment_user_song_update_progress_bar.show()
+            } else {
+                fragment_user_song_update_progress_bar.gone()
+            }
+        }
+
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
+        }
+
+    }
+
+    private fun displaySongInformation(songViewDataWrapper: SongViewDataWrapper) {
+        fragment_user_song_update_name.setText(songViewDataWrapper.getTitleSong())
+        fragment_user_song_update_description.setText(songViewDataWrapper.getArtistSong())
     }
 
 }

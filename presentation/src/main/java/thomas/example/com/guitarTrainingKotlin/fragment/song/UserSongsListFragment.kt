@@ -3,11 +3,11 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.example.com.guitarTrainingKotlin.R
+import thomas.example.com.guitarTrainingKotlin.activity.SongCreationActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserPanelActivity
 import thomas.example.com.guitarTrainingKotlin.activity.UserSongActivity
 import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
@@ -43,6 +43,11 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
         initiateViewModelObservers()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveSongListByUserId()
+    }
+
     private fun initiateToolbar() {
         (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_songs))
     }
@@ -50,7 +55,12 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
     private fun initiateView() {
 
         fragment_user_songs_list_recycler_view.adapter = userSongsListAdapter
-        fragment_user_songs_list_recycler_view.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        fragment_user_songs_list_recycler_view.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         fragment_user_songs_list_swipe_refresh_layout.setOnRefreshListener {
             viewModel.retrieveSongListByUserId()
@@ -67,8 +77,7 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
         }
 
         fragment_user_songs_floating_action_button.setOnClickListener {
-            val host = activity?.findViewById(R.id.user_panel_nav_host_fragment) as View
-            findNavController(host).navigate(R.id.add_song, null, null)
+            startActivity(Intent(activity, SongCreationActivity::class.java))
         }
     }
 

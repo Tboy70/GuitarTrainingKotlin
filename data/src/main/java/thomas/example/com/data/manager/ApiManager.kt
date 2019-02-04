@@ -36,6 +36,7 @@ interface ApiManager {
 
     fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
 
+
     // Song
     fun retrieveSongListByUserId(userId: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
 
@@ -49,7 +50,7 @@ interface ApiManager {
 
     fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Completable
 
-    fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreRemoteEntity>>
+    fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreRemoteEntity>>
 
     fun suppressAccount(userId: String): Completable
 }

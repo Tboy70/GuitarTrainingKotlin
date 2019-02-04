@@ -20,7 +20,7 @@ class UserDataRepository @Inject constructor(
     /**
      * No need of try / catch anymore !
      */
-    override fun getUserIdInSharedPrefs(): Single<String> {
+    override fun retrieveUserIdInSharedPrefs(): Single<String> {
         return Single.defer {
             Single.just(contentBusinessHelper.getUserIdInSharedPrefs())
         }

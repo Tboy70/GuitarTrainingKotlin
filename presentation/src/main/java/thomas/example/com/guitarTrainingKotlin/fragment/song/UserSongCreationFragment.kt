@@ -1,16 +1,12 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.song
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
-import thomas.example.com.data.manager.SharedPrefsManagerImpl
-import thomas.example.com.data.utils.InstrumentModeUtils
 import thomas.example.com.guitarTrainingKotlin.R
-import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
-import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
+import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentImpl
+import thomas.example.com.guitarTrainingKotlin.extension.*
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.viewmodel.song.UserSongCreationViewModel
 import javax.inject.Inject
@@ -24,66 +20,63 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: DialogComponentImpl
+    lateinit var dialogComponent: DialogComponentImpl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handleLiveData(view)
-        handleClickCreateSong()
+        initiateToolbar()
+        initiateView()
+        initiateViewModelObservers()
     }
 
-    private fun handleLiveData(view: View) {
-        viewModel.creationSongSuccess.observeSafe(this) {
-            materialDialogComponentImpl.dismissDialog()
-            if (it != null && it == true) {
-                fragmentManager?.popBackStack()
-            } else if (it != null && it == false) {
-                if (viewModel.errorThrowable != null) {
-//                    errorRendererComponent.requestRenderError(
-//                        viewModel.errorThrowable as Throwable,
-//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                        view
-//                    )
-                }
-                fragmentManager?.popBackStack()
-            }
-        }
-
-        viewModel.creationSongNotLaunch.observeSafe(this) {
-            materialDialogComponentImpl.dismissDialog()
-            if (it != null && it == true) {
-                if (viewModel.errorThrowable != null) {
-//                    errorRendererComponent.requestRenderError(
-//                        Exception(getString(R.string.error_field_not_filled)),
-//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                        view
-//                    )
-                }
-            }
-        }
+    private fun initiateToolbar() {
+        activity?.setSupportActionBar(fragment_user_song_creation_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
-    private fun handleClickCreateSong() {
+    private fun initiateView() {
         fragment_user_song_creation_validation.setOnClickListener {
-//            materialDialogComponentImpl.showProgressDialog(
-//                getString(R.string.dialog_creation_song_title),
-//                getString(R.string.dialog_creation_song_content),
-//                R.color.colorPrimary
-//            )
-
-            val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(
-                prefs.getString(
-                    SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
-                    SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
-                )
-            ).toString()
-            viewModel.checkInformationAndValidateCreation(
-                fragment_user_song_creation_name.text.toString(),
-                fragment_user_song_creation_artist.text.toString(),
-                instrumentMode
+            dialogComponent.displayDualChoiceDialog(
+                R.string.dialog_creation_song_title,
+                R.string.dialog_creation_song_content,
+                android.R.string.yes,
+                android.R.string.no,
+                onPositive = {
+                    viewModel.checkInformationAndValidateCreation(
+                        fragment_user_song_creation_name.text.toString(),
+                        fragment_user_song_creation_artist.text.toString()
+                    )
+                },
+                onNegative = {}
             )
+        }
+    }
+
+    private fun initiateViewModelObservers() {
+        viewModel.songCreatedLiveEvent.observeSafe(this) {
+            if (it != null && it == true) {
+                activity?.finish()
+            }
+        }
+
+        viewModel.informationNotRightLiveEvent.observeSafe(this) {
+            if (it) {
+                context?.let { context ->
+                    errorRendererComponent.displayErrorString(context.getString(R.string.error_wrong_info))
+                }
+            }
+        }
+
+        viewModel.viewState.observeSafe(this) {
+            if (it.loading) {
+                fragment_user_song_creation_progress_bar.show()
+            } else {
+                fragment_user_song_creation_progress_bar.gone()
+            }
+        }
+
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
         }
     }
 }

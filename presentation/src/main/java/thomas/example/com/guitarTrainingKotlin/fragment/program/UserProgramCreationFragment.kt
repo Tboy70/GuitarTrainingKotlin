@@ -18,7 +18,6 @@ import thomas.example.com.guitarTrainingKotlin.component.ErrorRendererComponentI
 import thomas.example.com.guitarTrainingKotlin.component.ExerciseUIComponent
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
 import thomas.example.com.guitarTrainingKotlin.component.listener.ExercisesUIComponentListener
-import thomas.example.com.guitarTrainingKotlin.component.listener.SingleChoiceMaterialDialogListener
 import thomas.example.com.guitarTrainingKotlin.extension.observeSafe
 import thomas.example.com.guitarTrainingKotlin.fragment.BaseFragment
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
@@ -67,7 +66,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
 
         viewModel.viewState.observeSafe(this) {
             if (it.displayingLoading) {
-//                materialDialogComponentImpl.showProgressDialog(
+//                dialogComponent.showProgressDialog(
 //                        getString(R.string.dialog_login_title),
 //                        getString(R.string.dialog_login_content),
 //                        R.color.colorPrimary
@@ -114,7 +113,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
             }
 
             val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-            val instrumentMode = InstrumentModeUtils.getIntValueFromInstrumentMode(
+            val instrumentMode = InstrumentModeUtils.getRemoteValueFromInstrumentMode(
                     prefs.getString(
                             SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
                             SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
@@ -138,7 +137,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
                     val title = getString(R.string.generic_exercise_choice_creation_program)
                     val items = exercisesArray.toList()
 
-//                    materialDialogComponentImpl.showSingleChoiceDialog(
+//                    dialogComponent.displaySingleListChoiceDialog(
 //                            title,
 //                            items,
 //                            selectedItem,

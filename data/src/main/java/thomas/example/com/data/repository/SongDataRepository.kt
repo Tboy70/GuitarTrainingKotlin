@@ -61,9 +61,9 @@ class SongDataRepository @Inject constructor(
         }
     }
 
-    override fun retrieveSongScoreHistoric(idSong: String): Single<List<Score>> {
+    override fun retrieveSongScoreHistory(idSong: String): Single<List<Score>> {
         return Single.defer {
-            apiBusinessHelper.retrieveSongScoreHistoric(idSong).map {
+            apiBusinessHelper.retrieveSongScoreHistory(idSong).map {
                 scoreEntityDataMapper.transformFromEntity(it)
             }
         }

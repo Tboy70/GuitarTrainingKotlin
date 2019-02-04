@@ -14,7 +14,7 @@ class CreateProgram @Inject constructor(
 ) : CompletableParametrizedUseCase<CreateProgram.Params>() {
 
     override fun build(params: Params): Completable {
-        return userRepository.getUserIdInSharedPrefs().map {
+        return userRepository.retrieveUserIdInSharedPrefs().map {
             params.program.userId = it
         }.flatMapCompletable {
             programRepository.createProgram(params.program, params.exercisesList)

@@ -20,6 +20,8 @@
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
 
+    <string name="toolbar_title_song_creation">Création d\'une chanson</string>
+
     <!-- DIALOGS-->
     <string name="dialog_login_title">Connexion en cours</string>
     <string name="dialog_login_content">Veuillez patienter …</string>
@@ -43,7 +45,8 @@
 
     <string name="dialog_update_program_title">Mise à jour du programme</string>
     <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?</string>
+    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?
+    </string>
 
     <string name="dialog_remove_program_title">Supression du programme</string>
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
@@ -54,9 +57,9 @@
     <string name="dialog_details_song_score_title">Vous avez fini ? Notez votre performance</string>
 
     <string name="dialog_creation_song_title">Création de la chanson</string>
-    <string name="dialog_creation_song_content">Création de la chanson en cours. Veuillez patienter …</string>
+    <string name="dialog_creation_song_content">Êtes-vous sûr de vouloir créer cette chanson ?</string>
 
-    <string name="dialog_update_song_title">Mise à jour du programme</string>
+    <string name="dialog_update_song_title">Mise à jour de la chanson</string>
     <string name="dialog_update_song_content">Mise à jour de la chanson en cours. Veuillez patienter …</string>
     <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chansons ?</string>
 
@@ -157,7 +160,7 @@
     <!-- USER SONG CREATION -->
     <string name="song_title">Titre de la chanson</string>
     <string name="song_artist">Nom de l\'artiste</string>
-    <string name="user_song_creation_title">Création d\'un chanson</string>
+    <string name="user_song_creation_title">Création d\'une chanson</string>
     <string name="user_song_creation_button_validate_text">Créer la chanson</string>
 
     <!-- SETTINGS -->
@@ -282,6 +285,7 @@
     <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
     <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
 
+    <string name="error_wrong_info">Mauvaises information</string>
     <string name="error_retrieve_song">Erreur pendant la récupération de la chanson</string>
     <string name="error_retrieve_songs">Erreur pendant la récupération des chansons</string>
     <string name="error_creation_song">Erreur pendant la création de la chanson</string>

@@ -2,13 +2,14 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import android.util.LongSparseArray
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
 import thomas.example.com.guitarTrainingKotlin.utils.ConstValues
 import thomas.example.com.guitarTrainingKotlin.utils.DateTimeUtils
+import thomas.example.com.guitarTrainingKotlin.view.datawrapper.SongViewDataWrapper
+import thomas.example.com.guitarTrainingKotlin.view.state.song.UserSongDetailsViewState
+import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.interactor.song.RemoveSong
 import thomas.example.com.interactor.song.RetrieveSongById
-import thomas.example.com.interactor.song.RetrieveSongScoreHistoric
+import thomas.example.com.interactor.song.RetrieveSongScoreHistory
 import thomas.example.com.interactor.song.SendScoreFeedback
 import thomas.example.com.model.Score
 import thomas.example.com.model.ScoreFeedback
@@ -18,93 +19,140 @@ import java.util.*
 import javax.inject.Inject
 
 class UserSongDetailsViewModel @Inject constructor(
-        private val retrieveSongById: RetrieveSongById,
-        private val removeSong: RemoveSong,
-        private val sendScoreFeedback: SendScoreFeedback,
-        private val retrieveSongScoreHistoric: RetrieveSongScoreHistoric
-) : ViewModel() {
+    private val removeSong: RemoveSong,
+    private val retrieveSongById: RetrieveSongById,
+    private val sendScoreFeedback: SendScoreFeedback,
+    private val retrieveSongScoreHistory: RetrieveSongScoreHistory
+) : StateViewModel<UserSongDetailsViewState>() {
 
-    lateinit var userSongViewDataWrapper: SongViewDataWrapper
-    lateinit var timestampKeyList: LongSparseArray<Float>
+    override val currentViewState = UserSongDetailsViewState()
 
-    val finishLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val finishRetrieveSongForDetails: MutableLiveData<Boolean> = MutableLiveData()
-    val finishSongDeletion: MutableLiveData<Boolean> = MutableLiveData()
-    val finishFeedbackSending: MutableLiveData<Boolean> = MutableLiveData()
-    val finishRetrieveSongScoreHistoric: MutableLiveData<Boolean> = MutableLiveData()
+    val songDeletedLiveEvent: MutableLiveData<Boolean> = MutableLiveData()
+    val songRetrievedLiveData: MutableLiveData<SongViewDataWrapper> = MutableLiveData()
+    val scoreHistoryRetrieved: MutableLiveData<LongSparseArray<Float>> = MutableLiveData()
 
-    var errorThrowable: Throwable? = null
     var referenceTimestamp: Long = ConstValues.CONST_DEFAULT_TIMESTAMP
 
-    fun getSongById(idProgram: String) {
-        retrieveSongById.subscribe(
-                params = RetrieveSongById.Params.toRetrieve(idProgram),
-                onSuccess = {
-                    userSongViewDataWrapper = SongViewDataWrapper(it)
-                    finishRetrieveSongForDetails.postValue(true)
-                    finishLoading.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    finishRetrieveSongForDetails.postValue(false)
-                }
-        )
+    private var idSong: String? = null
+
+    override fun onCleared() {
+        super.onCleared()
+        retrieveSongById.unsubscribe()
+        removeSong.unsubscribe()
+        sendScoreFeedback.unsubscribe()
+        retrieveSongScoreHistory.unsubscribe()
     }
 
-    fun removeSong(idProgram: String) {
-        removeSong.subscribe(
-                params = RemoveSong.Params.toRemove(idProgram),
-                onComplete = {
-                    finishSongDeletion.postValue(true)
-                    finishLoading.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    finishSongDeletion.postValue(false)
-                }
-        )
+    fun setIdSong(idSong: String) {
+        this.idSong = idSong
     }
 
-    fun sendSongFeedback(scoreFeedbackValue: Int, idSong: String) {
-
-        val scoreFeedback = ScoreFeedback()
-        scoreFeedback.scoreFeedback = scoreFeedbackValue
-
-        sendScoreFeedback.subscribe(
-                params = SendScoreFeedback.Params.toSend(scoreFeedback, idSong),
-                onComplete = {
-                    finishFeedbackSending.postValue(true)
-                },
-                onError = {
-                    errorThrowable = it
-                    finishFeedbackSending.postValue(false)
-                }
-        )
+    fun getIdSong(): String? {
+        return idSong
     }
 
-    fun retrieveSongScoreHistoric(idSong: String) {
-        retrieveSongScoreHistoric.subscribe(
-                params = RetrieveSongScoreHistoric.Params.toRetrieve(idSong),
+    fun retrieveSongScoreHistory() {
+        viewState.update {
+            loading = true
+        }
+        idSong?.let { idSong ->
+            retrieveSongScoreHistory.subscribe(
+                params = RetrieveSongScoreHistory.Params.toRetrieve(idSong),
                 onSuccess = {
                     formatRetrievedList(it)
+                    viewState.update {
+                        loading = false
+                    }
                 },
                 onError = {
-                    errorThrowable = it
-                    finishRetrieveSongScoreHistoric.postValue(false)
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
                 }
-        )
+            )
+        }
+    }
+
+    fun getSongById() {
+        viewState.update {
+            loading = true
+        }
+        this.idSong?.let { idSong ->
+            retrieveSongById.subscribe(
+                params = RetrieveSongById.Params.toRetrieve(idSong),
+                onSuccess = {
+                    songRetrievedLiveData.postValue(SongViewDataWrapper(it))
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
+                }
+            )
+        }
+    }
+
+    fun sendSongFeedback(rateValue: String) {
+        viewState.update {
+            loading = true
+        }
+        idSong?.let { idSong ->
+            sendScoreFeedback.subscribe(
+                params = SendScoreFeedback.Params.toSend(ScoreFeedback(rateValue.toInt()), idSong),
+                onComplete = {
+                    retrieveSongScoreHistory()
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
+                }
+            )
+        }
+    }
+
+    fun removeSong() {
+        viewState.update {
+            loading = true
+        }
+        idSong?.let { idSong ->
+            removeSong.subscribe(
+                params = RemoveSong.Params.toRemove(idSong),
+                onComplete = {
+                    songDeletedLiveEvent.postValue(true)
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    songDeletedLiveEvent.postValue(false)
+                    viewState.update {
+                        loading = false
+                    }
+                }
+            )
+        }
     }
 
     private fun formatRetrievedList(scoreList: List<Score>) {
-        timestampKeyList = convertHistoricDatesToTimestamp(scoreList)
-        finishRetrieveSongScoreHistoric.postValue(true)
+        convertHistoricDatesToTimestamp(scoreList)
     }
 
-    private fun convertHistoricDatesToTimestamp(scoreList: List<Score>): LongSparseArray<Float> {
+    private fun convertHistoricDatesToTimestamp(scoreList: List<Score>) {
         val timestampKeyList = LongSparseArray<Float>()
         val dateFormat = SimpleDateFormat(DateTimeUtils.FROM_API_FORMAT, Locale.FRANCE)
 
-        for (score in scoreList) {
+        scoreList.forEach { score ->
             val timestamp = Timestamp(dateFormat.parse(score.dateScore).time).time / 1000
             if (timestamp < referenceTimestamp) {
                 referenceTimestamp = timestamp
@@ -113,19 +161,12 @@ class UserSongDetailsViewModel @Inject constructor(
         }
 
         val timestampKeyListMinusReferenceTimestamp = LongSparseArray<Float>()
+
         for (i in 0 until timestampKeyList.size()) {
             val key = timestampKeyList.keyAt(i)
             timestampKeyListMinusReferenceTimestamp.put(key - referenceTimestamp, timestampKeyList.get(key))
         }
 
-        return timestampKeyListMinusReferenceTimestamp
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        retrieveSongById.unsubscribe()
-        removeSong.unsubscribe()
-        sendScoreFeedback.unsubscribe()
-        retrieveSongScoreHistoric.unsubscribe()
+        scoreHistoryRetrieved.postValue(timestampKeyListMinusReferenceTimestamp)
     }
 }

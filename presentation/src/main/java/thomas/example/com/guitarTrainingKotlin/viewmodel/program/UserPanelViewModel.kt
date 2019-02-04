@@ -2,10 +2,9 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.program
 
 import android.app.Application
 import android.preference.PreferenceManager
-import androidx.lifecycle.MutableLiveData
 import thomas.example.com.data.manager.SharedPrefsManagerImpl
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.UserViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.view.state.UserPanelActivityViewState
+import thomas.example.com.guitarTrainingKotlin.view.state.user.UserPanelActivityViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.AndroidStateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.user.LogoutUser
@@ -28,8 +27,6 @@ class UserPanelViewModel @Inject constructor(
     val logoutSucceedLiveEvent = SingleLiveEvent<Boolean>()
     val userNotRetrievedLiveEvent = SingleLiveEvent<Boolean>()
     val userRetrievedLiveEvent = SingleLiveEvent<UserViewDataWrapper>()
-
-    var errorThrowable: Throwable? = null
 
     init {
         retrieveInstrumentMode()

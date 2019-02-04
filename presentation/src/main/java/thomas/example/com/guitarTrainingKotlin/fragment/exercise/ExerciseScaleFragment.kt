@@ -109,7 +109,7 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
             }
         }
 
-//        materialDialogComponentImpl.showSingleChoiceDialog(
+//        dialogComponent.displaySingleListChoiceDialog(
 //            title,
 //            items,
 //            mSelectedItem,

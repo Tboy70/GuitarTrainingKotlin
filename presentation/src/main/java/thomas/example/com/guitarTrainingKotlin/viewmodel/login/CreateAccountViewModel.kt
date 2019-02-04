@@ -1,7 +1,7 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
-import thomas.example.com.guitarTrainingKotlin.view.state.CreateAccountFragmentViewState
+import thomas.example.com.guitarTrainingKotlin.view.state.user.CreateAccountFragmentViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.interactor.user.CreateNewUser
 import thomas.example.com.model.User
@@ -11,7 +11,8 @@ class CreateAccountViewModel @Inject constructor(
     private val createNewUser: CreateNewUser
 ) : StateViewModel<CreateAccountFragmentViewState>() {
 
-    override val currentViewState = CreateAccountFragmentViewState()
+    override val currentViewState =
+        CreateAccountFragmentViewState()
 
     val userCreationLiveData = MutableLiveData<Boolean>()
 

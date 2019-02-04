@@ -11,5 +11,5 @@ data class SongRemoteEntity(
     @SerializedName("nbPlay") var nbPlay: Int = 0,
     @SerializedName("lastPlay") var lastPlay: String = "",
     @SerializedName("userId") var userId: String = "",
-    @SerializedName("idInstrument") var idInstrument: String = ""
+    @SerializedName("idInstrument") var idInstrument: Int = 1
 )

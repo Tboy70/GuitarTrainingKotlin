@@ -83,7 +83,7 @@ class ExerciseModeFragment : AbstractExerciseFragment() {
         val title = getString(R.string.exercise_mode_dialog_choice_mode_text)
         items = resources.getStringArray(R.array.list_modes).asList()
 
-//        materialDialogComponentImpl.showSingleChoiceDialog(
+//        dialogComponent.displaySingleListChoiceDialog(
 //            title,
 //            items,
 //            mSelectedItem,

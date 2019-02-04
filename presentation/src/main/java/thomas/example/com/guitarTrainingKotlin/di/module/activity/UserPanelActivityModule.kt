@@ -35,10 +35,6 @@ abstract class UserPanelActivityModule {
 
     @PerFragment
     @ContributesAndroidInjector
-    abstract fun userSongCreationFragmentInjector(): UserSongCreationFragment
-
-    @PerFragment
-    @ContributesAndroidInjector
     abstract fun userSettingsFragmentInjector(): UserSettingsFragment
 
     @PerFragment

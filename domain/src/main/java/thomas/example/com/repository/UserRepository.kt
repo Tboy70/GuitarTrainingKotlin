@@ -7,7 +7,7 @@ import thomas.example.com.model.User
 interface UserRepository {
 
     // Shared prefs
-    fun getUserIdInSharedPrefs(): Single<String>
+    fun retrieveUserIdInSharedPrefs(): Single<String>
 
     fun setInstrumentModeInSharedPrefs(instrumentMode: String): Single<String>
 
@@ -23,5 +23,4 @@ interface UserRepository {
     fun logoutUser(): Completable
 
     fun suppressAccount(userId: String): Completable
-
 }

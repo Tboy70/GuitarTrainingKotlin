@@ -46,7 +46,7 @@ class APIBusinessHelper @Inject constructor(
     fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
         return apiManager.retrieveProgramsListByUserId(
             userId,
-            InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+            InstrumentModeUtils.getRemoteValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
             programRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -99,7 +99,7 @@ class APIBusinessHelper @Inject constructor(
     fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
         return apiManager.retrieveSongListByUserId(
             userId,
-            InstrumentModeUtils.getIntValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+            InstrumentModeUtils.getRemoteValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
         ).map {
             songRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -131,8 +131,8 @@ class APIBusinessHelper @Inject constructor(
         )
     }
 
-    fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreEntity>> {
-        return apiManager.retrieveSongScoreHistoric(idSong).map {
+    fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreEntity>> {
+        return apiManager.retrieveSongScoreHistory(idSong).map {
             scoreRemoteEntityDataMapper.transformToEntity(it)
         }
     }

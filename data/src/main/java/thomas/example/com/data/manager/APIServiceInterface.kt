@@ -54,7 +54,7 @@ interface APIServiceInterface {
     fun retrieveSongListByUserId(@Path("userId") userId: String, @Path("instrumentMode") instrumentModeValue: Int): Single<List<SongRemoteEntity>>
 
     @GET("song/{idSong}")
-    fun retrieveSongFromId(@Path("idSong") idSong: String): Single<Response<SongRemoteEntity>>
+    fun retrieveSongFromId(@Path("idSong") idSong: String): Single<SongRemoteEntity>
 
     @POST("song")
     fun createSong(@Body songRemoteEntity: SongRemoteEntity): Completable
@@ -69,5 +69,5 @@ interface APIServiceInterface {
     fun sendScoreFeedback(@Body scoreFeedback: ScoreFeedbackRemoteEntity, @Path("idSong") idSong: String): Completable
 
     @GET("score/{idSong}")
-    fun retrieveSongScoreHistoric(@Path("idSong") idSong: String): Single<Response<List<ScoreRemoteEntity>>>
+    fun retrieveSongScoreHistory(@Path("idSong") idSong: String): Single<List<ScoreRemoteEntity>>
 }

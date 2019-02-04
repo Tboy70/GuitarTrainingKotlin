@@ -2,7 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
 import thomas.example.com.guitarTrainingKotlin.view.datawrapper.ProgramViewDataWrapper
-import thomas.example.com.guitarTrainingKotlin.view.state.UserProgramListViewState
+import thomas.example.com.guitarTrainingKotlin.view.state.program.UserProgramListViewState
 import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.interactor.user.RetrieveProgramsListByUserId
 import javax.inject.Inject
@@ -11,7 +11,8 @@ class UserProgramsListViewModel @Inject constructor(
     private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId
 ) : StateViewModel<UserProgramListViewState>() {
 
-    override val currentViewState = UserProgramListViewState()
+    override val currentViewState =
+        UserProgramListViewState()
 
     private var userId: String? = null
 

@@ -92,17 +92,17 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
 //        viewModel.viewState.observeSafe(this) {
 //            when {
-//                it.displayingLoadingGetProgram -> materialDialogComponentImpl.showProgressDialog(
+//                it.displayingLoadingGetProgram -> dialogComponent.showProgressDialog(
 //                        getString(R.string.dialog_details_program_title),
 //                        getString(R.string.dialog_details_program_content),
 //                        R.color.colorPrimary
 //                )
-//                it.displayLoadingRemoveProgram -> materialDialogComponentImpl.showProgressDialog(
+//                it.displayLoadingRemoveProgram -> dialogComponent.showProgressDialog(
 //                        getString(R.string.dialog_remove_program_title),
 //                        getString(R.string.dialog_remove_program_content),
 //                        R.color.colorPrimary
 //                )
-//                else -> materialDialogComponentImpl.dismissDialog()
+//                else -> dialogComponent.dismissDialog()
 //            }
 //        }
 
@@ -146,7 +146,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
     private fun handleRemoveProgram() {
         fragment_user_program_details_remove_button.setOnClickListener {
-//            materialDialogComponentImpl.showMultiChoiceDialog(
+//            dialogComponent.showMultiChoiceDialog(
 //                    getString(R.string.dialog_remove_program_title),
 //                    getString(R.string.dialog_remove_program_confirm_content),
 //                    R.color.colorPrimary,

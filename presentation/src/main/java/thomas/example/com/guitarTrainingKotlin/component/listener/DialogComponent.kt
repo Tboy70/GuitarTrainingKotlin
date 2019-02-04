@@ -1,7 +1,6 @@
 package thomas.example.com.guitarTrainingKotlin.component.listener
 
 import androidx.annotation.StringRes
-import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 
 interface DialogComponent {
     fun dismissDialog()
@@ -23,4 +22,6 @@ interface DialogComponent {
     )
 
     fun showTimerDialog(durationLeft: Long, onTimerDialogDismiss: OnTimerDialogDismiss)
+
+    fun displaySingleListChoiceDialog(title: Int, items: Int, positiveText: Int, onPositive: (text: String) -> Unit)
 }

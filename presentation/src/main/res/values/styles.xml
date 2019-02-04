@@ -14,5 +14,8 @@
     <style name="Theme.App.AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowNoTitle">false</item> <!-- that's the important bit -->
     </style>
+    <style name="ToolbarAppTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 
 </resources>

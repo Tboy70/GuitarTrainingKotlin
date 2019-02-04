@@ -1,4 +1,4 @@
-package thomas.example.com.guitarTrainingKotlin.view.state
+package thomas.example.com.guitarTrainingKotlin.view.state.song
 
 data class UserSongListViewState(
     var displayError: Boolean = false,

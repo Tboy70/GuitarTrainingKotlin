@@ -13,11 +13,7 @@ class CreateSong @Inject constructor(
 ) : CompletableParametrizedUseCase<CreateSong.Params>() {
 
     override fun build(params: CreateSong.Params): Completable {
-        return userRepository.getUserIdInSharedPrefs().map {
-            params.song.userId = it
-        }.flatMapCompletable {
-            songRepository.createSong(params.song)
-        }
+        return songRepository.createSong(params.song)
     }
 
     class Params(val song: Song) {

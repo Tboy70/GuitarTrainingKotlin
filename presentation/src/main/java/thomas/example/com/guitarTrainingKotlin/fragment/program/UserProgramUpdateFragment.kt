@@ -99,7 +99,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                         val title = getString(R.string.generic_exercise_choice_creation_program)
                         val items = exercisesArray.toList()
 
-//                        materialDialogComponentImpl.showSingleChoiceDialog(
+//                        dialogComponent.displaySingleListChoiceDialog(
 //                            title,
 //                            items,
 //                            selectedItem,
@@ -150,13 +150,13 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_program_update_validate_button.setOnClickListener {
 
-//            materialDialogComponentImpl.showMultiChoiceDialog(
+//            dialogComponent.showMultiChoiceDialog(
 //                getString(R.string.dialog_update_program_title),
 //                getString(R.string.dialog_update_program_confirm_content),
 //                R.color.colorPrimary,
 //                object : MultipleChoiceMaterialDialogListener {
 //                    override fun onYesSelected() {
-//                        materialDialogComponentImpl.showProgressDialog(
+//                        dialogComponent.showProgressDialog(
 //                            getString(R.string.dialog_update_program_title),
 //                            getString(R.string.dialog_update_program_content),
 //                            R.color.colorPrimary

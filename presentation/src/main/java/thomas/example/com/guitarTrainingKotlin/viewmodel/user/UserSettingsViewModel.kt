@@ -1,9 +1,8 @@
 package thomas.example.com.guitarTrainingKotlin.viewmodel.user
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import thomas.example.com.guitarTrainingKotlin.view.state.UserSettingsViewState
-import thomas.example.com.guitarTrainingKotlin.viewmodel.base.AndroidStateViewModel
+import thomas.example.com.guitarTrainingKotlin.view.state.user.UserSettingsViewState
+import thomas.example.com.guitarTrainingKotlin.viewmodel.base.StateViewModel
 import thomas.example.com.guitarTrainingKotlin.viewmodel.livedata.SingleLiveEvent
 import thomas.example.com.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.example.com.interactor.sharedprefs.SetInstrumentModeInSharedPrefs
@@ -11,11 +10,10 @@ import thomas.example.com.interactor.user.SuppressAccount
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
-    application: Application,
     private val suppressAccount: SuppressAccount,
     private val retrieveInstrumentsModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs,
     private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs
-) : AndroidStateViewModel<UserSettingsViewState>(application) {
+) : StateViewModel<UserSettingsViewState>() {
 
     override val currentViewState = UserSettingsViewState()
 

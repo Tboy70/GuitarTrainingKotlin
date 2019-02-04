@@ -116,13 +116,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity> {
-        return apiService.retrieveSongFromId(idSong).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_SONG)
-            }
-        }
+        return apiService.retrieveSongFromId(idSong)
     }
 
     override fun createSong(songRemoteEntity: SongRemoteEntity): Completable {
@@ -144,13 +138,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong)
     }
 
-    override fun retrieveSongScoreHistoric(idSong: String): Single<List<ScoreRemoteEntity>> {
-        return apiService.retrieveSongScoreHistoric(idSong).map {
-            if (it.isSuccessful && it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_SCORE_SONG_HISTORIC)
-            }
-        }
+    override fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreRemoteEntity>> {
+        return apiService.retrieveSongScoreHistory(idSong)
     }
 }

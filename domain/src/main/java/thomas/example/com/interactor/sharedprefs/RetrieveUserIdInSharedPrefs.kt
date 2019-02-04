@@ -10,6 +10,6 @@ class RetrieveUserIdInSharedPrefs @Inject constructor(
 ) : SingleUseCase<String>() {
 
     override fun build(): Single<String> {
-        return userRepository.getUserIdInSharedPrefs()
+        return userRepository.retrieveUserIdInSharedPrefs()
     }
 }

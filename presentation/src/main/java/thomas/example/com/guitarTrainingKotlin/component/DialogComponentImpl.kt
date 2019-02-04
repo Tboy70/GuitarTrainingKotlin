@@ -1,8 +1,8 @@
 package thomas.example.com.guitarTrainingKotlin.component
 
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import thomas.example.com.guitarTrainingKotlin.activity.BaseActivity
-import thomas.example.com.guitarTrainingKotlin.activity.ProgramActivity
 import thomas.example.com.guitarTrainingKotlin.component.listener.DialogComponent
 import thomas.example.com.guitarTrainingKotlin.component.listener.OnTimerDialogDismiss
 import thomas.example.com.guitarTrainingKotlin.di.annotation.PerActivity
@@ -24,7 +24,7 @@ class DialogComponentImpl @Inject constructor(
 //            .show()
 //    }
 //
-//    override fun showSingleChoiceDialog(
+//    override fun displaySingleListChoiceDialog(
 //            title: String, items: List<String>, selectedItem: String?, color: Int, cancelable: Boolean,
 //            singleChoiceMaterialDialogListener: SingleChoiceMaterialDialogListener
 //    ) {
@@ -105,6 +105,17 @@ class DialogComponentImpl @Inject constructor(
             }
         }
 
+    }
+
+    override fun displaySingleListChoiceDialog(title: Int, items: Int, positiveText: Int, onPositive: (text: String) -> Unit) {
+        dismissDialog()
+        materialDialog = MaterialDialog(baseActivity).show {
+            title(title)
+            listItemsSingleChoice(items) { _, _, text ->
+                onPositive(text)
+            }
+            positiveButton(res = positiveText)
+        }
     }
 
     override fun displayDualChoiceDialog(

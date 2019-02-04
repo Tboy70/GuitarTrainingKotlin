@@ -30,6 +30,10 @@ abstract class ActivityInjectorModule {
     abstract fun userSongActivityInjector(): UserSongActivity
 
     @PerActivity
+    @ContributesAndroidInjector(modules = [SongCreationActivityModule::class])
+    abstract fun songCreationActivityInjector(): SongCreationActivity
+
+    @PerActivity
     @ContributesAndroidInjector(modules = [ProgramActivityModule::class])
     abstract fun programActivityInjector(): ProgramActivity
 }
