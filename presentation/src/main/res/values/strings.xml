@@ -20,7 +20,9 @@
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
 
+    <string name="toolbar_title_song_details">Ma chanson</string>
     <string name="toolbar_title_song_creation">Création d\'une chanson</string>
+    <string name="toolbar_title_song_update">Modification de la chanson</string>
 
     <!-- DIALOGS-->
     <string name="dialog_login_title">Connexion en cours</string>
@@ -61,7 +63,7 @@
 
     <string name="dialog_update_song_title">Mise à jour de la chanson</string>
     <string name="dialog_update_song_content">Mise à jour de la chanson en cours. Veuillez patienter …</string>
-    <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chansons ?</string>
+    <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chanson ?</string>
 
     <string name="dialog_remove_song_title">Suppression de la chanson</string>
     <string name="dialog_remove_song_content">Suppression de la chanson en cours. Veuillez patientez …</string>

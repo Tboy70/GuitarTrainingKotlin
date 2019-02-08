@@ -1,7 +1,9 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
@@ -30,7 +32,17 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
         initiateViewModelObservers()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                activity?.finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initiateToolbar() {
+        setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_user_song_creation_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 

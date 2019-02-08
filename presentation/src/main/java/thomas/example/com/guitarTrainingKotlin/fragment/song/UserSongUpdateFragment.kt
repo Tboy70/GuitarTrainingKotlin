@@ -1,7 +1,9 @@
 package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.example.com.guitarTrainingKotlin.R
 import thomas.example.com.guitarTrainingKotlin.component.DialogComponentImpl
@@ -24,6 +26,8 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
+    private var navHost: View? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -33,6 +37,7 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
                     viewModel.setIdSong(idSong)
                 }
             }
+            navHost = it.findViewById(R.id.user_song_nav_host_fragment) as View
         }
 
         viewModel.getSongById()
@@ -42,7 +47,19 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
         initiateViewModelObservers()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                navHost?.let { view ->
+                    Navigation.findNavController(view).navigateUp()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initiateToolbar() {
+        setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_user_song_update_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
@@ -71,7 +88,6 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
 
         viewModel.songUpdatedLiveEvent.observeSafe(this) {
             activity?.finish()
-
         }
 
         viewModel.viewState.observeSafe(this) {

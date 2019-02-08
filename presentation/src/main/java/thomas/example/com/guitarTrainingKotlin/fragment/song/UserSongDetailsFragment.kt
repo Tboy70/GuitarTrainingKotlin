@@ -2,6 +2,7 @@ package thomas.example.com.guitarTrainingKotlin.fragment.song
 
 import android.os.Bundle
 import android.util.LongSparseArray
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.Navigation.findNavController
 import com.github.mikephil.charting.components.XAxis
@@ -32,6 +33,8 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
     @Inject
     lateinit var dialogComponent: DialogComponentImpl
 
+    private var navHost: View? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,6 +44,8 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
                     viewModel.setIdSong(idSong)
                 }
             }
+
+            navHost = it.findViewById(R.id.user_song_nav_host_fragment) as View
         }
 
         viewModel.retrieveSongScoreHistory()
@@ -51,7 +56,17 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
         initiateViewModelObservers()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                activity?.finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initiateToolbar() {
+        setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_user_song_details_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
@@ -83,9 +98,9 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
         fragment_user_song_details_update_button.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(ConstValues.ID_SONG, viewModel.getIdSong())
-
-            val host = activity?.findViewById(R.id.user_song_nav_host_fragment) as View
-            findNavController(host).navigate(R.id.user_song_update, bundle, null)
+            navHost?.let { view ->
+                findNavController(view).navigate(R.id.user_song_update, bundle, null)
+            }
         }
     }
 
