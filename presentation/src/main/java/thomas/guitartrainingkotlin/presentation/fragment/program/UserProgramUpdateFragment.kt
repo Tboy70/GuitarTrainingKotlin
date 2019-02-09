@@ -11,9 +11,9 @@ import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.ExerciseUIComponent
+import thomas.guitartrainingkotlin.presentation.component.ExercisesUIComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponentListener
+import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
@@ -21,6 +21,8 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
 import thomas.guitartrainingkotlin.domain.model.Exercise
+import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import javax.inject.Inject
 
 class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
@@ -29,13 +31,13 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_program_update
 
     @Inject
-    lateinit var exercisesUIComponent: ExerciseUIComponent
+    lateinit var exercisesUIComponent: ExercisesUIComponent
 
     @Inject
-    lateinit var materialDialogComponentImpl: DialogComponentImpl
+    lateinit var materialDialogComponentImpl: DialogComponent
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponentImpl
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     private lateinit var exercisesArray: Array<String>
 
@@ -64,7 +66,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
         handleLiveData(view)
         initEditText()
-        initExercisesList()
+//        initExercisesList()
         handleClickValidateUpdateButton()
     }
 
@@ -90,49 +92,48 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
         fragment_user_program_update_description.setText(programViewDataWrapper?.getDescription())
     }
 
-    private fun initExercisesList() {
-        for (exercise in programViewDataWrapper?.getExercises().orEmpty()) {
-            val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(
-                object : ExercisesUIComponentListener {
-
-                    override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
-                        val title = getString(R.string.generic_exercise_choice_creation_program)
-                        val items = exercisesArray.toList()
-
-//                        dialogComponent.displaySingleListChoiceDialog(
-//                            title,
-//                            items,
-//                            selectedItem,
-//                            R.color.colorPrimary,
-//                            true,
-//                            object : SingleChoiceMaterialDialogListener {
-//                                override fun onItemSelected(selectedItem: String) {
-//                                    this@UserProgramUpdateFragment.selectedItem = selectedItem
-//                                    buttonTypeExercise.text = selectedItem
-//                                }
+//    private fun initExercisesList() {
+//        for (exercise in programViewDataWrapper?.getExercises().orEmpty()) {
+//            val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(
+//                object : ExercisesUIComponent {
+//                    override fun setTypeExerciseButtonAction(buttonTypeExercise: Button, durationExercise: EditText) {
+//                        val title = getString(R.string.generic_exercise_choice_creation_program)
+//                        val items = exercisesArray.toList()
 //
-//                                override fun getPositionSelected(which: Int) {
-//                                }
+////                        dialogComponent.displaySingleListChoiceDialog(
+////                            title,
+////                            items,
+////                            selectedItem,
+////                            R.color.colorPrimary,
+////                            true,
+////                            object : SingleChoiceMaterialDialogListener {
+////                                override fun onItemSelected(selectedItem: String) {
+////                                    this@UserProgramUpdateFragment.selectedItem = selectedItem
+////                                    buttonTypeExercise.text = selectedItem
+////                                }
+////
+////                                override fun getPositionSelected(which: Int) {
+////                                }
+////
+////                                override fun onCancelClick() {
+////                                }
+////
+////                            })
+//                    }
 //
-//                                override fun onCancelClick() {
-//                                }
+//                    override fun onRemoveView() {
+//                        exercisesToBeRemoved.add(exercise)
+//                    }
 //
-//                            })
-                    }
-
-                    override fun onRemoveView() {
-                        exercisesToBeRemoved.add(exercise)
-                    }
-
-                },
-                ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity as UserProgramActivity),
-                exercise.durationExercise.toString(),
-                ExerciseUIComponent.UPDATE_STATE
-            )
-
-            fragment_user_program_update_exercises_list.addView(horizontalLayoutContainingAllElements)
-        }
-    }
+//                },
+//                ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, baseActivity as UserProgramActivity),
+//                exercise.durationExercise.toString(),
+//                ExercisesUIComponentImpl.UPDATE_STATE
+//            )
+//
+//            fragment_user_program_update_exercises_list.addView(horizontalLayoutContainingAllElements)
+//        }
+//    }
 
     private fun getInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -174,7 +175,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 //                                ) as LinearLayout).getChildAt(1) as EditText).text.toString()
 //
 //                            programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
-//                                    ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
+//                                    ExerciseUtils.getTypeExerciseIdByName(exerciseName, baseActivity as UserProgramActivity)
 //                            programViewDataWrapper?.getExercises()?.get(i)?.durationExercise = exerciseDurationValue.toInt()
 //                        }
 //

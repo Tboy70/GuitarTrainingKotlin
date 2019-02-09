@@ -16,7 +16,7 @@ abstract class BaseActivity : AppCompatActivity(), HasSupportFragmentInjector {
     lateinit var injector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        /** Call the DispatchingAndroidInjector in the Application class to inject activity. **/
+        /** Call the DispatchingAndroidInjector in the Application class to inject baseActivity. **/
         AndroidInjection.inject(this)
 
         super.onCreate(savedInstanceState)

@@ -138,7 +138,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 //                    viewModel.userProgramViewDataWrapper
 //            )
 //
-//            val host = activity?.findViewById(R.id.user_program_nav_host_fragment) as View
+//            val host = baseActivity?.findViewById(R.id.user_program_nav_host_fragment) as View
 //            findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
         }
     }

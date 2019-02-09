@@ -3,11 +3,11 @@ package thomas.guitartrainingkotlin.presentation.fragment.program
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.presentation.activity.ProgramCreationActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
@@ -50,7 +50,12 @@ class UserProgramsListFragment : BaseFragment<UserProgramsListViewModel>() {
 
     private fun initiateView() {
         fragment_user_programs_list_recycler_view.adapter = userProgramsListAdapter
-        fragment_user_programs_list_recycler_view.addItemDecoration(DividerItemDecoration(activity, LinearLayoutManager.VERTICAL))
+        fragment_user_programs_list_recycler_view.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         fragment_user_programs_list_swipe_refresh_layout.setOnRefreshListener {
             viewModel.retrieveProgramsListByUserId()
@@ -67,8 +72,7 @@ class UserProgramsListFragment : BaseFragment<UserProgramsListViewModel>() {
         }
 
         fragment_user_programs_floating_action_button.setOnClickListener {
-            val host = activity?.findViewById(R.id.user_panel_nav_host_fragment) as View
-            findNavController(host).navigate(R.id.add_program, null, null)
+            startActivity(Intent(activity, ProgramCreationActivity::class.java))
         }
     }
 

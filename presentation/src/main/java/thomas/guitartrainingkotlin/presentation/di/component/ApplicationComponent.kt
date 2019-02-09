@@ -17,7 +17,7 @@ import thomas.guitartrainingkotlin.presentation.di.module.viewmodel.ViewModelMod
  * ActivityInjectorModule (one subcomponent per Activity)
  *
  * Each subcomponent will be linked to a Module (=> one module per Activity) which will allow us to inject
- * subcomponent activity's Fragments and provides Activity related objects
+ * subcomponent baseActivity's Fragments and provides Activity related objects
  * (we have a BaseActivity module which will be included in all of our ActivityModules)
  *
  * Fragments will be injected using @ContributesAndroidInjector annotation

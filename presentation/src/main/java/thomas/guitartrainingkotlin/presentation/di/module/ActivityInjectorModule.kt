@@ -2,8 +2,8 @@ package thomas.guitartrainingkotlin.presentation.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.activity.*
+import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.di.module.activity.*
 
 @Module
@@ -36,4 +36,8 @@ abstract class ActivityInjectorModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [ProgramActivityModule::class])
     abstract fun programActivityInjector(): ProgramActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [ProgramCreationActivityModule::class])
+    abstract fun programCreationActivityInjector(): ProgramCreationActivity
 }

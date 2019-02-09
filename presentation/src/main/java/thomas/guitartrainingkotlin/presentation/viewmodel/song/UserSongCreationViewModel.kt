@@ -1,12 +1,12 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.song
 
-import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongCreationViewState
-import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.song.CreateSong
 import thomas.guitartrainingkotlin.domain.model.Song
+import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongCreationViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
 class UserSongCreationViewModel @Inject constructor(
@@ -19,10 +19,8 @@ class UserSongCreationViewModel @Inject constructor(
 
     private var songToCreate = Song()
 
-    val songCreatedLiveEvent: SingleLiveEvent<Boolean> =
-        SingleLiveEvent()
-    val informationNotRightLiveEvent: SingleLiveEvent<Boolean> =
-        SingleLiveEvent()
+    val songCreatedLiveEvent = SingleLiveEvent<Boolean>()
+    val informationNotRightLiveEvent = SingleLiveEvent<Boolean>()
 
     override fun onCleared() {
         super.onCleared()

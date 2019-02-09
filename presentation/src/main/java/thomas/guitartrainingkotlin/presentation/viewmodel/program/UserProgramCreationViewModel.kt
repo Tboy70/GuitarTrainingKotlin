@@ -1,93 +1,89 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.util.SparseArray
+import androidx.core.util.forEach
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
+import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.program.CreateProgram
+import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.model.Program
+import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramCreationViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
 import javax.inject.Inject
 
-class UserProgramCreationViewModel @Inject constructor(private var createProgram: CreateProgram) : ViewModel() {
+class UserProgramCreationViewModel @Inject constructor(
+    private val createProgram: CreateProgram,
+    private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
+) : StateViewModel<UserProgramCreationViewState>() {
 
-    var errorThrowable: Throwable? = null
+    override val currentViewState = UserProgramCreationViewState()
 
-    val creationProgramSuccess = MutableLiveData<Boolean>()
-    val viewState = MutableLiveData<UserProgramCreationViewState>()
-    val errorEvent =
-        SingleLiveEvent<UserProgramCreationErrorEvent>()
+    val retrievedInstrumentMode = MutableLiveData<String>()
+    val createdProgramLiveEvent = SingleLiveEvent<Boolean>()
+    val informationNotRightLiveEvent = SingleLiveEvent<Boolean>()
 
-    data class UserProgramCreationViewState(
-            var displayingLoading: Boolean = false
-    )
+    var currentInstrumentMode: String? = null
 
-    data class UserProgramCreationErrorEvent(
-            val ERROR_TRIGGERED: Boolean = false,
-            val ERROR_CREATION_NOT_LAUNCH: Boolean = false
-    )
+    init {
+        retrieveCurrentInstrumentMode()
+    }
 
+    override fun onCleared() {
+        super.onCleared()
+        createProgram.unsubscribe()
+        retrieveInstrumentModeInSharedPrefs.unsubscribe()
+    }
 
     fun checkInformationAndValidateCreation(
-            nameProgram: String, descriptionProgram: String, exercises: SparseArray<String>, instrumentMode: String
+        nameProgram: String,
+        descriptionProgram: String,
+        exercises: SparseArray<String>
     ) {
+        viewState.update {
+            loading = true
+        }
 
-        viewState.postValue(
-            UserProgramCreationViewState(
-                true
-            )
-        )
         if (checkInformation(nameProgram, exercises)) {
-
-            val program = Program()
-            program.nameProgram = nameProgram
-            program.descriptionProgram = descriptionProgram
-            program.defaultProgram = false
-            program.idInstrument = instrumentMode
+            val program = Program(
+                nameProgram = nameProgram,
+                descriptionProgram = descriptionProgram,
+                defaultProgram = false,
+                idInstrument = currentInstrumentMode ?: SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE
+            )
 
             val exercisesList = ArrayList<Exercise>()
-
-            for (i in 0 until exercises.size()) {
-                val key = exercises.keyAt(i)
-                val exercise = Exercise()
-                exercise.typeExercise = key
-                exercise.durationExercise = exercises.get(key).toInt()
-                exercisesList.add(exercise)
+            exercises.forEach { key, value ->
+                exercisesList.add(
+                    Exercise(
+                        typeExercise = key,
+                        durationExercise = value.toInt()
+                    )
+                )
             }
 
             createProgram.subscribe(
-                    params = CreateProgram.Params.toCreate(program, exercisesList),
-                    onComplete = {
-                        creationProgramSuccess.postValue(true)
-                        viewState.postValue(
-                            UserProgramCreationViewState(
-                                false
-                            )
-                        )
-                    },
-                    onError = {
-                        errorThrowable = it
-                        errorEvent.postValue(
-                            UserProgramCreationErrorEvent(
-                                true,
-                                false
-                            )
-                        )
+                params = CreateProgram.Params.toCreate(program, exercisesList),
+                onComplete = {
+                    createdProgramLiveEvent.postValue(true)
+                    viewState.update {
+                        loading = false
                     }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
+                }
             )
         } else {
-            errorEvent.postValue(
-                UserProgramCreationErrorEvent(
-                    false,
-                    true
-                )
-            )
-            viewState.postValue(
-                UserProgramCreationViewState(
-                    false
-                )
-            )
+            informationNotRightLiveEvent.postValue(true)
+            viewState.update {
+                loading = false
+            }
         }
     }
 
@@ -95,20 +91,27 @@ class UserProgramCreationViewModel @Inject constructor(private var createProgram
         if (nameProgram == null || nameProgram.isEmpty()) {
             return false
         } else {
-            for (i in 0 until exercises.size()) {
-                val key = exercises.keyAt(i)
+            exercises.forEach { key, value ->
                 if (key == -1) {
                     return false
-                } else if (exercises.get(key).isEmpty() || !exercises.get(key).trim { it <= ' ' }.matches("^[0-9]*$".toRegex())) {
+                } else if (value.isEmpty() || !value.trim {
+                        it <= ' '
+                    }.matches("^[0-9]*$".toRegex())) {
                     return false
                 }
             }
-            return true
         }
+        return true
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        createProgram.unsubscribe()
+    private fun retrieveCurrentInstrumentMode() {
+        retrieveInstrumentModeInSharedPrefs.subscribe(
+            onSuccess = { instrumentMode ->
+                currentInstrumentMode = instrumentMode
+                retrievedInstrumentMode.postValue(instrumentMode)
+            }, onError = {
+                errorLiveEvent.postValue(it)
+            }
+        )
     }
 }

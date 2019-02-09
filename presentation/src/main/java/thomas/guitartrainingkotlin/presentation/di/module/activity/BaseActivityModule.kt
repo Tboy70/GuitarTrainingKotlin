@@ -5,11 +5,13 @@ import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
-import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
+import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
+import thomas.guitartrainingkotlin.presentation.component.ExercisesUIComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.SnackbarComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 
@@ -28,6 +30,12 @@ class BaseActivityModule {
     @PerActivity
     fun errorRendererComponent(errorRendererComponent: ErrorRendererComponentImpl): ErrorRendererComponent =
         errorRendererComponent
+
+    @Provides
+    @PerActivity
+    fun exerciseUIComponent(exercisesUIComponent: ExercisesUIComponentImpl): ExercisesUIComponent =
+        exercisesUIComponent
+
 
     @Provides
     @PerActivity

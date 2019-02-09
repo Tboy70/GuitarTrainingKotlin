@@ -4,7 +4,6 @@
     <string name="app_name">Guitar Training</string>
 
     <!-- TOOLBARS -->
-    <string name="generic_toolbar_about_title">A propos</string>
 
     <string name="toolbar_title_exercise_slap">Slap</string>
     <string name="toolbar_title_exercise_mode">Modes</string>
@@ -24,26 +23,20 @@
     <string name="toolbar_title_song_creation">Création d\'une chanson</string>
     <string name="toolbar_title_song_update">Modification de la chanson</string>
 
+    <string name="toolbar_title_program_creation">Création d\'un programme</string>
+
     <!-- DIALOGS-->
-    <string name="dialog_login_title">Connexion en cours</string>
-    <string name="dialog_login_content">Veuillez patienter …</string>
-
-    <string name="dialog_create_account_title">Création d\'un compte</string>
-    <string name="dialog_create_account_content">Création du compte en cours. Veuillez patienter …</string>
-
     <string name="dialog_suppress_account_title">Suppression d\'un compte</string>
     <string name="dialog_suppress_account_confirm_content">Êtes-vous sûr de vouloir supprimer le compte ?</string>
-    <string name="dialog_suppress_account_content">Suppression du compte en cours. Veuillez patientez …</string>
 
     <string name="dialog_logout_title">Déconnexion</string>
-    <string name="dialog_logout_content">Veuillez patienter</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ?</string>
 
     <string name="dialog_details_program_title">Chargement du programme …</string>
     <string name="dialog_details_program_content">Accorde toi en attendant …</string>
 
-    <string name="dialog_creation_program_title">Création du programme</string>
-    <string name="dialog_creation_program_content">Création du programme en cours. Veuillez patientez …</string>
+    <string name="dialog_create_program_title">Création du programme</string>
+    <string name="dialog_create_program_content">Êtes-vous sûr de vouloir créer ce programme ?</string>
 
     <string name="dialog_update_program_title">Mise à jour du programme</string>
     <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
@@ -62,15 +55,10 @@
     <string name="dialog_creation_song_content">Êtes-vous sûr de vouloir créer cette chanson ?</string>
 
     <string name="dialog_update_song_title">Mise à jour de la chanson</string>
-    <string name="dialog_update_song_content">Mise à jour de la chanson en cours. Veuillez patienter …</string>
     <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chanson ?</string>
 
     <string name="dialog_remove_song_title">Suppression de la chanson</string>
-    <string name="dialog_remove_song_content">Suppression de la chanson en cours. Veuillez patientez …</string>
     <string name="dialog_remove_song_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
-
-    <string name="dialog_send_feedback_title">Envoi de la note</string>
-    <string name="dialog_send_feedback_content">Envoi de la note en cours. Veuillez patientez …</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -265,9 +253,6 @@
 
     <string name="generic_error_title_text">Erreur …</string>
     <string name="snackbar_error_unknown_error">Erreur inconnue</string>
-    <string name="wrong_login_error_value_from_API">WRONG LOGIN</string>
-    <string name="snackbar_error_wrong_login">Authentification incorrecte</string>
-    <string name="error_field_not_filled">Veuillez remplir tous les champs</string>
     <string name="error_count_down_not_initialized">CountDown not initialized</string>
     <string name="snackbar_error_connection_problem">Problème de connexion internet</string>
     <string name="snackbar_error_server_connection_problem">Problème de connexion au serveur</string>
@@ -286,7 +271,6 @@
     <string name="error_creation_exercises">Erreur pendant la création des exercices</string>
     <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
     <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
-
     <string name="error_wrong_info">Mauvaises information</string>
     <string name="error_retrieve_song">Erreur pendant la récupération de la chanson</string>
     <string name="error_retrieve_songs">Erreur pendant la récupération des chansons</string>

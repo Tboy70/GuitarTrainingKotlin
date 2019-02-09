@@ -5,8 +5,8 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
+import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongCreationViewModel
@@ -18,10 +18,10 @@ class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
     override fun getLayoutId(): Int = R.layout.fragment_user_song_creation
 
     @Inject
-    lateinit var errorRendererComponent: ErrorRendererComponentImpl
+    lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
-    lateinit var dialogComponent: DialogComponentImpl
+    lateinit var dialogComponent: DialogComponent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

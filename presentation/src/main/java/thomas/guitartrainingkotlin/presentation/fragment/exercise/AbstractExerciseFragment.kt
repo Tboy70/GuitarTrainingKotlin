@@ -28,8 +28,8 @@ abstract class AbstractExerciseFragment : BaseExerciseFragment() {
     var durationLeft = DateTimeUtils.DEFAULT_DURATION_LEFT
 
     companion object {
-        const val RANK_EXERCISE = "thomas.example.com.guitarTrainingKotlin.activity.RANK_EXERCISE"
-        const val DURATION_EXERCISE = "thomas.example.com.guitarTrainingKotlin.activity.DURATION_EXERCISE"
+        const val RANK_EXERCISE = "thomas.example.com.guitarTrainingKotlin.baseActivity.RANK_EXERCISE"
+        const val DURATION_EXERCISE = "thomas.example.com.guitarTrainingKotlin.baseActivity.DURATION_EXERCISE"
     }
 
     fun setToolbar(toolbarTitle: Int) {
@@ -68,10 +68,10 @@ abstract class AbstractExerciseFragment : BaseExerciseFragment() {
 //                R.color.colorPrimary,
 //                object : MultipleChoiceMaterialDialogListener {
 //                    override fun onYesSelected() {
-//                        if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
-//                            (activity as ProgramActivity).startExercise(rankExercise + 1)
+//                        if (baseActivity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
+//                            (baseActivity as ProgramActivity).startExercise(rankExercise + 1)
 //                        } else {
-//                            activity?.finish()
+//                            baseActivity?.finish()
 //                        }
 //                    }
 //                })
