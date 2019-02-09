@@ -6,7 +6,7 @@
 
     <fragment
             android:id="@+id/user_programs_list"
-            android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramsListFragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramsListFragment"
             android:label="@string/nav_user_panel_home"
             tools:layout="@layout/fragment_user_programs_list">
         <action
@@ -27,7 +27,7 @@
 
     <fragment
             android:id="@+id/user_songs_list"
-            android:name="thomas.example.com.guitarTrainingKotlin.fragment.song.UserSongsListFragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.song.UserSongsListFragment"
             tools:layout="@layout/fragment_user_songs_list">
         <action
                 android:id="@+id/action_user_songs_list_to_user_programs_list"
@@ -44,7 +44,7 @@
 
     <fragment
             android:id="@+id/action_user_settings"
-            android:name="thomas.example.com.guitarTrainingKotlin.fragment.user.UserSettingsFragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.user.UserSettingsFragment"
             tools:layout="@layout/fragment_user_settings">
         <action
                 android:id="@+id/action_action_user_settings_to_user_programs_list"
@@ -65,7 +65,7 @@
 
     <fragment
             android:id="@+id/action_legal_notices"
-            android:name="thomas.example.com.guitarTrainingKotlin.fragment.other.LegalNoticesFragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.other.LegalNoticesFragment"
             tools:layout="@layout/fragment_legal_notices">
         <action
                 android:id="@+id/action_action_legal_notices_to_user_programs_list"
@@ -86,7 +86,7 @@
 
     <fragment
             android:id="@+id/add_program"
-            android:name="thomas.example.com.guitarTrainingKotlin.fragment.program.UserProgramCreationFragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramCreationFragment"
             tools:layout="@layout/fragment_user_program_creation">
         <action
                 android:id="@+id/action_add_program_to_user_programs_list"

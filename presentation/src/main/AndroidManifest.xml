@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="thomas.example.com.guitarTrainingKotlin">
+          package="thomas.guitartrainingkotlin">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-            android:name=".GuitarTrainingApplication"
+            android:name="thomas.guitartrainingkotlin.presentation.GuitarTrainingApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -14,7 +14,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".activity.StartActivity"
+                android:name="thomas.guitartrainingkotlin.presentation.activity.StartActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,18 +23,18 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".activity.LoginActivity"
+                android:name="thomas.guitartrainingkotlin.presentation.activity.LoginActivity"
                 android:windowSoftInputMode="adjustPan"/>
         <activity
-                android:name=".activity.UserPanelActivity"/>
+                android:name="thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity"/>
         <activity
-                android:name=".activity.UserProgramActivity"
+                android:name="thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".activity.ProgramActivity"
+                android:name="thomas.guitartrainingkotlin.presentation.activity.ProgramActivity"
                 android:screenOrientation="portrait"/>
-        <activity android:name=".activity.UserSongActivity"/>
-        <activity android:name=".activity.SongCreationActivity"/>
+        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.UserSongActivity"/>
+        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity"/>
     </application>
 
 </manifest>
