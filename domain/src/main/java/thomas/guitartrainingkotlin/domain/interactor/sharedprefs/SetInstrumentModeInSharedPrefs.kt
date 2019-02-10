@@ -7,16 +7,16 @@ import javax.inject.Inject
 
 class SetInstrumentModeInSharedPrefs @Inject constructor(
     private val userRepository: UserRepository
-) : SingleParametrizedUseCase<String, SetInstrumentModeInSharedPrefs.Params>() {
+) : SingleParametrizedUseCase<Int, SetInstrumentModeInSharedPrefs.Params>() {
 
-    override fun build(params: Params): Single<String> {
+    override fun build(params: Params): Single<Int> {
         return userRepository.setInstrumentModeInSharedPrefs(params.instrumentMode)
     }
 
-    class Params(val instrumentMode: String) {
+    class Params(val instrumentMode: Int) {
 
         companion object {
-            fun toSet(instrumentMode: String): Params {
+            fun toSet(instrumentMode: Int): Params {
                 return Params(instrumentMode)
             }
         }

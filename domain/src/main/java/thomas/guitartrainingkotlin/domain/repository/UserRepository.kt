@@ -9,9 +9,9 @@ interface UserRepository {
     // Shared prefs
     fun retrieveUserIdInSharedPrefs(): Single<String>
 
-    fun setInstrumentModeInSharedPrefs(instrumentMode: String): Single<String>
+    fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Single<Int>
 
-    fun retrieveInstrumentModeInSharedPrefs(): Single<String>
+    fun retrieveInstrumentModeInSharedPrefs(): Single<Int>
 
     // User
     fun connectUser(user: User): Single<User>

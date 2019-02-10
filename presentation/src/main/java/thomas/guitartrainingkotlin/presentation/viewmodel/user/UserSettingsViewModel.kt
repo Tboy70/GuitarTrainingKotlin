@@ -11,18 +11,18 @@ import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
     private val suppressAccount: SuppressAccount,
-    private val retrieveInstrumentsModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs,
+    private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs,
     private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs
 ) : StateViewModel<UserSettingsViewState>() {
 
     override val currentViewState = UserSettingsViewState()
 
     private var userId: String? = null
-    private var currentInstrumentMode: String? = null
+    private var currentInstrumentMode: Int? = null
 
     val suppressedAccountLiveEvent =
         SingleLiveEvent<Boolean>()
-    val retrievedInstrumentModeLiveData = MutableLiveData<String>()
+    val retrievedInstrumentModeLiveData = MutableLiveData<Int>()
 
     init {
         retrieveCurrentInstrumentMode()
@@ -76,7 +76,7 @@ class UserSettingsViewModel @Inject constructor(
     }
 
     private fun retrieveCurrentInstrumentMode() {
-        retrieveInstrumentsModeInSharedPrefs.subscribe(
+        retrieveInstrumentModeInSharedPrefs.subscribe(
             onSuccess = {
                 currentInstrumentMode = it
                 retrievedInstrumentModeLiveData.postValue(it)

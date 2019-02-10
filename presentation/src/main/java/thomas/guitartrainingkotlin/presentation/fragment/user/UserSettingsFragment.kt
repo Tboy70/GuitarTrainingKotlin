@@ -3,10 +3,9 @@ package thomas.guitartrainingkotlin.presentation.fragment.user
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Switch
 import kotlinx.android.synthetic.main.fragment_user_settings.*
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
@@ -48,11 +47,11 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 
     private fun initiateView() {
         user_settings_guitar_switch.setOnCheckedChangeListener { _, isChecked ->
-            handleSwitch(user_settings_bass_switch, isChecked)
+            handleSwitch(isChecked)
         }
 
         user_settings_bass_switch.setOnCheckedChangeListener { _, isChecked ->
-            handleSwitch(user_settings_guitar_switch, isChecked)
+            handleSwitch(isChecked)
         }
 
 
@@ -74,19 +73,27 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
 
         viewModel.retrievedInstrumentModeLiveData.observeSafe(this) {
             if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
-                user_settings_guitar_switch.setCustomChecked(true, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
-                    handleSwitch(user_settings_guitar_switch, isChecked)
-                })
-                user_settings_bass_switch.setCustomChecked(false, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
-                    handleSwitch(user_settings_bass_switch, isChecked)
-                })
+                user_settings_guitar_switch.setCustomChecked(
+                    true,
+                    CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+                        handleSwitch(isChecked)
+                    })
+                user_settings_bass_switch.setCustomChecked(
+                    false,
+                    CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+                        handleSwitch(isChecked)
+                    })
             } else if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
-                user_settings_guitar_switch.setCustomChecked(false, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
-                    handleSwitch(user_settings_guitar_switch, isChecked)
-                })
-                user_settings_bass_switch.setCustomChecked(true, CompoundButton.OnCheckedChangeListener {_, isChecked : Boolean ->
-                    handleSwitch(user_settings_bass_switch, isChecked)
-                })
+                user_settings_guitar_switch.setCustomChecked(
+                    false,
+                    CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+                        handleSwitch(isChecked)
+                    })
+                user_settings_bass_switch.setCustomChecked(
+                    true,
+                    CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
+                        handleSwitch(isChecked)
+                    })
             }
         }
 
@@ -107,8 +114,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
         }
     }
 
-    private fun handleSwitch(switch: Switch, isChecked: Boolean) {
-        switch.isChecked = !isChecked
+    private fun handleSwitch(isChecked: Boolean) {
         if (isChecked) {
             viewModel.updateInstrumentMode()
         }

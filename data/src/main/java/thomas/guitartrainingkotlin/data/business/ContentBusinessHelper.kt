@@ -7,7 +7,7 @@ import javax.inject.Singleton
 @Singleton
 class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: SharedPrefsManager) {
 
-    fun getUserIdInSharedPrefs(): String {
+    fun getUserIdInSharedPrefs(): String? {
         return sharedPrefsManager.getUserIdInSharedPrefs()
     }
 
@@ -19,11 +19,11 @@ class ContentBusinessHelper @Inject constructor(private val sharedPrefsManager: 
         sharedPrefsManager.deleteUserIdInSharedPrefs()
     }
 
-    fun retrieveInstrumentModeInSharedPrefs(): String {
+    fun retrieveInstrumentModeInSharedPrefs(): Int {
         return sharedPrefsManager.getInstrumentModeInSharedPrefs()
     }
 
-    fun setInstrumentModeInSharedPrefs(instrumentMode: String): String {
+    fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Int {
         return sharedPrefsManager.setInstrumentModeInSharedPrefs(instrumentMode)
     }
 

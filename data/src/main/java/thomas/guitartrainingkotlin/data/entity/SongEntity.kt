@@ -1,5 +1,7 @@
 package thomas.guitartrainingkotlin.data.entity
 
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
+
 data class SongEntity(
     var idSong: String = "",
     var titleSong: String = "",
@@ -9,5 +11,5 @@ data class SongEntity(
     var nbPlay: Int = 0,
     var lastPlay: String = "",
     var userId: String = "",
-    var idInstrument: String = ""
+    var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

@@ -137,7 +137,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
     private fun getInstrumentMode(): Array<String> {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return if (prefs.getString(
+        return if (prefs.getInt(
                 SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE,
                 SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
             ) == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR

@@ -80,11 +80,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
 
     override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String> {
         return apiService.createProgram(programRemoteEntity).map {
-            if (it.isSuccessful && it.body() != null) { // TODO : Check this if / else
-                (it.body() as ProgramResponseRemoteEntity).getCreatedId()
-            } else {
-                throw Exception(ConstantErrors.ERROR_CREATION_PROGRAM)
-            }
+            it.getCreatedId()
         }
     }
 

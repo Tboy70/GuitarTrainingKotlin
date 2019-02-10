@@ -6,7 +6,6 @@ import thomas.guitartrainingkotlin.data.entity.*
 import thomas.guitartrainingkotlin.data.manager.ApiManager
 import thomas.guitartrainingkotlin.data.manager.SharedPrefsManager
 import thomas.guitartrainingkotlin.data.mapper.remote.*
-import thomas.guitartrainingkotlin.data.utils.InstrumentModeUtils
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,7 +45,7 @@ class APIBusinessHelper @Inject constructor(
     fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
         return apiManager.retrieveProgramsListByUserId(
             userId,
-            InstrumentModeUtils.getRemoteValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+            sharedPrefsManager.getInstrumentModeInSharedPrefs()
         ).map {
             programRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -99,7 +98,7 @@ class APIBusinessHelper @Inject constructor(
     fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
         return apiManager.retrieveSongListByUserId(
             userId,
-            InstrumentModeUtils.getRemoteValueFromInstrumentMode(sharedPrefsManager.getInstrumentModeInSharedPrefs())
+            sharedPrefsManager.getInstrumentModeInSharedPrefs()
         ).map {
             songRemoteEntityDataMapper.transformToEntity(it)
         }

@@ -33,7 +33,7 @@ interface APIServiceInterface {
     fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Single<Response<ProgramRemoteEntity>>
 
     @POST("program")
-    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Single<Response<ProgramResponseRemoteEntity>>
+    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Single<ProgramResponseRemoteEntity>
 
     @POST("exercise")
     fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Completable

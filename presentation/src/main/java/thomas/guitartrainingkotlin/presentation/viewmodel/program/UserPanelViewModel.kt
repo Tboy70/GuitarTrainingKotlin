@@ -3,27 +3,28 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 import android.app.Application
 import android.preference.PreferenceManager
 import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
+import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
+import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveUserById
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.UserViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.view.state.user.UserPanelActivityViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
-import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveUserById
 import javax.inject.Inject
 
 class UserPanelViewModel @Inject constructor(
     application: Application,
     /** On n'injecte pas de context directement,on préfère injecter l'objet Application. **/
     private val logoutUser: LogoutUser,
-    private val retrieveUserById: RetrieveUserById
+    private val retrieveUserById: RetrieveUserById,
+    private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
 ) : AndroidStateViewModel<UserPanelActivityViewState>(application) {
 
     override val currentViewState =
         UserPanelActivityViewState()
 
     private var userId: String? = null
-    // TODO : Refactor --> Why string and int !?
-    private var instrumentMode: String? = SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR
+    private var instrumentMode: Int? = null
 
     val logoutSucceedLiveEvent = SingleLiveEvent<Boolean>()
     val userNotRetrievedLiveEvent =
@@ -68,8 +69,14 @@ class UserPanelViewModel @Inject constructor(
     }
 
     private fun retrieveInstrumentMode() {
-        instrumentMode = PreferenceManager.getDefaultSharedPreferences(getApplication())
-            .getString(SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE, SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR)
+        retrieveInstrumentModeInSharedPrefs.subscribe(
+            onSuccess = {
+                instrumentMode = it
+            },
+            onError = {
+                errorLiveEvent.postValue(it)
+            }
+        )
     }
 
     private fun getUserById(userId: String) {

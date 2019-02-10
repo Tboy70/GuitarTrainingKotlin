@@ -7,9 +7,9 @@ import javax.inject.Inject
 
 class RetrieveInstrumentModeInSharedPrefs @Inject constructor(
     private val userRepository: UserRepository
-) : SingleUseCase<String>() {
+) : SingleUseCase<Int>() {
 
-    override fun build(): Single<String> {
+    override fun build(): Single<Int> {
         return userRepository.retrieveInstrumentModeInSharedPrefs()
     }
 }

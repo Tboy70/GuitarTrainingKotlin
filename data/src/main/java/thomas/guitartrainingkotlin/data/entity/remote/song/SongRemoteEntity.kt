@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.data.entity.remote.song
 
 import com.google.gson.annotations.SerializedName
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 
 data class SongRemoteEntity(
     @SerializedName("idSong") var idSong: String = "",
@@ -11,5 +12,5 @@ data class SongRemoteEntity(
     @SerializedName("nbPlay") var nbPlay: Int = 0,
     @SerializedName("lastPlay") var lastPlay: String = "",
     @SerializedName("userId") var userId: String = "",
-    @SerializedName("idInstrument") var idInstrument: Int = 1
+    @SerializedName("idInstrument") var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

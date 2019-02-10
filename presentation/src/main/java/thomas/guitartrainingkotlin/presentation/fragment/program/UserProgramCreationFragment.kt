@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import androidx.core.view.children
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
@@ -99,7 +99,7 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
     private fun initiateViewModelObservers() {
 
         viewModel.retrievedInstrumentMode.observeSafe(this) {
-            exercisesArray = if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
+            exercisesArray = if (it == InstrumentModeValues.INSTRUMENT_MODE_GUITAR) {
                 R.array.list_exercises_guitar
             } else {
                 R.array.list_exercises_bass

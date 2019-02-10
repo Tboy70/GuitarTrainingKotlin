@@ -26,13 +26,13 @@ class UserDataRepository @Inject constructor(
         }
     }
 
-    override fun setInstrumentModeInSharedPrefs(instrumentMode: String): Single<String> {
+    override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Single<Int> {
         return Single.defer {
            Single.just(contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode))
         }
     }
 
-    override fun retrieveInstrumentModeInSharedPrefs(): Single<String> {
+    override fun retrieveInstrumentModeInSharedPrefs(): Single<Int> {
         return Single.defer {
             Single.just(contentBusinessHelper.retrieveInstrumentModeInSharedPrefs())
         }

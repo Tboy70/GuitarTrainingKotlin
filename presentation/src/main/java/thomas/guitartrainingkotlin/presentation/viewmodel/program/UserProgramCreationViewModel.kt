@@ -3,11 +3,11 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.lifecycle.MutableLiveData
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.program.CreateProgram
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.model.Program
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramCreationViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
@@ -21,11 +21,11 @@ class UserProgramCreationViewModel @Inject constructor(
 
     override val currentViewState = UserProgramCreationViewState()
 
-    val retrievedInstrumentMode = MutableLiveData<String>()
+    val retrievedInstrumentMode = MutableLiveData<Int>()
     val createdProgramLiveEvent = SingleLiveEvent<Boolean>()
     val informationNotRightLiveEvent = SingleLiveEvent<Boolean>()
 
-    var currentInstrumentMode: String? = null
+    private var currentInstrumentMode: Int? = null
 
     init {
         retrieveCurrentInstrumentMode()
@@ -51,7 +51,7 @@ class UserProgramCreationViewModel @Inject constructor(
                 nameProgram = nameProgram,
                 descriptionProgram = descriptionProgram,
                 defaultProgram = false,
-                idInstrument = currentInstrumentMode ?: SharedPrefsManagerImpl.CURRENT_INSTRUMENT_MODE
+                idInstrument = currentInstrumentMode ?: InstrumentModeValues.INSTRUMENT_MODE_GUITAR
             )
 
             val exercisesList = ArrayList<Exercise>()
