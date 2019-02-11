@@ -1,8 +1,8 @@
 package thomas.guitartrainingkotlin.data.entity
 
 data class ExerciseEntity(
-    var idExercise: String = "",
-    var durationExercise: Int = 0,
-    var idProgram: String = "",
-    var typeExercise: Int = 0
+    val idExercise: String = "",
+    val durationExercise: Int = 0,
+    val idProgram: String = "",
+    val typeExercise: Int = 0
 )

@@ -3,11 +3,11 @@ package thomas.guitartrainingkotlin.domain.model
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 
 data class Program(
-    var idProgram: String = "",
-    var nameProgram: String = "",
-    var descriptionProgram: String = "",
-    var defaultProgram: Boolean = true,
+    val idProgram: String = "",
+    val nameProgram: String = "",
+    val descriptionProgram: String = "",
+    val defaultProgram: Boolean = true,
     var userId: String? = "",
-    var exercises: MutableList<Exercise> = mutableListOf(),
-    var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
+    val exercises: MutableList<Exercise> = mutableListOf(),
+    val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

@@ -40,6 +40,7 @@ class UserPanelViewModel @Inject constructor(
         super.onCleared()
         logoutUser.unsubscribe()
         retrieveUserById.unsubscribe()
+        retrieveInstrumentModeInSharedPrefs.unsubscribe()
     }
 
     fun logoutUser() {

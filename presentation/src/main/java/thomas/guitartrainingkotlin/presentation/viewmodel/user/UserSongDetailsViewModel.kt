@@ -37,8 +37,8 @@ class UserSongDetailsViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        retrieveSongById.unsubscribe()
         removeSong.unsubscribe()
+        retrieveSongById.unsubscribe()
         sendScoreFeedback.unsubscribe()
         retrieveSongScoreHistory.unsubscribe()
     }

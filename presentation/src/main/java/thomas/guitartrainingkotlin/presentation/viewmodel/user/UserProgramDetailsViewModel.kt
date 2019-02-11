@@ -9,8 +9,8 @@ import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
 import javax.inject.Inject
 
 class UserProgramDetailsViewModel @Inject constructor(
-        private val retrieveProgramById: RetrieveProgramById,
-        private val removeProgram: RemoveProgram
+        private val removeProgram: RemoveProgram,
+        private val retrieveProgramById: RetrieveProgramById
 ) : ViewModel() {
 
     lateinit var userProgramViewDataWrapper: ProgramViewDataWrapper
@@ -31,6 +31,12 @@ class UserProgramDetailsViewModel @Inject constructor(
     data class UserProgramDetailsErrorEvent(
             val ERROR_TRIGGERED: Boolean = false
     )
+
+    override fun onCleared() {
+        super.onCleared()
+        removeProgram.unsubscribe()
+        retrieveProgramById.unsubscribe()
+    }
 
     fun getProgramById(idProgram: String) {
 
@@ -108,11 +114,5 @@ class UserProgramDetailsViewModel @Inject constructor(
                     )
                 }
         )
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        retrieveProgramById.unsubscribe()
-        removeProgram.unsubscribe()
     }
 }

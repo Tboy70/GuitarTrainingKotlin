@@ -1,8 +1,8 @@
 package thomas.guitartrainingkotlin.domain.model
 
 data class Score(
-    var idScore: String = "",
-    var valueScore: Float = 0f,
-    var dateScore: String = "",
-    var idSong: String = ""
+    val idScore: String = "",
+    val valueScore: Float = 0f,
+    val dateScore: String = "",
+    val idSong: String = ""
 )

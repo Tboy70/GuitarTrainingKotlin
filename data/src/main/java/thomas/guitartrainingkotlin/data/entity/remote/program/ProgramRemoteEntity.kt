@@ -5,11 +5,11 @@ import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEnt
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 
 data class ProgramRemoteEntity(
-    @SerializedName("idProgram") var idProgram: String = "",
-    @SerializedName("nameProgram") var nameProgram: String = "",
-    @SerializedName("descriptionProgram") var descriptionProgram: String = "",
-    @SerializedName("defaultProgram") var defaultProgram: Boolean = false,
-    @SerializedName("userId") var userId: String? = "",
-    @SerializedName("exercises") var exerciseRemoteEntityList: List<ExerciseRemoteEntity> = emptyList(),
-    @SerializedName("idInstrument") var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
+    @SerializedName("idProgram") val idProgram: String = "",
+    @SerializedName("nameProgram") val nameProgram: String = "",
+    @SerializedName("descriptionProgram") val descriptionProgram: String = "",
+    @SerializedName("defaultProgram") val defaultProgram: Boolean = false,
+    @SerializedName("userId") val userId: String? = "",
+    @SerializedName("exercises") val exerciseRemoteEntityList: List<ExerciseRemoteEntity> = emptyList(),
+    @SerializedName("idInstrument") val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

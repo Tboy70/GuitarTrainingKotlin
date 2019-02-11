@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.SongRepository
 import javax.inject.Inject
 
 class UpdateSong @Inject constructor(
-    private var songRepository: SongRepository
+    private val songRepository: SongRepository
 ) : CompletableParametrizedUseCase<UpdateSong.Params>() {
 
     override fun build(params: UpdateSong.Params): Completable {

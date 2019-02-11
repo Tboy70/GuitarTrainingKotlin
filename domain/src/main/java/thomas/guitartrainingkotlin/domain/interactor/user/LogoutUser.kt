@@ -5,7 +5,9 @@ import thomas.guitartrainingkotlin.domain.interactor.base.CompletableUseCase
 import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
-class LogoutUser @Inject constructor(private var userRepository: UserRepository) : CompletableUseCase() {
+class LogoutUser @Inject constructor(
+    private val userRepository: UserRepository
+) : CompletableUseCase() {
 
     override fun build(): Completable {
         return userRepository.logoutUser()

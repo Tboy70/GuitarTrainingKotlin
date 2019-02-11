@@ -6,7 +6,7 @@ import thomas.guitartrainingkotlin.domain.repository.ProgramRepository
 import javax.inject.Inject
 
 class RemoveProgram @Inject constructor(
-        private var programRepository: ProgramRepository
+        private val programRepository: ProgramRepository
 ) : CompletableParametrizedUseCase<RemoveProgram.Params>() {
 
     override fun build(params: RemoveProgram.Params): Completable {

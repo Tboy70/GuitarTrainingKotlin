@@ -5,7 +5,9 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEve
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
 import javax.inject.Inject
 
-class StartActivityViewModel @Inject constructor(private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs) : ViewModel() {
+class StartActivityViewModel @Inject constructor(
+    private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs
+) : ViewModel() {
 
     val retrievedUserIdLiveEvent = SingleLiveEvent<String>()
 

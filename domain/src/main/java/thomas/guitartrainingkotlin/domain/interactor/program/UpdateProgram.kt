@@ -8,7 +8,7 @@ import thomas.guitartrainingkotlin.domain.repository.ProgramRepository
 import javax.inject.Inject
 
 class UpdateProgram @Inject constructor(
-    private var programRepository: ProgramRepository
+    private val programRepository: ProgramRepository
 ) : CompletableParametrizedUseCase<UpdateProgram.Params>() {
 
     override fun build(params: UpdateProgram.Params): Completable {

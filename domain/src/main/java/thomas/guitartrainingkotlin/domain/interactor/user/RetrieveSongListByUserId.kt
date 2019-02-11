@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.SongRepository
 import javax.inject.Inject
 
 class RetrieveSongListByUserId @Inject constructor(
-        private var songRepository: SongRepository
+        private val songRepository: SongRepository
 ) : SingleParametrizedUseCase<List<Song>, RetrieveSongListByUserId.Params>() {
 
     override fun build(params: Params): Single<List<Song>> {

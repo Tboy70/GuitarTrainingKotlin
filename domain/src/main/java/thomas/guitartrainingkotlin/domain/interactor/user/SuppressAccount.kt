@@ -6,7 +6,7 @@ import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class SuppressAccount @Inject constructor(
-    private var userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : CompletableParametrizedUseCase<SuppressAccount.Params>() {
 
     override fun build(params: Params): Completable {

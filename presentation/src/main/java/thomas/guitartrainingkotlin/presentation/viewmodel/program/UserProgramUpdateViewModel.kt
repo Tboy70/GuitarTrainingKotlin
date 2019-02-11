@@ -7,23 +7,31 @@ import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.model.Program
 import javax.inject.Inject
 
-class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: UpdateProgram) : ViewModel() {
+class UserProgramUpdateViewModel @Inject constructor(
+    private val updateProgram: UpdateProgram
+) : ViewModel() {
 
     val updateProgramSuccess: MutableLiveData<Boolean> = MutableLiveData()
 
     var errorThrowable: Throwable? = null
+
+    override fun onCleared() {
+        super.onCleared()
+        updateProgram.unsubscribe()
+    }
 
     fun checkInformationAndValidateUpdate(
             idProgram: String, nameProgram: String, descriptionProgram: String,
             programListExercises: MutableList<Exercise>, exercisesToBeRemoved: MutableList<Exercise>
     ) {
         if (checkInformation(nameProgram, programListExercises)) {
-            val program = Program()
-            program.idProgram = idProgram
-            program.nameProgram = nameProgram
-            program.descriptionProgram = descriptionProgram
-            program.defaultProgram = false
-            program.exercises = programListExercises
+            val program = Program(
+                idProgram = idProgram,
+                nameProgram = nameProgram,
+                descriptionProgram = descriptionProgram,
+                defaultProgram = false,
+                exercises = programListExercises
+            )
 
             updateProgram.subscribe(
                     params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved),
@@ -52,10 +60,5 @@ class UserProgramUpdateViewModel @Inject constructor(private var updateProgram: 
             }
             return true
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        updateProgram.unsubscribe()
     }
 }

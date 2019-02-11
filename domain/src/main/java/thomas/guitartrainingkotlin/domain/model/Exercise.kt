@@ -1,8 +1,8 @@
 package thomas.guitartrainingkotlin.domain.model
 
 data class Exercise(
-    var idExercise: String = "",
-    var durationExercise: Int = 0,
+    val idExercise: String = "",
+    val durationExercise: Int = 0,
     var idProgram: String = "",
-    var typeExercise: Int = 0
+    val typeExercise: Int = 0
 )

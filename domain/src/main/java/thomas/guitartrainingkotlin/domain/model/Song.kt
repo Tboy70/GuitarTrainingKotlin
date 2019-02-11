@@ -6,10 +6,10 @@ data class Song(
     var idSong: String = "",
     var titleSong: String = "",
     var artistSong: String = "",
-    var averageScoreSong: Float = 0.0f,
-    var totalScoreSong: Int = 0,
-    var nbPlay: Int = 0,
-    var lastPlay: String = "",
+    val averageScoreSong: Float = 0.0f,
+    val totalScoreSong: Int = 0,
+    val nbPlay: Int = 0,
+    val lastPlay: String = "",
     var userId: String = "",
     var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

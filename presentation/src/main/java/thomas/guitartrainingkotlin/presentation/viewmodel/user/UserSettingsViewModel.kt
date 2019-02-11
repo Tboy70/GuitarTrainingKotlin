@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(
     private val suppressAccount: SuppressAccount,
-    private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs,
-    private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs
+    private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs,
+    private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
 ) : StateViewModel<UserSettingsViewState>() {
 
     override val currentViewState = UserSettingsViewState()
@@ -30,8 +30,9 @@ class UserSettingsViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        setInstrumentModeInSharedPrefs.unsubscribe()
         suppressAccount.unsubscribe()
+        setInstrumentModeInSharedPrefs.unsubscribe()
+        retrieveInstrumentModeInSharedPrefs.unsubscribe()
     }
 
     fun updateInstrumentMode() {

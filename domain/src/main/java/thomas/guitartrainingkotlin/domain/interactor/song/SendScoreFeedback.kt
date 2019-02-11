@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.SongRepository
 import javax.inject.Inject
 
 class SendScoreFeedback @Inject constructor(
-    private var songRepository: SongRepository
+    private val songRepository: SongRepository
 ) : CompletableParametrizedUseCase<SendScoreFeedback.Params>() {
 
     override fun build(params: SendScoreFeedback.Params): Completable {

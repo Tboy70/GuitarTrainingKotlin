@@ -7,7 +7,9 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEve
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
 import javax.inject.Inject
 
-class ProgramViewModel @Inject constructor(private val retrieveProgramById: RetrieveProgramById) : ViewModel() {
+class ProgramViewModel @Inject constructor(
+    private val retrieveProgramById: RetrieveProgramById
+) : ViewModel() {
 
     var errorThrowable: Throwable? = null
 
@@ -18,6 +20,11 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
     data class ProgramErrorEvent(
             val ERROR_TRIGGERED: Boolean = false
     )
+
+    override fun onCleared() {
+        super.onCleared()
+        retrieveProgramById.unsubscribe()
+    }
 
     fun getProgramById(idProgram: String) {
         retrieveProgramById.subscribe(
@@ -38,10 +45,5 @@ class ProgramViewModel @Inject constructor(private val retrieveProgramById: Retr
                     )
                 }
         )
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        retrieveProgramById.unsubscribe()
     }
 }
