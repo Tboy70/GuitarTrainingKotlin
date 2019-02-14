@@ -1,9 +1,9 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -13,18 +13,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.activity.ProgramActivity
-import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
-import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
+import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
-import thomas.guitartrainingkotlin.presentation.extension.observeSafe
+import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
+import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramDetailsViewModel
-import thomas.guitartrainingkotlin.domain.model.Exercise
 import javax.inject.Inject
 
 class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
@@ -36,103 +34,54 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
-    lateinit var materialDialogComponentImpl: DialogComponentImpl
+    lateinit var dialogComponent: DialogComponentImpl
 
-    private lateinit var idProgram: String
+    private var navHost: View? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = requireActivity().intent.extras
-        if (bundle != null) {
-            if (bundle.containsKey(ConstValues.ID_PROGRAM)) {
-                idProgram = bundle.getString(ConstValues.ID_PROGRAM)
-                checkProgramAndHideButtons(idProgram)
+
+        activity?.let {
+            it.intent.extras?.let { bundle ->
+                bundle.getString(ConstValues.ID_PROGRAM)?.let { idProgram ->
+                    viewModel.setIdProgram(idProgram)
+                }
+            }
+
+            navHost = it.findViewById(R.id.user_program_nav_host_fragment) as View
+        }
+
+        viewModel.getProgramById()
+
+        initiateToolbar()
+        initiateView()
+        initiateViewModelObservers()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                activity?.finish()
             }
         }
-
-        handleLiveData(view)
-        handleStartProgram()
-        handleUpdateProgram()
-        handleRemoveProgram()
+        return super.onOptionsItemSelected(item)
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.getProgramById(idProgram)
+    private fun initiateToolbar() {
+        setHasOptionsMenu(true)
+        activity?.setSupportActionBar(fragment_user_program_details_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
-    private fun checkProgramAndHideButtons(idProgram: String?) {
-        if (idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_GUITAR || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_GUITAR ||
-            idProgram == ConstValues.DEFAULT_PROGRAM_THEORETICAL_BASS || idProgram == ConstValues.DEFAULT_PROGRAM_PRACTICAL_BASS
-        ) {
-
-            fragment_user_program_details_remove_button.visibility = View.GONE
-            fragment_user_program_details_update_button.visibility = View.GONE
-
-            val constraintSet = ConstraintSet()
-            constraintSet.clone(fragment_user_program_details_constraint_layout)
-            constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
-            constraintSet.connect(
-                    R.id.fragment_user_program_details_start_button,
-                    ConstraintSet.BOTTOM,
-                    R.id.fragment_user_program_details_constraint_layout,
-                    ConstraintSet.BOTTOM,
-                    24  // TODO : WTF !
-            )
-            constraintSet.applyTo(fragment_user_program_details_constraint_layout)
-        }
-    }
-
-    private fun handleLiveData(view: View) {
-
-        viewModel.programDetailsRetrieved.observeSafe(this) {
-            displayInformation(it)
-        }
-
-//        viewModel.viewState.observeSafe(this) {
-//            when {
-//                it.displayingLoadingGetProgram -> dialogComponent.showProgressDialog(
-//                        getString(R.string.dialog_details_program_title),
-//                        getString(R.string.dialog_details_program_content),
-//                        R.color.colorPrimary
-//                )
-//                it.displayLoadingRemoveProgram -> dialogComponent.showProgressDialog(
-//                        getString(R.string.dialog_remove_program_title),
-//                        getString(R.string.dialog_remove_program_content),
-//                        R.color.colorPrimary
-//                )
-//                else -> dialogComponent.dismissDialog()
-//            }
-//        }
-
-        viewModel.errorEvent.observeSafe(this) {
-            val errorTriggered = viewModel.errorThrowable
-            if (it.ERROR_TRIGGERED && errorTriggered != null) {
-//                errorRendererComponent.requestRenderError(
-//                        errorTriggered,
-//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                        view
-//                )
-            }
-        }
-
-        viewModel.finishProgramDeletion.observeSafe(this) {
-            activity?.finish()
-        }
-    }
-
-    private fun handleStartProgram() {
+    private fun initiateView() {
         fragment_user_program_details_start_button.setOnClickListener {
-            val intent = Intent(activity, ProgramActivity::class.java)
-            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
-            startActivity(intent)
-            activity?.finish()
+            //            val intent = Intent(activity, ProgramActivity::class.java)
+//            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
+//            startActivity(intent)
+//            activity?.finish()
         }
-    }
 
-    private fun handleUpdateProgram() {
         fragment_user_program_details_update_button.setOnClickListener {
-//            val bundle = Bundle()
+            //            val bundle = Bundle()
 //            bundle.putSerializable(
 //                    UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
 //                    viewModel.userProgramViewDataWrapper
@@ -141,28 +90,66 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 //            val host = baseActivity?.findViewById(R.id.user_program_nav_host_fragment) as View
 //            findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
         }
+
+        fragment_user_program_details_remove_button.setOnClickListener {
+            dialogComponent.displayDualChoiceDialog(
+                R.string.dialog_remove_program_title,
+                R.string.dialog_remove_program_confirm_content,
+                android.R.string.yes,
+                android.R.string.cancel,
+                onPositive = {
+                    viewModel.removeProgram()
+                },
+                onNegative = {}
+            )
+        }
     }
 
-    private fun handleRemoveProgram() {
-        fragment_user_program_details_remove_button.setOnClickListener {
-//            dialogComponent.showMultiChoiceDialog(
-//                    getString(R.string.dialog_remove_program_title),
-//                    getString(R.string.dialog_remove_program_confirm_content),
-//                    R.color.colorPrimary,
-//                    object : MultipleChoiceMaterialDialogListener {
-//                        override fun onYesSelected() {
-//                            viewModel.removeProgram(idProgram)
-//                        }
-//                    })
+    private fun initiateViewModelObservers() {
+        viewModel.songRetrievedLiveData.observeSafe(this) {
+            displayInformation(it)
+        }
+
+        viewModel.viewState.observeSafe(this) {
+            if (it.loading) {
+                fragment_user_program_details_progress_bar.show()
+            } else {
+                fragment_user_program_details_progress_bar.gone()
+            }
+        }
+
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
+        }
+
+        viewModel.finishProgramDeletion.observeSafe(this) {
+            activity?.finish()
         }
     }
 
     private fun displayInformation(userProgramViewDataWrapper: ProgramViewDataWrapper) {
 
+        ConstValues.DEFAULT_PROGRAM.contains(userProgramViewDataWrapper.getId()).let {
+            if (it) {
+                fragment_user_program_details_remove_button.visibility = View.GONE
+                fragment_user_program_details_update_button.visibility = View.GONE
+
+                val constraintSet = ConstraintSet()
+                constraintSet.clone(fragment_user_program_details_constraint_layout)
+                constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
+                constraintSet.connect(
+                    R.id.fragment_user_program_details_start_button,
+                    ConstraintSet.BOTTOM,
+                    R.id.fragment_user_program_details_constraint_layout,
+                    ConstraintSet.BOTTOM,
+                    24  // TODO : WTF !
+                )
+                constraintSet.applyTo(fragment_user_program_details_constraint_layout)
+            }
+        }
+
         val nameProgram = userProgramViewDataWrapper.getName()
         val descriptionProgram = userProgramViewDataWrapper.getDescription()
-
-        setToolbar(nameProgram)
 
         fragment_user_program_details_name.text = nameProgram
 
@@ -174,12 +161,6 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
         }
 
         createExercisesList(userProgramViewDataWrapper.getExercises())
-    }
-
-    private fun setToolbar(nameProgram: String) {
-        if (activity is UserProgramActivity) {
-            (activity as UserProgramActivity).setToolbar(nameProgram)
-        }
     }
 
     private fun createExercisesList(exercises: MutableList<Exercise>) {

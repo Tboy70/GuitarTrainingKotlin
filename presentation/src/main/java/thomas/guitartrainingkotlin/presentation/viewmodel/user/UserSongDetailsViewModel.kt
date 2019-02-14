@@ -27,13 +27,13 @@ class UserSongDetailsViewModel @Inject constructor(
 
     override val currentViewState = UserSongDetailsViewState()
 
+    private var idSong: String? = null
+
     val songDeletedLiveEvent: MutableLiveData<Boolean> = MutableLiveData()
     val songRetrievedLiveData: MutableLiveData<SongViewDataWrapper> = MutableLiveData()
     val scoreHistoryRetrieved: MutableLiveData<LongSparseArray<Float>> = MutableLiveData()
 
     var referenceTimestamp: Long = ConstValues.CONST_DEFAULT_TIMESTAMP
-
-    private var idSong: String? = null
 
     override fun onCleared() {
         super.onCleared()

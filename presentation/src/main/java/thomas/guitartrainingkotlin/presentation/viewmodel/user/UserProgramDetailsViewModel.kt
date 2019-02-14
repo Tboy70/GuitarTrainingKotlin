@@ -1,36 +1,24 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import thomas.guitartrainingkotlin.domain.interactor.program.RemoveProgram
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
+import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramDetailsViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
 class UserProgramDetailsViewModel @Inject constructor(
         private val removeProgram: RemoveProgram,
         private val retrieveProgramById: RetrieveProgramById
-) : ViewModel() {
+) : StateViewModel<UserProgramDetailsViewState>() {
 
-    lateinit var userProgramViewDataWrapper: ProgramViewDataWrapper
+    override val currentViewState = UserProgramDetailsViewState()
 
-    val programDetailsRetrieved = MutableLiveData<ProgramViewDataWrapper>()
+    private var idProgram: String? = null
+
+    val songRetrievedLiveData = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
-    val viewState = MutableLiveData<UserProgramDetailsViewState>()
-    val errorEvent =
-        SingleLiveEvent<UserProgramDetailsErrorEvent>()
-
-    var errorThrowable: Throwable? = null
-
-    data class UserProgramDetailsViewState(
-            var displayingLoadingGetProgram: Boolean = false,
-            var displayLoadingRemoveProgram: Boolean = false
-    )
-
-    data class UserProgramDetailsErrorEvent(
-            val ERROR_TRIGGERED: Boolean = false
-    )
 
     override fun onCleared() {
         super.onCleared()
@@ -38,57 +26,43 @@ class UserProgramDetailsViewModel @Inject constructor(
         retrieveProgramById.unsubscribe()
     }
 
-    fun getProgramById(idProgram: String) {
+    fun setIdProgram(idProgram: String) {
+        this.idProgram = idProgram
+    }
 
-        viewState.postValue(
-            UserProgramDetailsViewState(
-                true,
-                false
-            )
-        )
-
-        retrieveProgramById.subscribe(
+    fun getProgramById() {
+        viewState.update {
+            loading = true
+        }
+        this.idProgram?.let { idProgram ->
+            retrieveProgramById.subscribe(
                 params = RetrieveProgramById.Params.toRetrieve(idProgram),
                 onSuccess = {
-                    programDetailsRetrieved.postValue(
+                    songRetrievedLiveData.postValue(
                         ProgramViewDataWrapper(
                             it
                         )
                     )
-                    viewState.postValue(
-                        UserProgramDetailsViewState(
-                            false,
-                            false
-                        )
-                    )
+                    viewState.update {
+                        loading = false
+                    }
                 },
                 onError = {
-                    errorThrowable = it
-                    errorEvent.postValue(
-                        UserProgramDetailsErrorEvent(
-                            true
-                        )
-                    )
-                    viewState.postValue(
-                        UserProgramDetailsViewState(
-                            false,
-                            false
-                        )
-                    )
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
                 }
-        )
+            )
+        }
     }
 
-    fun removeProgram(idProgram: String) {
-
-        viewState.postValue(
-            UserProgramDetailsViewState(
-                false,
-                true
-            )
-        )
-
-        removeProgram.subscribe(
+    fun removeProgram() {
+        viewState.update {
+            loading = true
+        }
+        idProgram?.let { idProgram ->
+            removeProgram.subscribe(
                 params = RemoveProgram.Params.toRemove(idProgram),
                 onComplete = {
                     finishProgramDeletion.postValue(true)
@@ -100,19 +74,12 @@ class UserProgramDetailsViewModel @Inject constructor(
                     )
                 },
                 onError = {
-                    errorThrowable = it
-                    errorEvent.postValue(
-                        UserProgramDetailsErrorEvent(
-                            true
-                        )
-                    )
-                    viewState.postValue(
-                        UserProgramDetailsViewState(
-                            false,
-                            false
-                        )
-                    )
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
                 }
-        )
+            )
+        }
     }
 }

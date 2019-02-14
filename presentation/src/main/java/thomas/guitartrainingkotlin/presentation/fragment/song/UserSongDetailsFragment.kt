@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.LongSparseArray
 import android.view.MenuItem
 import android.view.View
+import androidx.core.util.isNotEmpty
 import androidx.navigation.Navigation.findNavController
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -140,7 +141,7 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
     }
 
     private fun displayHistoricValues(timestampKeyList: LongSparseArray<Float>) {
-        if (timestampKeyList.size() != 0) {
+        if (timestampKeyList.isNotEmpty()) {
             val dataValues = ArrayList<Entry>()
             for (i in 0 until timestampKeyList.size()) {
                 val key = timestampKeyList.keyAt(i)

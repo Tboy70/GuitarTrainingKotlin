@@ -23,6 +23,7 @@
     <string name="toolbar_title_song_creation">Création d\'une chanson</string>
     <string name="toolbar_title_song_update">Modification de la chanson</string>
 
+    <string name="toolbar_title_program_details">Mon programme</string>
     <string name="toolbar_title_program_creation">Création d\'un programme</string>
 
     <!-- DIALOGS-->
@@ -31,9 +32,6 @@
 
     <string name="dialog_logout_title">Déconnexion</string>
     <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ?</string>
-
-    <string name="dialog_details_program_title">Chargement du programme …</string>
-    <string name="dialog_details_program_content">Accorde toi en attendant …</string>
 
     <string name="dialog_create_program_title">Création du programme</string>
     <string name="dialog_create_program_content">Êtes-vous sûr de vouloir créer ce programme ?</string>
@@ -47,8 +45,6 @@
     <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
     <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
 
-    <string name="dialog_details_song_title">Chargement de la chanson</string>
-    <string name="dialog_details_song_content">Accorde toi en attendant …</string>
     <string name="dialog_details_song_score_title">Vous avez fini ? Notez votre performance</string>
 
     <string name="dialog_creation_song_title">Création de la chanson</string>

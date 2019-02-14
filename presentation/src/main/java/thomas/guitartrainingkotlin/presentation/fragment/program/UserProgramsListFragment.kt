@@ -37,11 +37,14 @@ class UserProgramsListFragment : BaseFragment<UserProgramsListViewModel>() {
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        viewModel.retrieveProgramsListByUserId()
-
         initiateToolbar()
         initiateView()
         initiateViewModelObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.retrieveProgramsListByUserId()
     }
 
     private fun initiateToolbar() {

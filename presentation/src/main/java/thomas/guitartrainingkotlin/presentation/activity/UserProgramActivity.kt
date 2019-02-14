@@ -10,8 +10,4 @@ class UserProgramActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_program)
     }
-
-    fun setToolbar(toolbarName: String) {
-        activity_user_program_toolbar.title = toolbarName
-    }
 }

@@ -32,20 +32,22 @@ class ProgramListViewHolder(
 
         val totalDurationProgram = calculateTotalDurationProgram(programViewDataWrapper)
 
-        if (totalDurationProgram < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
-            view_user_programs_list_item_total_duration_exercises.text = String.format(
-                Locale.FRANCE,
-                context.getString(R.string.fragment_user_programs_list_total_duration_exercises_minutes_text),
-                totalDurationProgram
-            )
-        } else {
-            val hours: Int = totalDurationProgram / DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
-            val minutes: Int = totalDurationProgram % DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
-            view_user_programs_list_item_total_duration_exercises.text = String.format(
-                Locale.FRANCE,
-                context.getString(R.string.fragment_user_programs_list_total_duration_exercises_hours_text),
-                hours.toString(), minutes.toString()
-            )
+        (totalDurationProgram < DateTimeUtils.SECONDS_IN_ONE_MINUTE).let {
+            if (it) {
+                view_user_programs_list_item_total_duration_exercises.text = String.format(
+                    Locale.FRANCE,
+                    context.getString(R.string.fragment_user_programs_list_total_duration_exercises_minutes_text),
+                    totalDurationProgram
+                )
+            } else {
+                val hours: Int = totalDurationProgram / DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
+                val minutes: Int = totalDurationProgram % DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
+                view_user_programs_list_item_total_duration_exercises.text = String.format(
+                    Locale.FRANCE,
+                    context.getString(R.string.fragment_user_programs_list_total_duration_exercises_hours_text),
+                    hours.toString(), minutes.toString()
+                )
+            }
         }
 
         currentView.setOnClickListener {
@@ -55,7 +57,7 @@ class ProgramListViewHolder(
 
     private fun calculateTotalDurationProgram(programViewDataWrapper: ProgramViewDataWrapper): Int {
         var totalDuration = 0
-        for (exercise in programViewDataWrapper.getExercises()) {
+        programViewDataWrapper.getExercises().forEach { exercise ->
             totalDuration += exercise.durationExercise
         }
         return totalDuration

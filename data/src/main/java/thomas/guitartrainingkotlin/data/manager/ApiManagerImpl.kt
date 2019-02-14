@@ -13,12 +13,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
-import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.SongRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.user.UserRemoteEntity
-import thomas.guitartrainingkotlin.domain.utils.ConstantErrors
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,13 +67,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     }
 
     override fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity> {
-        return apiService.retrieveProgramFromId(idProgram).map {
-            if (it.body() != null) {
-                it.body()
-            } else {
-                throw Exception(ConstantErrors.ERROR_RETRIEVE_PROGRAM)
-            }
-        }
+        return apiService.retrieveProgramFromId(idProgram)
     }
 
     override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String> {
