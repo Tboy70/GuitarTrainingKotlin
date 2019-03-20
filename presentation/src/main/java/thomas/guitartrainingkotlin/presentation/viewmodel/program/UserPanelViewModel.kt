@@ -2,7 +2,7 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.app.Application
 import android.preference.PreferenceManager
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveUserById

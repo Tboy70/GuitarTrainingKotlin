@@ -1,4 +1,4 @@
-package thomas.guitartrainingkotlin.data.manager
+package thomas.guitartrainingkotlin.data.manager.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

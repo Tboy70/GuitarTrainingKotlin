@@ -1,4 +1,4 @@
-package thomas.guitartrainingkotlin.data.manager
+package thomas.guitartrainingkotlin.data.manager.sharedprefs
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,7 +8,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefsManager {
+class SharedPrefsManagerImpl @Inject constructor(context: Context) :
+    SharedPrefsManager {
 
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -25,17 +26,28 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
     }
 
     override fun getInstrumentModeInSharedPrefs(): Int {
-        return sharedPreferences.getInt(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR)
+        return sharedPreferences.getInt(
+            CURRENT_INSTRUMENT_MODE,
+            INSTRUMENT_MODE_GUITAR
+        )
     }
 
     override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Int {
         var newInstrumentMode = instrumentMode
         if (instrumentMode == INSTRUMENT_MODE_GUITAR) {
-            sharedPreferences.edit().putInt(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_BASS).apply()
-            newInstrumentMode = INSTRUMENT_MODE_BASS
+            sharedPreferences.edit().putInt(
+                CURRENT_INSTRUMENT_MODE,
+                INSTRUMENT_MODE_BASS
+            ).apply()
+            newInstrumentMode =
+                INSTRUMENT_MODE_BASS
         } else if (instrumentMode == INSTRUMENT_MODE_BASS) {
-            sharedPreferences.edit().putInt(CURRENT_INSTRUMENT_MODE, INSTRUMENT_MODE_GUITAR).apply()
-            newInstrumentMode = INSTRUMENT_MODE_GUITAR
+            sharedPreferences.edit().putInt(
+                CURRENT_INSTRUMENT_MODE,
+                INSTRUMENT_MODE_GUITAR
+            ).apply()
+            newInstrumentMode =
+                INSTRUMENT_MODE_GUITAR
         }
         return newInstrumentMode
     }

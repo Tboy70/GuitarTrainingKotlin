@@ -1,6 +1,6 @@
 package thomas.guitartrainingkotlin.data.business
 
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManager
+import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManager
 import javax.inject.Inject
 import javax.inject.Singleton
 

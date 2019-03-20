@@ -1,4 +1,4 @@
-package thomas.guitartrainingkotlin.data.manager
+package thomas.guitartrainingkotlin.data.manager.sharedprefs
 
 interface SharedPrefsManager {
 

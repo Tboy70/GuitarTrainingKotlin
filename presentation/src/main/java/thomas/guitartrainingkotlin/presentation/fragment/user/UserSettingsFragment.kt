@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl

@@ -9,8 +9,8 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
 class UserProgramDetailsViewModel @Inject constructor(
-        private val removeProgram: RemoveProgram,
-        private val retrieveProgramById: RetrieveProgramById
+    private val removeProgram: RemoveProgram,
+    private val retrieveProgramById: RetrieveProgramById
 ) : StateViewModel<UserProgramDetailsViewState>() {
 
     override val currentViewState = UserProgramDetailsViewState()
@@ -26,6 +26,8 @@ class UserProgramDetailsViewModel @Inject constructor(
         retrieveProgramById.unsubscribe()
     }
 
+    fun getIdProgram() = idProgram
+
     fun setIdProgram(idProgram: String) {
         this.idProgram = idProgram
     }
@@ -38,11 +40,7 @@ class UserProgramDetailsViewModel @Inject constructor(
             retrieveProgramById.subscribe(
                 params = RetrieveProgramById.Params.toRetrieve(idProgram),
                 onSuccess = {
-                    songRetrievedLiveData.postValue(
-                        ProgramViewDataWrapper(
-                            it
-                        )
-                    )
+                    songRetrievedLiveData.postValue(ProgramViewDataWrapper(it))
                     viewState.update {
                         loading = false
                     }
@@ -68,8 +66,8 @@ class UserProgramDetailsViewModel @Inject constructor(
                     finishProgramDeletion.postValue(true)
                     viewState.postValue(
                         UserProgramDetailsViewState(
-                            false,
-                            false
+                            displayError = false,
+                            loading = false
                         )
                     )
                 },

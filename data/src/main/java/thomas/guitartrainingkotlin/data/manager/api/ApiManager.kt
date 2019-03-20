@@ -1,4 +1,4 @@
-package thomas.guitartrainingkotlin.data.manager
+package thomas.guitartrainingkotlin.data.manager.api
 
 import io.reactivex.Completable
 import io.reactivex.Single

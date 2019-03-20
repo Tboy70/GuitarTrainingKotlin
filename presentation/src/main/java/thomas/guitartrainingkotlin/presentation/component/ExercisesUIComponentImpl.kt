@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.component
 
+import android.text.InputType
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.Button
@@ -67,6 +68,7 @@ class ExercisesUIComponentImpl @Inject constructor(
             ?: baseActivity.getString(R.string.user_program_creation_type_exercise_text)
 
         durationExercise = EditText(baseActivity)
+        durationExercise.inputType = InputType.TYPE_CLASS_NUMBER
         textDuration?.let {
             durationExercise.setText(textDuration)
         } ?: durationExercise.setHint(R.string.user_program_creation_duration_exercise_hint)

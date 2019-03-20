@@ -51,6 +51,12 @@ dependencies {
     // OkHttp
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
+    // DBFlow
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:4.2.4"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:4.2.4"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:4.2.4@aar"
+    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:4.2.4"
+
     implementation 'com.scottyab:aescrypt:0.0.1'
 
     testImplementation 'junit:junit:4.12'

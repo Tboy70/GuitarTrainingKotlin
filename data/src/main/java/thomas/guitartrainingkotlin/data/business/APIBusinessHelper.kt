@@ -3,22 +3,26 @@ package thomas.guitartrainingkotlin.data.business
 import io.reactivex.Completable
 import io.reactivex.Single
 import thomas.guitartrainingkotlin.data.entity.*
-import thomas.guitartrainingkotlin.data.manager.ApiManager
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManager
+import thomas.guitartrainingkotlin.data.manager.api.ApiManager
+import thomas.guitartrainingkotlin.data.manager.db.DBManager
+import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManager
+import thomas.guitartrainingkotlin.data.mapper.db.SongDBEntityDataMapper
 import thomas.guitartrainingkotlin.data.mapper.remote.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class APIBusinessHelper @Inject constructor(
+    private val dbManager: DBManager,
     private val apiManager: ApiManager,
     private val sharedPrefsManager: SharedPrefsManager,
-    private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
-    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
     private val userRemoteEntityDataMapper: UserRemoteEntityDataMapper,
     private val songRemoteEntityDataMapper: SongRemoteEntityDataMapper,
-    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper,
-    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper
+    private val scoreRemoteEntityDataMapper: ScoreRemoteEntityDataMapper,
+    private val songDBEntityDataMapper: SongDBEntityDataMapper,
+    private val programRemoteEntityDataMapper: ProgramRemoteEntityDataMapper,
+    private val exerciseRemoteEntityDataMapper: ExerciseRemoteEntityDataMapper,
+    private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper
 ) {
 
     fun connectUser(userEntity: UserEntity): Single<UserEntity> {
@@ -44,8 +48,7 @@ class APIBusinessHelper @Inject constructor(
 
     fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
         return apiManager.retrieveProgramsListByUserId(
-            userId,
-            sharedPrefsManager.getInstrumentModeInSharedPrefs()
+            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
         ).map {
             programRemoteEntityDataMapper.transformToEntity(it)
         }
@@ -96,11 +99,18 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
-        return apiManager.retrieveSongListByUserId(
-            userId,
-            sharedPrefsManager.getInstrumentModeInSharedPrefs()
-        ).map {
-            songRemoteEntityDataMapper.transformToEntity(it)
+        val songListInDB = dbManager.retrieveSongList()
+        return if (songListInDB.isNotEmpty()) {
+            Single.just(songDBEntityDataMapper.transformFromDB(songListInDB))
+        } else {
+            apiManager.retrieveSongListByUserId(
+                userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
+            ).map {
+                songRemoteEntityDataMapper.transformToEntity(it)
+            }.doOnSuccess {
+                dbManager.deleteSong()
+                dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
+            }
         }
     }
 
@@ -115,11 +125,16 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun removeSong(idSong: String): Completable {
-        return apiManager.removeSong(idSong)
+        return apiManager.removeSong(idSong).doOnComplete {
+            dbManager.deleteSongById(idSong)
+        }
     }
 
     fun updateSong(songEntity: SongEntity): Completable {
         return apiManager.updateSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
+            .doOnComplete {
+                dbManager.updateSong(songDBEntityDataMapper.transformToDB(songEntity))
+            }
     }
 
     fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Completable {

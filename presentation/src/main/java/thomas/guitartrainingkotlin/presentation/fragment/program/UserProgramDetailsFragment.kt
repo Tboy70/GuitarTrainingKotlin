@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
@@ -81,14 +82,11 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
         }
 
         fragment_user_program_details_update_button.setOnClickListener {
-            //            val bundle = Bundle()
-//            bundle.putSerializable(
-//                    UserProgramUpdateFragment.PROGRAM_OBJECT_WRAPPER_KEY,
-//                    viewModel.userProgramViewDataWrapper
-//            )
-//
-//            val host = baseActivity?.findViewById(R.id.user_program_nav_host_fragment) as View
-//            findNavController(host).navigate(R.id.action_user_songs_list_to_user_programs_list)
+            val bundle = Bundle()
+            bundle.putString(ConstValues.ID_PROGRAM, viewModel.getIdProgram())
+            navHost?.let { view ->
+                Navigation.findNavController(view).navigate(R.id.user_program_update, bundle, null)
+            }
         }
 
         fragment_user_program_details_remove_button.setOnClickListener {
@@ -155,7 +153,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
         if (descriptionProgram.isEmpty()) {
             fragment_user_program_details_description.text =
-                    activity?.getString(R.string.user_details_program_no_description)
+                activity?.getString(R.string.user_details_program_no_description)
         } else {
             fragment_user_program_details_description.text = descriptionProgram
         }
@@ -176,8 +174,8 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
             nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercises[i].typeExercise, activity as Activity)
             nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
             nameExercise.setTextSize(
-                    TypedValue.COMPLEX_UNIT_SP,
-                    (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
+                TypedValue.COMPLEX_UNIT_SP,
+                (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
             )
 
             val durationExercise = TextView(activity)
@@ -185,23 +183,23 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
             if (exercises[i].durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
                 durationExercise.text = String.format(
-                        getString(R.string.user_details_duration_exercise_minutes_txt),
-                        exercises[i].durationExercise.toString()
+                    getString(R.string.user_details_duration_exercise_minutes_txt),
+                    exercises[i].durationExercise.toString()
                 )
             } else {
                 val hours = exercises[i].durationExercise / DateTimeUtils.SECONDS_IN_ONE_MINUTE
                 val minutes = exercises[i].durationExercise % DateTimeUtils.SECONDS_IN_ONE_MINUTE
 
                 durationExercise.text = String.format(
-                        getString(R.string.user_details_duration_exercise_hours_txt),
-                        hours.toString(),
-                        minutes.toString()
+                    getString(R.string.user_details_duration_exercise_hours_txt),
+                    hours.toString(),
+                    minutes.toString()
                 )
             }
 
             durationExercise.setTextSize(
-                    TypedValue.COMPLEX_UNIT_SP,
-                    (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
+                TypedValue.COMPLEX_UNIT_SP,
+                (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
             )
 
             exercisesLinearLayout.addView(nameExercise, 0)

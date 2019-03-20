@@ -4,25 +4,18 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
-import thomas.guitartrainingkotlin.data.manager.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
-import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.ExercisesUIComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
-import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
-import thomas.guitartrainingkotlin.presentation.extension.observeSafe
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
-import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
-import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
+import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
+import thomas.guitartrainingkotlin.presentation.extension.observeSafe
+import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
+import thomas.guitartrainingkotlin.presentation.utils.ConstValues
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
+import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
 import javax.inject.Inject
 
 class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
@@ -151,7 +144,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     private fun handleClickValidateUpdateButton() {
         fragment_user_program_update_validate_button.setOnClickListener {
 
-//            dialogComponent.showMultiChoiceDialog(
+            //            dialogComponent.showMultiChoiceDialog(
 //                getString(R.string.dialog_update_program_title),
 //                getString(R.string.dialog_update_program_confirm_content),
 //                R.color.colorPrimary,
