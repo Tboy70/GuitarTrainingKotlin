@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.ui.chart
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.DisplayMetrics
 import android.view.WindowManager
@@ -13,8 +14,8 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class ChartMarkerView(context: Context?, layoutResource: Int, private val referenceTimestamp: Long) :
+@SuppressLint("ViewConstructor")
+class ChartMarkerView constructor(context: Context, layoutResource: Int, private val referenceTimestamp: Long) :
     MarkerView(context, layoutResource) {
 
     private val mDataFormat: DateFormat
@@ -37,15 +38,15 @@ class ChartMarkerView(context: Context?, layoutResource: Int, private val refere
 
     fun getXOffset(xpos: Float): Int {
         // this will center the marker-view horizontally
-        val min_offset = 50
-        if (xpos < min_offset)
+        val minOffset = 50
+        if (xpos < minOffset)
             return 0
 
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val metrics = DisplayMetrics()
         wm.defaultDisplay.getMetrics(metrics)
         //For right hand side
-        if (metrics.widthPixels - xpos < min_offset)
+        if (metrics.widthPixels - xpos < minOffset)
             return -width
         else if (metrics.widthPixels - xpos < 0)
             return -width//For left hand side

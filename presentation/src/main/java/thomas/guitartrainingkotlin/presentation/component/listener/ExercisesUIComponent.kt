@@ -6,9 +6,10 @@ import android.widget.LinearLayout
 interface ExercisesUIComponent {
 
     fun createNewExercise(
+        idExercise: String? = null,
         textButton: String? = null,
         textDuration: String? = null,
-        onRemoveView: () -> Unit,
+        onRemoveView: (idExercise : String?) -> Unit,
         onExerciseChosen: (button: Button) -> Unit
     ): LinearLayout
 }

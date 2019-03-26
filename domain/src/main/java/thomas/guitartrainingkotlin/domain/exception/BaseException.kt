@@ -2,7 +2,7 @@ package thomas.guitartrainingkotlin.domain.exception
 
 open class BaseException : Exception {
 
-    val code: Int
+    private val code: Int
 
     constructor() : super() {
         code = CODE_NONE

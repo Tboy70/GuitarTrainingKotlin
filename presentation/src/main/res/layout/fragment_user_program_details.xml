@@ -20,7 +20,7 @@
     <TextView
             android:id="@+id/fragment_user_program_details_name"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_start_end"
             android:paddingEnd="@dimen/padding_start_end"
             android:ellipsize="end"
@@ -28,20 +28,12 @@
             android:maxLines="2"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_huge"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_guideline_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_program_details_toolbar"
             app:layout_constraintVertical_bias="1.0"
             tools:text="Mon super programme"/>
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_user_program_details_guideline_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1"/>
 
     <TextView
             android:id="@+id/fragment_user_program_details_description"

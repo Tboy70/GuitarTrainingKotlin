@@ -1,11 +1,10 @@
 package thomas.guitartrainingkotlin.presentation.activity
 
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.activity_program.*
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.fragment.exercise.AbstractExerciseFragment
@@ -13,7 +12,6 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
 import thomas.guitartrainingkotlin.presentation.viewmodel.factory.ViewModelFactory
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.ProgramViewModel
-import thomas.guitartrainingkotlin.domain.model.Exercise
 import javax.inject.Inject
 
 class ProgramActivity : BaseActivity() {
@@ -25,7 +23,8 @@ class ProgramActivity : BaseActivity() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
-    private lateinit var exercisesOfProgram: List<Exercise>
+    private lateinit var exercisesOfProgram: List<Exercise> // TODO : ExerciseViewDataWrapper
+
     private var rankExercise = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,29 +35,14 @@ class ProgramActivity : BaseActivity() {
 
         exercisesOfProgram = ArrayList()
 
-        val extras = intent.extras
-
-        if (extras.containsKey(ConstValues.ID_PROGRAM)) {
-            programViewModel.getProgramById(extras.getString(ConstValues.ID_PROGRAM))
-        }
-
-        programViewModel.programRetrieved.observeSafe(this) {
-            exercisesOfProgram = it.getExercises()
-            startExercise(rankExercise)
-        }
-
-        programViewModel.errorEvent.observeSafe(this) {
-            val errorTriggered = programViewModel.errorThrowable
-            if (it.ERROR_TRIGGERED && errorTriggered != null) {
-//                errorRendererComponent.requestRenderError(
-//                        errorTriggered,
-//                        ErrorRendererComponentImpl.ERROR_DISPLAY_MODE_SNACKBAR,
-//                        findViewById(android.R.id.content)
-//                )
+        intent.extras?.let { bundle ->
+            if (bundle.containsKey(ConstValues.ID_PROGRAM)) {
+                bundle.getString(ConstValues.ID_PROGRAM)?.let {
+                    programViewModel.getProgramById(it)
+                }
             }
         }
-
-        // TODO : Create a view state for loading ?
+        initiateViewModelObserver()
     }
 
     fun startExercise(rankExercise: Int) {
@@ -75,16 +59,27 @@ class ProgramActivity : BaseActivity() {
         }
     }
 
-    fun setProgramToolbar(toolbarTitle: String?) {
-        setSupportActionBar(activity_program_toolbar)
-        activity_program_toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        activity_program_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-        activity_program_toolbar.setNavigationOnClickListener {
-            onBackPressed()
+    private fun initiateViewModelObserver() {
+        programViewModel.programRetrievedLiveEvent.observeSafe(this) {
+            exercisesOfProgram = it.getExercises()
+            startExercise(rankExercise)
         }
 
-        if (activity_program_toolbar != null) {
-            activity_program_toolbar.title = toolbarTitle
+        programViewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
         }
     }
+
+//    fun setProgramToolbar(toolbarTitle: String?) {
+//        setSupportActionBar(activity_program_toolbar)
+//        activity_program_toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+//        activity_program_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+//        activity_program_toolbar.setNavigationOnClickListener {
+//            onBackPressed()
+//        }
+//
+//        if (activity_program_toolbar != null) {
+//            activity_program_toolbar.title = toolbarTitle
+//        }
+//    }
 }

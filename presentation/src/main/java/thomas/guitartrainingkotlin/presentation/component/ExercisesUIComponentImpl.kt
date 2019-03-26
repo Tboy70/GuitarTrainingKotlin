@@ -26,25 +26,34 @@ class ExercisesUIComponentImpl @Inject constructor(
     private lateinit var verticalLayoutContainingTypeExerciseAndDurationExercise: LinearLayout
 
     override fun createNewExercise(
+        idExercise : String?,
         textButton: String?, textDuration: String?,
-        onRemoveView: () -> Unit,
+        onRemoveView: (idExercise : String?) -> Unit,
         onExerciseChosen: (button: Button) -> Unit
     ): LinearLayout {
         createLayout()
         createUIViews(textButton, textDuration)
-        setListeners(onRemoveView, onExerciseChosen)
+        setListeners(onRemoveView, onExerciseChosen, idExercise)
         addViews(verticalLayoutContainingTypeExerciseAndDurationExercise, horizontalLayoutContainingAllElements)
         return horizontalLayoutContainingAllElements
     }
 
-    private fun setListeners(onRemoveView: () -> Unit, onExerciseChosen: (button: Button) -> Unit) {
+    private fun setListeners(
+        onRemoveView: (idExercise: String?) -> Unit,
+        onExerciseChosen: (button: Button) -> Unit,
+        idExercise: String?
+    ) {
+        // I have to have a reference to the button, otherwise,
+        // it's always the last one which is updated
+        val buttonReference = buttonTypeExercise
+
         removeExerciseButton.setOnClickListener { v ->
             (v.parent.parent as ViewGroup).removeView(v.parent as ViewGroup)
-            onRemoveView()
+            onRemoveView(idExercise)
         }
 
-        buttonTypeExercise.setOnClickListener {
-            onExerciseChosen(buttonTypeExercise)
+        buttonReference.setOnClickListener {
+            onExerciseChosen(buttonReference)
         }
     }
 

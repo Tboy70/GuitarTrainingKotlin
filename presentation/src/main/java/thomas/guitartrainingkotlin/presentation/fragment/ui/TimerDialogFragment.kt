@@ -1,6 +1,5 @@
 package thomas.guitartrainingkotlin.presentation.fragment.ui
 
-import android.app.DialogFragment
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -8,13 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.timer_dialog_layout.*
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.domain.utils.ConstantTags
 import thomas.guitartrainingkotlin.presentation.component.listener.OnTimerDialogDismiss
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
-import thomas.guitartrainingkotlin.domain.utils.ConstantTags
 
-// TODO : DEPRECATED !!
+private const val DIALOG_FRAGMENT_TITLE =
+    "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_TITLE"
+private const val DIALOG_FRAGMENT_DURATION_EXERCISE =
+    "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_DURATION_EXERCISE"
+
 class TimerDialogFragment : DialogFragment() {
 
     enum class TimerStatus {
@@ -29,49 +33,29 @@ class TimerDialogFragment : DialogFragment() {
     private var durationExercise: Long = 0
     private var timeCountInMilliSeconds: Long = 0
     private var timeLeftToTheEndOfTimer: Long = 0
-    private var timerStatus =
-        TimerStatus.STOPPED
-
-    companion object {
-
-        private const val DIALOG_FRAGMENT_TITLE =
-            "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_TITLE"
-        private const val DIALOG_FRAGMENT_DURATION_EXERCISE =
-            "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_DURATION_EXERCISE"
-
-        fun newInstance(dialogTitle: String, durationExercise: Long): TimerDialogFragment {
-
-            val args = Bundle()
-
-            args.putString(DIALOG_FRAGMENT_TITLE, dialogTitle)
-            args.putLong(DIALOG_FRAGMENT_DURATION_EXERCISE, durationExercise)
-
-            val fragment = TimerDialogFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private var timerStatus = TimerStatus.STOPPED
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.timer_dialog_layout, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val args = arguments
-        if (args != null) {
-            dialogTitle = args.getString(DIALOG_FRAGMENT_TITLE)
-            durationExercise = args.getLong(DIALOG_FRAGMENT_DURATION_EXERCISE)
+        arguments?.let { bundle ->
+            bundle.getString(DIALOG_FRAGMENT_TITLE)?.let {
+                dialogTitle = it
+            }
+            durationExercise = bundle.getLong(DIALOG_FRAGMENT_DURATION_EXERCISE)
             timeLeftToTheEndOfTimer = durationExercise
         }
 
-        text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(durationExercise)
+        text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(timeLeftToTheEndOfTimer)
 
         dialog.setCanceledOnTouchOutside(true)
         dialog.setTitle(dialogTitle)
 
-        handleClickButtonStartTimer()
+        initiateViews()
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
@@ -79,7 +63,7 @@ class TimerDialogFragment : DialogFragment() {
         try {
             countDownTimer.cancel()
         } catch (e: UninitializedPropertyAccessException) {
-            Log.e(ConstantTags.TIME_DIALOG_FRAGMENT.tag, activity.getString(R.string.error_count_down_not_initialized))
+            Log.e(ConstantTags.TIME_DIALOG_FRAGMENT.tag, activity?.getString(R.string.error_count_down_not_initialized))
         }
         timerDialogDismissListener.onDismiss(timeLeftToTheEndOfTimer)
     }
@@ -88,7 +72,7 @@ class TimerDialogFragment : DialogFragment() {
         this.timerDialogDismissListener = onTimerDialogDismiss
     }
 
-    private fun handleClickButtonStartTimer() {
+    private fun initiateViews() {
         button_start_timer.setOnClickListener {
             startAndPauseTimer()
         }
@@ -96,7 +80,7 @@ class TimerDialogFragment : DialogFragment() {
 
     private fun startAndPauseTimer() {
         if (timerStatus == TimerStatus.STOPPED) {
-            initializeTimeValue(durationExercise)
+            initializeTimeValue(timeLeftToTheEndOfTimer)
             initializeProgressBar()
             timerStatus = TimerStatus.STARTED
             button_start_timer.text = getString(R.string.timer_pause_button)
@@ -126,17 +110,34 @@ class TimerDialogFragment : DialogFragment() {
             }
 
             override fun onFinish() {
-                text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(timeCountInMilliSeconds)
-                initializeProgressBar()
-                timerStatus =
-                    TimerStatus.STOPPED
+                timeLeftToTheEndOfTimer = 0
+                timerStatus = TimerStatus.STOPPED
+                dismiss()
             }
-
         }.start()
-        countDownTimer.start()
     }
 
     private fun pauseTimer() {
         countDownTimer.cancel()
+    }
+
+    companion object {
+
+        fun newInstance(
+            dialogTitle: String,
+            durationExercise: Long,
+            onTimerDialogDismiss: OnTimerDialogDismiss
+        ): TimerDialogFragment {
+
+            val args = Bundle()
+
+            args.putString(DIALOG_FRAGMENT_TITLE, dialogTitle)
+            args.putLong(DIALOG_FRAGMENT_DURATION_EXERCISE, durationExercise)
+
+            val fragment = TimerDialogFragment()
+            fragment.arguments = args
+            fragment.setTimerDialogDismissListener(onTimerDialogDismiss)
+            return fragment
+        }
     }
 }

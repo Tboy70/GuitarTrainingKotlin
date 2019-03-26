@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
+import thomas.guitartrainingkotlin.presentation.activity.ProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.*
@@ -75,10 +77,10 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
 
     private fun initiateView() {
         fragment_user_program_details_start_button.setOnClickListener {
-            //            val intent = Intent(activity, ProgramActivity::class.java)
-//            intent.putExtra(ConstValues.ID_PROGRAM, idProgram)
-//            startActivity(intent)
-//            activity?.finish()
+            val intent = Intent(activity, ProgramActivity::class.java)
+            intent.putExtra(ConstValues.ID_PROGRAM, viewModel.getIdProgram())
+            startActivity(intent)
+            activity?.finish()
         }
 
         fragment_user_program_details_update_button.setOnClickListener {
@@ -162,6 +164,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     }
 
     private fun createExercisesList(exercises: MutableList<Exercise>) {
+        fragment_user_program_details_exercises.removeAllViewsInLayout()
         val exercisesLinearLayout = LinearLayout(activity)
         exercisesLinearLayout.orientation = LinearLayout.VERTICAL
 
@@ -206,6 +209,6 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
             exercisesLinearLayout.addView(durationExercise, 1)
         }
 
-        fragment_user_program_details_exercises.addView(exercisesLinearLayout, 1)
+        fragment_user_program_details_exercises.addView(exercisesLinearLayout, 0)
     }
 }

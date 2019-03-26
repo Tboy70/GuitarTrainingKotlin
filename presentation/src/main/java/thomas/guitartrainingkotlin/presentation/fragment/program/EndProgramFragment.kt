@@ -20,7 +20,5 @@ class EndProgramFragment : AbstractExerciseFragment() {
         fragment_exercise_end_program_quit_button.setOnClickListener {
             activity?.finish()
         }
-
-        setToolbar(R.string.toolbar_title_end_program)
     }
 }

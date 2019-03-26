@@ -162,12 +162,14 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
             fragment_user_song_chart.axisRight.isEnabled = false
 
             val chartMarkerView =
-                ChartMarkerView(
-                    context,
-                    R.layout.chart_marker_view_layout,
-                    viewModel.referenceTimestamp
-                )
-            chartMarkerView.chartView = fragment_user_song_chart
+                context?.let {
+                    ChartMarkerView(
+                        it,
+                        R.layout.chart_marker_view_layout,
+                        viewModel.referenceTimestamp
+                    )
+                }
+            chartMarkerView?.chartView = fragment_user_song_chart
             fragment_user_song_chart.marker = chartMarkerView
 
             fragment_user_song_chart.invalidate()

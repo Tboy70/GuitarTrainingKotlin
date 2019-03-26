@@ -11,10 +11,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScale
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.other.LegalNoticesViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.program.ProgramViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserPanelViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramCreationViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.program.*
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongCreationViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongUpdateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.*
@@ -106,4 +103,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserSongUpdateViewModel::class)
     abstract fun bindUserSongUpdateViewModel(userSongUpdateViewModel: UserSongUpdateViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(IntroProgramViewModel::class)
+    abstract fun bindIntroProgramViewModel(introProgramViewModel: IntroProgramViewModel): ViewModel
 }

@@ -59,7 +59,7 @@ class UserSongDetailsViewModel @Inject constructor(
             retrieveSongScoreHistory.subscribe(
                 params = RetrieveSongScoreHistory.Params.toRetrieve(idSong),
                 onSuccess = {
-                    formatRetrievedList(it)
+                    convertHistoricDatesToTimestamp(it)
                     viewState.update {
                         loading = false
                     }
@@ -146,10 +146,6 @@ class UserSongDetailsViewModel @Inject constructor(
                 }
             )
         }
-    }
-
-    private fun formatRetrievedList(scoreList: List<Score>) {
-        convertHistoricDatesToTimestamp(scoreList)
     }
 
     private fun convertHistoricDatesToTimestamp(scoreList: List<Score>) {

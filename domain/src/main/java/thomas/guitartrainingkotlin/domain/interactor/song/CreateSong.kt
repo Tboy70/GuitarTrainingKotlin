@@ -4,12 +4,10 @@ import io.reactivex.Completable
 import thomas.guitartrainingkotlin.domain.interactor.base.parametrized.CompletableParametrizedUseCase
 import thomas.guitartrainingkotlin.domain.model.Song
 import thomas.guitartrainingkotlin.domain.repository.SongRepository
-import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class CreateSong @Inject constructor(
-    private val songRepository: SongRepository,
-    private val userRepository: UserRepository
+    private val songRepository: SongRepository
 ) : CompletableParametrizedUseCase<CreateSong.Params>() {
 
     override fun build(params: CreateSong.Params): Completable {

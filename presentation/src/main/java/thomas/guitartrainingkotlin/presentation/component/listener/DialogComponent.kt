@@ -21,7 +21,5 @@ interface DialogComponent {
         onNegative: () -> Unit
     )
 
-    fun showTimerDialog(durationLeft: Long, onTimerDialogDismiss: OnTimerDialogDismiss)
-
     fun displaySingleListChoiceDialog(title: Int, items: Int, positiveText: Int, onPositive: (text: String) -> Unit)
 }

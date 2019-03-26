@@ -24,6 +24,7 @@
     <string name="toolbar_title_song_update">Modification de la chanson</string>
 
     <string name="toolbar_title_program_details">Mon programme</string>
+    <string name="toolbar_title_program_update">Modification du programme</string>
     <string name="toolbar_title_program_creation">Création d\'un programme</string>
 
     <!-- DIALOGS-->
@@ -248,37 +249,42 @@
     <!-- ======================================================================================= -->
 
     <string name="generic_error_title_text">Erreur …</string>
+
+    <string name="error_wrong_info">Mauvaises information</string>
     <string name="snackbar_error_unknown_error">Erreur inconnue</string>
+    <string name="error_connection_problem">Problème de connexion internet</string>
     <string name="error_count_down_not_initialized">CountDown not initialized</string>
-    <string name="snackbar_error_connection_problem">Problème de connexion internet</string>
-    <string name="snackbar_error_server_connection_problem">Problème de connexion au serveur</string>
+    <string name="error_server_connection_problem">Problème de connexion au serveur</string>
 
     <string name="error_connect_user">Problème lors de la connexion au compte</string>
     <string name="error_creation_user">Erreur lors de la création de l\'utilisateur</string>
-    <string name="error_retrieve_user">Erreur lors de la récupération de l\'utilisateur</string>
     <string name="error_remove_user">Erreur pendant la suppression de l\'utilisateur</string>
+    <string name="error_retrieve_user">Erreur lors de la récupération de l\'utilisateur</string>
 
-    <string name="error_retrieve_program">Erreur pendant la récupération du programme</string>
-    <string name="error_retrieve_programs">Erreur pendant la récupération des programmes</string>
+    <string name="error_program_not_found">Impossible de récupérer le programme</string>
     <string name="error_creation_program">Erreur pendant la création du programme</string>
     <string name="error_update_program">Erreur pendant la mise à jour du programme</string>
     <string name="error_remove_program">Erreur pendant la suppression du programme</string>
+    <string name="error_retrieve_program">Erreur pendant la récupération du programme</string>
+    <string name="error_retrieve_programs">Erreur pendant la récupération des programmes</string>
 
     <string name="error_creation_exercises">Erreur pendant la création des exercices</string>
     <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
     <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
-    <string name="error_wrong_info">Mauvaises information</string>
-    <string name="error_retrieve_song">Erreur pendant la récupération de la chanson</string>
-    <string name="error_retrieve_songs">Erreur pendant la récupération des chansons</string>
+
+    <string name="error_song_not_found">Impossible de récupérer la chanson</string>
+    <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
     <string name="error_creation_song">Erreur pendant la création de la chanson</string>
     <string name="error_update_song">Erreur pendant la mise à jour de la chanson</string>
     <string name="error_remove_song">Erreur pendant la suppression de la chanson</string>
-    <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
+    <string name="error_retrieve_song">Erreur pendant la récupération de la chanson</string>
+    <string name="error_retrieve_songs">Erreur pendant la récupération des chansons</string>
     <string name="error_retrieve_song_score_historic">Erreur lors de la récupération de l\'historique de la chanson
     </string>
 
+
     <!-- ======================================================================================= -->
-    <!-- ====================================== ERRORS ========================================= -->
+    <!-- ===================================== SUCCESS ========================================= -->
     <!-- ======================================================================================= -->
     <string name="success_create_account">Compte créé avec succès ! Vous pouvez d\'ores et déjà l\'utiliser.</string>
 
@@ -314,6 +320,7 @@
     <string name="mode_mixolydian">Mixolydien</string>
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
+
     <string name="const_na">NA</string>
     <string name="never">Jamais</string>
     <string name="legal_notices_title">Mentions légales</string>

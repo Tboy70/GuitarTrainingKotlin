@@ -3,6 +3,8 @@ package thomas.guitartrainingkotlin.presentation.utils
 import android.content.Context
 import retrofit2.HttpException
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.data.exception.ProgramNotFoundException
+import thomas.guitartrainingkotlin.data.exception.SongNotFoundException
 import thomas.guitartrainingkotlin.domain.utils.ConstantErrors
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -14,8 +16,10 @@ object ErrorUtils {
             is HttpException -> {
                 return throwable.message()
             }
-            is ConnectException -> return context.getString(R.string.snackbar_error_connection_problem)
-            is UnknownHostException -> return context.getString(R.string.snackbar_error_server_connection_problem)
+            is ConnectException -> return context.getString(R.string.error_connection_problem)
+            is UnknownHostException -> return context.getString(R.string.error_server_connection_problem)
+            is SongNotFoundException -> return context.getString(R.string.error_song_not_found)
+            is ProgramNotFoundException -> return context.getString(R.string.error_program_not_found)
             is Exception -> {
                 return when (throwable.message) {
                     ConstantErrors.ERROR_CONNECT_USER -> context.getString(R.string.error_connect_user)

@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.ProgramRepository
 import javax.inject.Inject
 
 class RetrieveProgramById @Inject constructor(
-        private val programRepository: ProgramRepository
+    private val programRepository: ProgramRepository
 ) : SingleParametrizedUseCase<Program, RetrieveProgramById.Params>() {
 
     override fun build(params: Params): Single<Program> {

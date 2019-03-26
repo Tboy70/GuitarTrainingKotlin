@@ -1,25 +1,19 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
+import thomas.guitartrainingkotlin.presentation.view.state.program.ProgramActivityViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
 class ProgramViewModel @Inject constructor(
     private val retrieveProgramById: RetrieveProgramById
-) : ViewModel() {
+) : StateViewModel<ProgramActivityViewState>() {
 
-    var errorThrowable: Throwable? = null
+    override val currentViewState = ProgramActivityViewState()
 
-    val programRetrieved = MutableLiveData<ProgramViewDataWrapper>()
-    val errorEvent =
-        SingleLiveEvent<ProgramErrorEvent>()
-
-    data class ProgramErrorEvent(
-            val ERROR_TRIGGERED: Boolean = false
-    )
+    val programRetrievedLiveEvent = SingleLiveEvent<ProgramViewDataWrapper>()
 
     override fun onCleared() {
         super.onCleared()
@@ -28,22 +22,15 @@ class ProgramViewModel @Inject constructor(
 
     fun getProgramById(idProgram: String) {
         retrieveProgramById.subscribe(
-                params = RetrieveProgramById.Params.toRetrieve(idProgram),
-                onError = {
-                    errorThrowable = it
-                    errorEvent.postValue(
-                        ProgramErrorEvent(
-                            ERROR_TRIGGERED = true
-                        )
-                    )
-                },
-                onSuccess = {
-                    programRetrieved.postValue(
-                        ProgramViewDataWrapper(
-                            it
-                        )
-                    )
-                }
+            params = RetrieveProgramById.Params.toRetrieve(idProgram),
+            onError = {
+                errorLiveEvent.postValue(it)
+            },
+            onSuccess = {
+                programRetrievedLiveEvent.postValue(
+                    ProgramViewDataWrapper(it)
+                )
+            }
         )
     }
 }

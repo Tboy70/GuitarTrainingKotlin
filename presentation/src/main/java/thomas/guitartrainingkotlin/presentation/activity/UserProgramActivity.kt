@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.activity
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_user_program.*
 import thomas.guitartrainingkotlin.R
 
 class UserProgramActivity : BaseActivity() {
