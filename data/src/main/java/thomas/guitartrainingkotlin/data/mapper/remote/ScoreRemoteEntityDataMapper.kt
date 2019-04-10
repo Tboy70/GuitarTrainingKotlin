@@ -23,13 +23,14 @@ class ScoreRemoteEntityDataMapper @Inject constructor() {
         }
     }
 
-    fun transformToEntity(scoreRemoteEntityList: List<ScoreRemoteEntity>) = scoreRemoteEntityList.mapNotNull { scoreRemoteEntity ->
-        try {
-            transformToEntity(scoreRemoteEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformToEntity(scoreRemoteEntityList: List<ScoreRemoteEntity>) =
+        scoreRemoteEntityList.mapNotNull { scoreRemoteEntity ->
+            try {
+                transformToEntity(scoreRemoteEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 
     @Throws(DataMappingException::class)
     fun transformFromEntity(scoreEntity: ScoreEntity): ScoreRemoteEntity {

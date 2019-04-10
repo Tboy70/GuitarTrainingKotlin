@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
@@ -72,7 +72,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
     private fun initiateViewModelObservers() {
 
         viewModel.retrievedInstrumentModeLiveData.observeSafe(this) {
-            if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) {
+            if (it == InstrumentModeValues.INSTRUMENT_MODE_GUITAR) {
                 user_settings_guitar_switch.setCustomChecked(
                     true,
                     CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
@@ -83,7 +83,7 @@ class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
                     CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->
                         handleSwitch(isChecked)
                     })
-            } else if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_BASS) {
+            } else if (it == InstrumentModeValues.INSTRUMENT_MODE_BASS) {
                 user_settings_guitar_switch.setCustomChecked(
                     false,
                     CompoundButton.OnCheckedChangeListener { _, isChecked: Boolean ->

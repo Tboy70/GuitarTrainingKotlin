@@ -39,7 +39,6 @@ class UserSongCreationViewModel @Inject constructor(
             songToCreate.titleSong = titleSong
             songToCreate.artistSong = artistSong
 
-            //TODO : See if there is a better way
             retrieveInstrumentModeInSharedPrefs()
             retrieveUserIdInSharedPrefs()
 
@@ -72,7 +71,7 @@ class UserSongCreationViewModel @Inject constructor(
             onSuccess = {
                 songToCreate.idInstrument = it
             }, onError = {
-
+                errorLiveEvent.postValue(it)
             }
         )
     }
@@ -82,7 +81,7 @@ class UserSongCreationViewModel @Inject constructor(
             onSuccess = {
                 songToCreate.userId = it
             }, onError = {
-
+                errorLiveEvent.postValue(it)
             }
         )
     }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="user_programs_details_start_to_bottom_margin">24</integer>
+</resources>

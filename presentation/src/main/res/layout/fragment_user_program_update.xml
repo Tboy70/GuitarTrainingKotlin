@@ -62,7 +62,7 @@
             android:layout_marginStart="@dimen/constraint_layout_margin_8"
             android:layout_marginTop="@dimen/constraint_layout_margin_8"
             android:layout_marginEnd="@dimen/constraint_layout_margin_8"
-            android:text="@string/exercises_text"
+            android:text="@string/user_program_update_program_exercises"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

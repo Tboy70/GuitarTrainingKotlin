@@ -1,13 +1,13 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.song
 
 import androidx.lifecycle.MutableLiveData
+import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
+import thomas.guitartrainingkotlin.domain.interactor.song.UpdateSong
+import thomas.guitartrainingkotlin.domain.model.Song
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongUpdateViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
-import thomas.guitartrainingkotlin.domain.interactor.song.UpdateSong
-import thomas.guitartrainingkotlin.domain.model.Song
 import javax.inject.Inject
 
 class UserSongUpdateViewModel @Inject constructor(

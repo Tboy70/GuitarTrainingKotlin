@@ -1,10 +1,10 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
+import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveSongListByUserId
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongListViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveSongListByUserId
 import javax.inject.Inject
 
 class UserSongsListViewModel @Inject constructor(

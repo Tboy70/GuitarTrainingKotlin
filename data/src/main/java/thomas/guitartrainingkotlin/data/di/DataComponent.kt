@@ -23,9 +23,9 @@ interface DataComponent {
     //We expose our Repositories to dependent scopes
     fun userRepository(): UserRepository
 
-    fun programRepository() : ProgramRepository
+    fun programRepository(): ProgramRepository
 
-    fun songRepository() : SongRepository
+    fun songRepository(): SongRepository
 
     fun threadExecutor(): ThreadExecutor
 

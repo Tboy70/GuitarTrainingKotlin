@@ -90,5 +90,4 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
             errorRendererComponent.displayError(it)
         }
     }
-
 }

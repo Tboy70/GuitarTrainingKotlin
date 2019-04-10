@@ -81,7 +81,11 @@ class DurationComponent @Inject constructor() {
     }
 
     @Suppress("DEPRECATION")
-    fun setDurationLeft(exerciseScaleDurationLeft: TextView, durationTextLeft: String, timeCountInMilliSeconds: Long): Long {
+    fun setDurationLeft(
+        exerciseScaleDurationLeft: TextView,
+        durationTextLeft: String,
+        timeCountInMilliSeconds: Long
+    ): Long {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             exerciseScaleDurationLeft.text = Html.fromHtml(
                 String.format(

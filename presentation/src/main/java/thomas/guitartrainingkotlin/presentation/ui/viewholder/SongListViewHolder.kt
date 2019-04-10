@@ -34,7 +34,8 @@ class SongListViewHolder(
     private fun displayScoreSong(songViewDataWrapper: SongViewDataWrapper) {
         val averageScoreSong = songViewDataWrapper.getAverageScoreSong()
         val nbPlay = songViewDataWrapper.getNbPlay()
-        view_user_songs_list_item_nb_play.text = String.format(context.getString(R.string.user_song_list_nb_play), nbPlay)
+        view_user_songs_list_item_nb_play.text =
+            String.format(context.getString(R.string.user_song_list_nb_play), nbPlay)
 
         (((averageScoreSong == 0.0f && nbPlay == 0) || nbPlay == 0)).let {
             if (it) {
@@ -58,10 +59,10 @@ class SongListViewHolder(
                 DateTimeUtils.formatDate(DateTimeUtils.FROM_API_FORMAT, DateTimeUtils.WANTED_FORMAT, lastPlay)
             }.let { infoToDisplay ->
                 view_user_songs_list_item_last_play.text =
-                        String.format(
-                            context.getString(R.string.user_song_list_last_play),
-                            infoToDisplay
-                        )
+                    String.format(
+                        context.getString(R.string.user_song_list_last_play),
+                        infoToDisplay
+                    )
             }
         }
     }

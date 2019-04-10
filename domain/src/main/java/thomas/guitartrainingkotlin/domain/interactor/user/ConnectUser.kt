@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class ConnectUser @Inject constructor(
-        private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : SingleParametrizedUseCase<User, ConnectUser.Params>() {
 
     override fun build(params: Params): Single<User> {

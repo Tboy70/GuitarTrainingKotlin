@@ -7,9 +7,9 @@ class SongViewDataWrapper(@Transient private val song: Song) : Serializable {
 
     fun getId(): String = song.idSong
 
-    fun getTitleSong() : String = song.titleSong
+    fun getTitleSong(): String = song.titleSong
 
-    fun getArtistSong() : String  = song.artistSong
+    fun getArtistSong(): String = song.artistSong
 
     fun getAverageScoreSong(): Float = song.averageScoreSong
 

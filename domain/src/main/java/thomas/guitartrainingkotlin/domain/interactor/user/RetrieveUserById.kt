@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class RetrieveUserById @Inject constructor(
-        private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : SingleParametrizedUseCase<User, RetrieveUserById.Params>() {
 
     override fun build(params: Params): Single<User> {

@@ -28,13 +28,14 @@ class ProgramRemoteEntityDataMapper @Inject constructor(
         }
     }
 
-    fun transformToEntity(programRemoteEntityList: List<ProgramRemoteEntity>) = programRemoteEntityList.mapNotNull { programRemoteEntity ->
-        try {
-            transformToEntity(programRemoteEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformToEntity(programRemoteEntityList: List<ProgramRemoteEntity>) =
+        programRemoteEntityList.mapNotNull { programRemoteEntity ->
+            try {
+                transformToEntity(programRemoteEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 
     @Throws(DataMappingException::class)
     fun transformFromEntity(programEntity: ProgramEntity): ProgramRemoteEntity {

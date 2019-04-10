@@ -9,13 +9,14 @@ import javax.inject.Singleton
 @Singleton
 class ExerciseEntityDataMapper @Inject constructor() {
 
-    fun transformFromEntity(exerciseEntityList: List<ExerciseEntity>) = exerciseEntityList.mapNotNull { exerciseEntity ->
-        try {
-            transformFromEntity(exerciseEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformFromEntity(exerciseEntityList: List<ExerciseEntity>) =
+        exerciseEntityList.mapNotNull { exerciseEntity ->
+            try {
+                transformFromEntity(exerciseEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 
     @Throws(DataMappingException::class)
     fun transformFromEntity(exerciseEntity: ExerciseEntity): Exercise {

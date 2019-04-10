@@ -8,6 +8,6 @@ interface SnackbarComponent {
         view: View,
         content: String,
         length: Int,
-        success : Boolean
+        success: Boolean
     )
 }

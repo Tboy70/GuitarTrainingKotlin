@@ -65,10 +65,7 @@ class UserProgramDetailsViewModel @Inject constructor(
                 onComplete = {
                     finishProgramDeletion.postValue(true)
                     viewState.postValue(
-                        UserProgramDetailsViewState(
-                            displayError = false,
-                            loading = false
-                        )
+                        UserProgramDetailsViewState(loading = false)
                     )
                 },
                 onError = {

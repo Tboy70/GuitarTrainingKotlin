@@ -47,6 +47,11 @@ class APIBusinessHelper @Inject constructor(
         }
     }
 
+    fun retrievePassword(emailAddress: String): Completable {
+//        return apiManager.retrievePassword(emailAddress)
+        return Completable.complete()
+    }
+
     fun createNewUser(userEntity: UserEntity): Completable {
         return apiManager.createNewUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
     }
@@ -56,35 +61,6 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
-        // TODO : What should I do --> the commented way or this one ?
-//        val programListInDB = dbManager.retrieveProgramList()
-//        return if (programListInDB.isNotEmpty()) {
-//            Single.just(programDBEntityDataMapper.transformFromDB(programListInDB))
-//        } else {
-//            apiManager.retrieveProgramsListByUserId(
-//                userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-//            ).map {
-//                programRemoteEntityDataMapper.transformToEntity(it)
-//            }.doOnSuccess {
-//
-//                dbManager.deleteProgram()
-//                dbManager.deleteExercise()
-//
-//                val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
-//                dbManager.insertProgramList(programDBEntityList)
-//
-//                val exerciseList = mutableListOf<ExerciseDBEntity>()
-//                programDBEntityList.forEach { programDBEntity ->
-//                    programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
-//                        exerciseList.add(exerciseDBEntity)
-//                    }
-//                }
-//                if (exerciseList.isNotEmpty()) {
-//                    dbManager.insertExerciseList(exerciseList)
-//                }
-//            }
-//        }
-
         return apiManager.retrieveProgramsListByUserId(
             userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
         ).map {
@@ -172,21 +148,6 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
-        // TODO : What should I do --> the commented way or this one ?
-//        val songListInDB = dbManager.retrieveSongList()
-//        return if (songListInDB.isNotEmpty()) {
-//            Single.just(songDBEntityDataMapper.transformFromDB(songListInDB))
-//        } else {
-//            apiManager.retrieveSongListByUserId(
-//                userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-//            ).map {
-//                songRemoteEntityDataMapper.transformToEntity(it)
-//            }.doOnSuccess {
-//                dbManager.deleteSong()
-//                dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
-//            }
-//        }
-
         return apiManager.retrieveSongListByUserId(
             userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
         ).map {

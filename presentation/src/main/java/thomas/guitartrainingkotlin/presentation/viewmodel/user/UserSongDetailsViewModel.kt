@@ -2,17 +2,17 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import android.util.LongSparseArray
 import androidx.lifecycle.MutableLiveData
-import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
-import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongDetailsViewState
-import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.domain.interactor.song.RemoveSong
 import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
 import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongScoreHistory
 import thomas.guitartrainingkotlin.domain.interactor.song.SendScoreFeedback
 import thomas.guitartrainingkotlin.domain.model.Score
 import thomas.guitartrainingkotlin.domain.model.ScoreFeedback
+import thomas.guitartrainingkotlin.presentation.utils.ConstValues
+import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
+import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongDetailsViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*

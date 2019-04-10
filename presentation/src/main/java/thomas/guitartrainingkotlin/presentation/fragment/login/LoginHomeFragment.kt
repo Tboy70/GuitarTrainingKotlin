@@ -57,6 +57,14 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
             )
         }
 
+        fragment_login_home_forgot_password.setOnClickListener {
+            findNavController().navigate(
+                R.id.fragment_forgot_password,
+                null,
+                null
+            )
+        }
+
         // Validate button
         fragment_login_home_validate_button.setOnClickListener {
             activity?.let { fragmentActivity ->

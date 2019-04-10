@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerFragment
-import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.ui.viewholder.ProgramListViewHolder
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import javax.inject.Inject
 
 @PerFragment

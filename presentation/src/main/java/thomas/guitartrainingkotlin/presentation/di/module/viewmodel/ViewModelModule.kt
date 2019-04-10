@@ -6,9 +6,9 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import thomas.guitartrainingkotlin.presentation.di.annotation.ViewModelKey
 import thomas.guitartrainingkotlin.presentation.viewmodel.StartActivityViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseModeViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScaleViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.*
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.login.ForgotPasswordViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.other.LegalNoticesViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.*
@@ -66,6 +66,61 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ExerciseBackForthViewModel::class)
+    abstract fun bindExerciseBackForthViewModel(exerciseBackForthViewModel: ExerciseBackForthViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseBendSlideViewModel::class)
+    abstract fun bindExerciseBendSlideViewModel(exerciseBendSlideViewModel: ExerciseBendSlideViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExercisePalmMuteViewModel::class)
+    abstract fun bindExercisePalmMuteViewModel(exercisePalmMuteViewModel: ExercisePalmMuteViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExercisePullOffHammerOnViewModel::class)
+    abstract fun bindExercisePullOffHammerOnViewModel(exercisePullOffHammerOnViewModel: ExercisePullOffHammerOnViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseSkipStringViewModel::class)
+    abstract fun bindExerciseSkipStringViewModel(exerciseSkipStringViewModel: ExerciseSkipStringViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseSlapViewModel::class)
+    abstract fun bindExerciseSlapViewModel(exerciseSlapViewModel: ExerciseSlapViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseSpeedViewModel::class)
+    abstract fun bindExerciseSpeedViewModel(exerciseSpeedViewModel: ExerciseSpeedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseSweepPickingViewModel::class)
+    abstract fun bindExerciseSweepPickingViewModel(exerciseSweepPickingViewModel: ExerciseSweepPickingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseTappingViewModel::class)
+    abstract fun bindExerciseTappingViewModel(exerciseTappingViewModel: ExerciseTappingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExerciseThreeFingersViewModel::class)
+    abstract fun bindExerciseThreeFingersViewModel(exerciseThreeFingersViewModel: ExerciseThreeFingersViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EndProgramViewModel::class)
+    abstract fun bindEndProgramViewModel(endProgramViewModel: EndProgramViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(UserProgramCreationViewModel::class)
     abstract fun bindUserProgramCreationViewModel(userProgramCreationViewModel: UserProgramCreationViewModel): ViewModel
 
@@ -83,6 +138,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CreateAccountViewModel::class)
     abstract fun bindCreateAccountViewModel(createAccountViewModel: CreateAccountViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ForgotPasswordViewModel::class)
+    abstract fun bindForgotPasswordViewModel(forgotPasswordViewModel: ForgotPasswordViewModel): ViewModel
 
     @Binds
     @IntoMap

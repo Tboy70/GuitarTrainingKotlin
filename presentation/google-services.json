@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "727205484327",
+    "firebase_url": "https://guitartraining.firebaseio.com",
+    "project_id": "guitartraining",
+    "storage_bucket": "guitartraining.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727205484327:android:32b76ddf62d045ed",
+        "android_client_info": {
+          "package_name": "thomas.example.com.guitartraining_kotlin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDGCXDEb7CKJlrTVtBOED6UC2v2pnS48U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727205484327-aeap83g32jg15oll0es1125odiirvuvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

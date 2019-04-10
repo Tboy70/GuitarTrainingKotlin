@@ -9,7 +9,7 @@ object ActivityExtensions {
 }
 
 fun FragmentActivity.setSupportActionBar(toolbar: Toolbar, displayUp: Boolean = false) {
-    if(this is AppCompatActivity) {
+    if (this is AppCompatActivity) {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(displayUp)
     }

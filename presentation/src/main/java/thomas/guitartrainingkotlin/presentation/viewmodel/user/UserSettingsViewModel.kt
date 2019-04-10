@@ -1,12 +1,12 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import androidx.lifecycle.MutableLiveData
-import thomas.guitartrainingkotlin.presentation.view.state.user.UserSettingsViewState
-import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.SetInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.user.SuppressAccount
+import thomas.guitartrainingkotlin.presentation.view.state.user.UserSettingsViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
 class UserSettingsViewModel @Inject constructor(

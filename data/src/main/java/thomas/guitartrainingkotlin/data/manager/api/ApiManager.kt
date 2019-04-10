@@ -18,6 +18,8 @@ interface ApiManager {
 
     fun retrieveUserById(userId: String): Single<UserRemoteEntity>
 
+    fun retrievePassword(emailAddress: String): Completable
+
 
     // Program
     fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>

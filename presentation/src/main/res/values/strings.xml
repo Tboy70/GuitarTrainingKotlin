@@ -3,7 +3,11 @@
     <!-- APP -->
     <string name="app_name">Guitar Training</string>
 
+    <!-- NOTIFICATIONS -->
+    <string name="default_notification_channel_id">Channel</string>
+
     <!-- TOOLBARS -->
+    <string name="toolbar_forgot_password">Mot de passe oublié ?</string>
 
     <string name="toolbar_title_exercise_slap">Slap</string>
     <string name="toolbar_title_exercise_mode">Modes</string>
@@ -13,9 +17,9 @@
     <string name="toolbar_title_exercise_palm_mute">Palm mute</string>
     <string name="toolbar_title_exercise_bend_slide">Bend / Slide</string>
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
-    <string name="toolbar_title_exercise_skip_string">Mute une corde</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_three_fingers">Jeu à trois doigts</string>
+    <string name="toolbar_title_exercise_skip_string">Mute une corde en accord</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
 
@@ -29,44 +33,34 @@
 
     <!-- DIALOGS-->
     <string name="dialog_suppress_account_title">Suppression d\'un compte</string>
-    <string name="dialog_suppress_account_confirm_content">Êtes-vous sûr de vouloir supprimer le compte ?</string>
+    <string name="dialog_suppress_account_confirm_content">Es-tu sûr de vouloir supprimer le compte ?</string>
 
     <string name="dialog_logout_title">Déconnexion</string>
-    <string name="dialog_logout_confirm_content">Êtes vous sûr de vouloir vous déconnecter ?</string>
+    <string name="dialog_logout_confirm_content">Es-tu sûr de vouloir te déconnecter ?</string>
 
-    <string name="dialog_create_program_title">Création du programme</string>
-    <string name="dialog_create_program_content">Êtes-vous sûr de vouloir créer ce programme ?</string>
+    <string name="dialog_create_program_title">Création d\'un programme</string>
+    <string name="dialog_create_program_content">Es-tu sûr de vouloir créer ce programme ?</string>
 
     <string name="dialog_update_program_title">Mise à jour du programme</string>
-    <string name="dialog_update_program_content">Mise à jour du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_update_program_confirm_content">Êtes-vous certain de vouloir mettre à jour le programme ?
+    <string name="dialog_update_program_confirm_content">Es-tu certain de vouloir mettre à jour le programme ?
     </string>
 
     <string name="dialog_remove_program_title">Supression du programme</string>
-    <string name="dialog_remove_program_content">Supression du programme en cours. Veuillez patientez …</string>
-    <string name="dialog_remove_program_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
+    <string name="dialog_remove_program_confirm_content">Es-tu certain de vouloir supprimer le programme ?</string>
 
-    <string name="dialog_details_song_score_title">Vous avez fini ? Notez votre performance</string>
+    <string name="dialog_details_song_score_title">Tu as fini ? Note ta performance !</string>
 
     <string name="dialog_creation_song_title">Création de la chanson</string>
-    <string name="dialog_creation_song_content">Êtes-vous sûr de vouloir créer cette chanson ?</string>
+    <string name="dialog_creation_song_content">Es-tu sûr de vouloir créer cette chanson ?</string>
 
     <string name="dialog_update_song_title">Mise à jour de la chanson</string>
-    <string name="dialog_update_song_confirm_content">Êtes-vous certain de vouloir metttre à jour la chanson ?</string>
+    <string name="dialog_update_song_confirm_content">Es-tu certain de vouloir metttre à jour la chanson ?</string>
 
     <string name="dialog_remove_song_title">Suppression de la chanson</string>
-    <string name="dialog_remove_song_confirm_content">Êtes-vous certain de vouloir supprimer le programme ?</string>
+    <string name="dialog_remove_song_confirm_content">Es-tu certain de vouloir supprimer le programme ?</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
-
-    <!-- GENERIC TEXTS -->
-    <string name="exercises_text">Exercices</string>
-    <string name="program_name">Nom du programme</string>
-    <string name="program_description">Description du programme</string>
-
-    <string name="song_name">Nom de la chanson</string>
-    <string name="song_description">Nom de l\'artiste</string>
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
@@ -96,6 +90,10 @@
     <string name="create_account_password_hint">Mot de passe</string>
     <string name="create_account_title">Création d\'un compte</string>
 
+    <!-- FORGOT PASSWORD -->
+    <string name="forgot_password_email_hint">Adresse email</string>
+    <string name="forgot_password_explanation">Saisie ton adresse e-mail. Le mot de passe te sera réenvoyé</string>
+
     <!-- USER PANEL -->
     <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
     <string name="user_panel_navigation_drawer_settings">Paramètres</string>
@@ -104,6 +102,10 @@
     <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
     <string name="user_panel_navigation_drawer_close">Close navigation drawer</string>
     <string name="user_panel_navigation_drawer_legal_notices">Mentions légales</string>
+
+    <!-- USER PROGRAM GENERIC -->
+    <string name="program_name">Nom du programme</string>
+    <string name="program_description">Description du programme</string>
 
     <!-- USER PROGRAMS LIST-->
     <string name="user_programs_list_no_program_text">Aucun programme disponible</string>
@@ -114,12 +116,6 @@
     <string name="fragment_user_programs_list_total_duration_exercises_hours_text">Durée totale du programme: %1$s
         heure(s) et %2$s minutes
     </string>
-
-    <!-- USER SONGS LIST -->
-    <string name="user_song_list_score">Note : %1$s/5</string>
-    <string name="user_song_list_nb_play">Joué : %1$d fois</string>
-    <string name="user_song_list_last_play">Joué la dernière fois : %1$s</string>
-    <string name="user_song_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER PROGRAM DETAILS -->
     <string name="user_details_program_exercises_text">Exercises</string>
@@ -136,6 +132,19 @@
     <string name="user_program_creation_type_exercise_text">Type de l\'exercise</string>
     <string name="user_program_creation_button_validate_text">Créer le programme</string>
     <string name="user_program_creation_duration_exercise_hint">Durée de l\'exercise</string>
+
+    <!-- USER PROGRAM UPDATE -->
+    <string name="user_program_update_program_exercises">Exercices</string>
+
+    <!-- USER SONG GENERIC -->
+    <string name="song_name">Nom de la chanson</string>
+    <string name="song_description">Nom de l\'artiste</string>
+
+    <!-- USER SONGS LIST -->
+    <string name="user_song_list_score">Note : %1$s/5</string>
+    <string name="user_song_list_nb_play">Joué : %1$d fois</string>
+    <string name="user_song_list_last_play">Joué la dernière fois : %1$s</string>
+    <string name="user_song_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER SONG DETAILS -->
     <string name="label_chart">Notes</string>
@@ -162,8 +171,8 @@
 
     <string name="end_program_quit_button">Quitter</string>
     <string name="end_program_title">Fin du programme</string>
-    <string name="end_program_description_text">Félicitations ! Vous êtes pavenu au bout du programme ! L\'entraînement
-        est la clé, continuez ! :)
+    <string name="end_program_description_text">Félicitations ! Tu es pavenu au bout du programme ! L\'entraînement
+        est la clé, continue ! :)
     </string>
 
 
@@ -173,7 +182,7 @@
 
     <!-- DIALOGS EXERCISE -->
     <string name="confirm_next_exercise_title">Attention</string>
-    <string name="confirm_next_exercise_content">Vous n\'avez pas encore fini cet exercise. Voulez-vous vraiment passer
+    <string name="confirm_next_exercise_content">Tu n\'as pas encore fini cet exercise. Veux-tu vraiment passer
         au suivant ?
     </string>
 
@@ -286,8 +295,9 @@
     <!-- ======================================================================================= -->
     <!-- ===================================== SUCCESS ========================================= -->
     <!-- ======================================================================================= -->
-    <string name="success_create_account">Compte créé avec succès ! Vous pouvez d\'ores et déjà l\'utiliser.</string>
-
+    <string name="success_create_account">Compte créé avec succès ! Tu peux d\'ores et déjà l\'utiliser.</string>
+    <string name="success_forgot_password_email_sent">Un mail contenant le mot de passe vient de t\'être envoyé
+    </string>
 
     <!-- ======================================================================================= -->
     <!-- ======================================= VALUES ======================================== -->

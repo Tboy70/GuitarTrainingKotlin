@@ -10,7 +10,7 @@ import thomas.guitartrainingkotlin.data.values.DBValues
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Database(version = DBValues.DB_VERSION)
+@Database(version = DBValues.DB_VERSION, name = DBValues.DB_NAME)
 @Singleton
 class DBManagerImpl @Inject constructor(context: Context) : DBManager {
 

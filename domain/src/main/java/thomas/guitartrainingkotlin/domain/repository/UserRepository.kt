@@ -20,7 +20,10 @@ interface UserRepository {
 
     fun retrieveUserById(userId: String): Single<User>
 
+    fun retrievePassword(emailAddress: String): Completable
+
     fun logoutUser(): Completable
 
     fun suppressAccount(userId: String): Completable
+
 }

@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.domain.repository.SongRepository
 import javax.inject.Inject
 
 class RetrieveSongScoreHistory @Inject constructor(
-        private val songRepository: SongRepository
+    private val songRepository: SongRepository
 ) : SingleParametrizedUseCase<List<Score>, RetrieveSongScoreHistory.Params>() {
 
     override fun build(params: Params): Single<List<Score>> {

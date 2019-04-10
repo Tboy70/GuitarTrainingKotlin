@@ -30,7 +30,6 @@ class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
     @Inject
     lateinit var userSongsListAdapter: UserSongsListAdapter
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

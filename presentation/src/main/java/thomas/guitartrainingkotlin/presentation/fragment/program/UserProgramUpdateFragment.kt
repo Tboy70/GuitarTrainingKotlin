@@ -9,8 +9,8 @@ import android.widget.LinearLayout
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.model.Exercise
+import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
@@ -129,7 +129,6 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                     dialogComponent.dismissDialog()
                 }
             )
-
         }
     }
 
@@ -137,7 +136,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
         viewModel.instrumentModeRetrievedLiveEvent.observeSafe(this) {
             exercisesArray =
-                if (it == SharedPrefsManagerImpl.INSTRUMENT_MODE_GUITAR) { // TODO : Where take this value ?
+                if (it == InstrumentModeValues.INSTRUMENT_MODE_GUITAR) {
                     R.array.list_exercises_guitar
                 } else {
                     R.array.list_exercises_bass

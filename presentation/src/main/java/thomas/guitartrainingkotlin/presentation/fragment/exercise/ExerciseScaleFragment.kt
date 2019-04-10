@@ -1,28 +1,22 @@
 package thomas.guitartrainingkotlin.presentation.fragment.exercise
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
+import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScaleViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.factory.ViewModelFactory
-import javax.inject.Inject
 
-class ExerciseScaleFragment : AbstractExerciseFragment() {
+class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    private lateinit var exerciseScaleViewModel: ExerciseScaleViewModel
+    override val viewModelClass = ExerciseScaleViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_exercise_scale
 
     private var items: Int = 0
     private var navHost: View? = null
@@ -35,18 +29,12 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
         const val NB_SCALES = 3
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_exercise_scale, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
         }
-
-        exerciseScaleViewModel = ViewModelProviders.of(this, viewModelFactory).get(ExerciseScaleViewModel::class.java)
 
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
@@ -83,7 +71,7 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
             showSimpleChoiceDialog(SCALE_SELECTION)
         }
         fragment_exercise_scale_random_selection.setOnClickListener {
-            exerciseScaleViewModel.getRandomValue()
+            viewModel.getRandomValue()
         }
         fragment_exercise_scale_button_start_exercise.setOnClickListener {
             launchTimer(fragment_exercise_scale_duration_left)
@@ -94,7 +82,7 @@ class ExerciseScaleFragment : AbstractExerciseFragment() {
     }
 
     private fun initiateViewModelObservers() {
-        exerciseScaleViewModel.finishRandomLiveEvent.observeSafe(this) { noteTonePair ->
+        viewModel.finishRandomLiveEvent.observeSafe(this) { noteTonePair ->
             val notesArray = this.resources.getStringArray(R.array.list_notes)
             mSelectedItem = notesArray[noteTonePair.first]
             displaySelectedChoice(

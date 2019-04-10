@@ -1,8 +1,8 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
+import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
 class StartActivityViewModel @Inject constructor(

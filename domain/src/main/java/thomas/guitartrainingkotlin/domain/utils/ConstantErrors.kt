@@ -23,5 +23,6 @@ object ConstantErrors : Throwable() {
     const val ERROR_UPDATE_SONG = "thomas.guitartrainingkotlin.domain.utils.ERROR_UPDATE_SONG"
     const val ERROR_REMOVE_SONG = "thomas.guitartrainingkotlin.domain.utils.ERROR_REMOVE_SONG"
     const val ERROR_SEND_FEEDBACK_SONG = "thomas.guitartrainingkotlin.domain.utils.ERROR_SEND_FEEDBACK_SONG"
-    const val ERROR_RETRIEVE_SCORE_SONG_HISTORIC = "thomas.guitartrainingkotlin.domain.utils.ERROR_RETRIEVE_SCORE_SONG_HISTORIC"
+    const val ERROR_RETRIEVE_SCORE_SONG_HISTORIC =
+        "thomas.guitartrainingkotlin.domain.utils.ERROR_RETRIEVE_SCORE_SONG_HISTORIC"
 }

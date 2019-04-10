@@ -23,13 +23,14 @@ class UserRemoteEntityDataMapper @Inject constructor() {
         }
     }
 
-    fun transformToEntity(userRemoteEntityList: List<UserRemoteEntity>) = userRemoteEntityList.mapNotNull { userRemoteEntity ->
-        try {
-            transformToEntity(userRemoteEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformToEntity(userRemoteEntityList: List<UserRemoteEntity>) =
+        userRemoteEntityList.mapNotNull { userRemoteEntity ->
+            try {
+                transformToEntity(userRemoteEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 
     @Throws(DataMappingException::class)
     fun transformFromEntity(userEntity: UserEntity): UserRemoteEntity {

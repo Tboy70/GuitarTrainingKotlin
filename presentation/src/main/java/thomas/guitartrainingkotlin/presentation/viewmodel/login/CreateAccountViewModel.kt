@@ -1,10 +1,10 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
-import thomas.guitartrainingkotlin.presentation.view.state.user.CreateAccountFragmentViewState
-import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.domain.interactor.user.CreateNewUser
 import thomas.guitartrainingkotlin.domain.model.User
+import thomas.guitartrainingkotlin.presentation.view.state.user.CreateAccountFragmentViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
 class CreateAccountViewModel @Inject constructor(

@@ -18,11 +18,25 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 app:popUpTo="@+id/fragment_create_account"/>
+
+        <action
+                android:id="@+id/action_forgot_password"
+                app:destination="@id/fragment_forgot_password"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
+                app:popUpTo="@+id/fragment_forgot_password"/>
     </fragment>
 
     <fragment
             android:id="@+id/fragment_create_account"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.login.CreateAccountFragment"
             tools:layout="@layout/fragment_create_account"/>
+
+    <fragment
+            android:id="@+id/fragment_forgot_password"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.login.ForgotPasswordFragment"
+            tools:layout="@layout/fragment_forgot_password"/>
 
 </navigation>

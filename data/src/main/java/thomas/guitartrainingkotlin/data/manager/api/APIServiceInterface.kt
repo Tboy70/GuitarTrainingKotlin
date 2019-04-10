@@ -69,4 +69,7 @@ interface APIServiceInterface {
 
     @GET("score/{idSong}")
     fun retrieveSongScoreHistory(@Path("idSong") idSong: String): Single<List<ScoreRemoteEntity>>
+
+    @POST("user/{emailAddress}")
+    fun retrievePassword(@Path("emailAddress") emailAddress: String): Completable
 }

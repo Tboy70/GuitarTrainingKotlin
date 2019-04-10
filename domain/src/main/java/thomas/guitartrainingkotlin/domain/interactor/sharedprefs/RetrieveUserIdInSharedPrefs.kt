@@ -6,7 +6,7 @@ import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class RetrieveUserIdInSharedPrefs @Inject constructor(
-        private val userRepository: UserRepository
+    private val userRepository: UserRepository
 ) : SingleUseCase<String>() {
 
     override fun build(): Single<String> {

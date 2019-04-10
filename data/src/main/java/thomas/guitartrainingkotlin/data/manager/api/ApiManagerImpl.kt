@@ -22,6 +22,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ApiManagerImpl @Inject constructor() : ApiManager {
+
     private var apiService: APIServiceInterface
 
     companion object {
@@ -55,6 +56,10 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
 
     override fun retrieveUserById(userId: String): Single<UserRemoteEntity> {
         return apiService.retrieveUserById(userId)
+    }
+
+    override fun retrievePassword(emailAddress: String): Completable {
+        return apiService.retrievePassword(emailAddress)
     }
 
     override fun suppressAccount(userId: String): Completable {

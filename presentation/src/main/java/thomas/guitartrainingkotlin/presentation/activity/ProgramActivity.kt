@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
-import thomas.guitartrainingkotlin.presentation.fragment.exercise.AbstractExerciseFragment
+import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
+import thomas.guitartrainingkotlin.presentation.view.datawrapper.ExerciseViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.factory.ViewModelFactory
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.ProgramViewModel
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class ProgramActivity : BaseActivity() {
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
-    private lateinit var exercisesOfProgram: List<Exercise> // TODO : ExerciseViewDataWrapper
+    private lateinit var exercisesOfProgram: List<ExerciseViewDataWrapper>
 
     private var rankExercise = 0
 
@@ -49,10 +49,10 @@ class ProgramActivity : BaseActivity() {
         this.rankExercise = rankExercise
         if (rankExercise < exercisesOfProgram.size) {
             val rightExercise = exercisesOfProgram[rankExercise]
-            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.typeExercise)
+            val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.getTypeExercise())
             val bundle = Bundle()
-            bundle.putInt(AbstractExerciseFragment.RANK_EXERCISE, rankExercise)
-            bundle.putInt(AbstractExerciseFragment.DURATION_EXERCISE, rightExercise.durationExercise)
+            bundle.putInt(BaseExerciseFragment.RANK_EXERCISE, rankExercise)
+            bundle.putInt(BaseExerciseFragment.DURATION_EXERCISE, rightExercise.getDurationExercise())
             findNavController(R.id.program_nav_host_fragment).navigate(idFragmentToLaunch, bundle, null)
         } else {
             findNavController(R.id.program_nav_host_fragment).navigate(R.id.launcher_end_program_fragment, null, null)
@@ -61,7 +61,9 @@ class ProgramActivity : BaseActivity() {
 
     private fun initiateViewModelObserver() {
         programViewModel.programRetrievedLiveEvent.observeSafe(this) {
-            exercisesOfProgram = it.getExercises()
+            exercisesOfProgram = it.getExercises().map { exercise ->
+                ExerciseViewDataWrapper(exercise)
+            }
             startExercise(rankExercise)
         }
 
@@ -69,17 +71,4 @@ class ProgramActivity : BaseActivity() {
             errorRendererComponent.displayError(it)
         }
     }
-
-//    fun setProgramToolbar(toolbarTitle: String?) {
-//        setSupportActionBar(activity_program_toolbar)
-//        activity_program_toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-//        activity_program_toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
-//        activity_program_toolbar.setNavigationOnClickListener {
-//            onBackPressed()
-//        }
-//
-//        if (activity_program_toolbar != null) {
-//            activity_program_toolbar.title = toolbarTitle
-//        }
-//    }
 }

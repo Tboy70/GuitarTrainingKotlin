@@ -8,6 +8,7 @@ import thomas.guitartrainingkotlin.presentation.activity.LoginActivity
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerFragment
 import thomas.guitartrainingkotlin.presentation.fragment.login.CreateAccountFragment
+import thomas.guitartrainingkotlin.presentation.fragment.login.ForgotPasswordFragment
 import thomas.guitartrainingkotlin.presentation.fragment.login.LoginHomeFragment
 
 @Module(includes = [BaseActivityModule::class])
@@ -24,5 +25,9 @@ abstract class LoginActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun createAccountFragmentInjector(): CreateAccountFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun forgotPasswordFragmentInjector(): ForgotPasswordFragment
 
 }

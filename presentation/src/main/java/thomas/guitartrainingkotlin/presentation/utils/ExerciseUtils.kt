@@ -1,8 +1,8 @@
 package thomas.guitartrainingkotlin.presentation.utils
 
 import android.app.Activity
-import thomas.guitartrainingkotlin.data.values.ExercisesTypeValues
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.data.values.ExercisesTypeValues
 
 object ExerciseUtils {
 

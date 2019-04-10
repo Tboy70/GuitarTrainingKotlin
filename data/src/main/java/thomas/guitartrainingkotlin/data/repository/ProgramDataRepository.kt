@@ -2,9 +2,9 @@ package thomas.guitartrainingkotlin.data.repository
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.data.mapper.ExerciseEntityDataMapper
 import thomas.guitartrainingkotlin.data.mapper.ProgramEntityDataMapper
-import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.model.Program
 import thomas.guitartrainingkotlin.domain.repository.ProgramRepository

@@ -28,7 +28,7 @@ class UserDataRepository @Inject constructor(
 
     override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Single<Int> {
         return Single.defer {
-           Single.just(contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode))
+            Single.just(contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode))
         }
     }
 
@@ -65,6 +65,13 @@ class UserDataRepository @Inject constructor(
             }
         }
     }
+
+    override fun retrievePassword(emailAddress: String): Completable {
+        return Completable.defer {
+            apiBusinessHelper.retrievePassword(emailAddress)
+        }
+    }
+
 
     override fun logoutUser(): Completable {
         return Completable.defer {

@@ -26,9 +26,9 @@ class ExercisesUIComponentImpl @Inject constructor(
     private lateinit var verticalLayoutContainingTypeExerciseAndDurationExercise: LinearLayout
 
     override fun createNewExercise(
-        idExercise : String?,
+        idExercise: String?,
         textButton: String?, textDuration: String?,
-        onRemoveView: (idExercise : String?) -> Unit,
+        onRemoveView: (idExercise: String?) -> Unit,
         onExerciseChosen: (button: Button) -> Unit
     ): LinearLayout {
         createLayout()

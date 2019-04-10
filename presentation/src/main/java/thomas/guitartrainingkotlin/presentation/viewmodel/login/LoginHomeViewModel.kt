@@ -1,10 +1,10 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
 import androidx.lifecycle.MutableLiveData
-import thomas.guitartrainingkotlin.presentation.view.state.user.LoginFragmentViewState
-import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.domain.interactor.user.ConnectUser
 import thomas.guitartrainingkotlin.domain.model.User
+import thomas.guitartrainingkotlin.presentation.view.state.user.LoginFragmentViewState
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
 class LoginHomeViewModel @Inject constructor(

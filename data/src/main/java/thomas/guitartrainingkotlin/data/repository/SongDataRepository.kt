@@ -2,10 +2,10 @@ package thomas.guitartrainingkotlin.data.repository
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.data.mapper.ScoreEntityDataMapper
 import thomas.guitartrainingkotlin.data.mapper.ScoreFeedbackEntityDataMapper
 import thomas.guitartrainingkotlin.data.mapper.SongEntityDataMapper
-import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.domain.model.Score
 import thomas.guitartrainingkotlin.domain.model.ScoreFeedback
 import thomas.guitartrainingkotlin.domain.model.Song
@@ -57,7 +57,10 @@ class SongDataRepository @Inject constructor(
 
     override fun sendScoreFeedback(scoreFeedback: ScoreFeedback, idSong: String): Completable {
         return Completable.defer {
-            apiBusinessHelper.sendScoreFeedback(scoreFeedbackEntityDataMapper.transformModelToEntity(scoreFeedback), idSong)
+            apiBusinessHelper.sendScoreFeedback(
+                scoreFeedbackEntityDataMapper.transformModelToEntity(scoreFeedback),
+                idSong
+            )
         }
     }
 

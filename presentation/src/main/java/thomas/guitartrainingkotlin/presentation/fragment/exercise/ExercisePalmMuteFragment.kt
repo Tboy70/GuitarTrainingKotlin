@@ -1,24 +1,23 @@
 package thomas.guitartrainingkotlin.presentation.fragment.exercise
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_exercise_palm_mute.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
+import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
+import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExercisePalmMuteViewModel
 
-class ExercisePalmMuteFragment : AbstractExerciseFragment() {
+class ExercisePalmMuteFragment : BaseExerciseFragment<ExercisePalmMuteViewModel>() {
+
+    override val viewModelClass = ExercisePalmMuteViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_exercise_palm_mute
 
     private var navHost: View? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_exercise_palm_mute, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

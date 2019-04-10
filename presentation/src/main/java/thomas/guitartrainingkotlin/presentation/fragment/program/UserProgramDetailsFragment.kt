@@ -100,7 +100,9 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
                 onPositive = {
                     viewModel.removeProgram()
                 },
-                onNegative = {}
+                onNegative = {
+                    dialogComponent.dismissDialog()
+                }
             )
         }
     }
@@ -142,7 +144,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
                     ConstraintSet.BOTTOM,
                     R.id.fragment_user_program_details_constraint_layout,
                     ConstraintSet.BOTTOM,
-                    24  // TODO : WTF !
+                    activity?.resources?.getInteger(R.integer.user_programs_details_start_to_bottom_margin) ?: 0
                 )
                 constraintSet.applyTo(fragment_user_program_details_constraint_layout)
             }

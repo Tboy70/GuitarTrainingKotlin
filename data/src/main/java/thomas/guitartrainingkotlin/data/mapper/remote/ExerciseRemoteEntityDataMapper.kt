@@ -23,13 +23,14 @@ class ExerciseRemoteEntityDataMapper @Inject constructor() {
         }
     }
 
-    fun transformFromEntity(exerciseEntityList: List<ExerciseEntity>) = exerciseEntityList.mapNotNull { exerciseEntity ->
-        try {
-            transformFromEntity(exerciseEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformFromEntity(exerciseEntityList: List<ExerciseEntity>) =
+        exerciseEntityList.mapNotNull { exerciseEntity ->
+            try {
+                transformFromEntity(exerciseEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 
     @Throws(DataMappingException::class)
     fun transformToEntity(exerciseRemoteEntity: ExerciseRemoteEntity): ExerciseEntity {
@@ -45,11 +46,12 @@ class ExerciseRemoteEntityDataMapper @Inject constructor() {
         }
     }
 
-    fun transformToEntity(exerciseRemoteEntityList: List<ExerciseRemoteEntity>) = exerciseRemoteEntityList.mapNotNull { exerciseRemoteEntity ->
-        try {
-            transformToEntity(exerciseRemoteEntity)
-        } catch (e: DataMappingException) {
-            null
+    fun transformToEntity(exerciseRemoteEntityList: List<ExerciseRemoteEntity>) =
+        exerciseRemoteEntityList.mapNotNull { exerciseRemoteEntity ->
+            try {
+                transformToEntity(exerciseRemoteEntity)
+            } catch (e: DataMappingException) {
+                null
+            }
         }
-    }
 }

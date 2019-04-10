@@ -1,18 +1,16 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_end_program.*
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.fragment.exercise.AbstractExerciseFragment
+import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
+import thomas.guitartrainingkotlin.presentation.viewmodel.program.EndProgramViewModel
 
-class EndProgramFragment : AbstractExerciseFragment() {
+class EndProgramFragment : BaseExerciseFragment<EndProgramViewModel>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_end_program, container, false)
-    }
+    override val viewModelClass = EndProgramViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_end_program
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
