@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.game
 
 import android.app.Application
+import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import thomas.guitartrainingkotlin.presentation.view.state.game.IntervalGameViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
@@ -14,24 +15,32 @@ class IntervalGameViewModel @Inject constructor(
 
     override val currentViewState = IntervalGameViewState()
 
-    val finishRandomLiveEvent = SingleLiveEvent<Pair<Int, Int>>()
+    val answerCheckedLiveEvent = SingleLiveEvent<Boolean>()
+    val finishRandomLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
 
     init {
         getRandomValue()
     }
 
-    private fun getRandomValue() {
-        val noteValue = Random()
-        val intervalValue = Random()
+    fun getRandomValue() {
         finishRandomLiveEvent.postValue(
-            Pair(
-                noteValue.nextInt(12),  // TODO : Export
-                intervalValue.nextInt(16)
+            Triple(
+                Random().nextInt(ConstValues.NB_NOTES),
+                Random().nextInt(ConstValues.NB_INTERVAL),
+                Random().nextInt(ConstValues.INTERVAL_GAME_MODE)
             )
         )
     }
 
-    fun checkAnswer(randomNote: String, randomInterval: String, answer: String) {
-        GameUtils.checkAnswer(randomNote, randomInterval, answer, getApplication())
+    fun checkAnswer(randomNote: String, randomInterval: String, gameMode: Int, answer: String) {
+        answerCheckedLiveEvent.postValue(
+            GameUtils.checkAnswer(
+                randomNote,
+                randomInterval,
+                answer,
+                gameMode,
+                getApplication()
+            )
+        )
     }
 }

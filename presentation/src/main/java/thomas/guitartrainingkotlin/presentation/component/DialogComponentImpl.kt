@@ -1,10 +1,15 @@
 package thomas.guitartrainingkotlin.presentation.component
 
+import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
+import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import javax.inject.Inject
 
 @PerActivity
@@ -66,6 +71,19 @@ class DialogComponentImpl @Inject constructor(
             negativeButton(res = negativeText) {
                 onNegative()
             }
+        }
+    }
+
+    override fun displayCustomViewHelpScale(randomScale: String, positiveText: Int, onPositive: () -> Unit) {
+        dismissDialog()
+        materialDialog = MaterialDialog(baseActivity).show {}.apply {
+            customView(R.layout.view_help_scale)
+            cancelOnTouchOutside(true)
+            positiveButton(positiveText) { onPositive() }
+            val scaleInterval = GameUtils.getScaleInterval(baseActivity, randomScale)
+            getCustomView().findViewById<TextView>(R.id.view_help_scale_title).text =
+                baseActivity.getString(R.string.dialog_view_help_scale_title, randomScale.toLowerCase())
+            getCustomView().findViewById<TextView>(R.id.view_help_scale_interval).text = scaleInterval
         }
     }
 }

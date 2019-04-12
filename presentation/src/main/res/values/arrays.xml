@@ -17,9 +17,10 @@
     </string-array>
 
     <string-array name="list_scales">
-        <item>@string/tone_pentatonic</item>
         <item>@string/tone_major</item>
         <item>@string/tone_minor</item>
+        <item>@string/tone_pentatonic_major</item>
+        <item>@string/tone_pentatonic_minor</item>
     </string-array>
 
     <string-array name="list_modes">
@@ -37,14 +38,11 @@
         <item>la seconde mineure</item>
         <item>la seconde majeure</item>
         <item>la tierce mineure</item>
-        <item>la tierce majeure</item>
-        <item>la quarte diminuée</item>
+        <item>la tierce majeure / la quarte diminuée</item>
         <item>la quarte</item>
-        <item>la quarte augmentée</item>
-        <item>la quinte Diminué</item>
+        <item>la quarte augmentée / la quinte Diminué</item>
         <item>la quinte juste</item>
-        <item>la quinte augmentée</item>
-        <item>la sixte mineure</item>
+        <item>la quinte augmentée / la sixte mineure</item>
         <item>la sixte majeure</item>
         <item>la septième mineure</item>
         <item>la septème majeure</item>

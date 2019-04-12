@@ -64,5 +64,6 @@
     <!-- FORGOT PASSWORD -->
     <dimen name="forgot_password_explanation_margin_top">25dp</dimen>
     <dimen name="forgot_password_email_margin_top">25dp</dimen>
+    <dimen name="degree_edit_text_width">100dp</dimen>
 
 </resources>

@@ -9,6 +9,7 @@
     <!-- TOOLBARS -->
     <string name="toolbar_forgot_password">Mot de passe oublié ?</string>
 
+    <string name="toolbar_title_game_list">Jeux</string>
     <string name="toolbar_title_exercise_slap">Slap</string>
     <string name="toolbar_title_exercise_mode">Modes</string>
     <string name="toolbar_title_exercise_scale">Gammes</string>
@@ -19,6 +20,8 @@
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_three_fingers">Jeu à trois doigts</string>
+    <string name="toolbar_title_interval_game_list">Donner les intervalles</string>
+    <string name="toolbar_title_scale_game_list">Donner les notes de la gamme</string>
     <string name="toolbar_title_exercise_skip_string">Mute une corde en accord</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
@@ -58,6 +61,8 @@
 
     <string name="dialog_remove_song_title">Suppression de la chanson</string>
     <string name="dialog_remove_song_confirm_content">Es-tu certain de vouloir supprimer le programme ?</string>
+
+    <string name="dialog_interval_game_title">Votre réponse :</string>
 
     <!-- GENERIC BUTTONS -->
     <string name="generic_button_validate">Valider</string>
@@ -254,6 +259,22 @@
     <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite !</string>
 
 
+    <!-- ====================================================================================== -->
+    <!-- ====================================== GAMES ========================================= -->
+    <!-- ====================================================================================== -->
+
+    <string name="interval_game_hint_answer">Réponse</string>
+    <string name="scale_game_question">Gamme de %1$s %2$s :</string>
+    <string name="interval_game_question">%1$s de %2$s est :</string>
+    <string name="interval_game_title">Donner les intervalles</string>
+    <string name="game_right_answer">Bonne réponse !</string>
+    <string name="game_wrong_answer">Mauvaise réponse …</string>
+    <string name="interval_game_reversed_question">%1$s est %2$s de :</string>
+    <string name="interval_game_description">Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la
+        question …
+    </string>
+
+
     <!-- ======================================================================================= -->
     <!-- ====================================== ERRORS ========================================= -->
     <!-- ======================================================================================= -->
@@ -319,9 +340,10 @@
     <string name="note_B">B</string>
 
     <!-- Tones -->
-    <string name="tone_major">Majeur</string>
-    <string name="tone_minor">Mineur</string>
-    <string name="tone_pentatonic">Pentatonique</string>
+    <string name="tone_major">Majeure</string>
+    <string name="tone_minor">Mineure</string>
+    <string name="tone_pentatonic_minor">Pentatonique mineure</string>
+    <string name="tone_pentatonic_major">Pentatonique majeure</string>
 
     <!-- Modes -->
     <string name="mode_ionian">Ionien</string>
@@ -335,13 +357,15 @@
     <string name="const_na">NA</string>
     <string name="never">Jamais</string>
     <string name="legal_notices_title">Mentions légales</string>
+    <string name="first_degree">I</string>
+    <string name="second_degree">II</string>
+    <string name="third_degree">III</string>
+    <string name="fourth_degree">IV</string>
+    <string name="fifth_degree">V</string>
+    <string name="sixth_degree">VI</string>
+    <string name="seventh_degree">VII</string>
 
-    <!--  TODO : Sort -->
-    <string name="toolbar_title_game_list">Jeux</string>
-    <string name="toolbar_title_scale_game_list">Donner les notes de la gamme</string>
-    <string name="toolbar_title_interval_game_list">Donner les intervalles</string>
-    <string name="interval_game_question">%1$s de %2$s est :</string>
-    <string name="answer">Réponse</string>
-    <string name="dialog_interval_game_title">Votre réponse :</string>
+    <!-- TODO : Sort + some string are not extracted in layout -->
+    <string name="dialog_view_help_scale_title">Gamme %s</string>
 
 </resources>

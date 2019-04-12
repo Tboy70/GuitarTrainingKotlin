@@ -25,8 +25,6 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
     companion object {
         const val NOTE_SELECTION = 1
         const val SCALE_SELECTION = 2
-        const val NB_NOTES = 12
-        const val NB_SCALES = 3
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

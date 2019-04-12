@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
+import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.getInput
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
+import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
 import javax.inject.Inject
 
@@ -23,7 +26,11 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
     @Inject
     lateinit var dialogComponent: DialogComponent
 
-    private var randomNote: String = ""    // TODO : Anywhere else ?
+    @Inject
+    lateinit var snackbarComponent: SnackbarComponent
+
+    private var gameMode: Int = 0
+    private var randomNote: String = ""
     private var randomInterval: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,7 +68,7 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
         }
 
         fragment_interval_game_validate.setOnClickListener {
-            viewModel.checkAnswer(randomNote, randomInterval, fragment_interval_game_answer.getInput())
+            viewModel.checkAnswer(randomNote, randomInterval, gameMode, fragment_interval_game_answer.getInput())
         }
     }
 
@@ -69,11 +76,43 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
         viewModel.finishRandomLiveEvent.observeSafe(this) {
             randomNote = this.resources.getStringArray(R.array.list_notes)[it.first]
             randomInterval = this.resources.getStringArray(R.array.list_interval)[it.second]
-            fragment_interval_game_question.text = activity?.getString(
-                R.string.interval_game_question,
-                randomInterval.substring(0, 1).toUpperCase() + randomInterval.substring(1),
-                randomNote
-            )
+            gameMode = it.third
+
+            if (gameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE) {
+                fragment_interval_game_question.text = activity?.getString(
+                    R.string.interval_game_question,
+                    randomInterval.substring(0, 1).toUpperCase() + randomInterval.substring(1),
+                    randomNote
+                )
+            } else if (gameMode == ConstValues.INTERVAL_REVERSED_GAME_MODE) {
+                fragment_interval_game_question.text = activity?.getString(
+                    R.string.interval_game_reversed_question,
+                    randomNote,
+                    randomInterval
+                )
+            }
+        }
+
+        viewModel.answerCheckedLiveEvent.observeSafe(this) { rightAnswer ->
+            activity?.let { activity ->
+                if (rightAnswer) {
+                    snackbarComponent.displaySnackbar(
+                        activity.findViewById(android.R.id.content),
+                        getString(R.string.game_right_answer),
+                        Snackbar.LENGTH_SHORT,
+                        true
+                    )
+                    fragment_interval_game_answer.text = null
+                    viewModel.getRandomValue()
+                } else {
+                    snackbarComponent.displaySnackbar(
+                        activity.findViewById(android.R.id.content),
+                        getString(R.string.game_wrong_answer),
+                        Snackbar.LENGTH_SHORT,
+                        false
+                    )
+                }
+            }
         }
     }
 
