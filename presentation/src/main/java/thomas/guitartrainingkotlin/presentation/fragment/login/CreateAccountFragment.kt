@@ -66,7 +66,7 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
 
     private fun initiateViewModelObservers() {
         viewModel.userCreationLiveData.observeSafe(this) {
-            fragmentManager?.popBackStack()
+            fragmentManager?.popBackStack() // TODO : Findnavcontroller instead ?
 
             activity?.let { activity ->
                 snackbarComponent.displaySnackbar(

@@ -32,6 +32,25 @@
         <item>@string/mode_locrian</item>
     </string-array>
 
+    <string-array name="list_interval">
+        <item>la tonique</item>
+        <item>la seconde mineure</item>
+        <item>la seconde majeure</item>
+        <item>la tierce mineure</item>
+        <item>la tierce majeure</item>
+        <item>la quarte diminuée</item>
+        <item>la quarte</item>
+        <item>la quarte augmentée</item>
+        <item>la quinte Diminué</item>
+        <item>la quinte juste</item>
+        <item>la quinte augmentée</item>
+        <item>la sixte mineure</item>
+        <item>la sixte majeure</item>
+        <item>la septième mineure</item>
+        <item>la septème majeure</item>
+        <item>l\'octave</item>
+    </string-array>
+
     <string-array name="list_exercises_guitar">
         <item>@string/exercise_scale_title_text</item>
         <item>@string/exercise_mode_title_text</item>

@@ -62,7 +62,7 @@ class ForgotPasswordFragment : BaseFragment<ForgotPasswordViewModel>() {
 
     private fun initiateViewModelObservers() {
         viewModel.emailSentLiveEvent.observeSafe(this) {
-            fragmentManager?.popBackStack()
+            fragmentManager?.popBackStack() // TODO : Findnavcontroller instead ?
 
             activity?.let { activity ->
                 snackbarComponent.displaySnackbar(

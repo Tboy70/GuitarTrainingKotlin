@@ -95,6 +95,7 @@
     <string name="forgot_password_explanation">Saisie ton adresse e-mail. Le mot de passe te sera réenvoyé</string>
 
     <!-- USER PANEL -->
+    <string name="user_panel_navigation_drawer_games">Jeux</string>
     <string name="user_panel_navigation_drawer_songs">Mes chansons</string>
     <string name="user_panel_navigation_drawer_settings">Paramètres</string>
     <string name="user_panel_navigation_drawer_logout">Se déconnecter</string>
@@ -334,5 +335,13 @@
     <string name="const_na">NA</string>
     <string name="never">Jamais</string>
     <string name="legal_notices_title">Mentions légales</string>
+
+    <!--  TODO : Sort -->
+    <string name="toolbar_title_game_list">Jeux</string>
+    <string name="toolbar_title_scale_game_list">Donner les notes de la gamme</string>
+    <string name="toolbar_title_interval_game_list">Donner les intervalles</string>
+    <string name="interval_game_question">%1$s de %2$s est :</string>
+    <string name="answer">Réponse</string>
+    <string name="dialog_interval_game_title">Votre réponse :</string>
 
 </resources>

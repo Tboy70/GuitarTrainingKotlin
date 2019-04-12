@@ -39,6 +39,7 @@
         <activity android:name="thomas.guitartrainingkotlin.presentation.activity.UserSongActivity"/>
         <activity android:name="thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity"/>
         <activity android:name=".presentation.activity.ProgramCreationActivity"/>
+        <activity android:name=".presentation.activity.GameActivity"/>
 
         <!-- NOTIFICATION SERVICE -->
         <service android:name=".presentation.notification.NotificationsService"

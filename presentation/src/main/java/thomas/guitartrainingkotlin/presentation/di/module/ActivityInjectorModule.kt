@@ -40,4 +40,8 @@ abstract class ActivityInjectorModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [ProgramCreationActivityModule::class])
     abstract fun programCreationActivityInjector(): ProgramCreationActivity
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = [GameActivityModule::class])
+    abstract fun gameActivityInjector(): GameActivity
 }

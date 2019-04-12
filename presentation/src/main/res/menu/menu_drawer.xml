@@ -10,6 +10,11 @@
                 android:id="@+id/menu_drawer_songs"
                 android:icon="@drawable/ic_song"
                 android:title="@string/user_panel_navigation_drawer_songs"/>
+
+        <item
+                android:id="@+id/menu_drawer_games"
+                android:icon="@drawable/ic_games"
+                android:title="@string/user_panel_navigation_drawer_games"/>
         <item
                 android:id="@+id/menu_drawer_settings"
                 android:icon="@drawable/ic_settings"

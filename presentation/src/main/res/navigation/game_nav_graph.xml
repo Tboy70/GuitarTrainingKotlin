@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        app:startDestination="@+id/game_list_fragment">
+
+    <fragment
+            android:id="@+id/game_list_fragment"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.GameListFragment"
+            tools:layout="@layout/fragment_game_list">
+
+        <action
+                android:id="@+id/action_game_list_to_interval_game"
+                app:destination="@id/interval_game"/>
+
+        <action
+                android:id="@+id/action_game_list_to_scale_game"
+                app:destination="@id/scale_game"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/interval_game"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragment"
+            tools:layout="@layout/fragment_interval_game"/>
+
+    <fragment
+            android:id="@+id/scale_game"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ScaleGameFragment"
+            tools:layout="@layout/fragment_scale_game"/>
+
+</navigation>

@@ -7,6 +7,9 @@ import dagger.multibindings.IntoMap
 import thomas.guitartrainingkotlin.presentation.di.annotation.ViewModelKey
 import thomas.guitartrainingkotlin.presentation.viewmodel.StartActivityViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.*
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.GameListViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.ForgotPasswordViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
@@ -168,4 +171,19 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(IntroProgramViewModel::class)
     abstract fun bindIntroProgramViewModel(introProgramViewModel: IntroProgramViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GameListViewModel::class)
+    abstract fun bindGameListViewModel(gameListViewModel: GameListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(IntervalGameViewModel::class)
+    abstract fun bindIntervalGameViewModel(intervalGameViewModel: IntervalGameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ScaleGameViewModel::class)
+    abstract fun bindScaleGameViewModel(scaleGameViewModel: ScaleGameViewModel): ViewModel
 }

@@ -122,6 +122,7 @@ class UserPanelActivity : BaseActivity() {
         when (menuItem.itemId) {
             R.id.menu_drawer_programs -> getActionForUserProgramsDestination()
             R.id.menu_drawer_songs -> getActionForUserSongsDestination()
+            R.id.menu_drawer_games -> launchGameActivity()
             R.id.menu_drawer_settings -> getActionForSettingsDestination()
             R.id.menu_drawer_legal_notices -> getActionForLegalNoticesDestination()
             R.id.menu_drawer_logout -> logoutUser()
@@ -195,22 +196,22 @@ class UserPanelActivity : BaseActivity() {
 
     /*************** NAVIGATION PART ***************/
 
-    private fun getActionForUserSongsDestination() {
+    private fun getActionForUserProgramsDestination() {
         when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
-            UserProgramsListFragment::class.java.name -> R.id.action_user_programs_list_to_user_songs_list
-            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_songs_list
-            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_songs_list
+            UserSongsListFragment::class.java.name -> R.id.action_user_songs_list_to_user_programs_list
+            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_programs_list
+            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_programs_list
             else -> null
         }?.let { chosenDestination ->
             navigate(chosenDestination)
         }
     }
 
-    private fun getActionForUserProgramsDestination() {
+    private fun getActionForUserSongsDestination() {
         when ((findNavController(R.id.user_panel_nav_host_fragment).currentDestination as FragmentNavigator.Destination).className) {
-            UserSongsListFragment::class.java.name -> R.id.action_user_songs_list_to_user_programs_list
-            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_programs_list
-            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_programs_list
+            UserProgramsListFragment::class.java.name -> R.id.action_user_programs_list_to_user_songs_list
+            UserSettingsFragment::class.java.name -> R.id.action_action_user_settings_to_user_songs_list
+            LegalNoticesFragment::class.java.name -> R.id.action_action_legal_notices_to_user_songs_list
             else -> null
         }?.let { chosenDestination ->
             navigate(chosenDestination)
@@ -243,5 +244,10 @@ class UserPanelActivity : BaseActivity() {
         val bundle = Bundle()
         bundle.putString(ConstValues.USER_ID, viewModel.getUserId())
         findNavController(R.id.user_panel_nav_host_fragment).navigate(destinationId, bundle)
+    }
+
+    private fun launchGameActivity() {
+        val intent = Intent(this, GameActivity::class.java)
+        startActivity(intent)
     }
 }

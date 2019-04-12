@@ -4,6 +4,9 @@
             xmlns:tools="http://schemas.android.com/tools"
             app:startDestination="@+id/user_programs_list">
 
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <!-- ++++++++ USER PROGRAMS ACTIONS ++++++++ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <fragment
             android:id="@+id/user_programs_list"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramsListFragment"
@@ -22,6 +25,9 @@
                 app:destination="@id/action_legal_notices"/>
     </fragment>
 
+    <!-- ++++++++++++++++++++++++++++++++++++ -->
+    <!-- ++++++++ USER SONGS ACTIONS ++++++++ -->
+    <!-- ++++++++++++++++++++++++++++++++++++ -->
     <fragment
             android:id="@+id/user_songs_list"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.song.UserSongsListFragment"
@@ -39,6 +45,9 @@
                 app:destination="@id/action_legal_notices"/>
     </fragment>
 
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <!-- ++++++++ USER SETTINGS ACTIONS ++++++++ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <fragment
             android:id="@+id/action_user_settings"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.user.UserSettingsFragment"
@@ -60,6 +69,9 @@
                 app:popUpToInclusive="true"/>
     </fragment>
 
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
+    <!-- ++++++++ LEGAL NOTICES ACTIONS ++++++++ -->
+    <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <fragment
             android:id="@+id/action_legal_notices"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.other.LegalNoticesFragment"

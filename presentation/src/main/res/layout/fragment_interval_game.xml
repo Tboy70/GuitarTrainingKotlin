@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fragment_interval_game_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ToolbarAppTheme"
+            app:title="@string/toolbar_title_interval_game_list"
+            app:titleTextColor="@android:color/white"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/fragment_interval_game_title"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_toolbar"
+            android:layout_marginTop="@dimen/constraint_layout_margin_16"
+            android:textSize="@dimen/text_huge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:text="Donner les intervalles"/>
+
+    <TextView
+            android:id="@+id/fragment_interval_game_description"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_title"
+            android:textSize="@dimen/text_big"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:text="Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la question ..."/>
+
+    <TextView
+            android:id="@+id/fragment_interval_game_question"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_description"
+            android:textSize="@dimen/text_big"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:text="@string/interval_game_question"/>
+
+    <EditText
+            android:id="@+id/fragment_interval_game_answer"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/answer"
+            android:inputType="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question"
+            tools:ignore="Autofill" />
+
+    <Button
+            android:id="@+id/fragment_interval_game_validate"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:background="@drawable/button_drawable"
+            android:text="@string/generic_button_validate"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
