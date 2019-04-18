@@ -9,7 +9,6 @@ import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerFragment
 import thomas.guitartrainingkotlin.presentation.fragment.exercise.*
 import thomas.guitartrainingkotlin.presentation.fragment.program.EndProgramFragment
-import thomas.guitartrainingkotlin.presentation.fragment.program.IntroProgramFragment
 
 @Module(includes = [BaseActivityModule::class])
 abstract class ProgramActivityModule {
@@ -64,10 +63,6 @@ abstract class ProgramActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun exerciseThreeFingersFragmentInjector(): ExerciseThreeFingersFragment
-
-    @PerFragment
-    @ContributesAndroidInjector
-    abstract fun introProgramFragmentInjector(): IntroProgramFragment
 
     @PerFragment
     @ContributesAndroidInjector

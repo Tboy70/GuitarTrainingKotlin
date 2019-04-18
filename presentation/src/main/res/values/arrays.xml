@@ -17,6 +17,7 @@
     </string-array>
 
     <string-array name="list_scales">
+        <item>@string/tone_blues</item>
         <item>@string/tone_major</item>
         <item>@string/tone_minor</item>
         <item>@string/tone_pentatonic_major</item>
@@ -34,19 +35,19 @@
     </string-array>
 
     <string-array name="list_interval">
-        <item>la tonique</item>
-        <item>la seconde mineure</item>
-        <item>la seconde majeure</item>
-        <item>la tierce mineure</item>
-        <item>la tierce majeure / la quarte diminuée</item>
-        <item>la quarte</item>
-        <item>la quarte augmentée / la quinte Diminué</item>
-        <item>la quinte juste</item>
-        <item>la quinte augmentée / la sixte mineure</item>
-        <item>la sixte majeure</item>
-        <item>la septième mineure</item>
-        <item>la septème majeure</item>
-        <item>l\'octave</item>
+        <item>@string/interval_first</item>
+        <item>@string/interval_second_minor</item>
+        <item>@string/interval_second_major</item>
+        <item>@string/interval_third_minor</item>
+        <item>@string/interval_third_major</item>
+        <item>@string/interval_fourth</item>
+        <item>@string/interval_augmented_fourth</item>
+        <item>@string/interval_fifth</item>
+        <item>@string/interval_augmented_fifth</item>
+        <item>@string/interval_sixth_major</item>
+        <item>@string/interval_sixth_minor</item>
+        <item>@string/interval_seventh</item>
+        <item>@string/interval_octave</item>
     </string-array>
 
     <string-array name="list_exercises_guitar">

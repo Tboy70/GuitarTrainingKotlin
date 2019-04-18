@@ -3,7 +3,7 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_three_fingers.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
@@ -11,6 +11,7 @@ import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseThreeFingersViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersViewModel>() {
 
@@ -19,11 +20,14 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
 
     private var navHost: View? = null
 
+    private lateinit var sharedViewModel: ProgramSharedViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
+            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
@@ -36,8 +40,8 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                navHost?.let { view ->
-                    Navigation.findNavController(view).navigateUp()
+                navHost?.let {
+                    sharedViewModel.onBackPressed()
                 }
             }
         }

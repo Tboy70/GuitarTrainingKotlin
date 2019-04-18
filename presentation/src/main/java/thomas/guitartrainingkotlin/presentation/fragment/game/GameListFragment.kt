@@ -47,18 +47,22 @@ class GameListFragment : BaseFragment<GameListViewModel>() {
     private fun initiateViews() {
         button_game_interval.setOnClickListener {
             navHost?.let { view ->
-                Navigation.findNavController(view).navigate(R.id.interval_game, null, null)
+                Navigation.findNavController(view).navigate(R.id.action_game_list_to_interval_game, null, null)
             }
         }
 
         button_game_scale.setOnClickListener {
             navHost?.let { view ->
-                Navigation.findNavController(view).navigate(R.id.scale_game, null, null)
+                Navigation.findNavController(view).navigate(R.id.action_game_list_to_scale_game, null, null)
+            }
+        }
+
+        button_game_reversed_interval.setOnClickListener {
+            navHost?.let { view ->
+                Navigation.findNavController(view).navigate(R.id.action_game_list_to_reversed_interval_game, null, null)
             }
         }
     }
 
-    private fun initiateViewModelObservers() {
-    }
-
+    private fun initiateViewModelObservers() {}
 }

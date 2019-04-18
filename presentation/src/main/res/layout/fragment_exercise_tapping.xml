@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/colorPrimary"
+            android:theme="@style/ToolbarAppTheme"
             app:title="@string/toolbar_title_exercise_tapping"
             app:titleTextColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"/>

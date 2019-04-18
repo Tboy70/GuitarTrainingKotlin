@@ -3,7 +3,7 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
@@ -12,6 +12,7 @@ import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScaleViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
 
@@ -21,6 +22,8 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
     private var items: Int = 0
     private var navHost: View? = null
     private var mSelectedItem: String? = null
+
+    private lateinit var sharedViewModel: ProgramSharedViewModel
 
     companion object {
         const val NOTE_SELECTION = 1
@@ -32,6 +35,7 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
+            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
@@ -45,8 +49,8 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                navHost?.let { view ->
-                    Navigation.findNavController(view).navigateUp()
+                navHost?.let {
+                    sharedViewModel.onBackPressed()
                 }
             }
         }

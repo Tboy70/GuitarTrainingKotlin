@@ -24,7 +24,7 @@ object ExerciseUtils {
         }
     }
 
-    fun convertTypeExerciseToIdFragment(typeExercise: Int): Int {
+    fun convertTypeExerciseToStartIdFragment(typeExercise: Int): Int {
         return when (typeExercise) {
             ExercisesTypeValues.EXERCISE_SCALE -> R.id.launcher_scale_exercise_fragment
             ExercisesTypeValues.EXERCISE_MODE -> R.id.launcher_mode_exercise_fragment
@@ -39,6 +39,24 @@ object ExerciseUtils {
             ExercisesTypeValues.EXERCISE_SLAP -> R.id.launcher_slap_exercise_fragment
             ExercisesTypeValues.EXERCISE_THREE_FINGERS_RIGHT_HAND -> R.id.launcher_three_fingers_exercise_fragment
             else -> R.id.launcher_end_program_fragment
+        }
+    }
+
+    fun convertTypeExerciseToIdFragment(typeExercise: Int): Int {
+        return when (typeExercise) {
+            ExercisesTypeValues.EXERCISE_SCALE -> R.id.action_scale_exercise_fragment
+            ExercisesTypeValues.EXERCISE_MODE -> R.id.action_mode_exercise_fragment
+            ExercisesTypeValues.EXERCISE_PULL_OFF_HAMMER_ON -> R.id.action_pull_off_hammer_on_exercise_fragment
+            ExercisesTypeValues.EXERCISE_BEND_SLIDE -> R.id.action_bend_slide_exercise_fragment
+            ExercisesTypeValues.EXERCISE_BACK_FORTH -> R.id.action_back_forth_exercise_fragment
+            ExercisesTypeValues.EXERCISE_PALM_MUTE -> R.id.action_palm_mute_exercise_fragment
+            ExercisesTypeValues.EXERCISE_SKIP_STRING -> R.id.action_skip_string_exercise_fragment
+            ExercisesTypeValues.EXERCISE_TAPPING -> R.id.action_tapping_exercise_fragment
+            ExercisesTypeValues.EXERCISE_SWEEP_PICKING -> R.id.action_sweep_picking_exercise_fragment
+            ExercisesTypeValues.EXERCISE_SPEED -> R.id.action_speed_exercise_fragment
+            ExercisesTypeValues.EXERCISE_SLAP -> R.id.action_slap_exercise_fragment
+            ExercisesTypeValues.EXERCISE_THREE_FINGERS_RIGHT_HAND -> R.id.action_three_fingers_exercise_fragment
+            else -> R.id.action_end_program_fragment
         }
     }
 

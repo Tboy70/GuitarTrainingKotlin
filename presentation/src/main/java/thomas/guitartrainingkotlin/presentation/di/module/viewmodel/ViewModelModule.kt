@@ -9,12 +9,14 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.StartActivityViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.*
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.GameListViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.ReversedIntervalGameViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.ForgotPasswordViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.other.LegalNoticesViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.*
+import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongCreationViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongUpdateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.*
@@ -169,11 +171,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(IntroProgramViewModel::class)
-    abstract fun bindIntroProgramViewModel(introProgramViewModel: IntroProgramViewModel): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(GameListViewModel::class)
     abstract fun bindGameListViewModel(gameListViewModel: GameListViewModel): ViewModel
 
@@ -184,6 +181,16 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(ReversedIntervalGameViewModel::class)
+    abstract fun bindReversedIntervalGameViewModel(reversedIntervalGameViewModel: ReversedIntervalGameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(ScaleGameViewModel::class)
     abstract fun bindScaleGameViewModel(scaleGameViewModel: ScaleGameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProgramSharedViewModel::class)
+    abstract fun bindProgramSharedViewModel(programSharedViewModel: ProgramSharedViewModel): ViewModel
 }

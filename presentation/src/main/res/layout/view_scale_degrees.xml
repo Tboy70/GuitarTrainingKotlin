@@ -249,4 +249,38 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/eight_degree_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/sixth_degree_layout"
+            app:layout_constraintTop_toBottomOf="@id/sixth_degree_layout">
+
+        <EditText
+                android:id="@+id/eight_degree_answer"
+                android:layout_width="@dimen/degree_edit_text_width"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/eight_degree_label"
+                tools:ignore="Autofill,LabelFor"/>
+
+        <TextView
+                android:id="@+id/eight_degree_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/eight_degree"
+                android:textSize="@dimen/text_very_big"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/eight_degree_answer"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

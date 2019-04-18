@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@+id/launcher_intro_program_fragment">
-
-    <fragment
-            android:id="@+id/launcher_intro_program_fragment"
-            android:name="thomas.guitartrainingkotlin.presentation.fragment.program.IntroProgramFragment"
-            tools:layout="@layout/fragment_intro_program"/>
-
+            xmlns:app="http://schemas.android.com/apk/res-auto">
     <fragment
             android:id="@+id/launcher_scale_exercise_fragment"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.exercise.ExerciseScaleFragment"
@@ -74,5 +67,108 @@
             android:name="thomas.guitartrainingkotlin.presentation.fragment.program.EndProgramFragment"
             tools:layout="@layout/fragment_end_program"/>
 
+    <action
+            android:id="@+id/action_back_forth_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_back_forth_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_bend_slide_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_bend_slide_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_scale_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_scale_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_mode_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_mode_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_pull_off_hammer_on_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_pull_off_hammer_on_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_palm_mute_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_palm_mute_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_skip_string_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_skip_string_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_tapping_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_tapping_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_sweep_picking_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_sweep_picking_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_speed_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_speed_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_slap_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_slap_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_three_fingers_exercise_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_three_fingers_exercise_fragment"/>
+
+    <action
+            android:id="@+id/action_end_program_fragment"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/launcher_end_program_fragment"/>
 
 </navigation>

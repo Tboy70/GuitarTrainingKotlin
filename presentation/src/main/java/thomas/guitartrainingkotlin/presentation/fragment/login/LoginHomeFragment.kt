@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.presentation.activity.GameActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
@@ -63,6 +64,11 @@ class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
                 null,
                 null
             )
+        }
+
+        fragment_login_home_game_access.setOnClickListener {
+            val intent = Intent(activity, GameActivity::class.java)
+            startActivity(intent)
         }
 
         // Validate button

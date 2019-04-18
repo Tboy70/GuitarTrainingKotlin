@@ -9,6 +9,7 @@ import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.di.annotation.PerFragment
 import thomas.guitartrainingkotlin.presentation.fragment.game.GameListFragment
 import thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragment
+import thomas.guitartrainingkotlin.presentation.fragment.game.ReversedIntervalGameFragment
 import thomas.guitartrainingkotlin.presentation.fragment.game.ScaleGameFragment
 
 @Module(includes = [BaseActivityModule::class])
@@ -25,6 +26,10 @@ abstract class GameActivityModule {
     @PerFragment
     @ContributesAndroidInjector
     abstract fun intervalGameFragmentInjector(): IntervalGameFragment
+
+    @PerFragment
+    @ContributesAndroidInjector
+    abstract fun reversedIntervalGameFragmentInjector(): ReversedIntervalGameFragment
 
     @PerFragment
     @ContributesAndroidInjector

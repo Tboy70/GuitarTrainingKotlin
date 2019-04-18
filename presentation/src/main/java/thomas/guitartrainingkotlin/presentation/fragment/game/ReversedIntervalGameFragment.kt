@@ -6,20 +6,19 @@ import android.view.MenuItem
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_interval_game.*
+import kotlinx.android.synthetic.main.fragment_reversed_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
-import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.ReversedIntervalGameViewModel
 import javax.inject.Inject
 
-class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
+class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>() {
 
-    override val viewModelClass = IntervalGameViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_interval_game
+    override val viewModelClass = ReversedIntervalGameViewModel::class
+    override fun getLayoutId(): Int = R.layout.fragment_reversed_interval_game
 
     @Inject
     lateinit var dialogComponent: DialogComponent
@@ -27,8 +26,6 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
 
-    private var gameMode: Int = 0
-    private var givenNote: String = ""
     private var givenInterval: String = ""
 
     private val textChangedListener: TextWatcher = textChangedListener {
@@ -54,46 +51,35 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_interval_game_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(fragment_reversed_interval_game_toolbar, ActivityExtensions.DISPLAY_UP)
     }
 
     private fun initiateViews() {
-        fragment_interval_game_answer.addTextChangedListener(textChangedListener)
-        fragment_interval_game_answer.setOnClickListener {
+        fragment_reversed_interval_game_answer.addTextChangedListener(textChangedListener)
+        fragment_reversed_interval_game_answer.setOnClickListener {
             dialogComponent.displaySingleListChoiceDialog(
                 R.string.dialog_interval_game_title,
-                R.array.list_notes,
+                R.array.list_interval,
                 android.R.string.ok,
                 onPositive = { selectedNote ->
-                    fragment_interval_game_answer.setText(selectedNote)
+                    fragment_reversed_interval_game_answer.setText(selectedNote)
                 }
             )
         }
 
-        fragment_interval_game_validate.setOnClickListener {
-            viewModel.checkAnswer(givenNote, givenInterval, gameMode, fragment_interval_game_answer.getInput())
+        fragment_reversed_interval_game_validate.setOnClickListener {
+            viewModel.checkAnswer(givenInterval, fragment_reversed_interval_game_answer.getInput())
         }
     }
 
     private fun initiateViewModelObservers() {
         viewModel.finishRandomLiveEvent.observeSafe(this) {
-            givenNote = this.resources.getStringArray(R.array.list_notes)[it.first]
-            givenInterval = this.resources.getStringArray(R.array.list_interval)[it.second]
-            gameMode = it.third
+            givenInterval = this.resources.getStringArray(R.array.list_interval)[it]
 
-            if (gameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE) {
-                fragment_interval_game_question.text = activity?.getString(
-                    R.string.interval_game_question,
-                    givenInterval.substring(0, 1).toUpperCase() + givenInterval.substring(1),
-                    givenNote
-                )
-            } else if (gameMode == ConstValues.INTERVAL_REVERSED_GAME_MODE) {
-                fragment_interval_game_question.text = activity?.getString(
-                    R.string.interval_game_reversed_question,
-                    givenNote,
-                    givenInterval
-                )
-            }
+            fragment_reversed_interval_game_question.text = activity?.getString(
+                R.string.reversed_interval_game_question,
+                givenInterval
+            )
         }
 
         viewModel.answerCheckedLiveEvent.observeSafe(this) { rightAnswer ->
@@ -105,7 +91,7 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
                         Snackbar.LENGTH_SHORT,
                         true
                     )
-                    fragment_interval_game_answer.text = null
+                    fragment_reversed_interval_game_answer.text = null
                     viewModel.getRandomValue()
                 } else {
                     snackbarComponent.displaySnackbar(
@@ -120,6 +106,6 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
     }
 
     private fun updateConfirmButtonState() {
-        fragment_interval_game_validate.isEnabled = fragment_interval_game_answer.isNotEmpty()
+        fragment_reversed_interval_game_validate.isEnabled = fragment_reversed_interval_game_answer.isNotEmpty()
     }
 }

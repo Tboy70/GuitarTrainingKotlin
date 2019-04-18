@@ -8,7 +8,7 @@ object ConstValues {
 
     // MUSIC CONST
     const val NB_NOTES = 12
-    const val NB_SCALES = 4
+    const val NB_SCALES = 5
     const val NB_INTERVAL = 13
 
     // PROGRAM CONST

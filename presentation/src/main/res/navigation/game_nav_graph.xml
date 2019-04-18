@@ -11,11 +11,27 @@
 
         <action
                 android:id="@+id/action_game_list_to_interval_game"
+                app:enterAnim="@anim/enter_right"
+                app:exitAnim="@anim/exit_left"
+                app:popEnterAnim="@anim/enter_left"
+                app:popExitAnim="@anim/exit_right"
                 app:destination="@id/interval_game"/>
 
         <action
                 android:id="@+id/action_game_list_to_scale_game"
+                app:enterAnim="@anim/enter_right"
+                app:exitAnim="@anim/exit_left"
+                app:popEnterAnim="@anim/enter_left"
+                app:popExitAnim="@anim/exit_right"
                 app:destination="@id/scale_game"/>
+
+        <action
+                android:id="@+id/action_game_list_to_reversed_interval_game"
+                app:enterAnim="@anim/enter_right"
+                app:exitAnim="@anim/exit_left"
+                app:popEnterAnim="@anim/enter_left"
+                app:popExitAnim="@anim/exit_right"
+                app:destination="@id/reversed_interval_game"/>
     </fragment>
 
     <fragment
@@ -27,5 +43,10 @@
             android:id="@+id/scale_game"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ScaleGameFragment"
             tools:layout="@layout/fragment_scale_game"/>
+
+    <fragment
+            android:id="@+id/reversed_interval_game"
+            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ReversedIntervalGameFragment"
+            tools:layout="@layout/fragment_reversed_interval_game"/>
 
 </navigation>

@@ -20,8 +20,7 @@
     <string name="toolbar_title_exercise_back_forth">Allers retours</string>
     <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
     <string name="toolbar_title_exercise_three_fingers">Jeu à trois doigts</string>
-    <string name="toolbar_title_interval_game_list">Donner les intervalles</string>
-    <string name="toolbar_title_scale_game_list">Donner les notes de la gamme</string>
+
     <string name="toolbar_title_exercise_skip_string">Mute une corde en accord</string>
     <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
@@ -33,6 +32,10 @@
     <string name="toolbar_title_program_details">Mon programme</string>
     <string name="toolbar_title_program_update">Modification du programme</string>
     <string name="toolbar_title_program_creation">Création d\'un programme</string>
+
+    <string name="toolbar_title_scale_game_list">Gammes</string>
+    <string name="toolbar_title_interval_game_list">Intervalles</string>
+    <string name="toolbar_title_reversed_interval_game_list">Renversement d\'intervalle</string>
 
     <!-- DIALOGS-->
     <string name="dialog_suppress_account_title">Suppression d\'un compte</string>
@@ -62,6 +65,7 @@
     <string name="dialog_remove_song_title">Suppression de la chanson</string>
     <string name="dialog_remove_song_confirm_content">Es-tu certain de vouloir supprimer le programme ?</string>
 
+    <string name="dialog_view_help_scale_title">Gamme %s</string>
     <string name="dialog_interval_game_title">Votre réponse :</string>
 
     <!-- GENERIC BUTTONS -->
@@ -78,6 +82,10 @@
     <string name="timer_title">C\'est parti !</string>
     <string name="timer_start_button">Démarrer</string>
 
+    <!-- MISC -->
+    <string name="const_na">NA</string>
+    <string name="never">Jamais</string>
+
     <!-- ======================================================================================= -->
     <!-- ===================================== USER ============================================ -->
     <!-- ======================================================================================= -->
@@ -87,6 +95,7 @@
     <string name="login_home_hint_password">Mot de passe</string>
     <string name="login_home_hint_username">Nom d\'utilisateur</string>
     <string name="login_forgot_password">Mot de passe oublié ?</string>
+    <string name="login_game_access">Accéder aux jeux hors connexion</string>
     <string name="login_home_title">Renseigne tes informations de connexion</string>
 
     <!-- CREATE ACCOUNT -->
@@ -258,20 +267,42 @@
     <string name="exercise_three_fingers_title_text">Jeu avec trois doigts main droite</string>
     <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite !</string>
 
+    <!-- ===================================================================================== -->
+    <!-- ======================================= MISC ======================================== -->
+    <!-- ===================================================================================== -->
+
+    <!-- Legal notices -->
+    <string name="legal_notices_title">Mentions légales</string>
+    <string name="legal_notices_used_libs">Librairies utilisées :</string>
+    <string name="legal_notices_thanks">Remerciements :</string>
+
 
     <!-- ====================================================================================== -->
     <!-- ====================================== GAMES ========================================= -->
     <!-- ====================================================================================== -->
 
+    <string name="game_list_scale_game">Intervalles</string>
+    <string name="game_right_answer">Bonne réponse !</string>
     <string name="interval_game_hint_answer">Réponse</string>
+    <string name="game_wrong_answer">Mauvaise réponse …</string>
     <string name="scale_game_question">Gamme de %1$s %2$s :</string>
     <string name="interval_game_question">%1$s de %2$s est :</string>
     <string name="interval_game_title">Donner les intervalles</string>
-    <string name="game_right_answer">Bonne réponse !</string>
-    <string name="game_wrong_answer">Mauvaise réponse …</string>
+    <string name="game_list_interval_game">Notes de la gammes</string>
+    <string name="scale_game_title">Donner les notes de la gamme</string>
     <string name="interval_game_reversed_question">%1$s est %2$s de :</string>
+    <string name="reversed_interval_game_hint_answer">Intervalle renversé</string>
+    <string name="reversed_interval_game_title">Donner l\'intervalle renversé</string>
+    <string name="game_list_reversed_interval_game">Renversement d\'intervalle</string>
+    <string name="reversed_interval_game_question">L\'intervalle renversé de %s est :</string>
     <string name="interval_game_description">Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la
         question …
+    </string>
+    <string name="scale_game_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Retrouve les notes de la
+        gamme demandée …
+    </string>
+    <string name="reversed_interval_game_description">Il existe pour chaque intervalle son renversement. Les connais-tu
+        ? A toi de jouer !
     </string>
 
 
@@ -340,10 +371,11 @@
     <string name="note_B">B</string>
 
     <!-- Tones -->
+    <string name="tone_blues">Blues</string>
     <string name="tone_major">Majeure</string>
     <string name="tone_minor">Mineure</string>
-    <string name="tone_pentatonic_minor">Pentatonique mineure</string>
     <string name="tone_pentatonic_major">Pentatonique majeure</string>
+    <string name="tone_pentatonic_minor">Pentatonique mineure</string>
 
     <!-- Modes -->
     <string name="mode_ionian">Ionien</string>
@@ -354,9 +386,7 @@
     <string name="mode_aeolian">Aeolien</string>
     <string name="mode_locrian">Locrien</string>
 
-    <string name="const_na">NA</string>
-    <string name="never">Jamais</string>
-    <string name="legal_notices_title">Mentions légales</string>
+    <!-- Degrees -->
     <string name="first_degree">I</string>
     <string name="second_degree">II</string>
     <string name="third_degree">III</string>
@@ -364,8 +394,28 @@
     <string name="fifth_degree">V</string>
     <string name="sixth_degree">VI</string>
     <string name="seventh_degree">VII</string>
+    <string name="eight_degree">VIII</string>
 
-    <!-- TODO : Sort + some string are not extracted in layout -->
-    <string name="dialog_view_help_scale_title">Gamme %s</string>
+    <!-- Interval -->
+    <string name="interval_first">la tonique</string>
+    <string name="interval_second_minor">la seconde mineure</string>
+    <string name="interval_second_major">la seconde majeure</string>
+    <string name="interval_third_minor">la tierce mineure</string>
+    <string name="interval_third_major">la tierce majeure / la quarte diminuée</string>
+    <string name="interval_fourth">la quarte</string>
+    <string name="interval_augmented_fourth">la quarte augmentée / la quinte diminuée</string>
+    <string name="interval_fifth">la quinte juste</string>
+    <string name="interval_augmented_fifth">la quinte augmentée / la sixte mineure</string>
+    <string name="interval_sixth_major">la sixte majeure</string>
+    <string name="interval_sixth_minor">la septième mineure</string>
+    <string name="interval_seventh">la septième majeure</string>
+    <string name="interval_octave">l\'octave</string>
+
+    <!-- Scale interval -->
+    <string name="major_scale_interval">1T ; 1T ; 0.5T ; 1T ; 1T ; 1T ; 0.5T</string>
+    <string name="minor_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1T ;1T</string>
+    <string name="pentatonic_major_scale_interval">1T ; 1T ; 1.5T ; 1T ; 1.5T</string>
+    <string name="pentatonic_minor_scale_interval">1.5T ; 1T ; 1T ; 1.5T ; 1T</string>
+    <string name="blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T</string>
 
 </resources>

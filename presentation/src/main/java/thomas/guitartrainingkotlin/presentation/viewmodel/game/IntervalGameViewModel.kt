@@ -32,12 +32,12 @@ class IntervalGameViewModel @Inject constructor(
         )
     }
 
-    fun checkAnswer(randomNote: String, randomInterval: String, gameMode: Int, answer: String) {
+    fun checkAnswer(givenNote: String, givenInterval: String, gameMode: Int, userAnswer: String) {
         answerCheckedLiveEvent.postValue(
-            GameUtils.checkAnswer(
-                randomNote,
-                randomInterval,
-                answer,
+            GameUtils.checkIntervalGameAnswer(
+                givenNote,
+                givenInterval,
+                userAnswer,
                 gameMode,
                 getApplication()
             )

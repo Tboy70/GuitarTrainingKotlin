@@ -108,8 +108,17 @@
                     android:id="@+id/fragment_login_home_create_account"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_small"
                     android:gravity="center"
                     android:text="@string/login_create_account"
+                    android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                    android:id="@+id/fragment_login_home_game_access"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/login_game_access"
                     android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>

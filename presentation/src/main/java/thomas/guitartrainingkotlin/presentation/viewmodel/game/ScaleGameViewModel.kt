@@ -33,15 +33,15 @@ class ScaleGameViewModel @Inject constructor(
 
     fun checkAnswers(
         answersList: List<String>,
-        randomScale: String,
-        randomNote: String
+        givenScale: String,
+        givenNote: String
     ) {
 
         answerCheckedLiveEvent.postValue(
             GameUtils.checkScaleGameAnswer(
                 answersList,
-                randomScale,
-                randomNote,
+                givenScale,
+                givenNote,
                 getApplication()
             )
         )
