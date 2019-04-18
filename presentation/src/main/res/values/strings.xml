@@ -416,6 +416,6 @@
     <string name="minor_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1T ;1T</string>
     <string name="pentatonic_major_scale_interval">1T ; 1T ; 1.5T ; 1T ; 1.5T</string>
     <string name="pentatonic_minor_scale_interval">1.5T ; 1T ; 1T ; 1.5T ; 1T</string>
-    <string name="blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T</string>
+    <string name="blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T  \n\n Blues note = Quinte diminuée</string>
 
 </resources>
