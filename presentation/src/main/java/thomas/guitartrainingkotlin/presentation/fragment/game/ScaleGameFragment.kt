@@ -76,13 +76,12 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
             answersList.add(third_degree_answer.getInput())
             answersList.add(fourth_degree_answer.getInput())
             answersList.add(fifth_degree_answer.getInput())
+            answersList.add(sixth_degree_answer.getInput())
 
             if (givenScale == context?.getString(R.string.tone_minor) || givenScale == context?.getString(R.string.tone_major)) {
-                answersList.add(sixth_degree_answer.getInput())
                 answersList.add(seventh_degree_answer.getInput())
                 answersList.add(eight_degree_answer.getInput())
-            } else if (givenScale == context?.getString(R.string.tone_blues)) {
-                answersList.add(sixth_degree_answer.getInput())
+            } else if (givenScale == context?.getString(R.string.tone_blues_minor) || givenScale == context?.getString(R.string.tone_blues_major)) {
                 answersList.add(seventh_degree_answer.getInput())
             }
 
@@ -120,14 +119,16 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
             givenNote = this.resources.getStringArray(R.array.list_notes)[it.first]
             givenScale = this.resources.getStringArray(R.array.list_scales)[it.second]
 
+            context?.let { context ->
+                fourth_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+            }
             if (givenScale == context?.getString(R.string.tone_pentatonic_minor) || givenScale == context?.getString(
                     R.string.tone_pentatonic_major
                 )
             ) {
-                sixth_degree_layout.hide()
                 seventh_degree_layout.hide()
                 eight_degree_layout.hide()
-            } else if (givenScale == context?.getString(R.string.tone_blues)) {
+            } else if (givenScale == context?.getString(R.string.tone_blues_minor) || givenScale == context?.getString(R.string.tone_blues_major)) {
                 context?.let { context ->
                     fourth_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.holo_blue_dark))
                 }
@@ -244,12 +245,12 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
                 second_degree_answer.isNotEmpty() &&
                 third_degree_answer.isNotEmpty() &&
                 fourth_degree_answer.isNotEmpty() &&
-                fifth_degree_answer.isNotEmpty()
+                fifth_degree_answer.isNotEmpty() &&
+                sixth_degree_answer.isNotEmpty()
 
         var optionalDegree = true
-        if (sixth_degree_layout.visibility == View.VISIBLE && seventh_degree_layout.visibility == View.VISIBLE && eight_degree_layout.visibility == View.VISIBLE) {
-            optionalDegree =
-                sixth_degree_answer.isNotEmpty() && seventh_degree_answer.isNotEmpty() && eight_degree_answer.isNotEmpty()
+        if (seventh_degree_layout.visibility == View.VISIBLE && eight_degree_layout.visibility == View.VISIBLE) {
+            optionalDegree = seventh_degree_answer.isNotEmpty() && eight_degree_answer.isNotEmpty()
         }
 
         return mandatoryDegree && optionalDegree

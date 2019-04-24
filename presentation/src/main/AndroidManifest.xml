@@ -23,9 +23,11 @@
         </activity>
         <activity
                 android:name="thomas.guitartrainingkotlin.presentation.activity.LoginActivity"
-                android:windowSoftInputMode="adjustPan"/>
+                android:windowSoftInputMode="adjustPan"
+                android:screenOrientation="portrait"/>
         <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity"/>
+                android:name="thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity"
+                android:screenOrientation="portrait"/>
         <activity
                 android:name="thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity"
                 android:screenOrientation="portrait"/>
@@ -36,10 +38,14 @@
                 <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
-        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.UserSongActivity"/>
-        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity"/>
-        <activity android:name=".presentation.activity.ProgramCreationActivity"/>
-        <activity android:name=".presentation.activity.GameActivity"/>
+        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.UserSongActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.activity.ProgramCreationActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".presentation.activity.GameActivity"
+                  android:screenOrientation="portrait"/>
 
         <!-- NOTIFICATION SERVICE -->
         <service android:name=".presentation.notification.NotificationsService"

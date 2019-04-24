@@ -8,9 +8,10 @@ object GameUtils {
 
     private val MAJOR_SCALE_INTERVAL = listOf(2, 4, 5, 7, 9, 11, 12)
     private val MINOR_SCALE_INTERVAL = listOf(2, 3, 5, 7, 8, 10, 12)
-    private val PENTATONIC_MINOR_SCALE_INTERVAL = listOf(2, 4, 7, 9, 12)
-    private val PENTATONIC_MAJOR_SCALE_INTERVAL = listOf(3, 5, 7, 10, 12)
-    private val BLUES_SCALE = listOf(3, 5, 6, 7, 10, 12)
+    private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
+    private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
+    private val PENTATONIC_MAJOR_SCALE_INTERVAL = listOf(2, 4, 7, 9, 12)
+    private val PENTATONIC_MINOR_SCALE_INTERVAL = listOf(3, 5, 7, 10, 12)
 
     fun checkIntervalGameAnswer(
         givenNote: String, givenInterval: String, userAnswer: String, gameMode: Int, context: Context
@@ -108,11 +109,12 @@ object GameUtils {
 
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
         val scaleInterval = when (givenScale) {
-            scaleArray[0] -> BLUES_SCALE
-            scaleArray[1] -> MAJOR_SCALE_INTERVAL
-            scaleArray[2] -> MINOR_SCALE_INTERVAL
-            scaleArray[3] -> PENTATONIC_MAJOR_SCALE_INTERVAL
-            scaleArray[4] -> PENTATONIC_MINOR_SCALE_INTERVAL
+            scaleArray[0] -> MAJOR_SCALE_INTERVAL
+            scaleArray[1] -> MINOR_SCALE_INTERVAL
+            scaleArray[2] -> MAJOR_BLUES_SCALE_INTERVAL
+            scaleArray[3] -> MINOR_BLUES_SCALE_INTERVAL
+            scaleArray[4] -> PENTATONIC_MAJOR_SCALE_INTERVAL
+            scaleArray[5] -> PENTATONIC_MINOR_SCALE_INTERVAL
             else -> MAJOR_SCALE_INTERVAL
         }
 
@@ -134,10 +136,11 @@ object GameUtils {
     fun getScaleIntervalHelp(context: Context, givenScale: String): String {
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
         return when (givenScale) {
-            scaleArray[0] -> context.getString(R.string.blues_scale_interval)
-            scaleArray[1] -> context.getString(R.string.major_scale_interval)
-            scaleArray[2] -> context.getString(R.string.minor_scale_interval)
-            scaleArray[3] -> context.getString(R.string.pentatonic_major_scale_interval)
+            scaleArray[0] -> context.getString(R.string.major_scale_interval)
+            scaleArray[1] -> context.getString(R.string.minor_scale_interval)
+            scaleArray[2] -> context.getString(R.string.major_blues_scale_interval)
+            scaleArray[3] -> context.getString(R.string.minor_blues_scale_interval)
+            scaleArray[4] -> context.getString(R.string.pentatonic_major_scale_interval)
             scaleArray[4] -> context.getString(R.string.pentatonic_minor_scale_interval)
             else -> ""
         }

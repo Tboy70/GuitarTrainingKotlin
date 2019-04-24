@@ -371,9 +371,10 @@
     <string name="note_B">B</string>
 
     <!-- Tones -->
-    <string name="tone_blues">Blues</string>
     <string name="tone_major">Majeure</string>
     <string name="tone_minor">Mineure</string>
+    <string name="tone_blues_minor">Blues mineure</string>
+    <string name="tone_blues_major">Blues majeure</string>
     <string name="tone_pentatonic_major">Pentatonique majeure</string>
     <string name="tone_pentatonic_minor">Pentatonique mineure</string>
 
@@ -416,6 +417,9 @@
     <string name="minor_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1T ;1T</string>
     <string name="pentatonic_major_scale_interval">1T ; 1T ; 1.5T ; 1T ; 1.5T</string>
     <string name="pentatonic_minor_scale_interval">1.5T ; 1T ; 1T ; 1.5T ; 1T</string>
-    <string name="blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T  \n\n Blues note = Quinte diminuée</string>
+    <string name="major_blues_scale_interval">1T ; 0.5T ; 0.5T ; 1.5T ; 1T ; 1.5T \n\n Blues note = Quinte diminuée
+    </string>
+    <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
+    </string>
 
 </resources>
