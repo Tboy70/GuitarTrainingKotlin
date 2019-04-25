@@ -16,7 +16,9 @@ class ScaleGameViewModel @Inject constructor(
     override val currentViewState = ScaleGameViewState()
 
     val answerCheckedLiveEvent = SingleLiveEvent<List<Boolean>>()
-    val finishRandomLiveEvent = SingleLiveEvent<Pair<Int, Int>>()
+    val finishRandomLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
+    val correctScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
+    val randomScaleLiveEvent = SingleLiveEvent<List<String>>()
 
     init {
         getRandomValue()
@@ -24,9 +26,10 @@ class ScaleGameViewModel @Inject constructor(
 
     fun getRandomValue() {
         finishRandomLiveEvent.postValue(
-            Pair(
+            Triple(
                 Random().nextInt(ConstValues.NB_NOTES),
-                Random().nextInt(ConstValues.NB_SCALES)
+                Random().nextInt(ConstValues.NB_SCALES),
+                Random().nextInt(ConstValues.SCALE_GAME_MODE)
             )
         )
     }
@@ -44,6 +47,18 @@ class ScaleGameViewModel @Inject constructor(
                 givenNote,
                 getApplication()
             )
+        )
+    }
+
+    fun generateCorrectScale(givenNote: String) {
+        correctScaleLiveEvent.postValue(
+            GameUtils.generateCorrectScale(givenNote, getApplication())
+        )
+    }
+
+    fun generateRandomScale(givenNote: String) {
+        randomScaleLiveEvent.postValue(
+            GameUtils.generateRandomScale(givenNote, getApplication())
         )
     }
 

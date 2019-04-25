@@ -62,11 +62,12 @@
     <dimen name="ic_chart_text_margin_start">40dp</dimen>
 
     <!-- FORGOT PASSWORD -->
-    <dimen name="forgot_password_explanation_margin_top">25dp</dimen>
     <dimen name="forgot_password_email_margin_top">25dp</dimen>
-    <dimen name="degree_edit_text_width">100dp</dimen>
+    <dimen name="forgot_password_explanation_margin_top">25dp</dimen>
 
     <!-- GAME -->
+    <dimen name="degree_edit_text_width">100dp</dimen>
     <dimen name="reversed_interval_edit_text_width">200dp</dimen>
+    <dimen name="fragment_scale_game_button_margin">1dp</dimen>
 
 </resources>

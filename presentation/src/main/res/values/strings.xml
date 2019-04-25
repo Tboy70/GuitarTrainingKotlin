@@ -66,9 +66,12 @@
     <string name="dialog_remove_song_confirm_content">Es-tu certain de vouloir supprimer le programme ?</string>
 
     <string name="dialog_view_help_scale_title">Gamme %s</string>
-    <string name="dialog_interval_game_title">Votre réponse :</string>
+
+    <string name="dialog_game_answer_title">Votre réponse :</string>
 
     <!-- GENERIC BUTTONS -->
+    <string name="generic_button_no">Non</string>
+    <string name="generic_button_yes">Oui</string>
     <string name="generic_button_validate">Valider</string>
 
     <!-- NAVIGATION -->
@@ -298,8 +301,15 @@
     <string name="interval_game_description">Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la
         question …
     </string>
-    <string name="scale_game_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Retrouve les notes de la
+    <string name="scale_game_first_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Retrouve les
+        notes de la
         gamme demandée …
+    </string>
+    <string name="scale_game_second_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Est-ce la bonne
+        gamme ?
+    </string>
+    <string name="scale_game_third_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Quelle est cette
+        gamme ?
     </string>
     <string name="reversed_interval_game_description">Il existe pour chaque intervalle son renversement. Les connais-tu
         ? A toi de jouer !
@@ -421,5 +431,6 @@
     </string>
     <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
     </string>
+    <string name="fragment_scale_game_which_scale_answer_hint">Gamme</string>
 
 </resources>

@@ -25,6 +25,7 @@ object ConstValues {
 
     // GAMES CONST
     const val INTERVAL_GAME_MODE = 2
+    const val SCALE_GAME_MODE = 3
     const val INTERVAL_NORMAL_GAME_MODE = 0
     const val INTERVAL_REVERSED_GAME_MODE = 1
 

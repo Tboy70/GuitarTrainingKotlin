@@ -61,7 +61,7 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
         fragment_interval_game_answer.addTextChangedListener(textChangedListener)
         fragment_interval_game_answer.setOnClickListener {
             dialogComponent.displaySingleListChoiceDialog(
-                R.string.dialog_interval_game_title,
+                R.string.dialog_game_answer_title,
                 R.array.list_notes,
                 android.R.string.ok,
                 onPositive = { selectedNote ->

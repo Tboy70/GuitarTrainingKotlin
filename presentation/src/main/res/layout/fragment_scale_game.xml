@@ -30,12 +30,12 @@
             android:id="@+id/fragment_scale_game_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/scale_game_description"
             android:textSize="@dimen/text_big"
             android:padding="@dimen/constraint_layout_margin_16"
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/scale_game_first_mode_description"/>
 
     <TextView
             android:id="@+id/fragment_scale_game_question"
@@ -46,7 +46,8 @@
             android:padding="@dimen/constraint_layout_margin_16"
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="gone"/>
 
     <ImageView
             android:id="@+id/fragment_scale_game_help"
@@ -56,7 +57,22 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_question"
             app:layout_constraintBottom_toTopOf="@id/fragment_scale_game_question"
             app:layout_constraintStart_toEndOf="@id/fragment_scale_game_question"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription"
+            tools:visibility="gone"/>
+
+    <EditText
+            android:id="@+id/fragment_scale_game_which_scale_answer"
+            android:layout_width="@dimen/degree_edit_text_width"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:gravity="center"
+            android:hint="@string/fragment_scale_game_which_scale_answer_hint"
+            app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="Autofill,LabelFor"/>
 
     <include layout="@layout/view_scale_degrees"
              android:layout_width="0dp"
@@ -77,8 +93,48 @@
             android:text="@string/generic_button_validate"
             android:textColor="@android:color/white"
             android:enabled="false"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_scale_fragment_buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+                android:id="@+id/fragment_scale_game_yes_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/button_drawable"
+                android:text="@string/generic_button_yes"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="@dimen/fragment_scale_game_button_margin"
+                android:layout_marginEnd="@dimen/fragment_scale_game_button_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/fragment_scale_game_no_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Button
+                android:id="@+id/fragment_scale_game_no_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/button_drawable"
+                android:text="@string/generic_button_no"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="@dimen/fragment_scale_game_button_margin"
+                android:layout_marginEnd="@dimen/fragment_scale_game_button_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_scale_game_yes_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

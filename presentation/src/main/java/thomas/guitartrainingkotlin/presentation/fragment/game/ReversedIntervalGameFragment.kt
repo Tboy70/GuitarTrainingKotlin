@@ -58,7 +58,7 @@ class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>
         fragment_reversed_interval_game_answer.addTextChangedListener(textChangedListener)
         fragment_reversed_interval_game_answer.setOnClickListener {
             dialogComponent.displaySingleListChoiceDialog(
-                R.string.dialog_interval_game_title,
+                R.string.dialog_game_answer_title,
                 R.array.list_interval,
                 android.R.string.ok,
                 onPositive = { selectedNote ->

@@ -3,6 +3,7 @@ package thomas.guitartrainingkotlin.presentation.utils
 import android.content.Context
 import thomas.guitartrainingkotlin.R
 import java.lang.Math.abs
+import java.util.*
 
 object GameUtils {
 
@@ -14,60 +15,86 @@ object GameUtils {
     private val PENTATONIC_MINOR_SCALE_INTERVAL = listOf(3, 5, 7, 10, 12)
 
     fun checkIntervalGameAnswer(
-        givenNote: String, givenInterval: String, userAnswer: String, gameMode: Int, context: Context
+        givenNote: String, givenInterval: String, userAnswer: String, intervalGameMode: Int, context: Context
     ): Boolean {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
-        val expectedAnswer = if (gameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE) {
-            findIntervalValueNormalGame(context, givenInterval, noteArray.indexOf(givenNote))
-        } else {
-            findIntervalValueReversedGame(context, givenInterval, noteArray.indexOf(givenNote))
-        }
-
-        return userAnswer == expectedAnswer
+        return userAnswer == findIntervalValue(context, givenInterval, noteArray.indexOf(givenNote), intervalGameMode)
     }
 
-    private fun findIntervalValueNormalGame(context: Context, givenInterval: String, indexOfGivenNote: Int): String? {
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
-        val intervalArray = context.resources.getStringArray(R.array.list_interval)
-        return when (givenInterval) {
-            intervalArray[0] -> noteArray[(indexOfGivenNote + 0) % ConstValues.NB_NOTES]
-            intervalArray[1] -> noteArray[(indexOfGivenNote + 1) % ConstValues.NB_NOTES]
-            intervalArray[2] -> noteArray[(indexOfGivenNote + 2) % ConstValues.NB_NOTES]
-            intervalArray[3] -> noteArray[(indexOfGivenNote + 3) % ConstValues.NB_NOTES]
-            intervalArray[4] -> noteArray[(indexOfGivenNote + 4) % ConstValues.NB_NOTES]
-            intervalArray[5] -> noteArray[(indexOfGivenNote + 5) % ConstValues.NB_NOTES]
-            intervalArray[6] -> noteArray[(indexOfGivenNote + 6) % ConstValues.NB_NOTES]
-            intervalArray[7] -> noteArray[(indexOfGivenNote + 7) % ConstValues.NB_NOTES]
-            intervalArray[8] -> noteArray[(indexOfGivenNote + 8) % ConstValues.NB_NOTES]
-            intervalArray[9] -> noteArray[(indexOfGivenNote + 9) % ConstValues.NB_NOTES]
-            intervalArray[10] -> noteArray[(indexOfGivenNote + 10) % ConstValues.NB_NOTES]
-            intervalArray[11] -> noteArray[(indexOfGivenNote + 11) % ConstValues.NB_NOTES]
-            intervalArray[12] -> noteArray[(indexOfGivenNote + 12) % ConstValues.NB_NOTES]
-            else -> null
-        }
-    }
-
-    private fun findIntervalValueReversedGame(
+    private fun findIntervalValue(
         context: Context,
         givenInterval: String,
-        indexOfGivenNote: Int
+        indexOfGivenNote: Int,
+        intervalGameMode: Int
     ): String? {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
         val intervalArray = context.resources.getStringArray(R.array.list_interval)
         return when (givenInterval) {
-            intervalArray[0] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 0)) % ConstValues.NB_NOTES)]
-            intervalArray[1] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 1)) % ConstValues.NB_NOTES)]
-            intervalArray[2] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 2)) % ConstValues.NB_NOTES)]
-            intervalArray[3] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 3)) % ConstValues.NB_NOTES)]
-            intervalArray[4] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 4)) % ConstValues.NB_NOTES)]
-            intervalArray[5] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 5)) % ConstValues.NB_NOTES)]
-            intervalArray[6] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 6)) % ConstValues.NB_NOTES)]
-            intervalArray[7] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 7)) % ConstValues.NB_NOTES)]
-            intervalArray[8] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 8)) % ConstValues.NB_NOTES)]
-            intervalArray[9] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 9)) % ConstValues.NB_NOTES)]
-            intervalArray[10] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 10)) % ConstValues.NB_NOTES)]
-            intervalArray[11] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 11)) % ConstValues.NB_NOTES)]
-            intervalArray[12] -> noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 12)) % ConstValues.NB_NOTES)]
+            intervalArray[0] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 0) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 0)) % ConstValues.NB_NOTES)]
+            intervalArray[1] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 1) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 1)) % ConstValues.NB_NOTES)]
+            intervalArray[2] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 2) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 2)) % ConstValues.NB_NOTES)]
+            intervalArray[3] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 3) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 3)) % ConstValues.NB_NOTES)]
+            intervalArray[4] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 4) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 4)) % ConstValues.NB_NOTES)]
+            intervalArray[5] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 5) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 5)) % ConstValues.NB_NOTES)]
+            intervalArray[6] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 6) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 6)) % ConstValues.NB_NOTES)]
+            intervalArray[7] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 7) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 7)) % ConstValues.NB_NOTES)]
+            intervalArray[8] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 8) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 8)) % ConstValues.NB_NOTES)]
+            intervalArray[9] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 9) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 9)) % ConstValues.NB_NOTES)]
+            intervalArray[10] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 10) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 10)) % ConstValues.NB_NOTES)]
+            intervalArray[11] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 11) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 11)) % ConstValues.NB_NOTES)]
+            intervalArray[12] ->
+                if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
+                    noteArray[(indexOfGivenNote + 12) % ConstValues.NB_NOTES]
+                else
+                    noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - 12)) % ConstValues.NB_NOTES)]
             else -> null
         }
     }
@@ -144,5 +171,43 @@ object GameUtils {
             scaleArray[4] -> context.getString(R.string.pentatonic_minor_scale_interval)
             else -> ""
         }
+    }
+
+    fun generateCorrectScale(givenNote: String, context: Context): Pair<MutableList<String>, String> {
+        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val scaleArray = context.resources.getStringArray(R.array.list_scales)
+
+        val indexOfGivenNote = noteArray.indexOf(givenNote)
+
+        val generatedScale = mutableListOf(givenNote)
+
+        val scaleToGenerated = when (Random().nextInt(ConstValues.NB_SCALES)) {
+            1 -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+            2 -> Pair(MINOR_SCALE_INTERVAL, scaleArray[1])
+            3 -> Pair(MAJOR_BLUES_SCALE_INTERVAL, scaleArray[2])
+            4 -> Pair(MINOR_BLUES_SCALE_INTERVAL, scaleArray[3])
+            5 -> Pair(PENTATONIC_MAJOR_SCALE_INTERVAL, scaleArray[4])
+            6 -> Pair(PENTATONIC_MINOR_SCALE_INTERVAL, scaleArray[5])
+            else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+        }
+
+        scaleToGenerated.first.forEachIndexed { _, value ->
+            generatedScale.add(
+                noteArray[(indexOfGivenNote + value) % ConstValues.NB_NOTES]
+            )
+        }
+
+        return Pair(generatedScale, scaleToGenerated.second)
+    }
+
+    // TODO : Finish
+    fun generateRandomScale(givenNote: String, context: Context): List<String> {
+        val correctOrRandomScale = Random().nextInt(2)
+        if (correctOrRandomScale == 0) {
+            generateCorrectScale(givenNote, context)
+        } else {
+            generateCorrectScale(givenNote, context)
+        }
+        return generateCorrectScale(givenNote, context).first   // TODO : WRONG !
     }
 }
