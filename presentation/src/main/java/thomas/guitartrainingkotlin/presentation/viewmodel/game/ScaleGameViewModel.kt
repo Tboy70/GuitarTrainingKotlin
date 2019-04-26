@@ -15,10 +15,11 @@ class ScaleGameViewModel @Inject constructor(
 
     override val currentViewState = ScaleGameViewState()
 
+    val randomScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
     val answerCheckedLiveEvent = SingleLiveEvent<List<Boolean>>()
+    val answerCheckedLiveEvent2 = SingleLiveEvent<Pair<List<Boolean>, Boolean>>()
     val finishRandomLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
     val correctScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
-    val randomScaleLiveEvent = SingleLiveEvent<List<String>>()
 
     init {
         getRandomValue()
@@ -34,12 +35,7 @@ class ScaleGameViewModel @Inject constructor(
         )
     }
 
-    fun checkAnswers(
-        answersList: List<String>,
-        givenScale: String,
-        givenNote: String
-    ) {
-
+    fun checkAnswers(answersList: List<String>, givenScale: String, givenNote: String) {
         answerCheckedLiveEvent.postValue(
             GameUtils.checkScaleGameAnswer(
                 answersList,
@@ -50,16 +46,32 @@ class ScaleGameViewModel @Inject constructor(
         )
     }
 
+    fun checkAnswers(answersList: List<String>, givenScale: String, givenNote: String, isCorrect: Boolean) {
+        answerCheckedLiveEvent2.postValue(
+            Pair(
+                GameUtils.checkScaleGameAnswer(
+                    answersList,
+                    givenScale,
+                    givenNote,
+                    getApplication()
+                ), isCorrect
+            )
+        )
+    }
+
     fun generateCorrectScale(givenNote: String) {
         correctScaleLiveEvent.postValue(
-            GameUtils.generateCorrectScale(givenNote, getApplication())
+            GameUtils.generateCorrectRandomScale(givenNote, getApplication())
         )
     }
 
     fun generateRandomScale(givenNote: String) {
+        val correctOrIncorrectScale = Random().nextInt(3)
         randomScaleLiveEvent.postValue(
-            GameUtils.generateRandomScale(givenNote, getApplication())
+            if (correctOrIncorrectScale == 1)
+                GameUtils.generateCorrectRandomScale(givenNote, getApplication())
+            else
+                GameUtils.generateIncorrectRandomScale(givenNote, getApplication())
         )
     }
-
 }

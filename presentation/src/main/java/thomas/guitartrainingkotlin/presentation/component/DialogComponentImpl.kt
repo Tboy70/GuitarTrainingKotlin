@@ -80,7 +80,7 @@ class DialogComponentImpl @Inject constructor(
             customView(R.layout.view_help_scale)
             cancelOnTouchOutside(true)
             positiveButton(positiveText) { onPositive() }
-            val scaleInterval = GameUtils.getScaleIntervalHelp(baseActivity, randomScale)
+            val scaleInterval = GameUtils.retrieveScaleIntervalHelp(baseActivity, randomScale)
             getCustomView().findViewById<TextView>(R.id.view_help_scale_title).text =
                 baseActivity.getString(R.string.dialog_view_help_scale_title, randomScale.toLowerCase())
             getCustomView().findViewById<TextView>(R.id.view_help_scale_interval).text = scaleInterval
