@@ -160,8 +160,8 @@
 
     <!-- USER SONGS LIST -->
     <string name="user_song_list_score">Note : %1$s/5</string>
-    <string name="user_song_list_nb_play">Joué : %1$d fois</string>
-    <string name="user_song_list_last_play">Joué la dernière fois : %1$s</string>
+    <string name="user_song_list_nb_play">Jouée : %1$d fois</string>
+    <string name="user_song_list_last_play">Jouée la dernière fois : %1$s</string>
     <string name="user_song_list_no_program_text">Aucune chanson disponible</string>
 
     <!-- USER SONG DETAILS -->
@@ -284,6 +284,7 @@
     <!-- ====================================== GAMES ========================================= -->
     <!-- ====================================================================================== -->
 
+    <string name="view_help_scale_reminder">Rappel</string>
     <string name="game_list_scale_game">Intervalles</string>
     <string name="game_right_answer">Bonne réponse !</string>
     <string name="interval_game_hint_answer">Réponse</string>
@@ -293,6 +294,7 @@
     <string name="interval_game_title">Donner les intervalles</string>
     <string name="game_list_interval_game">Notes de la gammes</string>
     <string name="scale_game_title">Donner les notes de la gamme</string>
+    <string name="fragment_scale_game_which_scale_answer_hint">Gamme</string>
     <string name="interval_game_reversed_question">%1$s est %2$s de :</string>
     <string name="reversed_interval_game_hint_answer">Intervalle renversé</string>
     <string name="reversed_interval_game_title">Donner l\'intervalle renversé</string>
@@ -382,11 +384,13 @@
 
     <!-- Tones -->
     <string name="tone_major">Majeure</string>
-    <string name="tone_minor">Mineure</string>
-    <string name="tone_blues_minor">Blues mineure</string>
-    <string name="tone_blues_major">Blues majeure</string>
+    <string name="tone_minor_natural">Mineure naturelle</string>
+    <string name="tone_minor_harmonic">Mineure harmonique</string>
+    <string name="tone_minor_melodic">Mineure melodique</string>
     <string name="tone_pentatonic_major">Pentatonique majeure</string>
     <string name="tone_pentatonic_minor">Pentatonique mineure</string>
+    <string name="tone_blues_major">Blues majeure</string>
+    <string name="tone_blues_minor">Blues mineure</string>
 
     <!-- Modes -->
     <string name="mode_ionian">Ionien</string>
@@ -424,13 +428,19 @@
 
     <!-- Scale interval -->
     <string name="major_scale_interval">1T ; 1T ; 0.5T ; 1T ; 1T ; 1T ; 0.5T</string>
-    <string name="minor_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1T ;1T</string>
+    <string name="minor_natural_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1T ;1T</string>
+    <string name="minor_harmonic_scale_interval">1T ; 0.5T ; 1T ; 1T ; 0.5T ; 1.5T ; 0.5T \n\n
+        Différence par rapport à la gamme mineure naturelle : 7e degré élevé d\'un demi ton \n
+        -> Sonorité plus "hispanique" ou "néo-classique"
+    </string>
+    <string name="minor_melodic_scale_interval">1T ; 0.5T ; 1T ; 1T ; 1T ; 1T ; 0.5T \n\n
+        Équivalent de la gamme majeure mais avec une tierce diminuée (abaissée d\'un demi-ton)
+    </string>
     <string name="pentatonic_major_scale_interval">1T ; 1T ; 1.5T ; 1T ; 1.5T</string>
     <string name="pentatonic_minor_scale_interval">1.5T ; 1T ; 1T ; 1.5T ; 1T</string>
     <string name="major_blues_scale_interval">1T ; 0.5T ; 0.5T ; 1.5T ; 1T ; 1.5T \n\n Blues note = Quinte diminuée
     </string>
     <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
     </string>
-    <string name="fragment_scale_game_which_scale_answer_hint">Gamme</string>
 
 </resources>

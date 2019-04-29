@@ -194,11 +194,11 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
 
     private fun displayRequiredDegrees(givenScale: String) {
         context?.let { context ->
-
-            third_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-            fourth_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-
-            if (givenScale == context.getString(R.string.tone_major) || givenScale == context.getString(R.string.tone_minor)) {
+            if (givenScale == context.getString(R.string.tone_major) ||
+                givenScale == context.getString(R.string.tone_minor_natural) ||
+                givenScale == context.getString(R.string.tone_minor_harmonic) ||
+                givenScale == context.getString(R.string.tone_minor_melodic)
+            ) {
                 seventh_degree_layout.show()
                 eight_degree_layout.show()
             } else {
@@ -310,7 +310,9 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
         answersList.add(fifth_degree_answer.getInput())
         answersList.add(sixth_degree_answer.getInput())
 
-        if (givenScale == context?.getString(R.string.tone_minor) ||
+        if (givenScale == context?.getString(R.string.tone_minor_natural) ||
+            givenScale == context?.getString(R.string.tone_minor_harmonic) ||
+            givenScale == context?.getString(R.string.tone_minor_melodic) ||
             givenScale == context?.getString(R.string.tone_major)
         ) {
             answersList.add(seventh_degree_answer.getInput())
@@ -378,6 +380,16 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
         sixth_degree_answer.text = null
         seventh_degree_answer.text = null
         eight_degree_answer.text = null
+        context?.let {
+            first_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            second_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            third_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            fourth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            fifth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            sixth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            seventh_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+            eight_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+        }
         fragment_scale_game_which_scale_answer.text = null
         viewModel.getRandomValue()
     }

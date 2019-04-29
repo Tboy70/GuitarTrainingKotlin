@@ -66,9 +66,9 @@ class ScaleGameViewModel @Inject constructor(
     }
 
     fun generateRandomScale(givenNote: String) {
-        val correctOrIncorrectScale = Random().nextInt(3)
+        val correctOrIncorrectScale = Random().nextInt(2)
         randomScaleLiveEvent.postValue(
-            if (correctOrIncorrectScale == 1)
+            if (correctOrIncorrectScale == 0)
                 GameUtils.generateCorrectRandomScale(givenNote, getApplication())
             else
                 GameUtils.generateIncorrectRandomScale(givenNote, getApplication())

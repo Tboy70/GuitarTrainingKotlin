@@ -16,8 +16,9 @@ class UserProgramDetailsViewModel @Inject constructor(
     override val currentViewState = UserProgramDetailsViewState()
 
     private var idProgram: String? = null
+    private var nameProgram: String? = null
 
-    val songRetrievedLiveData = MutableLiveData<ProgramViewDataWrapper>()
+    val programRetrievedLiveData = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
 
     override fun onCleared() {
@@ -40,7 +41,8 @@ class UserProgramDetailsViewModel @Inject constructor(
             retrieveProgramById.subscribe(
                 params = RetrieveProgramById.Params.toRetrieve(idProgram),
                 onSuccess = {
-                    songRetrievedLiveData.postValue(ProgramViewDataWrapper(it))
+                    this.nameProgram = it.nameProgram
+                    programRetrievedLiveData.postValue(ProgramViewDataWrapper(it))
                     viewState.update {
                         loading = false
                     }
@@ -77,4 +79,6 @@ class UserProgramDetailsViewModel @Inject constructor(
             )
         }
     }
+
+    fun getNameProgram() = nameProgram
 }

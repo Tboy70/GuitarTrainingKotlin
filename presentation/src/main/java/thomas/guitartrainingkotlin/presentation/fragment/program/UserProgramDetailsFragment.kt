@@ -108,7 +108,7 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     }
 
     private fun initiateViewModelObservers() {
-        viewModel.songRetrievedLiveData.observeSafe(this) {
+        viewModel.programRetrievedLiveData.observeSafe(this) {
             displayInformation(it)
         }
 

@@ -8,7 +8,7 @@ object ConstValues {
 
     // MUSIC CONST
     const val NB_NOTES = 12
-    const val NB_SCALES = 5
+    const val NB_SCALES = 8
     const val NB_INTERVAL = 13
 
     // PROGRAM CONST
@@ -38,5 +38,6 @@ object ConstValues {
     const val USER_ID = "thomas.example.com.guitarTrainingKotlin.baseActivity.USER_ID"
     const val ID_SONG = "thomas.example.com.guitarTrainingKotlin.baseActivity.ID_SONG"
     const val ID_PROGRAM = "thomas.example.com.guitarTrainingKotlin.baseActivity.ID_PROGRAM"
+    const val NAME_PROGRAM = "thomas.example.com.guitarTrainingKotlin.baseActivity.NAME_PROGRAM"
 
 }

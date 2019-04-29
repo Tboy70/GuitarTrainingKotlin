@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="@string/end_program_title"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/text_very_huge"
+            android:textSize="@dimen/text_very_big"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_exercise_end_program_toolbar"/>

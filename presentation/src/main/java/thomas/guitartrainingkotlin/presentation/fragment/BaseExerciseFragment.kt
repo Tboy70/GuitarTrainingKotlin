@@ -60,8 +60,10 @@ abstract class BaseExerciseFragment<T : ViewModel> : Fragment() {
     var rankExercise = ConstValues.CONST_ERROR
     var durationExercise = ConstValues.CONST_ERROR
     var durationLeft = DateTimeUtils.DEFAULT_DURATION_LEFT
+    var nameProgram: String = ""
 
     companion object {
+        const val NAME_PROGRAM = "thomas.example.com.guitarTrainingKotlin.baseActivity.NAME_PROGRAM"
         const val RANK_EXERCISE = "thomas.example.com.guitarTrainingKotlin.baseActivity.RANK_EXERCISE"
         const val DURATION_EXERCISE = "thomas.example.com.guitarTrainingKotlin.baseActivity.DURATION_EXERCISE"
     }
@@ -107,7 +109,7 @@ abstract class BaseExerciseFragment<T : ViewModel> : Fragment() {
                 android.R.string.no,
                 onPositive = {
                     if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
-                        (activity as ProgramActivity).startExercise(rankExercise + 1)
+                        (activity as ProgramActivity).startExercise(rankExercise + 1, nameProgram)
                     } else {
                         activity?.finish()
                     }

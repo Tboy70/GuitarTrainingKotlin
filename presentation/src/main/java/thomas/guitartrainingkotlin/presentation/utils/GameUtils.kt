@@ -8,11 +8,13 @@ import java.util.*
 object GameUtils {
 
     private val MAJOR_SCALE_INTERVAL = listOf(2, 4, 5, 7, 9, 11, 12)
-    private val MINOR_SCALE_INTERVAL = listOf(2, 3, 5, 7, 8, 10, 12)
-    private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
-    private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
+    private val MINOR_NATURAL_SCALE_INTERVAL = listOf(2, 3, 5, 7, 8, 10, 12)
+    private val MINOR_MELODIC_SCALE_INTERVAL = listOf(2, 3, 5, 7, 9, 11, 12)
+    private val MINOR_HARMONIC_SCALE_INTERVAL = listOf(2, 3, 5, 7, 8, 11, 12)
     private val PENTATONIC_MAJOR_SCALE_INTERVAL = listOf(2, 4, 7, 9, 12)
     private val PENTATONIC_MINOR_SCALE_INTERVAL = listOf(3, 5, 7, 10, 12)
+    private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
+    private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
 
     fun checkIntervalGameAnswer(
         givenNote: String, givenInterval: String, userAnswer: String, intervalGameMode: Int, context: Context
@@ -55,11 +57,13 @@ object GameUtils {
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
         val scaleInterval = when (givenScale) {
             scaleArray[0] -> MAJOR_SCALE_INTERVAL
-            scaleArray[1] -> MINOR_SCALE_INTERVAL
-            scaleArray[2] -> MAJOR_BLUES_SCALE_INTERVAL
-            scaleArray[3] -> MINOR_BLUES_SCALE_INTERVAL
+            scaleArray[1] -> MINOR_NATURAL_SCALE_INTERVAL
+            scaleArray[2] -> MINOR_HARMONIC_SCALE_INTERVAL
+            scaleArray[3] -> MINOR_MELODIC_SCALE_INTERVAL
             scaleArray[4] -> PENTATONIC_MAJOR_SCALE_INTERVAL
             scaleArray[5] -> PENTATONIC_MINOR_SCALE_INTERVAL
+            scaleArray[6] -> MAJOR_BLUES_SCALE_INTERVAL
+            scaleArray[7] -> MINOR_BLUES_SCALE_INTERVAL
             else -> MAJOR_SCALE_INTERVAL
         }
 
@@ -82,11 +86,13 @@ object GameUtils {
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
         return when (givenScale) {
             scaleArray[0] -> context.getString(R.string.major_scale_interval)
-            scaleArray[1] -> context.getString(R.string.minor_scale_interval)
-            scaleArray[2] -> context.getString(R.string.major_blues_scale_interval)
-            scaleArray[3] -> context.getString(R.string.minor_blues_scale_interval)
+            scaleArray[1] -> context.getString(R.string.minor_natural_scale_interval)
+            scaleArray[2] -> context.getString(R.string.minor_harmonic_scale_interval)
+            scaleArray[3] -> context.getString(R.string.minor_melodic_scale_interval)
             scaleArray[4] -> context.getString(R.string.pentatonic_major_scale_interval)
-            scaleArray[4] -> context.getString(R.string.pentatonic_minor_scale_interval)
+            scaleArray[5] -> context.getString(R.string.pentatonic_minor_scale_interval)
+            scaleArray[6] -> context.getString(R.string.major_blues_scale_interval)
+            scaleArray[7] -> context.getString(R.string.minor_blues_scale_interval)
             else -> ""
         }
     }
@@ -128,12 +134,14 @@ object GameUtils {
     private fun getReferenceScale(context: Context): Pair<List<Int>, String> {
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
         return when (Random().nextInt(ConstValues.NB_SCALES)) {
-            1 -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
-            2 -> Pair(MINOR_SCALE_INTERVAL, scaleArray[1])
-            3 -> Pair(MAJOR_BLUES_SCALE_INTERVAL, scaleArray[2])
-            4 -> Pair(MINOR_BLUES_SCALE_INTERVAL, scaleArray[3])
-            5 -> Pair(PENTATONIC_MAJOR_SCALE_INTERVAL, scaleArray[4])
-            6 -> Pair(PENTATONIC_MINOR_SCALE_INTERVAL, scaleArray[5])
+            0 -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+            1 -> Pair(MINOR_NATURAL_SCALE_INTERVAL, scaleArray[1])
+            2 -> Pair(MINOR_HARMONIC_SCALE_INTERVAL, scaleArray[2])
+            3 -> Pair(MINOR_MELODIC_SCALE_INTERVAL, scaleArray[3])
+            4 -> Pair(PENTATONIC_MAJOR_SCALE_INTERVAL, scaleArray[4])
+            5 -> Pair(PENTATONIC_MINOR_SCALE_INTERVAL, scaleArray[5])
+            6 -> Pair(MAJOR_BLUES_SCALE_INTERVAL, scaleArray[6])
+            7 -> Pair(MINOR_BLUES_SCALE_INTERVAL, scaleArray[7])
             else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
         }
     }

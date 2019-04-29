@@ -55,7 +55,7 @@ class ProgramActivity : BaseActivity() {
         sharedViewModel.onBackPressed()
     }
 
-    fun startExercise(rankExercise: Int) {
+    fun startExercise(rankExercise: Int, nameProgram: String) {
         this.rankExercise = rankExercise
         if (rankExercise < exercisesOfProgram.size) {
 
@@ -63,6 +63,7 @@ class ProgramActivity : BaseActivity() {
             val bundle = Bundle()
             bundle.putInt(BaseExerciseFragment.RANK_EXERCISE, rankExercise)
             bundle.putInt(BaseExerciseFragment.DURATION_EXERCISE, rightExercise.getDurationExercise())
+            bundle.putString(BaseExerciseFragment.NAME_PROGRAM, nameProgram)
 
             if (!programStarted) {
                 navHost?.findNavController()?.let {
@@ -93,7 +94,7 @@ class ProgramActivity : BaseActivity() {
             exercisesOfProgram = it.getExercises().map { exercise ->
                 ExerciseViewDataWrapper(exercise)
             }
-            startExercise(rankExercise)
+            startExercise(rankExercise, it.getName())
         }
 
         programViewModel.errorLiveEvent.observeSafe(this) {

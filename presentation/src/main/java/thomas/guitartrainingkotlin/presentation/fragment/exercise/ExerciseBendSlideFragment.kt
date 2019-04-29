@@ -30,6 +30,7 @@ class ExerciseBendSlideFragment : BaseExerciseFragment<ExerciseBendSlideViewMode
             sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -51,6 +52,7 @@ class ExerciseBendSlideFragment : BaseExerciseFragment<ExerciseBendSlideViewMode
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_bend_slide_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_bend_slide_toolbar.title = nameProgram
     }
 
     private fun initiateView() {

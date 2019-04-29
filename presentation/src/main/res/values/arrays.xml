@@ -18,11 +18,13 @@
 
     <string-array name="list_scales">
         <item>@string/tone_major</item>
-        <item>@string/tone_minor</item>
-        <item>@string/tone_blues_major</item>
-        <item>@string/tone_blues_minor</item>
+        <item>@string/tone_minor_natural</item>
+        <item>@string/tone_minor_harmonic</item>
+        <item>@string/tone_minor_melodic</item>
         <item>@string/tone_pentatonic_major</item>
         <item>@string/tone_pentatonic_minor</item>
+        <item>@string/tone_blues_major</item>
+        <item>@string/tone_blues_minor</item>
     </string-array>
 
     <string-array name="list_modes">
