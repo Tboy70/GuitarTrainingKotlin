@@ -30,6 +30,7 @@ class ExerciseSkipStringFragment : BaseExerciseFragment<ExerciseSkipStringViewMo
             sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -51,6 +52,7 @@ class ExerciseSkipStringFragment : BaseExerciseFragment<ExerciseSkipStringViewMo
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_skip_string_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_skip_string_toolbar.title = nameProgram
     }
 
     private fun initiateView() {

@@ -30,6 +30,7 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
             sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -51,6 +52,7 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_three_fingers_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_three_fingers_toolbar.title = nameProgram
     }
 
     private fun initiateView() {

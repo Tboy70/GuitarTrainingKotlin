@@ -8,20 +8,20 @@
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/fragment_scale_game_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            style="@style/ToolbarAppTheme"
             android:theme="@style/ToolbarAppTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:title="@string/toolbar_title_scale_game_list"
-            app:titleTextColor="@android:color/white"
+            app:titleTextAppearance="@style/ToolbarTitleText"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
             android:id="@+id/fragment_scale_game_title"
+            style="@style/GenericTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scale_game_title"
-            android:textSize="@dimen/text_very_big"
             android:layout_marginTop="@dimen/constraint_layout_margin_16"
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_toolbar"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,10 +29,12 @@
 
     <TextView
             android:id="@+id/fragment_scale_game_description"
+            style="@style/GenericSubTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_big"
-            android:padding="@dimen/constraint_layout_margin_16"
+            android:paddingTop="@dimen/constraint_layout_margin_8"
+            android:paddingStart="@dimen/constraint_layout_margin_16"
+            android:paddingEnd="@dimen/constraint_layout_margin_16"
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/fragment_scale_game_description"
-            app:layout_constraintBottom_toTopOf="@id/included_degree_view" tools:layout_editor_absoluteX="0dp">
+            app:layout_constraintBottom_toTopOf="@id/included_degree_view">
 
         <TextView
                 android:id="@+id/fragment_scale_game_question"
@@ -107,11 +109,8 @@
 
         <Button
                 android:id="@+id/fragment_scale_game_validate"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
-                android:background="@drawable/button_drawable"
+                style="@style/GenericBigButton"
                 android:text="@string/generic_button_validate"
-                android:textColor="@android:color/white"
                 android:layout_marginBottom="@dimen/constraint_layout_margin_8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -120,11 +119,8 @@
 
         <Button
                 android:id="@+id/fragment_scale_game_yes_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_height"
-                android:background="@drawable/button_drawable"
+                style="@style/GenericLittleButton"
                 android:text="@string/generic_button_yes"
-                android:textColor="@android:color/white"
                 android:layout_marginStart="@dimen/fragment_scale_game_button_margin"
                 android:layout_marginEnd="@dimen/fragment_scale_game_button_margin"
                 android:layout_marginBottom="@dimen/constraint_layout_margin_8"
@@ -135,11 +131,8 @@
 
         <Button
                 android:id="@+id/fragment_scale_game_no_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/button_height"
-                android:background="@drawable/button_drawable"
+                style="@style/GenericLittleButton"
                 android:text="@string/generic_button_no"
-                android:textColor="@android:color/white"
                 android:layout_marginStart="@dimen/fragment_scale_game_button_margin"
                 android:layout_marginEnd="@dimen/fragment_scale_game_button_margin"
                 android:layout_marginBottom="@dimen/constraint_layout_margin_8"

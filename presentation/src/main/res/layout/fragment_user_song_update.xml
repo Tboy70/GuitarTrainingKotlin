@@ -8,13 +8,13 @@
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/fragment_user_song_update_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            style="@style/ToolbarAppTheme"
             android:theme="@style/ToolbarAppTheme"
-            app:title="@string/toolbar_title_song_update"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:titleTextAppearance="@style/ToolbarTitleText"
+            app:title="@string/toolbar_title_song_update"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
             android:id="@+id/fragment_user_song_update_name"
@@ -57,12 +57,9 @@
 
     <Button
             android:id="@+id/fragment_user_song_update_validate_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/generic_button_validate"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
@@ -180,8 +181,9 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
             nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
             nameExercise.setTextSize(
                 TypedValue.COMPLEX_UNIT_SP,
-                (activity as Activity).resources.getDimension(R.dimen.text_default) / (activity as Activity).resources.displayMetrics.density
+                (activity as Activity).resources.getDimension(R.dimen.text_big) / (activity as Activity).resources.displayMetrics.density
             )
+            nameExercise.setTypeface(null, Typeface.BOLD)
 
             val durationExercise = TextView(activity)
             TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)

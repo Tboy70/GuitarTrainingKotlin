@@ -10,19 +10,7 @@
     <string name="toolbar_forgot_password">Mot de passe oublié ?</string>
 
     <string name="toolbar_title_game_list">Jeux</string>
-    <string name="toolbar_title_exercise_slap">Slap</string>
-    <string name="toolbar_title_exercise_mode">Modes</string>
-    <string name="toolbar_title_exercise_scale">Gammes</string>
-    <string name="toolbar_title_exercise_speed">Vitesse</string>
-    <string name="toolbar_title_exercise_tapping">Tapping</string>
-    <string name="toolbar_title_exercise_palm_mute">Palm mute</string>
-    <string name="toolbar_title_exercise_bend_slide">Bend / Slide</string>
-    <string name="toolbar_title_exercise_back_forth">Allers retours</string>
-    <string name="toolbar_title_exercise_sweep_picking">Sweep picking</string>
-    <string name="toolbar_title_exercise_three_fingers">Jeu à trois doigts</string>
 
-    <string name="toolbar_title_exercise_skip_string">Mute une corde en accord</string>
-    <string name="toolbar_title_exercise_pull_off_hammer_on">Pull off / Hammer on</string>
     <string name="toolbar_title_end_program">Fin du programme</string>
 
     <string name="toolbar_title_song_details">Ma chanson</string>

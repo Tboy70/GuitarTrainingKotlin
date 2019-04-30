@@ -9,10 +9,9 @@
             android:id="@+id/fragment_game_list_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
             android:theme="@style/ToolbarAppTheme"
+            app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_game_list"
-            app:titleTextColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,11 +25,8 @@
 
         <Button
                 android:id="@+id/button_game_interval"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
+                style="@style/GenericBigButton"
                 android:text="@string/game_list_scale_game"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_drawable"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/button_game_reversed_interval"
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +34,8 @@
 
         <Button
                 android:id="@+id/button_game_reversed_interval"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
+                style="@style/GenericBigButton"
                 android:text="@string/game_list_reversed_interval_game"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_drawable"
                 app:layout_constraintTop_toBottomOf="@id/button_game_interval"
                 app:layout_constraintBottom_toTopOf="@id/button_game_scale"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,11 +43,8 @@
 
         <Button
                 android:id="@+id/button_game_scale"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="wrap_content"
+                style="@style/GenericBigButton"
                 android:text="@string/game_list_interval_game"
-                android:textColor="@android:color/white"
-                android:background="@drawable/button_drawable"
                 app:layout_constraintTop_toBottomOf="@id/button_game_reversed_interval"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

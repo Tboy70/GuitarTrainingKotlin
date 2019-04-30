@@ -30,6 +30,7 @@ class ExercisePalmMuteFragment : BaseExerciseFragment<ExercisePalmMuteViewModel>
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -51,6 +52,7 @@ class ExercisePalmMuteFragment : BaseExerciseFragment<ExercisePalmMuteViewModel>
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_palm_mute_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_palm_mute_toolbar.title = nameProgram
     }
 
     private fun initiateView() {

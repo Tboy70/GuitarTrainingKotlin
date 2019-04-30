@@ -12,16 +12,17 @@
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/fragment_create_account_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                style="@style/ToolbarAppTheme"
+                android:theme="@style/ToolbarAppTheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:title="@string/create_account_title"
-                app:titleTextColor="@android:color/white"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextAppearance="@style/ToolbarTitleText"
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
                 android:id="@+id/fragment_create_account_title"
+                style="@style/GenericTitleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/constraint_layout_margin_16"
@@ -29,8 +30,6 @@
                 app:layout_constraintBottom_toTopOf="@id/fragment_create_account_info_layout"
                 android:gravity="center"
                 android:text="@string/create_account_title"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_very_big"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_create_account_toolbar"/>
@@ -94,11 +93,9 @@
 
         <Button
                 android:id="@+id/fragment_create_account_validate"
-                android:layout_width="@dimen/button_width"
-                android:layout_height="@dimen/button_height"
-                android:background="@drawable/button_drawable"
+                style="@style/GenericBigButton"
                 android:text="@string/generic_button_validate"
-                android:textColor="@android:color/white"
+                android:enabled="false"
                 android:layout_marginTop="@dimen/constraint_layout_margin_16"
                 android:layout_marginBottom="@dimen/constraint_layout_margin_16"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -9,9 +9,9 @@
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/fragment_user_song_details_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            style="@style/ToolbarAppTheme"
             android:theme="@style/ToolbarAppTheme"
+            app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_song_details"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +65,10 @@
 
     <Button
             android:id="@+id/fragment_user_song_details_rate_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginTop="@dimen/constraint_layout_margin_8"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_song_details_start"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_update_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
@@ -80,12 +77,9 @@
 
     <Button
             android:id="@+id/fragment_user_song_details_update_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_song_details_update"
-            android:textColor="@android:color/white"
             app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_song_details_rate_button"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_remove_button"
@@ -94,12 +88,9 @@
 
     <Button
             android:id="@+id/fragment_user_song_details_remove_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_song_details_remove"
-            android:textColor="@android:color/white"
             app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

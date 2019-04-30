@@ -12,23 +12,22 @@
 
         <androidx.appcompat.widget.Toolbar
                 android:id="@+id/fragment_login_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:background="@color/colorPrimary"
+                style="@style/ToolbarAppTheme"
+                android:theme="@style/ToolbarAppTheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:titleTextAppearance="@style/ToolbarTitleText"
                 app:title="@string/app_name"
-                app:titleTextColor="@android:color/white"
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
                 android:id="@+id/fragment_create_account_title"
+                style="@style/GenericTitleText"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/constraint_layout_margin_16"
-                android:layout_marginBottom="@dimen/constraint_layout_margin_16"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/constraint_layout_margin_16"
                 android:gravity="center"
                 android:text="@string/login_home_title"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_very_big"
                 app:layout_constraintBottom_toTopOf="@+id/fragment_login_home_info_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,12 +87,9 @@
 
             <Button
                     android:id="@+id/fragment_login_home_validate_button"
-                    android:layout_width="@dimen/button_width"
-                    android:layout_height="@dimen/button_height"
+                    style="@style/GenericBigButton"
                     android:layout_marginBottom="@dimen/space_medium"
-                    android:background="@drawable/button_drawable"
-                    android:text="@string/generic_button_validate"
-                    android:textColor="@android:color/white"/>
+                    android:text="@string/generic_button_validate"/>
 
             <TextView
                     android:id="@+id/fragment_login_home_forgot_password"

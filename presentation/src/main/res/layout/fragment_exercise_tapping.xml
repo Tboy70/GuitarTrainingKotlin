@@ -8,12 +8,11 @@
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/fragment_exercise_tapping_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            style="@style/ToolbarAppTheme"
             android:theme="@style/ToolbarAppTheme"
-            app:title="@string/toolbar_title_exercise_tapping"
-            app:titleTextColor="@android:color/white"
+            app:titleTextAppearance="@style/ToolbarTitleText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -64,24 +63,18 @@
 
     <Button
             android:id="@+id/fragment_exercise_tapping_button_start_exercise"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/generic_exercise_start_button_text"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/fragment_exercise_tapping_next_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
             android:id="@+id/fragment_exercise_tapping_next_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/generic_exercise_next_exercise_text"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

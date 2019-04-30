@@ -37,6 +37,7 @@ class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
             sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -59,6 +60,7 @@ class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_mode_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_mode_toolbar.title = nameProgram
     }
 
     private fun initiateView() {

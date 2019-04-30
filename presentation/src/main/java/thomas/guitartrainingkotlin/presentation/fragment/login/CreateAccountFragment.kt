@@ -1,6 +1,8 @@
 package thomas.guitartrainingkotlin.presentation.fragment.login
 
 import android.os.Bundle
+import android.text.TextWatcher
+import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +12,7 @@ import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
-import thomas.guitartrainingkotlin.presentation.extension.getInput
-import thomas.guitartrainingkotlin.presentation.extension.gone
-import thomas.guitartrainingkotlin.presentation.extension.observeSafe
-import thomas.guitartrainingkotlin.presentation.extension.show
+import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
 import javax.inject.Inject
@@ -28,6 +27,10 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
 
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
+
+    private val textChangedListener: TextWatcher = textChangedListener {
+        updateConfirmButtonState()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +56,9 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
     }
 
     private fun initiateViews() {
-
+        fragment_create_account_pseudo.addTextChangedListener(textChangedListener)
+        fragment_create_account_email.addTextChangedListener(textChangedListener)
+        fragment_create_account_password.addTextChangedListener(textChangedListener)
         // Account creation validation
         fragment_create_account_validate.setOnClickListener {
             viewModel.createNewUser(
@@ -89,5 +94,13 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
         viewModel.errorLiveEvent.observeSafe(this) {
             errorRendererComponent.displayError(it)
         }
+    }
+
+    private fun updateConfirmButtonState() {
+        fragment_create_account_validate.isEnabled =
+            fragment_create_account_pseudo.getInput().isNotEmpty() &&
+                    fragment_create_account_email.getInput().isNotEmpty() &&
+                    Patterns.EMAIL_ADDRESS.matcher(fragment_create_account_email.getInput()).matches() &&
+                    fragment_create_account_password.getInput().isNotEmpty()
     }
 }

@@ -9,118 +9,90 @@
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/fragment_user_program_details_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            style="@style/ToolbarAppTheme"
             android:theme="@style/ToolbarAppTheme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_program_details"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/fragment_user_program_details_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/padding_start_end"
-            android:paddingEnd="@dimen/padding_start_end"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_huge"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_user_program_details_toolbar"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="Mon super programme"/>
-
-    <TextView
-            android:id="@+id/fragment_user_program_details_description"
-            android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_user_program_content_layout"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:gravity="center_vertical"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_very_big"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_guideline_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_details_name"
-            tools:text="Ma super description"/>
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintBottom_toTopOf="@id/fragment_user_program_details_start_button"
+            app:layout_constraintTop_toBottomOf="@id/fragment_user_program_details_toolbar">
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_user_program_details_guideline_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3"/>
-
-    <ScrollView
-            android:id="@+id/fragment_user_program_details_exercises_scroll_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_guideline_3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fragment_user_program_details_guideline_2"
-            app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-                android:id="@+id/fragment_user_program_details_exercises"
-                android:layout_width="match_parent"
+        <TextView
+                android:id="@+id/fragment_user_program_details_name"
+                style="@style/GenericTitleText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:paddingStart="@dimen/padding_start_end"
+                android:paddingEnd="@dimen/padding_start_end"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Mon super programme"/>
 
-            <TextView
+        <TextView
+                android:id="@+id/fragment_user_program_details_description"
+                style="@style/GenericSubTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/constraint_layout_margin_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_details_name"
+                tools:text="Ma super description"/>
+
+        <ScrollView
+                android:id="@+id/fragment_user_program_details_exercises_scroll_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/constraint_layout_margin_16"
+                app:layout_constraintTop_toBottomOf="@id/fragment_user_program_details_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                    android:id="@+id/fragment_user_program_details_exercises"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:text="@string/user_details_program_exercises_text"
-                    android:textSize="@dimen/text_big"
-                    android:textStyle="bold"/>
-        </LinearLayout>
-    </ScrollView>
+                    android:orientation="vertical"/>
+        </ScrollView>
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_user_program_details_guideline_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
             android:id="@+id/fragment_user_program_details_remove_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_program_details_remove"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
             android:id="@+id/fragment_user_program_details_start_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_program_details_start"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_update_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
             android:id="@+id/fragment_user_program_details_update_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:background="@drawable/button_drawable"
             android:text="@string/user_program_details_update"
-            android:textColor="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_remove_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

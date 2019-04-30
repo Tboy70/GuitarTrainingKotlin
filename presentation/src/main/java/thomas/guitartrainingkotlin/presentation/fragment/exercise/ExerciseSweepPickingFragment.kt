@@ -30,6 +30,7 @@ class ExerciseSweepPickingFragment : BaseExerciseFragment<ExerciseSweepPickingVi
             sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
+        nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
         rankExercise = arguments?.getInt(RANK_EXERCISE) ?: ConstValues.CONST_ERROR
         durationExercise = arguments?.getInt(DURATION_EXERCISE) ?: ConstValues.CONST_ERROR
 
@@ -51,6 +52,7 @@ class ExerciseSweepPickingFragment : BaseExerciseFragment<ExerciseSweepPickingVi
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(fragment_exercise_sweep_picking_toolbar, ActivityExtensions.DISPLAY_UP)
+        fragment_exercise_sweep_picking_toolbar.title = nameProgram
     }
 
     private fun initiateView() {
