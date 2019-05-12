@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_three_fingers.*
+import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
@@ -59,10 +60,10 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
 
         setDurationUI(fragment_exercise_three_fingers_duration, fragment_exercise_three_fingers_duration_left)
 
-        fragment_exercise_three_fingers_button_start_exercise.setOnClickListener {
+        view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_three_fingers_duration_left)
         }
-        fragment_exercise_three_fingers_next_button.setOnClickListener {
+        view_action_exercise_next.setOnClickListener {
             startNextExercise()
         }
     }

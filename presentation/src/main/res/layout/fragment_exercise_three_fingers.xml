@@ -15,68 +15,64 @@
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/fragment_exercise_three_fingers_title"
-            android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintBottom_toTopOf="@id/view_action_exercise"
+            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_three_fingers_toolbar">
+
+        <TextView
+                android:id="@+id/fragment_exercise_three_fingers_title"
+                style="@style/GenericTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/exercise_three_fingers_title_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/fragment_exercise_three_fingers_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:gravity="center_vertical"
+                android:text="@string/exercise_three_fingers_description_text"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_title"/>
+
+        <TextView
+                android:id="@+id/fragment_exercise_three_fingers_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_description"
+                tools:text="@string/generic_exercise_duration_text"/>
+
+        <TextView
+                android:id="@+id/fragment_exercise_three_fingers_duration_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_duration"
+                tools:text="@string/generic_exercise_duration_left_text"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+            android:id="@+id/view_action_exercise"
+            layout="@layout/view_action_exercise"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
-            android:gravity="center"
-            android:text="@string/exercise_three_fingers_title_text"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_very_big"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_three_fingers_toolbar"/>
-
-    <TextView
-            android:id="@+id/fragment_exercise_three_fingers_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center_vertical"
-            android:text="@string/exercise_three_fingers_description_text"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_title"/>
-
-    <TextView
-            android:id="@+id/fragment_exercise_three_fingers_duration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_description"
-            tools:text="@string/generic_exercise_duration_text"/>
-
-    <TextView
-            android:id="@+id/fragment_exercise_three_fingers_duration_left"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_three_fingers_duration"
-            tools:text="@string/generic_exercise_duration_left_text"/>
-
-    <Button
-            android:id="@+id/fragment_exercise_three_fingers_button_start_exercise"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_exercise_start_button_text"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_exercise_three_fingers_next_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-            android:id="@+id/fragment_exercise_three_fingers_next_button"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_exercise_next_exercise_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

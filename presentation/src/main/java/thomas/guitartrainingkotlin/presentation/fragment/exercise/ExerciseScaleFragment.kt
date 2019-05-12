@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
+import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
@@ -77,10 +78,10 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
         fragment_exercise_scale_random_selection.setOnClickListener {
             viewModel.getRandomValue()
         }
-        fragment_exercise_scale_button_start_exercise.setOnClickListener {
+        view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_scale_duration_left)
         }
-        fragment_exercise_scale_next_button.setOnClickListener {
+        view_action_exercise_next.setOnClickListener {
             startNextExercise()
         }
     }

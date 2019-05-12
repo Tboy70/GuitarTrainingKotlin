@@ -5,7 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.guitartrainingkotlin.R
@@ -22,6 +22,7 @@ import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
+import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
 import javax.inject.Inject
@@ -98,15 +99,13 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                 onPositive = {
                     for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
                         val exerciseName =
-                            (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout)
-                                .getChildAt(0) as LinearLayout)
-                                .getChildAt(0) as Button)
-                                .text.toString()
+                            (((fragment_user_program_update_exercises_list.getChildAt(i) as CustomExerciseView)
+                                .getChildAt(0) as ConstraintLayout)
+                                .findViewById<Button>(R.id.view_custom_exercise_type).text.toString())
                         val exerciseDurationValue =
-                            (((fragment_user_program_update_exercises_list.getChildAt(i) as LinearLayout)
-                                .getChildAt(0) as LinearLayout)
-                                .getChildAt(1) as EditText)
-                                .text.toString()
+                            (((fragment_user_program_update_exercises_list.getChildAt(i) as CustomExerciseView)
+                                .getChildAt(0) as ConstraintLayout)
+                                .findViewById<EditText>(R.id.view_custom_exercise_duration).text.toString())
 
                         programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
                             ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
@@ -158,7 +157,8 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
     private fun initExercisesList(exercises: MutableList<Exercise>) {
         activity?.let { activity ->
             exercises.forEach {
-                val horizontalLayoutContainingAllElements = exercisesUIComponent.createNewExercise(
+                exercisesUIComponent.createNewExercise(
+                    fragment_user_program_update_exercises_list,
                     it.idExercise,
                     ExerciseUtils.convertTypeExerciseToName(it.typeExercise, activity),
                     it.durationExercise.toString(),
@@ -178,7 +178,6 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
                                 })
                         }
                     })
-                fragment_user_program_update_exercises_list.addView(horizontalLayoutContainingAllElements)
             }
         }
     }

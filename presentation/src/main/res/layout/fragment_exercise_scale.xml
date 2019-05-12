@@ -15,108 +15,112 @@
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/fragment_exercise_scale_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
-            android:gravity="center"
-            android:text="@string/exercise_scale_title_text"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_very_big"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_scale_toolbar"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintBottom_toTopOf="@id/view_action_exercise"
+            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_scale_toolbar">
 
-    <TextView
-            android:id="@+id/fragment_exercise_scale_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center_vertical"
-            android:text="@string/exercise_scale_description_text"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_title"/>
+        <TextView
+                android:id="@+id/fragment_exercise_scale_title"
+                style="@style/GenericTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/exercise_scale_title_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
-            android:id="@+id/choice_scale_linear_layout"
+        <TextView
+                android:id="@+id/fragment_exercise_scale_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:gravity="center_vertical"
+                android:text="@string/exercise_scale_description_text"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_title"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/choice_scale_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_description">
+
+            <Button
+                    android:id="@+id/fragment_exercise_scale_button_choice_note"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/choice_button_drawable"
+                    android:drawableEnd="@drawable/ic_dropdown_grey"
+                    android:text="@string/exercise_scale_note_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorGreyDark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_exercise_scale_random_selection"/>
+
+            <ImageButton
+                    android:id="@+id/fragment_exercise_scale_random_selection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_random_scale"
+                    android:tint="@color/colorGreyDark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fragment_exercise_scale_button_choice_note"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_exercise_scale_button_choice_mode"/>
+
+            <Button
+                    android:id="@+id/fragment_exercise_scale_button_choice_mode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/choice_button_drawable"
+                    android:drawableEnd="@drawable/ic_dropdown_grey"
+                    android:text="@string/exercise_scale_tone_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorGreyDark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fragment_exercise_scale_random_selection"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+                android:id="@+id/fragment_exercise_scale_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/choice_scale_linear_layout"
+                tools:text="@string/generic_exercise_duration_text"/>
+
+        <TextView
+                android:id="@+id/fragment_exercise_scale_duration_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_duration"
+                tools:text="@string/generic_exercise_duration_left_text"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+            android:id="@+id/view_action_exercise"
+            layout="@layout/view_action_exercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_description">
-
-        <Button
-                android:id="@+id/fragment_exercise_scale_button_choice_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableEnd="@drawable/ic_dropdown_black"
-                android:text="@string/exercise_scale_note_text"
-                android:textAllCaps="false"
-                android:textColor="@android:color/black"/>
-
-        <ImageButton
-                android:id="@+id/fragment_exercise_scale_random_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_random_scale"/>
-
-        <Button
-                android:id="@+id/fragment_exercise_scale_button_choice_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:drawableEnd="@drawable/ic_dropdown_black"
-                android:text="@string/exercise_scale_tone_text"
-                android:textAllCaps="false"
-                android:textColor="@android:color/black"/>
-
-    </LinearLayout>
-
-    <TextView
-            android:id="@+id/fragment_exercise_scale_duration"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/choice_scale_linear_layout"
-            tools:text="@string/generic_exercise_duration_text"/>
-
-    <TextView
-            android:id="@+id/fragment_exercise_scale_duration_left"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_scale_duration"
-            tools:text="@string/generic_exercise_duration_left_text"/>
-
-    <Button
-            android:id="@+id/fragment_exercise_scale_button_start_exercise"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_exercise_start_button_text"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_exercise_scale_next_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-            android:id="@+id/fragment_exercise_scale_next_button"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_exercise_next_exercise_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -148,6 +148,9 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
                     activity?.resources?.getInteger(R.integer.user_programs_details_start_to_bottom_margin) ?: 0
                 )
                 constraintSet.applyTo(fragment_user_program_details_constraint_layout)
+            } else {
+                fragment_user_program_details_remove_button.visibility = View.VISIBLE
+                fragment_user_program_details_update_button.visibility = View.VISIBLE
             }
         }
 

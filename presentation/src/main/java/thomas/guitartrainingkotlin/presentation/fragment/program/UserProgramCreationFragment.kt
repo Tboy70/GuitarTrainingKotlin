@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
 import thomas.guitartrainingkotlin.R
@@ -17,6 +17,7 @@ import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUICo
 import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
+import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramCreationViewModel
 import javax.inject.Inject
 
@@ -69,10 +70,10 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
             val exercises = SparseArray<String>()
 
             fragment_user_program_creation_exercises.children.forEach { child ->
-                val key = (((child as LinearLayout).getChildAt(0) as LinearLayout)
-                    .getChildAt(0) as Button).text.toString()
-                val value = ((child.getChildAt(0) as LinearLayout)
-                    .getChildAt(1) as EditText).text.toString()
+                val key = (((child as CustomExerciseView).getChildAt(0) as ConstraintLayout)
+                    .findViewById<Button>(R.id.view_custom_exercise_type).text.toString())
+                val value = ((child.getChildAt(0) as ConstraintLayout)
+                    .findViewById<EditText>(R.id.view_custom_exercise_duration).text.toString())
 
                 activity?.let { activity ->
                     exercises.append(ExerciseUtils.getTypeExerciseIdByName(key, activity), value)
@@ -132,22 +133,21 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
 
 
     private fun addFieldToCreateExercise() {
-        fragment_user_program_creation_exercises.addView(
-            exercisesUIComponent.createNewExercise(
-                onRemoveView = {
-                    enableCreationAddExerciseButton(true)
-                },
-                onExerciseChosen = { buttonTypeExercise ->
-                    dialogComponent.displaySingleListChoiceDialog(
-                        R.string.generic_exercise_choice_creation_program,
-                        exercisesArray,
-                        android.R.string.ok,
-                        onPositive = { exerciseTitle ->
-                            buttonTypeExercise.text = exerciseTitle
-                            enableCreationAddExerciseButton(true)
-                        })
-                }
-            )
+        exercisesUIComponent.createNewExercise(
+            fragment_user_program_creation_exercises,
+            onRemoveView = {
+                enableCreationAddExerciseButton(true)
+            },
+            onExerciseChosen = { buttonTypeExercise ->
+                dialogComponent.displaySingleListChoiceDialog(
+                    R.string.generic_exercise_choice_creation_program,
+                    exercisesArray,
+                    android.R.string.ok,
+                    onPositive = { exerciseTitle ->
+                        buttonTypeExercise.text = exerciseTitle
+                        enableCreationAddExerciseButton(true)
+                    })
+            }
         )
     }
 

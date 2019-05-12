@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
@@ -20,9 +21,9 @@
             style="@style/GenericTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
             android:gravity="center"
             android:text="@string/user_program_creation_title"
+            android:layout_marginTop="@dimen/constraint_layout_margin_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_program_creation_toolbar"/>
@@ -46,6 +47,7 @@
 
             <EditText
                     android:id="@+id/fragment_user_program_creation_name"
+                    style="@style/GenericSubTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/program_name"
@@ -55,6 +57,7 @@
 
             <EditText
                     android:id="@+id/fragment_user_program_creation_description"
+                    style="@style/GenericSubTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/program_description"
@@ -64,7 +67,7 @@
 
             <LinearLayout
                     android:id="@+id/fragment_user_program_creation_exercises"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"/>
 

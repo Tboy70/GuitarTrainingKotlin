@@ -5,6 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_exercise_back_forth.*
+import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
@@ -58,10 +59,10 @@ class ExerciseBackForthFragment : BaseExerciseFragment<ExerciseBackForthViewMode
     private fun initiateView() {
         setDurationUI(fragment_exercise_back_forth_duration, fragment_exercise_back_forth_duration_left)
 
-        fragment_exercise_back_forth_button_start_exercise.setOnClickListener {
+        view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_back_forth_duration_left)
         }
-        fragment_exercise_back_forth_next_button.setOnClickListener {
+        view_action_exercise_next.setOnClickListener {
             startNextExercise()
         }
     }

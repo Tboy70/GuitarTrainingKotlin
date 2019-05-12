@@ -29,6 +29,10 @@
     <!-- GENERIC CONSTRAINT LAYOUT MARGIN-->
     <dimen name="constraint_layout_margin_8">8dp</dimen>
     <dimen name="constraint_layout_margin_16">16dp</dimen>
+    <dimen name="constraint_layout_margin_64">64dp</dimen>
+
+    <!-- BUTTON CHOICE -->
+    <dimen name="radius_choice_button">7dp</dimen>
 
     <!-- TIMER SIZE -->
     <dimen name="timer_width">270dp</dimen>

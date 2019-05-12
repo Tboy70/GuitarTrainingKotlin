@@ -75,6 +75,7 @@
             style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
             android:text="@string/user_program_details_remove"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -93,6 +94,7 @@
             style="@style/GenericBigButton"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
             android:text="@string/user_program_details_update"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_remove_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

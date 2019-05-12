@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,30 +15,49 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-            android:id="@+id/fragment_exercise_end_program_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
-            android:gravity="center"
-            android:text="@string/end_program_title"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_very_big"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_end_program_toolbar"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/constraint_layout_margin_16"
+            app:layout_constraintBottom_toTopOf="@id/fragment_exercise_end_program_quit_button"
+            app:layout_constraintTop_toBottomOf="@id/fragment_exercise_end_program_toolbar">
 
-    <TextView
-            android:id="@+id/fragment_exercise_end_program_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:gravity="center_vertical"
-            android:text="@string/end_program_description_text"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_end_program_title"/>
+        <TextView
+                android:id="@+id/fragment_exercise_end_program_title"
+                style="@style/GenericTitleText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/end_program_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/fragment_exercise_end_program_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big"
+                android:gravity="center_vertical"
+                android:text="@string/end_program_description_text"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_exercise_end_program_title"/>
+
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_thumb_up"
+                android:padding="@dimen/constraint_layout_margin_64"
+                app:layout_constraintTop_toBottomOf="@id/fragment_exercise_end_program_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:ignore="ContentDescription"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Button
             android:id="@+id/fragment_exercise_end_program_quit_button"
