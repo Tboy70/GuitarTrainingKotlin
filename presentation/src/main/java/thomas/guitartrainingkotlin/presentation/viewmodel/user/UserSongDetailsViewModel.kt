@@ -35,14 +35,6 @@ class UserSongDetailsViewModel @Inject constructor(
 
     var referenceTimestamp: Long = ConstValues.CONST_DEFAULT_TIMESTAMP
 
-    override fun onCleared() {
-        super.onCleared()
-        removeSong.unsubscribe()
-        retrieveSongById.unsubscribe()
-        sendScoreFeedback.unsubscribe()
-        retrieveSongScoreHistory.unsubscribe()
-    }
-
     fun setIdSong(idSong: String) {
         this.idSong = idSong
     }
@@ -56,20 +48,22 @@ class UserSongDetailsViewModel @Inject constructor(
             loading = true
         }
         idSong?.let { idSong ->
-            retrieveSongScoreHistory.subscribe(
-                params = RetrieveSongScoreHistory.Params.toRetrieve(idSong),
-                onSuccess = {
-                    convertHistoricDatesToTimestamp(it)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                retrieveSongScoreHistory.subscribe(
+                    params = RetrieveSongScoreHistory.Params.toRetrieve(idSong),
+                    onSuccess = {
+                        convertHistoricDatesToTimestamp(it)
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
@@ -79,24 +73,26 @@ class UserSongDetailsViewModel @Inject constructor(
             loading = true
         }
         this.idSong?.let { idSong ->
-            retrieveSongById.subscribe(
-                params = RetrieveSongById.Params.toRetrieve(idSong),
-                onSuccess = {
-                    songRetrievedLiveData.postValue(
-                        SongViewDataWrapper(
-                            it
+            compositeDisposable?.add(
+                retrieveSongById.subscribe(
+                    params = RetrieveSongById.Params.toRetrieve(idSong),
+                    onSuccess = {
+                        songRetrievedLiveData.postValue(
+                            SongViewDataWrapper(
+                                it
+                            )
                         )
-                    )
-                    viewState.update {
-                        loading = false
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
@@ -106,20 +102,22 @@ class UserSongDetailsViewModel @Inject constructor(
             loading = true
         }
         idSong?.let { idSong ->
-            sendScoreFeedback.subscribe(
-                params = SendScoreFeedback.Params.toSend(ScoreFeedback(rateValue.toInt()), idSong),
-                onComplete = {
-                    retrieveSongScoreHistory()
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                sendScoreFeedback.subscribe(
+                    params = SendScoreFeedback.Params.toSend(ScoreFeedback(rateValue.toInt()), idSong),
+                    onComplete = {
+                        retrieveSongScoreHistory()
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
@@ -129,21 +127,23 @@ class UserSongDetailsViewModel @Inject constructor(
             loading = true
         }
         idSong?.let { idSong ->
-            removeSong.subscribe(
-                params = RemoveSong.Params.toRemove(idSong),
-                onComplete = {
-                    songDeletedLiveEvent.postValue(true)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                removeSong.subscribe(
+                    params = RemoveSong.Params.toRemove(idSong),
+                    onComplete = {
+                        songDeletedLiveEvent.postValue(true)
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        songDeletedLiveEvent.postValue(false)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    songDeletedLiveEvent.postValue(false)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }

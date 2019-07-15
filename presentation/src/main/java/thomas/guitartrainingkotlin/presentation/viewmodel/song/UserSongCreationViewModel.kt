@@ -22,13 +22,6 @@ class UserSongCreationViewModel @Inject constructor(
     val songCreatedLiveEvent = SingleLiveEvent<Boolean>()
     val informationNotRightLiveEvent = SingleLiveEvent<Boolean>()
 
-    override fun onCleared() {
-        super.onCleared()
-        createSong.unsubscribe()
-        retrieveUserIdInSharedPrefs.unsubscribe()
-        retrieveInstrumentModeInSharedPrefs.unsubscribe()
-    }
-
     fun checkInformationAndValidateCreation(titleSong: String, artistSong: String) {
         if (checkInformation(titleSong, artistSong)) {
 
@@ -42,20 +35,22 @@ class UserSongCreationViewModel @Inject constructor(
             retrieveInstrumentModeInSharedPrefs()
             retrieveUserIdInSharedPrefs()
 
-            createSong.subscribe(
-                params = CreateSong.Params.toCreate(songToCreate),
-                onComplete = {
-                    songCreatedLiveEvent.postValue(true)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                createSong.subscribe(
+                    params = CreateSong.Params.toCreate(songToCreate),
+                    onComplete = {
+                        songCreatedLiveEvent.postValue(true)
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         } else {
             informationNotRightLiveEvent.postValue(true)
@@ -67,22 +62,26 @@ class UserSongCreationViewModel @Inject constructor(
     }
 
     private fun retrieveInstrumentModeInSharedPrefs() {
-        retrieveInstrumentModeInSharedPrefs.subscribe(
-            onSuccess = {
-                songToCreate.idInstrument = it
-            }, onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = {
+                    songToCreate.idInstrument = it
+                }, onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 
     private fun retrieveUserIdInSharedPrefs() {
-        retrieveUserIdInSharedPrefs.subscribe(
-            onSuccess = {
-                songToCreate.userId = it
-            }, onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveUserIdInSharedPrefs.subscribe(
+                onSuccess = {
+                    songToCreate.userId = it
+                }, onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 }

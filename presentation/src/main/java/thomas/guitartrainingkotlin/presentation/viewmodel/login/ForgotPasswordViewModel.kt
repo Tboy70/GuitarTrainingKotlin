@@ -15,14 +15,16 @@ class ForgotPasswordViewModel @Inject constructor(
     val emailSentLiveEvent = SingleLiveEvent<Boolean>()
 
     fun retrievePassword(emailAddress: String) {
-        retrievePassword.subscribe(
-            onComplete = {
-                emailSentLiveEvent.postValue(true)
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-            },
-            params = RetrievePassword.Params.toRetrieve(emailAddress)
+        compositeDisposable?.add(
+            retrievePassword.subscribe(
+                onComplete = {
+                    emailSentLiveEvent.postValue(true)
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                },
+                params = RetrievePassword.Params.toRetrieve(emailAddress)
+            )
         )
     }
 }

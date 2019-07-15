@@ -31,12 +31,6 @@ class UserProgramCreationViewModel @Inject constructor(
         retrieveCurrentInstrumentMode()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        createProgram.unsubscribe()
-        retrieveInstrumentModeInSharedPrefs.unsubscribe()
-    }
-
     fun checkInformationAndValidateCreation(
         nameProgram: String,
         descriptionProgram: String,
@@ -64,20 +58,22 @@ class UserProgramCreationViewModel @Inject constructor(
                 )
             }
 
-            createProgram.subscribe(
-                params = CreateProgram.Params.toCreate(program, exercisesList),
-                onComplete = {
-                    createdProgramLiveEvent.postValue(true)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                createProgram.subscribe(
+                    params = CreateProgram.Params.toCreate(program, exercisesList),
+                    onComplete = {
+                        createdProgramLiveEvent.postValue(true)
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         } else {
             informationNotRightLiveEvent.postValue(true)
@@ -105,13 +101,15 @@ class UserProgramCreationViewModel @Inject constructor(
     }
 
     private fun retrieveCurrentInstrumentMode() {
-        retrieveInstrumentModeInSharedPrefs.subscribe(
-            onSuccess = { instrumentMode ->
-                currentInstrumentMode = instrumentMode
-                retrievedInstrumentMode.postValue(instrumentMode)
-            }, onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = { instrumentMode ->
+                    currentInstrumentMode = instrumentMode
+                    retrievedInstrumentMode.postValue(instrumentMode)
+                }, onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 }

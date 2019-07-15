@@ -27,30 +27,23 @@ class UserPanelViewModel @Inject constructor(
     private var instrumentMode: Int? = null
 
     val logoutSucceedLiveEvent = SingleLiveEvent<Boolean>()
-    val userNotRetrievedLiveEvent =
-        SingleLiveEvent<Boolean>()
-    val userRetrievedLiveEvent =
-        SingleLiveEvent<UserViewDataWrapper>()
+    val userNotRetrievedLiveEvent = SingleLiveEvent<Boolean>()
+    val userRetrievedLiveEvent = SingleLiveEvent<UserViewDataWrapper>()
 
     init {
         retrieveInstrumentMode()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        logoutUser.unsubscribe()
-        retrieveUserById.unsubscribe()
-        retrieveInstrumentModeInSharedPrefs.unsubscribe()
-    }
-
     fun logoutUser() {
-        logoutUser.subscribe(
-            onComplete = {
-                logoutSucceedLiveEvent.postValue(true)
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            logoutUser.subscribe(
+                onComplete = {
+                    logoutSucceedLiveEvent.postValue(true)
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 
@@ -70,30 +63,34 @@ class UserPanelViewModel @Inject constructor(
     }
 
     private fun retrieveInstrumentMode() {
-        retrieveInstrumentModeInSharedPrefs.subscribe(
-            onSuccess = {
-                instrumentMode = it
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = {
+                    instrumentMode = it
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 
     private fun getUserById(userId: String) {
-        retrieveUserById.subscribe(
-            params = RetrieveUserById.Params.toRetrieve(userId),
-            onSuccess = {
-                userRetrievedLiveEvent.postValue(
-                    UserViewDataWrapper(
-                        it
+        compositeDisposable?.add(
+            retrieveUserById.subscribe(
+                params = RetrieveUserById.Params.toRetrieve(userId),
+                onSuccess = {
+                    userRetrievedLiveEvent.postValue(
+                        UserViewDataWrapper(
+                            it
+                        )
                     )
-                )
-            },
-            onError = {
-                this.userId = null
-                errorLiveEvent.postValue(it)
-            }
+                },
+                onError = {
+                    this.userId = null
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 }

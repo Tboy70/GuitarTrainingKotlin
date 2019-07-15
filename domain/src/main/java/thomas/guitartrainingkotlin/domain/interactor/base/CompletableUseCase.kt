@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.domain.interactor.base
 
 import io.reactivex.Completable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -9,8 +10,8 @@ import io.reactivex.schedulers.Schedulers
  */
 abstract class CompletableUseCase : UseCase() {
 
-    fun subscribe(onError: ((Throwable) -> Unit), onComplete: (() -> Unit)) {
-        disposable = build()
+    fun subscribe(onError: ((Throwable) -> Unit), onComplete: (() -> Unit)): Disposable {
+        return build()
             .subscribeOn(Schedulers.from(threadExecutor))
             .subscribe(onComplete, onError)
     }

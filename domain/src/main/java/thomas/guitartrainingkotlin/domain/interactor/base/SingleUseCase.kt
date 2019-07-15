@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.domain.interactor.base
 
 import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -8,8 +9,8 @@ import io.reactivex.schedulers.Schedulers
  */
 abstract class SingleUseCase<T> : UseCase() {
 
-    fun subscribe(onError: ((Throwable) -> Unit), onSuccess: ((T) -> Unit)) {
-        disposable = build()
+    fun subscribe(onError: ((Throwable) -> Unit), onSuccess: ((T) -> Unit)) : Disposable {
+        return build()
             .subscribeOn(Schedulers.from(threadExecutor))
             .subscribe(onSuccess, onError)
     }

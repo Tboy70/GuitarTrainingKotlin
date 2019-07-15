@@ -20,32 +20,26 @@ class UserSettingsViewModel @Inject constructor(
     private var userId: String? = null
     private var currentInstrumentMode: Int? = null
 
-    val suppressedAccountLiveEvent =
-        SingleLiveEvent<Boolean>()
+    val suppressedAccountLiveEvent = SingleLiveEvent<Boolean>()
     val retrievedInstrumentModeLiveData = MutableLiveData<Int>()
 
     init {
         retrieveCurrentInstrumentMode()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        suppressAccount.unsubscribe()
-        setInstrumentModeInSharedPrefs.unsubscribe()
-        retrieveInstrumentModeInSharedPrefs.unsubscribe()
-    }
-
     fun updateInstrumentMode() {
         currentInstrumentMode?.let {
-            setInstrumentModeInSharedPrefs.subscribe(
-                onSuccess = { newInstrumentMode ->
-                    currentInstrumentMode = newInstrumentMode
-                    retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)
-                },
-                onError = { throwable ->
-                    errorLiveEvent.postValue(throwable)
-                },
-                params = SetInstrumentModeInSharedPrefs.Params.toSet(it)
+            compositeDisposable?.add(
+                setInstrumentModeInSharedPrefs.subscribe(
+                    onSuccess = { newInstrumentMode ->
+                        currentInstrumentMode = newInstrumentMode
+                        retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)
+                    },
+                    onError = { throwable ->
+                        errorLiveEvent.postValue(throwable)
+                    },
+                    params = SetInstrumentModeInSharedPrefs.Params.toSet(it)
+                )
             )
         }
     }
@@ -55,19 +49,21 @@ class UserSettingsViewModel @Inject constructor(
             viewState.update {
                 loading = true
             }
-            suppressAccount.subscribe(
-                params = SuppressAccount.Params.toSuppress(userId),
-                onComplete = {
-                    suppressedAccountLiveEvent.postValue(true)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                suppressAccount.subscribe(
+                    params = SuppressAccount.Params.toSuppress(userId),
+                    onComplete = {
+                        suppressedAccountLiveEvent.postValue(true)
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
@@ -77,14 +73,16 @@ class UserSettingsViewModel @Inject constructor(
     }
 
     private fun retrieveCurrentInstrumentMode() {
-        retrieveInstrumentModeInSharedPrefs.subscribe(
-            onSuccess = {
-                currentInstrumentMode = it
-                retrievedInstrumentModeLiveData.postValue(it)
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = {
+                    currentInstrumentMode = it
+                    retrievedInstrumentModeLiveData.postValue(it)
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 }

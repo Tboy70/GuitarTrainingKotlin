@@ -18,32 +18,29 @@ class UserProgramsListViewModel @Inject constructor(
 
     var retrieveUserProgramLiveData = MutableLiveData<List<ProgramViewDataWrapper>>()
 
-    override fun onCleared() {
-        super.onCleared()
-        retrieveProgramsListByUserId.unsubscribe()
-    }
-
     fun retrieveProgramsListByUserId() {
         viewState.update {
             loading = true
         }
         userId?.let { userId ->
-            retrieveProgramsListByUserId.subscribe(
-                params = RetrieveProgramsListByUserId.Params.forList(userId),
-                onSuccess = {
-                    retrieveUserProgramLiveData.postValue(it.map { program ->
-                        ProgramViewDataWrapper(program)
-                    })
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                retrieveProgramsListByUserId.subscribe(
+                    params = RetrieveProgramsListByUserId.Params.forList(userId),
+                    onSuccess = {
+                        retrieveUserProgramLiveData.postValue(it.map { program ->
+                            ProgramViewDataWrapper(program)
+                        })
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = { throwable ->
+                        errorLiveEvent.postValue(throwable)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = { throwable ->
-                    errorLiveEvent.postValue(throwable)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }

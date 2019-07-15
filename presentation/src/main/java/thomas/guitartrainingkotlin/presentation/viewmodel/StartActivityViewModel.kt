@@ -1,13 +1,13 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
+import thomas.guitartrainingkotlin.presentation.viewmodel.base.BaseViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
 class StartActivityViewModel @Inject constructor(
     private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs
-) : ViewModel() {
+) : BaseViewModel() {
 
     val retrievedUserIdLiveEvent = SingleLiveEvent<String>()
 
@@ -15,21 +15,17 @@ class StartActivityViewModel @Inject constructor(
         getUserIdInSharedPrefs()
     }
 
-    /** To unsubscribe usecase **/
-    override fun onCleared() {
-        super.onCleared()
-        retrieveUserIdInSharedPrefs.unsubscribe()
-    }
-
     /** Using of lambdas ! **/
     private fun getUserIdInSharedPrefs() {
-        retrieveUserIdInSharedPrefs.subscribe(
-            onSuccess = { userId ->
-                retrievedUserIdLiveEvent.postValue(userId)
-            },
-            onError = {
-                retrievedUserIdLiveEvent.postValue(USER_ID_DEFAULT)
-            }
+        compositeDisposable?.add(
+            retrieveUserIdInSharedPrefs.subscribe(
+                onSuccess = { userId ->
+                    retrievedUserIdLiveEvent.postValue(userId)
+                },
+                onError = {
+                    retrievedUserIdLiveEvent.postValue(USER_ID_DEFAULT)
+                }
+            )
         )
     }
 

@@ -17,32 +17,29 @@ class UserSongsListViewModel @Inject constructor(
 
     var retrieveUserSongsLiveData = MutableLiveData<List<SongViewDataWrapper>>()
 
-    override fun onCleared() {
-        super.onCleared()
-        retrieveSongListByUserId.unsubscribe()
-    }
-
     fun retrieveSongListByUserId() {
         viewState.update {
             loading = true
         }
         userId?.let { userId ->
-            retrieveSongListByUserId.subscribe(
-                params = RetrieveSongListByUserId.Params.forList(userId),
-                onSuccess = {
-                    retrieveUserSongsLiveData.postValue(it.map { song ->
-                        SongViewDataWrapper(song)
-                    })
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                retrieveSongListByUserId.subscribe(
+                    params = RetrieveSongListByUserId.Params.forList(userId),
+                    onSuccess = {
+                        retrieveUserSongsLiveData.postValue(it.map { song ->
+                            SongViewDataWrapper(song)
+                        })
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = { throwable ->
+                        errorLiveEvent.postValue(throwable)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = { throwable ->
-                    errorLiveEvent.postValue(throwable)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }

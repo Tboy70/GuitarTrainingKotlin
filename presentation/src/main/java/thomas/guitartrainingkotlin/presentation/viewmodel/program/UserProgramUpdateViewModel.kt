@@ -26,13 +26,6 @@ class UserProgramUpdateViewModel @Inject constructor(
     val programRetrievedLiveData: MutableLiveData<ProgramViewDataWrapper> = MutableLiveData()
     val instrumentModeRetrievedLiveEvent: SingleLiveEvent<Int> = SingleLiveEvent()
 
-    override fun onCleared() {
-        super.onCleared()
-        updateProgram.unsubscribe()
-        retrieveProgramById.unsubscribe()
-        retrieveInstrumentModeInSharedPrefs.unsubscribe()
-    }
-
     fun setIdProgram(idProgram: String) {
         this.idProgram = idProgram
     }
@@ -42,35 +35,39 @@ class UserProgramUpdateViewModel @Inject constructor(
             loading = true
         }
         this.idProgram?.let { idProgram ->
-            retrieveProgramById.subscribe(
-                params = RetrieveProgramById.Params.toRetrieve(idProgram),
-                onSuccess = {
-                    programRetrievedLiveData.postValue(
-                        ProgramViewDataWrapper(
-                            it
+            compositeDisposable?.add(
+                retrieveProgramById.subscribe(
+                    params = RetrieveProgramById.Params.toRetrieve(idProgram),
+                    onSuccess = {
+                        programRetrievedLiveData.postValue(
+                            ProgramViewDataWrapper(
+                                it
+                            )
                         )
-                    )
-                    viewState.update {
-                        loading = false
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
 
     fun retrieveInstrumentMode() {
-        retrieveInstrumentModeInSharedPrefs.subscribe(
-            onSuccess = {
-                instrumentModeRetrievedLiveEvent.postValue(it)
-            }, onError = {
-                errorLiveEvent.postValue(it)
-            }
+        compositeDisposable?.add(
+            retrieveInstrumentModeInSharedPrefs.subscribe(
+                onSuccess = {
+                    instrumentModeRetrievedLiveEvent.postValue(it)
+                }, onError = {
+                    errorLiveEvent.postValue(it)
+                }
+            )
         )
     }
 
@@ -87,15 +84,17 @@ class UserProgramUpdateViewModel @Inject constructor(
                 exercises = programListExercises
             )
 
-            updateProgram.subscribe(
-                params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved),
+            compositeDisposable?.add(
+                updateProgram.subscribe(
+                    params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved),
 
-                onComplete = {
-                    updateProgramSuccess.postValue(true)
-                },
-                onError = {
-                    updateProgramSuccess.postValue(false)
-                }
+                    onComplete = {
+                        updateProgramSuccess.postValue(true)
+                    },
+                    onError = {
+                        updateProgramSuccess.postValue(false)
+                    }
+                )
             )
         }
     }

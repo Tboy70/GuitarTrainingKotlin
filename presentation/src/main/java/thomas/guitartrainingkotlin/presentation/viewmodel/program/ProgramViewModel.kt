@@ -15,22 +15,19 @@ class ProgramViewModel @Inject constructor(
 
     val programRetrievedLiveEvent = SingleLiveEvent<ProgramViewDataWrapper>()
 
-    override fun onCleared() {
-        super.onCleared()
-        retrieveProgramById.unsubscribe()
-    }
-
     fun getProgramById(idProgram: String) {
-        retrieveProgramById.subscribe(
-            params = RetrieveProgramById.Params.toRetrieve(idProgram),
-            onError = {
-                errorLiveEvent.postValue(it)
-            },
-            onSuccess = {
-                programRetrievedLiveEvent.postValue(
-                    ProgramViewDataWrapper(it)
-                )
-            }
+        compositeDisposable?.add(
+            retrieveProgramById.subscribe(
+                params = RetrieveProgramById.Params.toRetrieve(idProgram),
+                onError = {
+                    errorLiveEvent.postValue(it)
+                },
+                onSuccess = {
+                    programRetrievedLiveEvent.postValue(
+                        ProgramViewDataWrapper(it)
+                    )
+                }
+            )
         )
     }
 }

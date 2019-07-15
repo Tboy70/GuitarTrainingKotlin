@@ -1,13 +1,14 @@
 package thomas.guitartrainingkotlin.domain.interactor.base.parametrized
 
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import thomas.guitartrainingkotlin.domain.interactor.base.UseCase
 
 abstract class ObservableParametrizedUseCase<T, P> : UseCase() {
 
-    fun subscribe(params: P, onError: ((Throwable) -> Unit), onComplete: (() -> Unit), onNext: ((T) -> Unit)) {
-        disposable = build(params)
+    fun subscribe(params: P, onError: ((Throwable) -> Unit), onComplete: (() -> Unit), onNext: ((T) -> Unit)) : Disposable {
+        return build(params)
             .subscribeOn(Schedulers.from(threadExecutor))
             .subscribe(onNext, onError, onComplete)
     }

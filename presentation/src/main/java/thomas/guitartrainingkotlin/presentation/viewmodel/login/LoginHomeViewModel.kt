@@ -13,17 +13,12 @@ class LoginHomeViewModel @Inject constructor(
 
     override val currentViewState = LoginFragmentViewState()
 
-    val retrievedUserLiveData = MutableLiveData<Boolean>()
-    val savedUserPseudoLiveData = MutableLiveData<String>()
-    val savedUserPasswordLiveData = MutableLiveData<String>()
-
     private var userPseudo: String = ""
     private var userPassword: String = ""
 
-    override fun onCleared() {
-        super.onCleared()
-        connectUser.unsubscribe()
-    }
+    val retrievedUserLiveData = MutableLiveData<Boolean>()
+    val savedUserPseudoLiveData = MutableLiveData<String>()
+    val savedUserPasswordLiveData = MutableLiveData<String>()
 
     fun connectUser(userPseudo: String, userPassword: String) {
 
@@ -36,20 +31,22 @@ class LoginHomeViewModel @Inject constructor(
             userPassword = userPassword
         )
 
-        connectUser.subscribe(
-            params = ConnectUser.Params.forLogin(user),
-            onSuccess = {
-                retrievedUserLiveData.postValue(true)
-                viewState.update {
-                    loading = false
+        compositeDisposable?.add(
+            connectUser.subscribe(
+                params = ConnectUser.Params.forLogin(user),
+                onSuccess = {
+                    retrievedUserLiveData.postValue(true)
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
                 }
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-                viewState.update {
-                    loading = false
-                }
-            }
+            )
         )
     }
 

@@ -16,17 +16,11 @@ class UserSongUpdateViewModel @Inject constructor(
 ) : StateViewModel<UserSongUpdateViewState>() {
 
     override val currentViewState = UserSongUpdateViewState()
+
     private var idSong: String? = null
 
-    val songUpdatedLiveEvent: SingleLiveEvent<Boolean> =
-        SingleLiveEvent()
+    val songUpdatedLiveEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val songRetrievedLiveData: MutableLiveData<SongViewDataWrapper> = MutableLiveData()
-
-    override fun onCleared() {
-        super.onCleared()
-        updateSong.unsubscribe()
-        retrieveSongById.unsubscribe()
-    }
 
     fun setIdSong(idSong: String) {
         this.idSong = idSong
@@ -43,10 +37,41 @@ class UserSongUpdateViewModel @Inject constructor(
                 song.titleSong = titleSong
                 song.artistSong = artistSong
 
-                updateSong.subscribe(
-                    params = UpdateSong.Params.toUpdate(song),
-                    onComplete = {
-                        songUpdatedLiveEvent.postValue(true)
+                compositeDisposable?.add(
+                    updateSong.subscribe(
+                        params = UpdateSong.Params.toUpdate(song),
+                        onComplete = {
+                            songUpdatedLiveEvent.postValue(true)
+                            viewState.update {
+                                loading = false
+                            }
+                        },
+                        onError = {
+                            errorLiveEvent.postValue(it)
+                            viewState.update {
+                                loading = false
+                            }
+                        }
+                    )
+                )
+            }
+        }
+    }
+
+    fun getSongById() {
+        viewState.update {
+            loading = true
+        }
+        this.idSong?.let { idSong ->
+            compositeDisposable?.add(
+                retrieveSongById.subscribe(
+                    params = RetrieveSongById.Params.toRetrieve(idSong),
+                    onSuccess = {
+                        songRetrievedLiveData.postValue(
+                            SongViewDataWrapper(
+                                it
+                            )
+                        )
                         viewState.update {
                             loading = false
                         }
@@ -58,33 +83,6 @@ class UserSongUpdateViewModel @Inject constructor(
                         }
                     }
                 )
-            }
-        }
-    }
-
-    fun getSongById() {
-        viewState.update {
-            loading = true
-        }
-        this.idSong?.let { idSong ->
-            retrieveSongById.subscribe(
-                params = RetrieveSongById.Params.toRetrieve(idSong),
-                onSuccess = {
-                    songRetrievedLiveData.postValue(
-                        SongViewDataWrapper(
-                            it
-                        )
-                    )
-                    viewState.update {
-                        loading = false
-                    }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
             )
         }
     }

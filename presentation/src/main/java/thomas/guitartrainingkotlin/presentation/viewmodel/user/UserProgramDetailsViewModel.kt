@@ -21,12 +21,6 @@ class UserProgramDetailsViewModel @Inject constructor(
     val programRetrievedLiveData = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()
 
-    override fun onCleared() {
-        super.onCleared()
-        removeProgram.unsubscribe()
-        retrieveProgramById.unsubscribe()
-    }
-
     fun getIdProgram() = idProgram
 
     fun setIdProgram(idProgram: String) {
@@ -38,21 +32,23 @@ class UserProgramDetailsViewModel @Inject constructor(
             loading = true
         }
         this.idProgram?.let { idProgram ->
-            retrieveProgramById.subscribe(
-                params = RetrieveProgramById.Params.toRetrieve(idProgram),
-                onSuccess = {
-                    this.nameProgram = it.nameProgram
-                    programRetrievedLiveData.postValue(ProgramViewDataWrapper(it))
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                retrieveProgramById.subscribe(
+                    params = RetrieveProgramById.Params.toRetrieve(idProgram),
+                    onSuccess = {
+                        this.nameProgram = it.nameProgram
+                        programRetrievedLiveData.postValue(ProgramViewDataWrapper(it))
+                        viewState.update {
+                            loading = false
+                        }
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
+                )
             )
         }
     }
@@ -62,23 +58,23 @@ class UserProgramDetailsViewModel @Inject constructor(
             loading = true
         }
         idProgram?.let { idProgram ->
-            removeProgram.subscribe(
-                params = RemoveProgram.Params.toRemove(idProgram),
-                onComplete = {
-                    finishProgramDeletion.postValue(true)
-                    viewState.postValue(
-                        UserProgramDetailsViewState(loading = false)
-                    )
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
+            compositeDisposable?.add(
+                removeProgram.subscribe(
+                    params = RemoveProgram.Params.toRemove(idProgram),
+                    onComplete = {
+                        finishProgramDeletion.postValue(true)
+                        viewState.postValue(
+                            UserProgramDetailsViewState(loading = false)
+                        )
+                    },
+                    onError = {
+                        errorLiveEvent.postValue(it)
+                        viewState.update {
+                            loading = false
+                        }
                     }
-                }
+                )
             )
         }
     }
-
-    fun getNameProgram() = nameProgram
 }

@@ -11,15 +11,9 @@ class CreateAccountViewModel @Inject constructor(
     private val createNewUser: CreateNewUser
 ) : StateViewModel<CreateAccountFragmentViewState>() {
 
-    override val currentViewState =
-        CreateAccountFragmentViewState()
+    override val currentViewState = CreateAccountFragmentViewState()
 
     val userCreationLiveData = MutableLiveData<Boolean>()
-
-    override fun onCleared() {
-        super.onCleared()
-        createNewUser.unsubscribe()
-    }
 
     fun createNewUser(pseudoUser: String, emailUser: String, passwordUser: String) {
 
@@ -34,20 +28,22 @@ class CreateAccountViewModel @Inject constructor(
             userPassword = passwordUser
         )
 
-        createNewUser.subscribe(
-            params = CreateNewUser.Params.toCreate(user),
-            onComplete = {
-                userCreationLiveData.postValue(true)
-                viewState.update {
-                    loading = false
+        compositeDisposable?.add(
+            createNewUser.subscribe(
+                params = CreateNewUser.Params.toCreate(user),
+                onComplete = {
+                    userCreationLiveData.postValue(true)
+                    viewState.update {
+                        loading = false
+                    }
+                },
+                onError = {
+                    errorLiveEvent.postValue(it)
+                    viewState.update {
+                        loading = false
+                    }
                 }
-            },
-            onError = {
-                errorLiveEvent.postValue(it)
-                viewState.update {
-                    loading = false
-                }
-            }
+            )
         )
     }
 }

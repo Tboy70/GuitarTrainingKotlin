@@ -1,13 +1,12 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.base
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 
 abstract class AndroidStateViewModel<T>(
     application: Application
-) : AndroidViewModel(application) {
+) : BaseAndroidViewModel(application) {
     abstract val currentViewState: T
 
     val viewState = MutableLiveData<T>()
