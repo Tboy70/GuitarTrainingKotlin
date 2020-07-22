@@ -24,7 +24,8 @@ abstract class BaseFragment<T : ViewModel> : Fragment() {
 
     abstract val viewModelClass: KClass<T>
 
-    override fun onAttach(context: Context?) {
+
+    override fun onAttach(context: Context) {
         /** Call the AndroidSupportInjection to inject fragment. **/
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
