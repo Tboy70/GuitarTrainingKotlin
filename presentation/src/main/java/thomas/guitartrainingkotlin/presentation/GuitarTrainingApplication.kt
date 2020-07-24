@@ -34,6 +34,7 @@ class GuitarTrainingApplication : Application(), HasActivityInjector {
             .build().inject(this)
     }
 
+
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 
 }

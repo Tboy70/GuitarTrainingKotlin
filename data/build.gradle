@@ -30,15 +30,15 @@ dependencies {
 
     implementation project(':domain')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Android support
     implementation 'com.android.support:appcompat-v7:28.1.1'
 
     // Retrofit 2
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // DAGGER
     kapt 'com.google.dagger:dagger-compiler:2.22.1'
@@ -46,10 +46,10 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.22.1'
 
     // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
 
     // OkHttp
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 
     // DBFlow
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:4.2.4"
@@ -59,9 +59,9 @@ dependencies {
 
     implementation 'com.scottyab:aescrypt:0.0.1'
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
 
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

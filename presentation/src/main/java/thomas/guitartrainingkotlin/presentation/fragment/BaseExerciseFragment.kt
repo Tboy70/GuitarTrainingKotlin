@@ -42,7 +42,7 @@ abstract class BaseExerciseFragment<T : ViewModel> : Fragment() {
 
     abstract val viewModelClass: KClass<T>
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         /** Call the AndroidSupportInjection to inject fragment. **/
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
@@ -84,18 +84,21 @@ abstract class BaseExerciseFragment<T : ViewModel> : Fragment() {
                     toBeDisplayedInTimer =
                         durationExercise * DateTimeUtils.SECONDS_IN_ONE_MINUTE * DateTimeUtils.MINUTE_TO_MILLISECONDS
                 }
-                TimerDialogFragment.newInstance(
-                    activity.getString(R.string.timer_title),
-                    toBeDisplayedInTimer,
-                    object : OnTimerDialogDismiss {
-                        override fun onDismiss(timeCountInMilliseconds: Long) {
-                            durationLeft = durationComponent.setDurationLeft(
-                                textViewToUpdate,
-                                getString(R.string.generic_exercise_duration_left_text),
-                                timeCountInMilliseconds
-                            )
-                        }
-                    }).show(fragmentManager, TIMER_DIALOG_FRAGMENT_TAG)
+
+                fragmentManager?.let {
+                    TimerDialogFragment.newInstance(
+                        activity.getString(R.string.timer_title),
+                        toBeDisplayedInTimer,
+                        object : OnTimerDialogDismiss {
+                            override fun onDismiss(timeCountInMilliseconds: Long) {
+                                durationLeft = durationComponent.setDurationLeft(
+                                    textViewToUpdate,
+                                    getString(R.string.generic_exercise_duration_left_text),
+                                    timeCountInMilliseconds
+                                )
+                            }
+                        }).show(it, TIMER_DIALOG_FRAGMENT_TAG)
+                }
             }
         }
     }

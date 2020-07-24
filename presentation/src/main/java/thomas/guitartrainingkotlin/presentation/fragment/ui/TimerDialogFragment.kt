@@ -52,13 +52,13 @@ class TimerDialogFragment : DialogFragment() {
 
         text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(timeLeftToTheEndOfTimer)
 
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.setTitle(dialogTitle)
+        dialog?.setCanceledOnTouchOutside(true)
+        dialog?.setTitle(dialogTitle)
 
         initiateViews()
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         try {
             countDownTimer.cancel()
