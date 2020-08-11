@@ -4,13 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.scopes.FragmentScoped
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerFragment
 import thomas.guitartrainingkotlin.presentation.ui.viewholder.ProgramListViewHolder
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import javax.inject.Inject
 
-@PerFragment
+@FragmentScoped
 class UserProgramsListAdapter @Inject constructor(
     private val context: Context
 ) : RecyclerView.Adapter<ProgramListViewHolder>() {

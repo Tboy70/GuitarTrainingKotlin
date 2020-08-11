@@ -3,16 +3,17 @@ package thomas.guitartrainingkotlin.presentation.component
 import android.os.Build
 import android.text.Html
 import android.widget.TextView
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
+import dagger.hilt.android.scopes.ActivityScoped
+import thomas.guitartrainingkotlin.presentation.component.listener.DurationComponent
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
 import java.util.*
 import javax.inject.Inject
 
-@PerActivity
-class DurationComponent @Inject constructor() {
+@ActivityScoped
+class DurationComponentImpl @Inject constructor() : DurationComponent {
 
     @Suppress("DEPRECATION")
-    fun setDuration(
+    override fun setDuration(
         durationExercise: Int, durationLeft: Long, exerciseDuration: TextView,
         durationText: String?, exerciseDurationLeft: TextView, durationTextLeft: String?
     ): Long {
@@ -81,7 +82,7 @@ class DurationComponent @Inject constructor() {
     }
 
     @Suppress("DEPRECATION")
-    fun setDurationLeft(
+    override fun setDurationLeft(
         exerciseScaleDurationLeft: TextView,
         durationTextLeft: String,
         timeCountInMilliSeconds: Long

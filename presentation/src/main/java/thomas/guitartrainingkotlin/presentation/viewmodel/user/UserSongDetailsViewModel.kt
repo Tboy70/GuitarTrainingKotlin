@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import android.util.LongSparseArray
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.song.RemoveSong
 import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
@@ -18,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class UserSongDetailsViewModel @Inject constructor(
+class UserSongDetailsViewModel @ViewModelInject constructor(
     private val removeSong: RemoveSong,
     private val retrieveSongById: RetrieveSongById,
     private val sendScoreFeedback: SendScoreFeedback,

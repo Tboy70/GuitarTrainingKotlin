@@ -3,8 +3,11 @@ package thomas.guitartrainingkotlin.presentation.fragment.song
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity
@@ -12,23 +15,22 @@ import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserSongActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.ui.adapter.UserSongsListAdapter
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongsListViewModel
 import javax.inject.Inject
 
-class UserSongsListFragment : BaseFragment<UserSongsListViewModel>() {
-
-    override val viewModelClass = UserSongsListViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_songs_list
+@AndroidEntryPoint
+class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var userSongsListAdapter: UserSongsListAdapter
+
+    private val viewModel by viewModels<UserSongsListViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

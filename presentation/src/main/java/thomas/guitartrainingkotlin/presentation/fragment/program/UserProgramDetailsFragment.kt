@@ -13,7 +13,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
@@ -21,7 +24,6 @@ import thomas.guitartrainingkotlin.presentation.activity.ProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
@@ -29,10 +31,8 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewData
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramDetailsViewModel
 import javax.inject.Inject
 
-class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
-
-    override val viewModelClass = UserProgramDetailsViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_program_details
+@AndroidEntryPoint
+class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_details) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -41,6 +41,8 @@ class UserProgramDetailsFragment : BaseFragment<UserProgramDetailsViewModel>() {
     lateinit var dialogComponent: DialogComponentImpl
 
     private var navHost: View? = null
+
+    private val viewModel by viewModels<UserProgramDetailsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

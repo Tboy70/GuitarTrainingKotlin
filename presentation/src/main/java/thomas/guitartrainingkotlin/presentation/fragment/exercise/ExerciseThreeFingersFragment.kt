@@ -3,7 +3,8 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_three_fingers.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
@@ -14,21 +15,21 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseThreeFingersViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
-class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersViewModel>() {
+@AndroidEntryPoint
+class ExerciseThreeFingersFragment : BaseExerciseFragment() {
 
-    override val viewModelClass = ExerciseThreeFingersViewModel::class
     override fun getLayoutId(): Int = R.layout.fragment_exercise_three_fingers
 
     private var navHost: View? = null
 
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val exerciseThreeFingersViewModel by viewModels<ExerciseThreeFingersViewModel>()
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
-            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
@@ -52,13 +53,19 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment<ExerciseThreeFingersVi
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_exercise_three_fingers_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_exercise_three_fingers_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
         fragment_exercise_three_fingers_toolbar.title = nameProgram
     }
 
     private fun initiateView() {
 
-        setDurationUI(fragment_exercise_three_fingers_duration, fragment_exercise_three_fingers_duration_left)
+        setDurationUI(
+            fragment_exercise_three_fingers_duration,
+            fragment_exercise_three_fingers_duration_left
+        )
 
         view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_three_fingers_duration_left)

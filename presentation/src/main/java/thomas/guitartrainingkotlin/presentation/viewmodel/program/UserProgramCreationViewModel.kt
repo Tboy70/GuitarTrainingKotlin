@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.util.SparseArray
 import androidx.core.util.forEach
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.program.CreateProgram
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
@@ -14,7 +15,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEve
 import java.util.*
 import javax.inject.Inject
 
-class UserProgramCreationViewModel @Inject constructor(
+class UserProgramCreationViewModel @ViewModelInject constructor(
     private val createProgram: CreateProgram,
     private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
 ) : StateViewModel<UserProgramCreationViewState>() {

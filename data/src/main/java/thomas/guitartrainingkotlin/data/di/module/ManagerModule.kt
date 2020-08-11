@@ -2,6 +2,8 @@ package thomas.guitartrainingkotlin.data.di.module
 
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import thomas.guitartrainingkotlin.data.manager.api.ApiManager
 import thomas.guitartrainingkotlin.data.manager.api.ApiManagerImpl
 import thomas.guitartrainingkotlin.data.manager.db.DBManager
@@ -11,6 +13,7 @@ import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerIm
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 abstract class ManagerModule {
 
     @Binds

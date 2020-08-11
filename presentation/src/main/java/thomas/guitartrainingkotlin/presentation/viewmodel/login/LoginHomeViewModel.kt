@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.user.ConnectUser
 import thomas.guitartrainingkotlin.domain.model.User
@@ -7,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.view.state.user.LoginFragmentVie
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
-class LoginHomeViewModel @Inject constructor(
+class LoginHomeViewModel @ViewModelInject constructor(
     private val connectUser: ConnectUser
 ) : StateViewModel<LoginFragmentViewState>() {
 

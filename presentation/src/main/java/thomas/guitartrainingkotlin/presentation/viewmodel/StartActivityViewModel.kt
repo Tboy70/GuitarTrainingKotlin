@@ -1,11 +1,12 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.BaseViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class StartActivityViewModel @Inject constructor(
+class StartActivityViewModel @ViewModelInject constructor(
     private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs
 ) : BaseViewModel() {
 

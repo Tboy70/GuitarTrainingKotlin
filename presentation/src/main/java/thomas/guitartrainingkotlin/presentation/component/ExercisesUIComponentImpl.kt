@@ -2,13 +2,13 @@ package thomas.guitartrainingkotlin.presentation.component
 
 import android.widget.Button
 import android.widget.LinearLayout
+import dagger.hilt.android.scopes.ActivityScoped
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
 import javax.inject.Inject
 
-@PerActivity
+@ActivityScoped
 class ExercisesUIComponentImpl @Inject constructor(val baseActivity: BaseActivity) : ExercisesUIComponent {
 
     private lateinit var rootLayout: LinearLayout

@@ -3,8 +3,11 @@ package thomas.guitartrainingkotlin.presentation.fragment.program
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.ProgramCreationActivity
@@ -12,23 +15,22 @@ import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.ui.adapter.UserProgramsListAdapter
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramsListViewModel
 import javax.inject.Inject
 
-class UserProgramsListFragment : BaseFragment<UserProgramsListViewModel>() {
-
-    override val viewModelClass = UserProgramsListViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_programs_list
+@AndroidEntryPoint
+class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) {
 
     @Inject
     lateinit var userProgramsListAdapter: UserProgramsListAdapter
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
+
+    private val viewModel by viewModels<UserProgramsListViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

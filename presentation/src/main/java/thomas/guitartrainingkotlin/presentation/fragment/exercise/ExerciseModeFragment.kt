@@ -3,7 +3,8 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_mode.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
@@ -15,16 +16,17 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseModeViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
-class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
+@AndroidEntryPoint
+class ExerciseModeFragment : BaseExerciseFragment() {
 
-    override val viewModelClass = ExerciseModeViewModel::class
     override fun getLayoutId(): Int = R.layout.fragment_exercise_mode
 
     private var items: Int = 0
     private var navHost: View? = null
     private var mSelectedItem: String? = null
 
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val exerciseModeViewModel by viewModels<ExerciseModeViewModel>()
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     companion object {
         const val NB_MODES = 7
@@ -35,7 +37,6 @@ class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
-            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
@@ -72,7 +73,7 @@ class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
             showSimpleChoiceDialog()
         }
         fragment_exercise_mode_random_selection.setOnClickListener {
-            viewModel.getRandomValue()
+            exerciseModeViewModel.getRandomValue()
         }
         view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_mode_duration_left)
@@ -83,7 +84,7 @@ class ExerciseModeFragment : BaseExerciseFragment<ExerciseModeViewModel>() {
     }
 
     private fun initiateViewModelObservers() {
-        viewModel.finishRandomLiveEvent.observeSafe(this) { modeValue ->
+        exerciseModeViewModel.finishRandomLiveEvent.observeSafe(this) { modeValue ->
             val modesArray = this.resources.getStringArray(R.array.list_modes)
             mSelectedItem = modesArray[modeValue]
             displaySelectedChoice(mSelectedItem)

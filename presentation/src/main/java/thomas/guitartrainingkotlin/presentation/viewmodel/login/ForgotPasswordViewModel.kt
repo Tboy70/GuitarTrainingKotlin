@@ -1,12 +1,13 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrievePassword
 import thomas.guitartrainingkotlin.presentation.view.state.user.ForgotPasswordFragmentViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class ForgotPasswordViewModel @Inject constructor(
+class ForgotPasswordViewModel @ViewModelInject constructor(
     private val retrievePassword: RetrievePassword
 ) : StateViewModel<ForgotPasswordFragmentViewState>() {
 

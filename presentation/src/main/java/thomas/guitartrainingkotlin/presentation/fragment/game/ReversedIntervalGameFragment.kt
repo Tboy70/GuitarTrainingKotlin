@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_reversed_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ReversedIntervalGameViewModel
 import javax.inject.Inject
 
-class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>() {
-
-    override val viewModelClass = ReversedIntervalGameViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_reversed_interval_game
+@AndroidEntryPoint
+class ReversedIntervalGameFragment : Fragment(R.layout.fragment_reversed_interval_game) {
 
     @Inject
     lateinit var dialogComponent: DialogComponent
@@ -27,6 +27,8 @@ class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>
     lateinit var snackbarComponent: SnackbarComponent
 
     private var givenInterval: String = ""
+
+    private val viewModel by viewModels<ReversedIntervalGameViewModel>()
 
     private val textChangedListener: TextWatcher = textChangedListener {
         updateConfirmButtonState()
@@ -51,7 +53,10 @@ class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_reversed_interval_game_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_reversed_interval_game_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateViews() {
@@ -106,6 +111,7 @@ class ReversedIntervalGameFragment : BaseFragment<ReversedIntervalGameViewModel>
     }
 
     private fun updateConfirmButtonState() {
-        fragment_reversed_interval_game_validate.isEnabled = fragment_reversed_interval_game_answer.isNotEmpty()
+        fragment_reversed_interval_game_validate.isEnabled =
+            fragment_reversed_interval_game_answer.isNotEmpty()
     }
 }

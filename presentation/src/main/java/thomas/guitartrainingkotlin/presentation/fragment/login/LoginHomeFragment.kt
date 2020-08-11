@@ -4,25 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login_home.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.GameActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.KeyboardUtils
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
 import javax.inject.Inject
 
-class LoginHomeFragment : BaseFragment<LoginHomeViewModel>() {
-
-    override val viewModelClass = LoginHomeViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_login_home
+@AndroidEntryPoint
+class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
+
+    private val viewModel by viewModels<LoginHomeViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -5,14 +5,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import dagger.hilt.android.scopes.ActivityScoped
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import javax.inject.Inject
 
-@PerActivity
+@ActivityScoped
 class DialogComponentImpl @Inject constructor(
     private val baseActivity: BaseActivity
 ) : DialogComponent {

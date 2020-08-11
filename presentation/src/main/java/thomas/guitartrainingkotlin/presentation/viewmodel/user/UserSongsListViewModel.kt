@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveSongListByUserId
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
@@ -7,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongListView
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
-class UserSongsListViewModel @Inject constructor(
+class UserSongsListViewModel @ViewModelInject constructor(
     private val retrieveSongListByUserId: RetrieveSongListByUserId
 ) : StateViewModel<UserSongListViewState>() {
 

@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
@@ -15,16 +18,13 @@ import thomas.guitartrainingkotlin.presentation.component.listener.DialogCompone
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ExercisesUIComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
 import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramCreationViewModel
 import javax.inject.Inject
 
-class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>() {
-
-    override val viewModelClass = UserProgramCreationViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_program_creation
+@AndroidEntryPoint
+class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_creation) {
 
     @Inject
     lateinit var exercisesUIComponent: ExercisesUIComponent
@@ -36,6 +36,8 @@ class UserProgramCreationFragment : BaseFragment<UserProgramCreationViewModel>()
     lateinit var dialogComponent: DialogComponent
 
     private var exercisesArray: Int = 0
+
+    private val viewModel by viewModels<UserProgramCreationViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

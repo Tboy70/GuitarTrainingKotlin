@@ -3,7 +3,9 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_back_forth.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
@@ -14,20 +16,20 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseBackForthViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
-class ExerciseBackForthFragment : BaseExerciseFragment<ExerciseBackForthViewModel>() {
+@AndroidEntryPoint
+class ExerciseBackForthFragment : BaseExerciseFragment() {
 
-    override val viewModelClass = ExerciseBackForthViewModel::class
     override fun getLayoutId(): Int = R.layout.fragment_exercise_back_forth
 
     private var navHost: View? = null
 
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val exerciseBackForthViewModel by viewModels<ExerciseBackForthViewModel>()
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
-            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
         }
 

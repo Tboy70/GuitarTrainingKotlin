@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.user.CreateNewUser
 import thomas.guitartrainingkotlin.domain.model.User
@@ -7,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.view.state.user.CreateAccountFra
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
-class CreateAccountViewModel @Inject constructor(
+class CreateAccountViewModel @ViewModelInject constructor(
     private val createNewUser: CreateNewUser
 ) : StateViewModel<CreateAccountFragmentViewState>() {
 

@@ -3,13 +3,14 @@ package thomas.guitartrainingkotlin.presentation.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
@@ -22,14 +23,12 @@ import thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramsLis
 import thomas.guitartrainingkotlin.presentation.fragment.song.UserSongsListFragment
 import thomas.guitartrainingkotlin.presentation.fragment.user.UserSettingsFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.factory.ViewModelFactory
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class UserPanelActivity : BaseActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
     @Inject
@@ -37,13 +36,11 @@ class UserPanelActivity : BaseActivity() {
 
     private var drawerToggle: ActionBarDrawerToggle? = null
 
-    private lateinit var viewModel: UserPanelViewModel
+    private val viewModel by viewModels<UserPanelViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(UserPanelViewModel::class.java)
 
         initiateToolbar()
         initiateDrawerMenu()

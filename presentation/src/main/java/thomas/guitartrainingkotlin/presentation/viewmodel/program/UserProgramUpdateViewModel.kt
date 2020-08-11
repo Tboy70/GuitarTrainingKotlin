@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
 import thomas.guitartrainingkotlin.domain.interactor.program.UpdateProgram
@@ -12,7 +13,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class UserProgramUpdateViewModel @Inject constructor(
+class UserProgramUpdateViewModel @ViewModelInject constructor(
     private val updateProgram: UpdateProgram,
     private val retrieveProgramById: RetrieveProgramById,
     private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs

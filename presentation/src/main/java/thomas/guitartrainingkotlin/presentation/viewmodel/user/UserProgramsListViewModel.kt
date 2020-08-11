@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveProgramsListByUserId
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
@@ -7,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramLi
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import javax.inject.Inject
 
-class UserProgramsListViewModel @Inject constructor(
+class UserProgramsListViewModel @ViewModelInject constructor(
     private val retrieveProgramsListByUserId: RetrieveProgramsListByUserId
 ) : StateViewModel<UserProgramListViewState>() {
 

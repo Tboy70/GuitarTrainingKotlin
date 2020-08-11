@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.song
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
 import thomas.guitartrainingkotlin.domain.interactor.song.UpdateSong
@@ -10,7 +11,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class UserSongUpdateViewModel @Inject constructor(
+class UserSongUpdateViewModel @ViewModelInject constructor(
     private val updateSong: UpdateSong,
     private val retrieveSongById: RetrieveSongById
 ) : StateViewModel<UserSongUpdateViewState>() {

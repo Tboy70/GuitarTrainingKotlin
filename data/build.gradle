@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -33,17 +33,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Android support
-    implementation 'com.android.support:appcompat-v7:28.1.1'
+    implementation 'com.android.support:appcompat-v7:29.1.1'
 
     // Retrofit 2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    // DAGGER
-    kapt 'com.google.dagger:dagger-compiler:2.22.1'
-    implementation 'com.google.dagger:dagger:2.22.1'
-    implementation 'com.google.dagger:dagger-android-support:2.22.1'
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'

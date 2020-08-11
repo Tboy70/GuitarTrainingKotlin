@@ -2,8 +2,10 @@ package thomas.guitartrainingkotlin.presentation.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
@@ -11,35 +13,30 @@ import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ExerciseViewDataWrapper
-import thomas.guitartrainingkotlin.presentation.viewmodel.factory.ViewModelFactory
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.ProgramViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProgramActivity : BaseActivity() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
+
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     private var rankExercise = 0
     private var navHost: View? = null
     private var programStarted = false
     private var exercisesOfProgram: List<ExerciseViewDataWrapper> = ArrayList()
 
-    private lateinit var programViewModel: ProgramViewModel
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val programViewModel by viewModels<ProgramViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_program)
 
         navHost = findViewById(R.id.program_nav_host_fragment)
-        sharedViewModel = ViewModelProviders.of(this, viewModelFactory).get(ProgramSharedViewModel::class.java)
-
-        programViewModel = ViewModelProviders.of(this, viewModelFactory).get(ProgramViewModel::class.java)
 
         intent.extras?.let { bundle ->
             if (bundle.containsKey(ConstValues.ID_PROGRAM)) {

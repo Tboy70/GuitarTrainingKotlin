@@ -6,27 +6,29 @@ import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_account.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.CreateAccountViewModel
 import javax.inject.Inject
 
-class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
-
-    override val viewModelClass = CreateAccountViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_create_account
+@AndroidEntryPoint
+class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
+
+    private val viewModel by viewModels<CreateAccountViewModel>()
 
     private val textChangedListener: TextWatcher = textChangedListener {
         updateConfirmButtonState()
@@ -100,7 +102,8 @@ class CreateAccountFragment : BaseFragment<CreateAccountViewModel>() {
         fragment_create_account_validate.isEnabled =
             fragment_create_account_pseudo.getInput().isNotEmpty() &&
                     fragment_create_account_email.getInput().isNotEmpty() &&
-                    Patterns.EMAIL_ADDRESS.matcher(fragment_create_account_email.getInput()).matches() &&
+                    Patterns.EMAIL_ADDRESS.matcher(fragment_create_account_email.getInput())
+                        .matches() &&
                     fragment_create_account_password.getInput().isNotEmpty()
     }
 }

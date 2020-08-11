@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.app.Application
 import android.preference.PreferenceManager
+import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
@@ -12,7 +13,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewM
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class UserPanelViewModel @Inject constructor(
+class UserPanelViewModel @ViewModelInject constructor(
     application: Application,
     /** On n'injecte pas de context directement,on préfère injecter l'objet Application. **/
     private val logoutUser: LogoutUser,

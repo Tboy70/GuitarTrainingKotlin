@@ -3,7 +3,9 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
@@ -12,19 +14,21 @@ import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
+import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExercisePullOffHammerOnViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScaleViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
-class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
+@AndroidEntryPoint
+class ExerciseScaleFragment : BaseExerciseFragment() {
 
-    override val viewModelClass = ExerciseScaleViewModel::class
     override fun getLayoutId(): Int = R.layout.fragment_exercise_scale
 
     private var items: Int = 0
     private var navHost: View? = null
     private var mSelectedItem: String? = null
 
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val exerciseScaleViewModel by viewModels<ExerciseScaleViewModel>()
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     companion object {
         const val NOTE_SELECTION = 1
@@ -36,7 +40,6 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
-            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
@@ -76,7 +79,7 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
             showSimpleChoiceDialog(SCALE_SELECTION)
         }
         fragment_exercise_scale_random_selection.setOnClickListener {
-            viewModel.getRandomValue()
+            exerciseScaleViewModel.getRandomValue()
         }
         view_action_exercise_start.setOnClickListener {
             launchTimer(fragment_exercise_scale_duration_left)
@@ -87,7 +90,7 @@ class ExerciseScaleFragment : BaseExerciseFragment<ExerciseScaleViewModel>() {
     }
 
     private fun initiateViewModelObservers() {
-        viewModel.finishRandomLiveEvent.observeSafe(this) { noteTonePair ->
+        exerciseScaleViewModel.finishRandomLiveEvent.observeSafe(this) { noteTonePair ->
             val notesArray = this.resources.getStringArray(R.array.list_notes)
             mSelectedItem = notesArray[noteTonePair.first]
             displaySelectedChoice(

@@ -6,7 +6,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
@@ -19,7 +22,6 @@ import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.getInput
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.ExerciseUtils
 import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
@@ -27,10 +29,8 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewData
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpdateViewModel
 import javax.inject.Inject
 
-class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
-
-    override val viewModelClass = UserProgramUpdateViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_program_update
+@AndroidEntryPoint
+class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update) {
 
     @Inject
     lateinit var exercisesUIComponent: ExercisesUIComponent
@@ -43,6 +43,7 @@ class UserProgramUpdateFragment : BaseFragment<UserProgramUpdateViewModel>() {
 
     private var exercisesArray: Int? = null
 
+    private val viewModel by viewModels<UserProgramUpdateViewModel>()
     private var programViewDataWrapper: ProgramViewDataWrapper? = null
 
     private var exercisesToBeRemoved: MutableList<Exercise> = ArrayList()

@@ -3,6 +3,9 @@ package thomas.guitartrainingkotlin.presentation.fragment.user
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_settings.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
@@ -13,21 +16,20 @@ import thomas.guitartrainingkotlin.presentation.extension.hide
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setCustomChecked
 import thomas.guitartrainingkotlin.presentation.extension.show
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSettingsViewModel
 import javax.inject.Inject
 
-class UserSettingsFragment : BaseFragment<UserSettingsViewModel>() {
-
-    override val viewModelClass = UserSettingsViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_settings
+@AndroidEntryPoint
+class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     @Inject
     lateinit var dialogComponent: DialogComponentImpl
+
+    private val viewModel by viewModels<UserSettingsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

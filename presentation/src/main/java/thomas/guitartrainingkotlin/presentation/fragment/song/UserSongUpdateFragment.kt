@@ -3,22 +3,22 @@ package thomas.guitartrainingkotlin.presentation.fragment.song
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
 
-class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
-
-    override val viewModelClass = UserSongUpdateViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_song_update
+@AndroidEntryPoint
+class UserSongUpdateFragment : Fragment(R.layout.fragment_user_song_update) {
 
     @Inject
     lateinit var dialogComponent: DialogComponentImpl
@@ -27,6 +27,8 @@ class UserSongUpdateFragment : BaseFragment<UserSongUpdateViewModel>() {
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
 
     private var navHost: View? = null
+
+    private val viewModel by viewModels<UserSongUpdateViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

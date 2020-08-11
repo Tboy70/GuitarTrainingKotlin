@@ -1,12 +1,13 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.exercise
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import thomas.guitartrainingkotlin.presentation.fragment.exercise.ExerciseModeFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
 import javax.inject.Inject
 
-class ExerciseModeViewModel @Inject constructor() : ViewModel() {
+class ExerciseModeViewModel @ViewModelInject constructor() : ViewModel() {
 
     val finishRandomLiveEvent: SingleLiveEvent<Int> = SingleLiveEvent()
 

@@ -3,18 +3,16 @@ package thomas.guitartrainingkotlin.presentation.fragment.game
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_game_list.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
-import thomas.guitartrainingkotlin.presentation.viewmodel.game.GameListViewModel
 
-class GameListFragment : BaseFragment<GameListViewModel>() {
-
-    override val viewModelClass = GameListViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_game_list
+@AndroidEntryPoint
+class GameListFragment : Fragment(R.layout.fragment_game_list) {
 
     private var navHost: View? = null
 
@@ -47,19 +45,22 @@ class GameListFragment : BaseFragment<GameListViewModel>() {
     private fun initiateViews() {
         button_game_interval.setOnClickListener {
             navHost?.let { view ->
-                Navigation.findNavController(view).navigate(R.id.action_game_list_to_interval_game, null, null)
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_game_list_to_interval_game, null, null)
             }
         }
 
         button_game_scale.setOnClickListener {
             navHost?.let { view ->
-                Navigation.findNavController(view).navigate(R.id.action_game_list_to_scale_game, null, null)
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_game_list_to_scale_game, null, null)
             }
         }
 
         button_game_reversed_interval.setOnClickListener {
             navHost?.let { view ->
-                Navigation.findNavController(view).navigate(R.id.action_game_list_to_reversed_interval_game, null, null)
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_game_list_to_reversed_interval_game, null, null)
             }
         }
     }

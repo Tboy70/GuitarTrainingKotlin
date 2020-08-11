@@ -3,7 +3,8 @@ package thomas.guitartrainingkotlin.presentation.fragment.exercise
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_tapping.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
 import thomas.guitartrainingkotlin.R
@@ -14,21 +15,21 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseTappingViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
-class ExerciseTappingFragment : BaseExerciseFragment<ExerciseTappingViewModel>() {
+@AndroidEntryPoint
+class ExerciseTappingFragment : BaseExerciseFragment() {
 
-    override val viewModelClass = ExerciseTappingViewModel::class
     override fun getLayoutId(): Int = R.layout.fragment_exercise_tapping
 
     private var navHost: View? = null
 
-    private lateinit var sharedViewModel: ProgramSharedViewModel
+    private val exerciseTappingViewModel by viewModels<ExerciseTappingViewModel>()
+    private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.let {
             navHost = it.findViewById(R.id.program_nav_host_fragment) as View
-            sharedViewModel = ViewModelProviders.of(it, viewModelFactory).get(ProgramSharedViewModel::class.java)
         }
 
         nameProgram = arguments?.getString(NAME_PROGRAM) ?: ""
@@ -52,7 +53,10 @@ class ExerciseTappingFragment : BaseExerciseFragment<ExerciseTappingViewModel>()
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_exercise_tapping_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_exercise_tapping_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
         fragment_exercise_tapping_toolbar.title = nameProgram
     }
 

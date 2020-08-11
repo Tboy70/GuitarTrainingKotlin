@@ -2,15 +2,13 @@ package thomas.guitartrainingkotlin.presentation.fragment.other
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
-import thomas.guitartrainingkotlin.presentation.viewmodel.other.LegalNoticesViewModel
 
-class LegalNoticesFragment : BaseFragment<LegalNoticesViewModel>() {
-
-    override val viewModelClass = LegalNoticesViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_legal_notices
+@AndroidEntryPoint
+class LegalNoticesFragment : Fragment(R.layout.fragment_legal_notices) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

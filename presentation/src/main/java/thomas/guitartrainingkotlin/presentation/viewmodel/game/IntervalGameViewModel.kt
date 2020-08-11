@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.game
 
 import android.app.Application
+import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import thomas.guitartrainingkotlin.presentation.view.state.game.IntervalGameViewState
@@ -9,7 +10,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEve
 import java.util.*
 import javax.inject.Inject
 
-class IntervalGameViewModel @Inject constructor(
+class IntervalGameViewModel @ViewModelInject constructor(
     application: Application
 ) : AndroidStateViewModel<IntervalGameViewState>(application) {
 

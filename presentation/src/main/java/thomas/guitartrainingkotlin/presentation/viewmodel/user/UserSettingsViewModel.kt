@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.SetInstrumentModeInSharedPrefs
@@ -9,7 +10,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class UserSettingsViewModel @Inject constructor(
+class UserSettingsViewModel @ViewModelInject constructor(
     private val suppressAccount: SuppressAccount,
     private val setInstrumentModeInSharedPrefs: SetInstrumentModeInSharedPrefs,
     private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs

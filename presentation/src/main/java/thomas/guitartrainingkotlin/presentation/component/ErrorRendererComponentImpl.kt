@@ -4,13 +4,13 @@ import android.graphics.Color
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.scopes.ActivityScoped
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
-import thomas.guitartrainingkotlin.presentation.di.annotation.PerActivity
 import thomas.guitartrainingkotlin.presentation.utils.ErrorUtils
 import javax.inject.Inject
 
-@PerActivity
+@ActivityScoped
 class ErrorRendererComponentImpl @Inject constructor(
     private val baseActivity: BaseActivity
 ) : ErrorRendererComponent {

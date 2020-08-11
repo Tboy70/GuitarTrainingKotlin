@@ -3,25 +3,27 @@ package thomas.guitartrainingkotlin.presentation.fragment.song
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_song_creation.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongCreationViewModel
 import javax.inject.Inject
 
-class UserSongCreationFragment : BaseFragment<UserSongCreationViewModel>() {
-
-    override val viewModelClass = UserSongCreationViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_song_creation
+@AndroidEntryPoint
+class UserSongCreationFragment : Fragment(R.layout.fragment_user_song_creation) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
 
     @Inject
     lateinit var dialogComponent: DialogComponent
+
+    private val viewModel by viewModels<UserSongCreationViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

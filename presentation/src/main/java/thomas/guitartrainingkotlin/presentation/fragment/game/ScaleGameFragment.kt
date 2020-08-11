@@ -7,29 +7,31 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_scale_game.*
 import kotlinx.android.synthetic.main.view_scale_degrees.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewModel
 import javax.inject.Inject
 
-class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
-
-    override val viewModelClass = ScaleGameViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_scale_game
+@AndroidEntryPoint
+class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
 
     @Inject
     lateinit var dialogComponent: DialogComponent
 
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
+
+    private val viewModel by viewModels<ScaleGameViewModel>()
 
     private val textChangedListener: TextWatcher = textChangedListener {
         updateConfirmButtonState()
@@ -203,13 +205,26 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
                 eight_degree_layout.show()
             } else {
                 eight_degree_layout.hide()
-                if (givenScale == context.getString(R.string.tone_pentatonic_minor) || givenScale == context.getString(R.string.tone_pentatonic_major)) {
+                if (givenScale == context.getString(R.string.tone_pentatonic_minor) || givenScale == context.getString(
+                        R.string.tone_pentatonic_major
+                    )
+                ) {
                     seventh_degree_layout.hide()
                 } else if (givenScale == context.getString(R.string.tone_blues_minor)) {
-                    fourth_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.holo_blue_dark))
+                    fourth_degree_label.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            android.R.color.holo_blue_dark
+                        )
+                    )
                     seventh_degree_layout.show()
                 } else if (givenScale == context.getString(R.string.tone_blues_major)) {
-                    third_degree_label.setTextColor(ContextCompat.getColor(context, android.R.color.holo_blue_dark))
+                    third_degree_label.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            android.R.color.holo_blue_dark
+                        )
+                    )
                     seventh_degree_layout.show()
                 }
             }
@@ -414,9 +429,10 @@ class ScaleGameFragment : BaseFragment<ScaleGameViewModel>() {
     }
 
     private fun fieldsAreNotBlank(): Boolean {
-        val mandatoryDegree = first_degree_answer.isNotEmpty() && second_degree_answer.isNotEmpty() &&
-                third_degree_answer.isNotEmpty() && fourth_degree_answer.isNotEmpty() &&
-                fifth_degree_answer.isNotEmpty() && sixth_degree_answer.isNotEmpty()
+        val mandatoryDegree =
+            first_degree_answer.isNotEmpty() && second_degree_answer.isNotEmpty() &&
+                    third_degree_answer.isNotEmpty() && fourth_degree_answer.isNotEmpty() &&
+                    fifth_degree_answer.isNotEmpty() && sixth_degree_answer.isNotEmpty()
 
         var optionalDegree = true
         if (seventh_degree_layout.visibility == View.VISIBLE && eight_degree_layout.visibility == View.VISIBLE) {

@@ -1,5 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
+import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.view.state.program.ProgramActivityViewState
@@ -7,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import javax.inject.Inject
 
-class ProgramViewModel @Inject constructor(
+class ProgramViewModel @ViewModelInject constructor(
     private val retrieveProgramById: RetrieveProgramById
 ) : StateViewModel<ProgramActivityViewState>() {
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.timer_dialog_layout.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.utils.ConstantTags
@@ -19,6 +20,7 @@ private const val DIALOG_FRAGMENT_TITLE =
 private const val DIALOG_FRAGMENT_DURATION_EXERCISE =
     "thomas.example.com.guitarTrainingKotlin.fragment.ui.TimerDialogFragment.DIALOG_FRAGMENT_DURATION_EXERCISE"
 
+@AndroidEntryPoint
 class TimerDialogFragment : DialogFragment() {
 
     enum class TimerStatus {

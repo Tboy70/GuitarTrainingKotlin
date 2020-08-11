@@ -5,17 +5,19 @@ import android.util.LongSparseArray
 import android.view.MenuItem
 import android.view.View
 import androidx.core.util.isNotEmpty
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation.findNavController
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_song_details.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.ui.chart.ChartMarkerView
 import thomas.guitartrainingkotlin.presentation.ui.chart.HourAxisValueFormatter
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
@@ -23,10 +25,8 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWra
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongDetailsViewModel
 import javax.inject.Inject
 
-class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
-
-    override val viewModelClass = UserSongDetailsViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_user_song_details
+@AndroidEntryPoint
+class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponentImpl
@@ -35,6 +35,8 @@ class UserSongDetailsFragment : BaseFragment<UserSongDetailsViewModel>() {
     lateinit var dialogComponent: DialogComponentImpl
 
     private var navHost: View? = null
+
+    private val viewModel by viewModels<UserSongDetailsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

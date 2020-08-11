@@ -4,28 +4,30 @@ import android.os.Bundle
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.fragment.BaseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
 import javax.inject.Inject
 
-class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
-
-    override val viewModelClass = IntervalGameViewModel::class
-    override fun getLayoutId(): Int = R.layout.fragment_interval_game
+@AndroidEntryPoint
+class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
 
     @Inject
     lateinit var dialogComponent: DialogComponent
 
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
+
+    private val viewModel by viewModels<IntervalGameViewModel>()
 
     private var gameMode: Int = 0
     private var givenNote: String = ""
@@ -71,7 +73,12 @@ class IntervalGameFragment : BaseFragment<IntervalGameViewModel>() {
         }
 
         fragment_interval_game_validate.setOnClickListener {
-            viewModel.checkAnswer(givenNote, givenInterval, gameMode, fragment_interval_game_answer.getInput())
+            viewModel.checkAnswer(
+                givenNote,
+                givenInterval,
+                gameMode,
+                fragment_interval_game_answer.getInput()
+            )
         }
     }
 
