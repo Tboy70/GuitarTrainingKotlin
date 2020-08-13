@@ -2,6 +2,12 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.song
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.song.RetrieveSongById
 import thomas.guitartrainingkotlin.domain.interactor.song.UpdateSong
 import thomas.guitartrainingkotlin.domain.model.Song
@@ -9,8 +15,8 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWra
 import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongUpdateViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class UserSongUpdateViewModel @ViewModelInject constructor(
     private val updateSong: UpdateSong,
     private val retrieveSongById: RetrieveSongById
@@ -29,62 +35,48 @@ class UserSongUpdateViewModel @ViewModelInject constructor(
 
     fun checkInformationAndValidateUpdate(titleSong: String, artistSong: String) {
         if (checkInformation(titleSong, artistSong)) {
-            viewState.update {
-                loading = true
-            }
+
             idSong?.let { idSong ->
                 val song = Song()
                 song.idSong = idSong
                 song.titleSong = titleSong
                 song.artistSong = artistSong
 
-                compositeDisposable?.add(
-                    updateSong.subscribe(
-                        params = UpdateSong.Params.toUpdate(song),
-                        onComplete = {
-                            songUpdatedLiveEvent.postValue(true)
-                            viewState.update {
-                                loading = false
+                viewModelScope.launch {
+                    try {
+                        updateSong.updateSong(song)
+                            .onStart { viewState.update { loading = true } }
+                            .onCompletion { viewState.update { loading = false } }
+                            .collect {
+                                songUpdatedLiveEvent.postValue(true)
                             }
-                        },
-                        onError = {
-                            errorLiveEvent.postValue(it)
-                            viewState.update {
-                                loading = false
-                            }
-                        }
-                    )
-                )
+                    } catch (e: Exception) {
+                        errorLiveEvent.postValue(e)
+                    }
+                }
             }
         }
     }
 
     fun getSongById() {
-        viewState.update {
-            loading = true
-        }
-        this.idSong?.let { idSong ->
-            compositeDisposable?.add(
-                retrieveSongById.subscribe(
-                    params = RetrieveSongById.Params.toRetrieve(idSong),
-                    onSuccess = {
-                        songRetrievedLiveData.postValue(
-                            SongViewDataWrapper(
-                                it
+
+        idSong?.let {
+            viewModelScope.launch {
+                try {
+                    retrieveSongById.retrieveSongById(it)
+                        .onStart { viewState.update { loading = true } }
+                        .onCompletion { viewState.update { loading = false } }
+                        .collect {
+                            songRetrievedLiveData.postValue(
+                                SongViewDataWrapper(
+                                    it
+                                )
                             )
-                        )
-                        viewState.update {
-                            loading = false
                         }
-                    },
-                    onError = {
-                        errorLiveEvent.postValue(it)
-                        viewState.update {
-                            loading = false
-                        }
-                    }
-                )
-            )
+                } catch (e: Exception) {
+                    errorLiveEvent.postValue(e)
+                }
+            }
         }
     }
 

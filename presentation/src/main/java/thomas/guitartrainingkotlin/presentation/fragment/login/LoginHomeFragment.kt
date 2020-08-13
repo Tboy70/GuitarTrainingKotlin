@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login_home.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.GameActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
@@ -19,6 +20,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewMod
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
 
     @Inject

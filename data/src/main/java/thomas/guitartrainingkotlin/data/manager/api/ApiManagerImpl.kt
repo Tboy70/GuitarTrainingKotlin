@@ -3,13 +3,11 @@ package thomas.guitartrainingkotlin.data.manager.api
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.scottyab.aescrypt.AESCrypt
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
@@ -31,107 +29,148 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
 
     init {
         val gson: Gson = GsonBuilder().setLenient().create()
-        val rxAdapter: RxJava2CallAdapterFactory = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        val interceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(rxAdapter)
             .client(client)
             .build()
         apiService = retrofit.create(APIServiceInterface::class.java)
     }
 
-    override fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity> {
-        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
-        return apiService.connectUser(userRemoteEntity)
-    }
-
-    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable {
-        userRemoteEntity.userPassword = AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
-        return apiService.createNewUser(userRemoteEntity)
-    }
-
-    override fun retrieveUserById(userId: String): Single<UserRemoteEntity> {
-        return apiService.retrieveUserById(userId)
-    }
-
-    override fun retrievePassword(emailAddress: String): Completable {
-        return apiService.retrievePassword(emailAddress)
-    }
-
-    override fun suppressAccount(userId: String): Completable {
-        return apiService.suppressAccount(userId)
-    }
-
-    override fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int)
-            : Single<List<ProgramRemoteEntity>> {
-        return apiService.retrieveProgramsListByUserId(userId, instrumentModeValue)
-    }
-
-    override fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity> {
-        return apiService.retrieveProgramFromId(idProgram)
-    }
-
-    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String> {
-        return apiService.createProgram(programRemoteEntity).map {
-            it.getCreatedId()
+    override fun connectUser(userRemoteEntity: UserRemoteEntity): Flow<UserRemoteEntity> {
+        userRemoteEntity.userPassword =
+            AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
+        return flow {
+            emit(apiService.connectUser(userRemoteEntity))
         }
     }
 
-    override fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable {
-        return apiService.createExercise(exerciseRemoteEntityList)
+    override fun createNewUser(userRemoteEntity: UserRemoteEntity): Flow<Unit> {
+        userRemoteEntity.userPassword =
+            AESCrypt.encrypt(userRemoteEntity.userPseudo, userRemoteEntity.userPassword)
+        return flow {
+            emit(apiService.createNewUser(userRemoteEntity))
+        }
     }
 
-    override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Completable {
-        return apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity)
+    override fun retrieveUserById(userId: String): Flow<UserRemoteEntity> {
+        return flow {
+            emit(apiService.retrieveUserById(userId))
+        }
     }
 
-    override fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable {
-        return apiService.updateExercise(exerciseRemoteEntityList)
+    override fun retrievePassword(emailAddress: String): Flow<Unit> {
+        return flow {
+            emit(apiService.retrievePassword(emailAddress))
+        }
     }
 
-    override fun removeProgram(idProgram: String): Completable {
-        return apiService.removeProgram(idProgram)
+    override fun suppressAccount(userId: String): Flow<Unit> {
+        return flow {
+            emit(apiService.suppressAccount(userId))
+        }
     }
 
-    override fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable {
-        return apiService.removeExercises(exerciseRemoteEntityListToBeRemoved)
+    override fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int)
+            : Flow<List<ProgramRemoteEntity>> {
+        return flow {
+            emit(apiService.retrieveProgramsListByUserId(userId, instrumentModeValue))
+        }
+    }
+
+    override fun retrieveProgramFromId(idProgram: String): Flow<ProgramRemoteEntity> {
+        return flow {
+            emit(apiService.retrieveProgramFromId(idProgram))
+        }
+    }
+
+    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String?> {
+        return flow {
+            emit(apiService.createProgram(programRemoteEntity).getCreatedId())
+        }
+    }
+
+    override fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Flow<Unit> {
+        return flow {
+            emit(apiService.createExercise(exerciseRemoteEntityList))
+        }
+    }
+
+    override fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Flow<Unit> {
+        return flow {
+            emit(apiService.updateProgram(programRemoteEntity.idProgram, programRemoteEntity))
+        }
+    }
+
+    override fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Flow<Unit> {
+        return flow {
+            apiService.updateExercise(exerciseRemoteEntityList)
+        }
+    }
+
+    override fun removeProgram(idProgram: String): Flow<Unit> {
+        return flow {
+            emit(apiService.removeProgram(idProgram))
+        }
+
+    }
+
+    override fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Flow<Unit> {
+        return flow {
+            emit(apiService.removeExercises(exerciseRemoteEntityListToBeRemoved))
+        }
     }
 
     override fun retrieveSongListByUserId(
         userId: String,
         instrumentModeValue: Int
-    ): Single<List<SongRemoteEntity>> {
-        return apiService.retrieveSongListByUserId(userId, instrumentModeValue)
+    ): Flow<List<SongRemoteEntity>> {
+        return flow {
+            emit(apiService.retrieveSongListByUserId(userId, instrumentModeValue))
+        }
     }
 
-    override fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity> {
-        return apiService.retrieveSongFromId(idSong)
+    override fun retrieveSongFromId(idSong: String): Flow<SongRemoteEntity> {
+        return flow {
+            emit(apiService.retrieveSongFromId(idSong))
+        }
     }
 
-    override fun createSong(songRemoteEntity: SongRemoteEntity): Completable {
-        return apiService.createSong(songRemoteEntity)
+    override fun createSong(songRemoteEntity: SongRemoteEntity): Flow<Unit> {
+        return flow {
+            emit(apiService.createSong(songRemoteEntity))
+        }
+
     }
 
-    override fun updateSong(songRemoteEntity: SongRemoteEntity): Completable {
-        return apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity)
+    override fun updateSong(songRemoteEntity: SongRemoteEntity): Flow<Unit> {
+        return flow {
+            emit(apiService.updateSong(songRemoteEntity.idSong, songRemoteEntity))
+        }
     }
 
-    override fun removeSong(idSong: String): Completable {
-        return apiService.removeSong(idSong)
+    override fun removeSong(idSong: String): Flow<Unit> {
+        return flow {
+            emit(apiService.removeSong(idSong))
+        }
     }
 
     override fun sendScoreFeedback(
         scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
         idSong: String
-    ): Completable {
-        return apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong)
+    ): Flow<Unit> {
+        return flow {
+            emit(apiService.sendScoreFeedback(scoreFeedbackRemoteEntity, idSong))
+        }
     }
 
-    override fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreRemoteEntity>> {
-        return apiService.retrieveSongScoreHistory(idSong)
+    override fun retrieveSongScoreHistory(idSong: String): Flow<List<ScoreRemoteEntity>> {
+        return flow {
+            emit(apiService.retrieveSongScoreHistory(idSong))
+        }
     }
 }

@@ -2,12 +2,18 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.user
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveSongListByUserId
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongListViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class UserSongsListViewModel @ViewModelInject constructor(
     private val retrieveSongListByUserId: RetrieveSongListByUserId
 ) : StateViewModel<UserSongListViewState>() {
@@ -19,29 +25,22 @@ class UserSongsListViewModel @ViewModelInject constructor(
     var retrieveUserSongsLiveData = MutableLiveData<List<SongViewDataWrapper>>()
 
     fun retrieveSongListByUserId() {
-        viewState.update {
-            loading = true
-        }
-        userId?.let { userId ->
-            compositeDisposable?.add(
-                retrieveSongListByUserId.subscribe(
-                    params = RetrieveSongListByUserId.Params.forList(userId),
-                    onSuccess = {
-                        retrieveUserSongsLiveData.postValue(it.map { song ->
-                            SongViewDataWrapper(song)
-                        })
-                        viewState.update {
-                            loading = false
+
+        userId?.let {
+            viewModelScope.launch {
+                try {
+                    retrieveSongListByUserId.retrieveSongListByUserId(it)
+                        .onStart { viewState.update { loading = true } }
+                        .onCompletion { viewState.update { loading = false } }
+                        .collect {
+                            retrieveUserSongsLiveData.postValue(it.map { song ->
+                                SongViewDataWrapper(song)
+                            })
                         }
-                    },
-                    onError = { throwable ->
-                        errorLiveEvent.postValue(throwable)
-                        viewState.update {
-                            loading = false
-                        }
-                    }
-                )
-            )
+                } catch (e: Exception) {
+                    errorLiveEvent.postValue(e)
+                }
+            }
         }
     }
 

@@ -1,32 +1,26 @@
 package thomas.guitartrainingkotlin.domain.interactor.program
 
-import io.reactivex.Completable
-import thomas.guitartrainingkotlin.domain.interactor.base.parametrized.CompletableParametrizedUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.model.Program
 import thomas.guitartrainingkotlin.domain.repository.ProgramRepository
 import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class CreateProgram @Inject constructor(
     private val userRepository: UserRepository,
     private val programRepository: ProgramRepository
-) : CompletableParametrizedUseCase<CreateProgram.Params>() {
+) {
 
-    override fun build(params: Params): Completable {
+    fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit?> {
         return userRepository.retrieveUserIdInSharedPrefs().map {
-            params.program.userId = it
-        }.flatMapCompletable {
-            programRepository.createProgram(params.program, params.exercisesList)
-        }
-    }
-
-    class Params(val program: Program, val exercisesList: List<Exercise>) {
-
-        companion object {
-            fun toCreate(program: Program, exercisesList: List<Exercise>): Params {
-                return Params(program, exercisesList)
-            }
+            program.userId = it
+        }.onCompletion {
+            programRepository.createProgram(program, exercisesList)
         }
     }
 }

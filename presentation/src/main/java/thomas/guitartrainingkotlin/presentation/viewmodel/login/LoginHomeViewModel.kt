@@ -2,12 +2,18 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.login
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.user.ConnectUser
 import thomas.guitartrainingkotlin.domain.model.User
 import thomas.guitartrainingkotlin.presentation.view.state.user.LoginFragmentViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class LoginHomeViewModel @ViewModelInject constructor(
     private val connectUser: ConnectUser
 ) : StateViewModel<LoginFragmentViewState>() {
@@ -32,23 +38,16 @@ class LoginHomeViewModel @ViewModelInject constructor(
             userPassword = userPassword
         )
 
-        compositeDisposable?.add(
-            connectUser.subscribe(
-                params = ConnectUser.Params.forLogin(user),
-                onSuccess = {
-                    retrievedUserLiveData.postValue(true)
-                    viewState.update {
-                        loading = false
-                    }
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                    viewState.update {
-                        loading = false
-                    }
-                }
-            )
-        )
+        viewModelScope.launch {
+            try {
+                connectUser.connectUser(user)
+                    .onStart { viewState.update { loading = true } }
+                    .onCompletion { viewState.update { loading = false } }
+                    .collect { retrievedUserLiveData.postValue(true) }
+            } catch (e: Exception) {
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 
     fun saveUserPseudoValue(userPseudo: String) {

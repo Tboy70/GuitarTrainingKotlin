@@ -56,10 +56,13 @@ dependencies {
 
     // Retrofit 2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
 
-    // RxJava
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    // Preferences
+    implementation "androidx.preference:preference-ktx:1.1.1"
 
     // LiveData - View model
     implementation "android.arch.lifecycle:runtime:1.1.1"

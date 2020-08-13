@@ -2,6 +2,12 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.program.RetrieveProgramById
 import thomas.guitartrainingkotlin.domain.interactor.program.UpdateProgram
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
@@ -11,8 +17,8 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewData
 import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramUpdateViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class UserProgramUpdateViewModel @ViewModelInject constructor(
     private val updateProgram: UpdateProgram,
     private val retrieveProgramById: RetrieveProgramById,
@@ -32,44 +38,38 @@ class UserProgramUpdateViewModel @ViewModelInject constructor(
     }
 
     fun getProgramById() {
-        viewState.update {
-            loading = true
-        }
-        this.idProgram?.let { idProgram ->
-            compositeDisposable?.add(
-                retrieveProgramById.subscribe(
-                    params = RetrieveProgramById.Params.toRetrieve(idProgram),
-                    onSuccess = {
-                        programRetrievedLiveData.postValue(
-                            ProgramViewDataWrapper(
-                                it
+
+        idProgram?.let {
+            viewModelScope.launch {
+                try {
+                    retrieveProgramById.retrieveProgramById(it)
+                        .onStart { viewState.update { loading = true } }
+                        .onCompletion { viewState.update { loading = false } }
+                        .collect {
+                            programRetrievedLiveData.postValue(
+                                ProgramViewDataWrapper(
+                                    it
+                                )
                             )
-                        )
-                        viewState.update {
-                            loading = false
                         }
-                    },
-                    onError = {
-                        errorLiveEvent.postValue(it)
-                        viewState.update {
-                            loading = false
-                        }
-                    }
-                )
-            )
+                } catch (e: Exception) {
+                    errorLiveEvent.postValue(e)
+                }
+            }
         }
     }
 
     fun retrieveInstrumentMode() {
-        compositeDisposable?.add(
-            retrieveInstrumentModeInSharedPrefs.subscribe(
-                onSuccess = {
-                    instrumentModeRetrievedLiveEvent.postValue(it)
-                }, onError = {
-                    errorLiveEvent.postValue(it)
-                }
-            )
-        )
+        viewModelScope.launch {
+            try {
+                retrieveInstrumentModeInSharedPrefs.retrieveInstrumentModeInSharedPrefs()
+                    .collect {
+                        instrumentModeRetrievedLiveEvent.postValue(it)
+                    }
+            } catch (e: Exception) {
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 
     fun checkInformationAndValidateUpdate(
@@ -85,18 +85,17 @@ class UserProgramUpdateViewModel @ViewModelInject constructor(
                 exercises = programListExercises
             )
 
-            compositeDisposable?.add(
-                updateProgram.subscribe(
-                    params = UpdateProgram.Params.toUpdate(program, exercisesToBeRemoved),
-
-                    onComplete = {
-                        updateProgramSuccess.postValue(true)
-                    },
-                    onError = {
-                        updateProgramSuccess.postValue(false)
-                    }
-                )
-            )
+            viewModelScope.launch {
+                try {
+                    updateProgram.updateProgram(program, exercisesToBeRemoved)
+                        .collect {
+                            updateProgramSuccess.postValue(true)
+                        }
+                } catch (e: Exception) {
+                    updateProgramSuccess.postValue(false)
+                    errorLiveEvent.postValue(e)
+                }
+            }
         }
     }
 
@@ -107,7 +106,9 @@ class UserProgramUpdateViewModel @ViewModelInject constructor(
             for (exercise in exercises) {
                 if (exercise.typeExercise == -1) {
                     return false
-                } else if (!(exercise.durationExercise).toString().trim().matches("^[0-9]*$".toRegex())) {
+                } else if (!(exercise.durationExercise).toString().trim()
+                        .matches("^[0-9]*$".toRegex())
+                ) {
                     return false
                 }
             }

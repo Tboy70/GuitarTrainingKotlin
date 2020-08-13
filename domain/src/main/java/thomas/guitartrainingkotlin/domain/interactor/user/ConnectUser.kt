@@ -1,25 +1,14 @@
 package thomas.guitartrainingkotlin.domain.interactor.user
 
-import io.reactivex.Single
-import thomas.guitartrainingkotlin.domain.interactor.base.parametrized.SingleParametrizedUseCase
+import kotlinx.coroutines.flow.Flow
 import thomas.guitartrainingkotlin.domain.model.User
 import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class ConnectUser @Inject constructor(
     private val userRepository: UserRepository
-) : SingleParametrizedUseCase<User, ConnectUser.Params>() {
-
-    override fun build(params: Params): Single<User> {
-        return userRepository.connectUser(params.user)
-    }
-
-    class Params(val user: User) {
-
-        companion object {
-            fun forLogin(user: User): Params {
-                return Params(user)
-            }
-        }
+) {
+    suspend fun connectUser(user: User): Flow<User> {
+        return userRepository.connectUser(user)
     }
 }

@@ -4,6 +4,11 @@ import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.program.CreateProgram
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.model.Exercise
@@ -13,8 +18,8 @@ import thomas.guitartrainingkotlin.presentation.view.state.program.UserProgramCr
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
-import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class UserProgramCreationViewModel @ViewModelInject constructor(
     private val createProgram: CreateProgram,
     private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
@@ -59,23 +64,35 @@ class UserProgramCreationViewModel @ViewModelInject constructor(
                 )
             }
 
-            compositeDisposable?.add(
-                createProgram.subscribe(
-                    params = CreateProgram.Params.toCreate(program, exercisesList),
-                    onComplete = {
-                        createdProgramLiveEvent.postValue(true)
-                        viewState.update {
-                            loading = false
+            viewModelScope.launch {
+                try {
+                    createProgram.createProgram(program, exercisesList)
+                        .onCompletion { viewState.update { loading = false } }
+                        .collect {
+                            createdProgramLiveEvent.postValue(true)
                         }
-                    },
-                    onError = {
-                        errorLiveEvent.postValue(it)
-                        viewState.update {
-                            loading = false
-                        }
-                    }
-                )
-            )
+                } catch (e: Exception) {
+                    errorLiveEvent.postValue(e)
+                }
+            }
+
+//            compositeDisposable?.add(
+//                createProgram.subscribe(
+//                    params = CreateProgram.Params.toCreate(program, exercisesList),
+//                    onComplete = {
+//                        createdProgramLiveEvent.postValue(true)
+//                        viewState.update {
+//                            loading = false
+//                        }
+//                    },
+//                    onError = {
+//                        errorLiveEvent.postValue(it)
+//                        viewState.update {
+//                            loading = false
+//                        }
+//                    }
+//                )
+//            )
         } else {
             informationNotRightLiveEvent.postValue(true)
             viewState.update {
@@ -102,15 +119,16 @@ class UserProgramCreationViewModel @ViewModelInject constructor(
     }
 
     private fun retrieveCurrentInstrumentMode() {
-        compositeDisposable?.add(
-            retrieveInstrumentModeInSharedPrefs.subscribe(
-                onSuccess = { instrumentMode ->
-                    currentInstrumentMode = instrumentMode
-                    retrievedInstrumentMode.postValue(instrumentMode)
-                }, onError = {
-                    errorLiveEvent.postValue(it)
-                }
-            )
-        )
+        viewModelScope.launch {
+            try {
+                retrieveInstrumentModeInSharedPrefs.retrieveInstrumentModeInSharedPrefs()
+                    .collect {
+                        currentInstrumentMode = it
+                        retrievedInstrumentMode.postValue(it)
+                    }
+            } catch (e: Exception) {
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 }

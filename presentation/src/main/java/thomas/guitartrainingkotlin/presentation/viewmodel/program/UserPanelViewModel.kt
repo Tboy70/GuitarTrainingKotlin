@@ -1,8 +1,11 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.app.Application
-import android.preference.PreferenceManager
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
@@ -11,7 +14,6 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.UserViewDataWra
 import thomas.guitartrainingkotlin.presentation.view.state.user.UserPanelActivityViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import javax.inject.Inject
 
 class UserPanelViewModel @ViewModelInject constructor(
     application: Application,
@@ -36,16 +38,17 @@ class UserPanelViewModel @ViewModelInject constructor(
     }
 
     fun logoutUser() {
-        compositeDisposable?.add(
-            logoutUser.subscribe(
-                onComplete = {
-                    logoutSucceedLiveEvent.postValue(true)
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                }
-            )
-        )
+
+        viewModelScope.launch {
+            try {
+                logoutUser.logoutUser()
+                    .collect {
+                        logoutSucceedLiveEvent.postValue(true)
+                    }
+            }catch (e : Exception) {
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 
     fun getUserId() = userId
@@ -55,7 +58,7 @@ class UserPanelViewModel @ViewModelInject constructor(
             .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
 
         userId?.let { userId ->
-            if (!userId.isEmpty() && userId != "0") {
+            if (userId.isNotEmpty() && userId != "0") {
                 getUserById(userId)
             } else {
                 userNotRetrievedLiveEvent.postValue(true)
@@ -64,34 +67,34 @@ class UserPanelViewModel @ViewModelInject constructor(
     }
 
     private fun retrieveInstrumentMode() {
-        compositeDisposable?.add(
-            retrieveInstrumentModeInSharedPrefs.subscribe(
-                onSuccess = {
-                    instrumentMode = it
-                },
-                onError = {
-                    errorLiveEvent.postValue(it)
-                }
-            )
-        )
+        viewModelScope.launch {
+            try {
+                retrieveInstrumentModeInSharedPrefs.retrieveInstrumentModeInSharedPrefs()
+                    .collect {
+                        instrumentMode = it
+                    }
+            } catch (e: Exception) {
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 
     private fun getUserById(userId: String) {
-        compositeDisposable?.add(
-            retrieveUserById.subscribe(
-                params = RetrieveUserById.Params.toRetrieve(userId),
-                onSuccess = {
-                    userRetrievedLiveEvent.postValue(
-                        UserViewDataWrapper(
-                            it
+
+        viewModelScope.launch {
+            try {
+                retrieveUserById.retrieveUserById(userId)
+                    .collect {
+                        userRetrievedLiveEvent.postValue(
+                            UserViewDataWrapper(
+                                it
+                            )
                         )
-                    )
-                },
-                onError = {
-                    this.userId = null
-                    errorLiveEvent.postValue(it)
-                }
-            )
-        )
+                    }
+            } catch (e: Exception) {
+                this@UserPanelViewModel.userId = null
+                errorLiveEvent.postValue(e)
+            }
+        }
     }
 }

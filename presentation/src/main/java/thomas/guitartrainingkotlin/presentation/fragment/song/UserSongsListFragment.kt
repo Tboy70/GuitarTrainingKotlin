@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
@@ -21,6 +22,7 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWra
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongsListViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
 

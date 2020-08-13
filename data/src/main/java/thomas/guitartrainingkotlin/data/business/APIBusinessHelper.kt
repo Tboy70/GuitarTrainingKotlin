@@ -2,6 +2,9 @@ package thomas.guitartrainingkotlin.data.business
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import thomas.guitartrainingkotlin.data.entity.*
 import thomas.guitartrainingkotlin.data.entity.db.ExerciseDBEntity
 import thomas.guitartrainingkotlin.data.exception.ProgramNotFoundException
@@ -17,6 +20,8 @@ import thomas.guitartrainingkotlin.data.mapper.remote.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @Singleton
 class APIBusinessHelper @Inject constructor(
     private val dbManager: DBManager,
@@ -34,163 +39,214 @@ class APIBusinessHelper @Inject constructor(
     private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper
 ) {
 
-    fun connectUser(userEntity: UserEntity): Single<UserEntity> {
+    fun connectUser(userEntity: UserEntity): Flow<UserEntity> {
         return apiManager.connectUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
             .map {
                 userRemoteEntityDataMapper.transformToEntity(it)
             }
     }
 
-    fun retrieveUserById(userId: String): Single<UserEntity> {
+    fun retrieveUserById(userId: String): Flow<UserEntity> {
         return apiManager.retrieveUserById(userId).map {
             userRemoteEntityDataMapper.transformToEntity(it)
         }
     }
 
-    fun retrievePassword(emailAddress: String): Completable {
-//        return apiManager.retrievePassword(emailAddress)
-        return Completable.complete()
+    fun retrievePassword(emailAddress: String): Flow<Unit> {
+        return apiManager.retrievePassword(emailAddress)
     }
 
-    fun createNewUser(userEntity: UserEntity): Completable {
+    fun createNewUser(userEntity: UserEntity): Flow<Unit> {
         return apiManager.createNewUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
     }
 
-    fun suppressAccount(userId: String): Completable {
+    fun suppressAccount(userId: String): Flow<Unit> {
         return apiManager.suppressAccount(userId)
     }
 
-    fun retrieveProgramListByUserId(userId: String): Single<List<ProgramEntity>> {
-        return apiManager.retrieveProgramsListByUserId(
-            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-        ).map {
-            programRemoteEntityDataMapper.transformToEntity(it)
-        }.doOnSuccess {
+    fun retrieveProgramListByUserId(userId: String): Flow<List<ProgramEntity>> {
+        return sharedPrefsManager.getInstrumentModeInSharedPrefs()
+            .flatMapConcat {
+                apiManager.retrieveProgramsListByUserId(
+                    userId, it
+                ).map {
+                    programRemoteEntityDataMapper.transformToEntity(it)
+                }.onEach {
 
-            dbManager.deleteProgram()
-            dbManager.deleteExercise()
+                    dbManager.deleteProgram()
+                    dbManager.deleteExercise()
 
-            val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
-            dbManager.insertProgramList(programDBEntityList)
+                    val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
+                    dbManager.insertProgramList(programDBEntityList)
 
-            val exerciseList = mutableListOf<ExerciseDBEntity>()
-            programDBEntityList.forEach { programDBEntity ->
-                programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
-                    exerciseList.add(exerciseDBEntity)
+                    val exerciseList = mutableListOf<ExerciseDBEntity>()
+                    programDBEntityList.forEach { programDBEntity ->
+                        programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
+                            exerciseList.add(exerciseDBEntity)
+                        }
+                    }
+                    if (exerciseList.isNotEmpty()) {
+                        dbManager.insertExerciseList(exerciseList)
+                    }
+                }.catch {
+                    /** Replace on error resume next ? To check ! */
+                    programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList())
                 }
             }
-            if (exerciseList.isNotEmpty()) {
-                dbManager.insertExerciseList(exerciseList)
-            }
-        }.onErrorResumeNext {
-            Single.just(programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList()))
-        }
+//        apiManager.retrieveProgramsListByUserId(
+//            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
+//        ).map {
+//            programRemoteEntityDataMapper.transformToEntity(it)
+//        }.onEach {
+//
+//            dbManager.deleteProgram()
+//            dbManager.deleteExercise()
+//
+//            val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
+//            dbManager.insertProgramList(programDBEntityList)
+//
+//            val exerciseList = mutableListOf<ExerciseDBEntity>()
+//            programDBEntityList.forEach { programDBEntity ->
+//                programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
+//                    exerciseList.add(exerciseDBEntity)
+//                }
+//            }
+//            if (exerciseList.isNotEmpty()) {
+//                dbManager.insertExerciseList(exerciseList)
+//            }
+//        }.catch {
+//            /** Replace on error resume next ? To check ! */
+//            programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList())
+//        }
     }
 
-    fun retrieveProgramFromId(idProgram: String): Single<ProgramEntity> {
+    fun retrieveProgramFromId(idProgram: String): Flow<ProgramEntity> {
         return apiManager.retrieveProgramFromId(idProgram).map {
             programRemoteEntityDataMapper.transformToEntity(it)
-        }.onErrorResumeNext {
+        }.catch {
+            /** Replace on error resume next ? To check ! */
             dbManager.retrieveProgramById(idProgram)?.let {
                 Single.just(programDBEntityDataMapper.transformFromDB(it))
             } ?: Single.error(ProgramNotFoundException())
         }
     }
 
-    fun createProgram(programEntity: ProgramEntity): Single<String> {
+    fun createProgram(programEntity: ProgramEntity): Flow<String?> {
         return apiManager.createProgram(
             programRemoteEntityDataMapper.transformFromEntity(programEntity)
         ).map { idProgram ->
             idProgram
-        }.doOnSuccess {
-            dbManager.insertProgram(programDBEntityDataMapper.transformToDB(programEntity.apply {
-                this.idProgram = it
-            }))
+        }.onEach {
+            it?.let {
+                dbManager.insertProgram(programDBEntityDataMapper.transformToDB(programEntity.apply {
+                    this.idProgram = it
+                }))
+            }
         }
     }
 
-    fun createExercise(exerciseEntityList: List<ExerciseEntity>): Completable {
+    fun createExercise(exerciseEntityList: List<ExerciseEntity>): Flow<Unit> {
         return apiManager.createExercise(
             exerciseRemoteEntityDataMapper.transformFromEntity(
                 exerciseEntityList
             )
-        ).doOnComplete {
+        ).onCompletion {
             dbManager.insertExerciseList(exerciseDBEntityDataMapper.transformToDB(exerciseEntityList))
         }
     }
 
-    fun updateProgram(programEntity: ProgramEntity, exerciseEntityList: List<ExerciseEntity>): Completable {
+    fun updateProgram(
+        programEntity: ProgramEntity,
+        exerciseEntityList: List<ExerciseEntity>
+    ): Flow<Unit> {
         return apiManager.removeExercises(
             exerciseRemoteEntityDataMapper.transformFromEntity(
                 exerciseEntityList
             )
-        ).concatWith(
+        ).flatMapConcat {
             apiManager.updateProgram(
                 programRemoteEntityDataMapper.transformFromEntity(
                     programEntity
                 )
-            ).doOnComplete {
+            ).onCompletion {
                 dbManager.updateProgram(programDBEntityDataMapper.transformToDB(programEntity))
             }
-        ).concatWith(
+        }.flatMapConcat {
             apiManager.updateExercise(
                 exerciseRemoteEntityDataMapper.transformFromEntity(
                     programEntity.exerciseEntityList
                 )
             )
-        )
+        }
     }
 
-    fun removeProgram(idProgram: String): Completable {
-        return apiManager.removeProgram(idProgram).doOnComplete {
+    fun removeProgram(idProgram: String): Flow<Unit> {
+        return apiManager.removeProgram(idProgram).onCompletion {
             dbManager.deleteProgramById(idProgram)
         }
     }
 
-    fun retrieveSongListByUserId(userId: String): Single<List<SongEntity>> {
-        return apiManager.retrieveSongListByUserId(
-            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-        ).map {
-            songRemoteEntityDataMapper.transformToEntity(it)
-        }.doOnSuccess {
-            dbManager.deleteSong()
-            dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
-        }.onErrorResumeNext {
-            Single.just(songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList()))
+    fun retrieveSongListByUserId(userId: String): Flow<List<SongEntity>> {
+        return sharedPrefsManager.getInstrumentModeInSharedPrefs().flatMapConcat {
+            apiManager.retrieveSongListByUserId(
+                userId, it
+            ).map {
+                songRemoteEntityDataMapper.transformToEntity(it)
+            }.onEach {
+                /** Replace doOnSuccess ? */
+                dbManager.deleteSong()
+                dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
+            }.catch {
+                /** replace onErrorResumeNext ? */
+                songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList())
+            }
         }
+//        return apiManager.retrieveSongListByUserId(
+//            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
+//        ).map {
+//            songRemoteEntityDataMapper.transformToEntity(it)
+//        }.onEach {
+//            /** Replace doOnSuccess ? */
+//            dbManager.deleteSong()
+//            dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
+//        }.catch {
+//            /** replace onErrorResumeNext ? */
+//            songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList())
+//        }
     }
 
-    fun retrieveSongFromId(idSong: String): Single<SongEntity> {
+    fun retrieveSongFromId(idSong: String): Flow<SongEntity> {
         return apiManager.retrieveSongFromId(idSong).map {
             songRemoteEntityDataMapper.transformToEntity(it)
-        }.onErrorResumeNext {
+        }.catch {
+            /** replace onErrorResumeNext ? */
             dbManager.retrieveSongById(idSong)?.let {
-                Single.just(songDBEntityDataMapper.transformFromDB(it))
-            } ?: Single.error(SongNotFoundException())
+                songDBEntityDataMapper.transformFromDB(it)
+            } ?: throw SongNotFoundException()
         }
     }
 
-    fun createSong(songEntity: SongEntity): Completable {
+    fun createSong(songEntity: SongEntity): Flow<Unit> {
         return apiManager.createSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
-            .doOnComplete {
+            .onCompletion {
                 dbManager.insertSong(songDBEntityDataMapper.transformToDB(songEntity))
             }
     }
 
-    fun removeSong(idSong: String): Completable {
-        return apiManager.removeSong(idSong).doOnComplete {
+    fun removeSong(idSong: String): Flow<Unit> {
+        return apiManager.removeSong(idSong).onCompletion {
             dbManager.deleteSongById(idSong)
         }
     }
 
-    fun updateSong(songEntity: SongEntity): Completable {
+    fun updateSong(songEntity: SongEntity): Flow<Unit> {
         return apiManager.updateSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
-            .doOnComplete {
+            .onCompletion {
                 dbManager.updateSong(songDBEntityDataMapper.transformToDB(songEntity))
             }
     }
 
-    fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Completable {
+    fun sendScoreFeedback(scoreFeedbackEntity: ScoreFeedbackEntity, idSong: String): Flow<Unit> {
         return apiManager.sendScoreFeedback(
             scoreFeedbackRemoteEntityDataMapper.transformFromEntity(
                 scoreFeedbackEntity
@@ -198,13 +254,13 @@ class APIBusinessHelper @Inject constructor(
         )
     }
 
-    fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreEntity>> {
+    fun retrieveSongScoreHistory(idSong: String): Flow<List<ScoreEntity>> {
         return apiManager.retrieveSongScoreHistory(idSong).map {
             scoreRemoteEntityDataMapper.transformToEntity(it)
-        }.doOnSuccess {
+        }.onEach {
             dbManager.updateSongScore(idSong, scoreDBEntityDataMapper.transformToDB(it))
-        }.onErrorResumeNext {
-            Single.just(scoreDBEntityDataMapper.transformFromDB(dbManager.retrieveSongScore(idSong)))
+        }.catch {
+            scoreDBEntityDataMapper.transformFromDB(dbManager.retrieveSongScore(idSong))
         }
     }
 }

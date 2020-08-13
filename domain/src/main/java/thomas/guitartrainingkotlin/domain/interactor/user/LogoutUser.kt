@@ -1,15 +1,13 @@
 package thomas.guitartrainingkotlin.domain.interactor.user
 
-import io.reactivex.Completable
-import thomas.guitartrainingkotlin.domain.interactor.base.CompletableUseCase
+import kotlinx.coroutines.flow.Flow
 import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
 class LogoutUser @Inject constructor(
     private val userRepository: UserRepository
-) : CompletableUseCase() {
-
-    override fun build(): Completable {
+) {
+    fun logoutUser(): Flow<Unit> {
         return userRepository.logoutUser()
     }
 }

@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.data.manager.api
 
 import io.reactivex.Completable
-import io.reactivex.Single
 import retrofit2.http.*
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
@@ -14,62 +13,77 @@ import thomas.guitartrainingkotlin.data.entity.remote.user.UserRemoteEntity
 interface APIServiceInterface {
 
     @POST("connect")
-    fun connectUser(@Body userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
+    suspend fun connectUser(@Body userRemoteEntity: UserRemoteEntity): UserRemoteEntity
 
     @POST("user")
-    fun createNewUser(@Body userRemoteEntity: UserRemoteEntity): Completable
+    suspend fun createNewUser(@Body userRemoteEntity: UserRemoteEntity)
 
     @GET("user/{userId}")
-    fun retrieveUserById(@Path("userId") userId: String): Single<UserRemoteEntity>
+    suspend fun retrieveUserById(@Path("userId") userId: String): UserRemoteEntity
 
     @DELETE("user/{userId}")
-    fun suppressAccount(@Path("userId") userId: String): Completable
+    suspend fun suppressAccount(@Path("userId") userId: String)
 
     @GET("programs/{userId}/{instrumentMode}")
-    fun retrieveProgramsListByUserId(@Path("userId") userId: String, @Path("instrumentMode") instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>
+    suspend fun retrieveProgramsListByUserId(
+        @Path("userId") userId: String,
+        @Path("instrumentMode") instrumentModeValue: Int
+    ): List<ProgramRemoteEntity>
 
     @GET("program/{idProgram}")
-    fun retrieveProgramFromId(@Path("idProgram") idProgram: String): Single<ProgramRemoteEntity>
+    suspend fun retrieveProgramFromId(@Path("idProgram") idProgram: String): ProgramRemoteEntity
 
     @POST("program")
-    fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): Single<ProgramResponseRemoteEntity>
+    suspend fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): ProgramResponseRemoteEntity
 
     @POST("exercise")
-    fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>): Completable
+    suspend fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>)
 
     @PATCH("program/{idProgram}")
-    fun updateProgram(@Path("idProgram") idProgram: String, @Body programRemoteEntity: ProgramRemoteEntity): Completable
+    suspend fun updateProgram(
+        @Path("idProgram") idProgram: String,
+        @Body programRemoteEntity: ProgramRemoteEntity
+    )
 
     @PATCH("exercise")
-    fun updateExercise(@Body exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
+    suspend fun updateExercise(@Body exerciseRemoteEntityList: List<ExerciseRemoteEntity>)
 
     @DELETE("program/{idProgram}")
-    fun removeProgram(@Path("idProgram") idProgram: String): Completable
+    suspend fun removeProgram(@Path("idProgram") idProgram: String)
 
     @HTTP(method = "DELETE", path = "exercise", hasBody = true)
-    fun removeExercises(@Body exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
+    suspend fun removeExercises(@Body exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>)
 
     @GET("songs/{userId}/{instrumentMode}")
-    fun retrieveSongListByUserId(@Path("userId") userId: String, @Path("instrumentMode") instrumentModeValue: Int): Single<List<SongRemoteEntity>>
+    suspend fun retrieveSongListByUserId(
+        @Path("userId") userId: String,
+        @Path("instrumentMode") instrumentModeValue: Int
+    ): List<SongRemoteEntity>
 
     @GET("song/{idSong}")
-    fun retrieveSongFromId(@Path("idSong") idSong: String): Single<SongRemoteEntity>
+    suspend fun retrieveSongFromId(@Path("idSong") idSong: String): SongRemoteEntity
 
     @POST("song")
-    fun createSong(@Body songRemoteEntity: SongRemoteEntity): Completable
+    suspend fun createSong(@Body songRemoteEntity: SongRemoteEntity)
 
     @PATCH("song/{idSong}")
-    fun updateSong(@Path("idSong") idSong: String, @Body songRemoteEntity: SongRemoteEntity): Completable
+    suspend fun updateSong(
+        @Path("idSong") idSong: String,
+        @Body songRemoteEntity: SongRemoteEntity
+    )
 
     @DELETE("song/{idSong}")
-    fun removeSong(@Path("idSong") idProgram: String): Completable
+    suspend fun removeSong(@Path("idSong") idProgram: String)
 
     @POST("song/{idSong}")
-    fun sendScoreFeedback(@Body scoreFeedback: ScoreFeedbackRemoteEntity, @Path("idSong") idSong: String): Completable
+    suspend fun sendScoreFeedback(
+        @Body scoreFeedback: ScoreFeedbackRemoteEntity,
+        @Path("idSong") idSong: String
+    )
 
     @GET("score/{idSong}")
-    fun retrieveSongScoreHistory(@Path("idSong") idSong: String): Single<List<ScoreRemoteEntity>>
+    suspend fun retrieveSongScoreHistory(@Path("idSong") idSong: String): List<ScoreRemoteEntity>
 
     @POST("user/{emailAddress}")
-    fun retrievePassword(@Path("emailAddress") emailAddress: String): Completable
+    suspend fun retrievePassword(@Path("emailAddress") emailAddress: String)
 }

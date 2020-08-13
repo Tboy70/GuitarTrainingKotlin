@@ -3,6 +3,8 @@ package thomas.guitartrainingkotlin.data.manager.sharedprefs
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -10,22 +12,35 @@ import javax.inject.Singleton
 @Singleton
 class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefsManager {
 
-    private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val sharedPreferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
-    override fun getUserIdInSharedPrefs(): String? = sharedPreferences.getString(CURRENT_USER_ID, null)
+    override fun getUserIdInSharedPrefs(): Flow<String?> = flow {
+        emit(sharedPreferences.getString(CURRENT_USER_ID, null))
+    }
 
     override fun setUserIdInSharedPrefs(userId: String) {
         sharedPreferences.edit().putString(CURRENT_USER_ID, userId).apply()
     }
 
-    override fun deleteUserIdInSharedPrefs() {
-        sharedPreferences.edit().remove(CURRENT_USER_ID).apply()
+    override fun deleteUserIdInSharedPrefs(): Flow<Unit> {
+        return flow {
+            emit(sharedPreferences.edit().remove(CURRENT_USER_ID).apply())
+        }
     }
 
-    override fun getInstrumentModeInSharedPrefs(): Int =
-        sharedPreferences.getInt(CURRENT_INSTRUMENT_MODE, InstrumentModeValues.INSTRUMENT_MODE_GUITAR)
+    override fun getInstrumentModeInSharedPrefs(): Flow<Int> =
+        flow {
+            emit(
+                sharedPreferences.getInt(
+                    CURRENT_INSTRUMENT_MODE,
+                    InstrumentModeValues.INSTRUMENT_MODE_GUITAR
+                )
+            )
+        }
 
-    override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Int {
+
+    override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Flow<Int> {
         var newInstrumentMode = instrumentMode
         if (instrumentMode == InstrumentModeValues.INSTRUMENT_MODE_GUITAR) {
             sharedPreferences.edit().putInt(
@@ -40,7 +55,7 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
             ).apply()
             newInstrumentMode = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
         }
-        return newInstrumentMode
+        return flow { emit(newInstrumentMode) }
     }
 
     override fun deleteCurrentInstrumentInSharedPrefs() {

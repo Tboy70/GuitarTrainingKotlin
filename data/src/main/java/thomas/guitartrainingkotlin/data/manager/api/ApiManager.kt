@@ -2,6 +2,9 @@ package thomas.guitartrainingkotlin.data.manager.api
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Call
+import retrofit2.Response
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
@@ -12,47 +15,47 @@ import thomas.guitartrainingkotlin.data.entity.remote.user.UserRemoteEntity
 interface ApiManager {
 
     // User
-    fun connectUser(userRemoteEntity: UserRemoteEntity): Single<UserRemoteEntity>
+    fun connectUser(userRemoteEntity: UserRemoteEntity): Flow<UserRemoteEntity>
 
-    fun createNewUser(userRemoteEntity: UserRemoteEntity): Completable
+    fun createNewUser(userRemoteEntity: UserRemoteEntity) : Flow<Unit>
 
-    fun retrieveUserById(userId: String): Single<UserRemoteEntity>
+    fun retrieveUserById(userId: String): Flow<UserRemoteEntity>
 
-    fun retrievePassword(emailAddress: String): Completable
+    fun retrievePassword(emailAddress: String): Flow<Unit>
+
+    fun suppressAccount(userId: String): Flow<Unit>
 
 
     // Program
-    fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int): Single<List<ProgramRemoteEntity>>
+    fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int): Flow<List<ProgramRemoteEntity>>
 
-    fun retrieveProgramFromId(idProgram: String): Single<ProgramRemoteEntity>
+    fun retrieveProgramFromId(idProgram: String): Flow<ProgramRemoteEntity>
 
-    fun createProgram(programRemoteEntity: ProgramRemoteEntity): Single<String>
+    fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String?>
 
-    fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
+    fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Flow<Unit>
 
-    fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Completable
+    fun updateProgram(programRemoteEntity: ProgramRemoteEntity): Flow<Unit>
 
-    fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Completable
+    fun updateExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Flow<Unit>
 
-    fun removeProgram(idProgram: String): Completable
+    fun removeProgram(idProgram: String): Flow<Unit>
 
-    fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Completable
+    fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Flow<Unit>
 
 
     // Song
-    fun retrieveSongListByUserId(userId: String, instrumentModeValue: Int): Single<List<SongRemoteEntity>>
+    fun retrieveSongListByUserId(userId: String, instrumentModeValue: Int): Flow<List<SongRemoteEntity>>
 
-    fun retrieveSongFromId(idSong: String): Single<SongRemoteEntity>
+    fun retrieveSongFromId(idSong: String): Flow<SongRemoteEntity>
 
-    fun createSong(songRemoteEntity: SongRemoteEntity): Completable
+    fun createSong(songRemoteEntity: SongRemoteEntity): Flow<Unit>
 
-    fun updateSong(songRemoteEntity: SongRemoteEntity): Completable
+    fun updateSong(songRemoteEntity: SongRemoteEntity): Flow<Unit>
 
-    fun removeSong(idSong: String): Completable
+    fun removeSong(idSong: String): Flow<Unit>
 
-    fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Completable
+    fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Flow<Unit>
 
-    fun retrieveSongScoreHistory(idSong: String): Single<List<ScoreRemoteEntity>>
-
-    fun suppressAccount(userId: String): Completable
+    fun retrieveSongScoreHistory(idSong: String): Flow<List<ScoreRemoteEntity>>
 }

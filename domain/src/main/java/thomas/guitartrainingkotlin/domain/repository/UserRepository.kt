@@ -1,29 +1,28 @@
 package thomas.guitartrainingkotlin.domain.repository
 
-import io.reactivex.Completable
-import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 import thomas.guitartrainingkotlin.domain.model.User
 
 interface UserRepository {
 
     // Shared prefs
-    fun retrieveUserIdInSharedPrefs(): Single<String>
+    fun retrieveUserIdInSharedPrefs(): Flow<String?>
 
-    fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Single<Int>
+    fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Flow<Int>
 
-    fun retrieveInstrumentModeInSharedPrefs(): Single<Int>
+    fun retrieveInstrumentModeInSharedPrefs(): Flow<Int>
 
     // User
-    fun connectUser(user: User): Single<User>
+    suspend fun connectUser(user: User): Flow<User>
 
-    fun createNewUser(user: User): Completable
+    fun createNewUser(user: User) : Flow<Unit>
 
-    fun retrieveUserById(userId: String): Single<User>
+    fun retrieveUserById(userId: String): Flow<User>
 
-    fun retrievePassword(emailAddress: String): Completable
+    fun retrievePassword(emailAddress: String): Flow<Unit>
 
-    fun logoutUser(): Completable
+    fun logoutUser(): Flow<Unit>
 
-    fun suppressAccount(userId: String): Completable
+    fun suppressAccount(userId: String): Flow<Unit>
 
 }
