@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseArray
 import android.view.MenuItem
 import android.view.View

@@ -10,6 +10,7 @@ import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.BaseActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
+import java.util.*
 import javax.inject.Inject
 
 @ActivityScoped
@@ -27,7 +28,12 @@ class DialogComponentImpl @Inject constructor(
         }
     }
 
-    override fun displaySingleChoiceDialog(title: Int, content: Int, positiveText: Int, onPositive: () -> Unit) {
+    override fun displaySingleChoiceDialog(
+        title: Int,
+        content: Int,
+        positiveText: Int,
+        onPositive: () -> Unit
+    ) {
         dismissDialog()
         materialDialog = MaterialDialog(baseActivity).show {
             title(title)
@@ -59,7 +65,12 @@ class DialogComponentImpl @Inject constructor(
     }
 
     override fun displayDualChoiceDialog(
-        title: Int, content: Int, positiveText: Int, negativeText: Int, onPositive: () -> Unit, onNegative: () -> Unit
+        title: Int,
+        content: Int,
+        positiveText: Int,
+        negativeText: Int,
+        onPositive: () -> Unit,
+        onNegative: () -> Unit
     ) {
         dismissDialog()
         materialDialog = MaterialDialog(baseActivity).show {
@@ -74,7 +85,11 @@ class DialogComponentImpl @Inject constructor(
         }
     }
 
-    override fun displayCustomViewHelpScale(randomScale: String, positiveText: Int, onPositive: () -> Unit) {
+    override fun displayCustomViewHelpScale(
+        randomScale: String,
+        positiveText: Int,
+        onPositive: () -> Unit
+    ) {
         dismissDialog()
         materialDialog = MaterialDialog(baseActivity).show {}.apply {
             customView(R.layout.view_help_scale)
@@ -82,8 +97,12 @@ class DialogComponentImpl @Inject constructor(
             positiveButton(positiveText) { onPositive() }
             val scaleInterval = GameUtils.retrieveScaleIntervalHelp(baseActivity, randomScale)
             getCustomView().findViewById<TextView>(R.id.view_help_scale_title).text =
-                baseActivity.getString(R.string.dialog_view_help_scale_title, randomScale.toLowerCase())
-            getCustomView().findViewById<TextView>(R.id.view_help_scale_interval).text = scaleInterval
+                baseActivity.getString(
+                    R.string.dialog_view_help_scale_title,
+                    randomScale.toLowerCase(Locale.ROOT)
+                )
+            getCustomView().findViewById<TextView>(R.id.view_help_scale_interval).text =
+                scaleInterval
         }
     }
 }

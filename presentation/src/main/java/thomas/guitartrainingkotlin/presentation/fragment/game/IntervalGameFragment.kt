@@ -16,6 +16,7 @@ import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarCompo
 import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -91,7 +92,8 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
             if (gameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE) {
                 fragment_interval_game_question.text = activity?.getString(
                     R.string.interval_game_question,
-                    givenInterval.substring(0, 1).toUpperCase() + givenInterval.substring(1),
+                    givenInterval.substring(0, 1)
+                        .toUpperCase(Locale.ROOT) + givenInterval.substring(1),
                     givenNote
                 )
             } else if (gameMode == ConstValues.INTERVAL_REVERSED_GAME_MODE) {

@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.fragment_user_settings.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
-import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.hide
@@ -43,10 +42,6 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
 //        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
-    }
-
-    private fun initiateToolbar() {
-        (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_settings))
     }
 
     private fun initiateView() {

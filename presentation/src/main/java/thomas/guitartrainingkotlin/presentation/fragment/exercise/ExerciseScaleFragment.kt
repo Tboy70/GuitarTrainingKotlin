@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_exercise_scale.*
 import kotlinx.android.synthetic.main.view_action_exercise.*
@@ -14,7 +13,6 @@ import thomas.guitartrainingkotlin.presentation.extension.observeSafe
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExercisePullOffHammerOnViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseScaleViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
@@ -64,7 +62,10 @@ class ExerciseScaleFragment : BaseExerciseFragment() {
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_exercise_scale_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_exercise_scale_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
         fragment_exercise_scale_toolbar.title = nameProgram
     }
 

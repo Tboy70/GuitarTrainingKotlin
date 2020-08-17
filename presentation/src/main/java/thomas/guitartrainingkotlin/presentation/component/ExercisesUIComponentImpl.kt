@@ -20,7 +20,7 @@ class ExercisesUIComponentImpl @Inject constructor(val baseActivity: BaseActivit
         rootLayout: LinearLayout,
         textButton: String?,
         textDuration: String?,
-        onRemoveView: (customView : View) -> Unit,
+        onRemoveView: (customView: View) -> Unit,
         onExerciseChosen: (button: Button) -> Unit
     ) {
         this.rootLayout = rootLayout

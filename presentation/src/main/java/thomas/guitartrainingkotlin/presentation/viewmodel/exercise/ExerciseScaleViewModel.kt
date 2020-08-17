@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
-import javax.inject.Inject
 
 class ExerciseScaleViewModel @ViewModelInject constructor() : ViewModel() {
 

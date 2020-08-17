@@ -43,7 +43,7 @@
                 android:contentDescription="@null"
                 android:paddingBottom="@dimen/user_programs_list_icon_placeholder_padding_bottom"
                 android:src="@drawable/ic_program"
-                android:tint="@color/placeholder_text_color"/>
+                app:tint="@color/placeholder_text_color" />
 
         <TextView
                 android:layout_width="match_parent"

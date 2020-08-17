@@ -44,7 +44,10 @@ class UserSongCreationFragment : Fragment(R.layout.fragment_user_song_creation) 
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_song_creation_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_song_creation_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {

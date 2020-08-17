@@ -75,7 +75,10 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_program_details_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_program_details_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {
@@ -141,13 +144,17 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
 
                 val constraintSet = ConstraintSet()
                 constraintSet.clone(fragment_user_program_details_constraint_layout)
-                constraintSet.clear(R.id.fragment_user_program_details_start_button, ConstraintSet.TOP)
+                constraintSet.clear(
+                    R.id.fragment_user_program_details_start_button,
+                    ConstraintSet.TOP
+                )
                 constraintSet.connect(
                     R.id.fragment_user_program_details_start_button,
                     ConstraintSet.BOTTOM,
                     R.id.fragment_user_program_details_constraint_layout,
                     ConstraintSet.BOTTOM,
-                    activity?.resources?.getInteger(R.integer.user_programs_details_start_to_bottom_margin) ?: 0
+                    activity?.resources?.getInteger(R.integer.user_programs_details_start_to_bottom_margin)
+                        ?: 0
                 )
                 constraintSet.applyTo(fragment_user_program_details_constraint_layout)
             } else {
@@ -177,13 +184,24 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
         exercisesLinearLayout.orientation = LinearLayout.VERTICAL
 
         val layoutParams =
-            ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         exercisesLinearLayout.layoutParams = layoutParams
 
         for (i in exercises.size - 1 downTo 0) {
             val nameExercise = TextView(activity)
-            nameExercise.text = ExerciseUtils.convertTypeExerciseToName(exercises[i].typeExercise, activity as Activity)
-            nameExercise.setTextColor(ContextCompat.getColor(activity as Activity, android.R.color.black))
+            nameExercise.text = ExerciseUtils.convertTypeExerciseToName(
+                exercises[i].typeExercise,
+                activity as Activity
+            )
+            nameExercise.setTextColor(
+                ContextCompat.getColor(
+                    activity as Activity,
+                    android.R.color.black
+                )
+            )
             nameExercise.setTextSize(
                 TypedValue.COMPLEX_UNIT_SP,
                 (activity as Activity).resources.getDimension(R.dimen.text_big) / (activity as Activity).resources.displayMetrics.density
@@ -191,7 +209,10 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
             nameExercise.setTypeface(null, Typeface.BOLD)
 
             val durationExercise = TextView(activity)
-            TextViewCompat.setTextAppearance(durationExercise, R.style.TextAppearance_AppCompat_Caption)
+            TextViewCompat.setTextAppearance(
+                durationExercise,
+                R.style.TextAppearance_AppCompat_Caption
+            )
 
             if (exercises[i].durationExercise < DateTimeUtils.SECONDS_IN_ONE_MINUTE) {
                 durationExercise.text = String.format(

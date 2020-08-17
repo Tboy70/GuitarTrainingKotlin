@@ -70,7 +70,10 @@ class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_song_details_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_song_details_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {

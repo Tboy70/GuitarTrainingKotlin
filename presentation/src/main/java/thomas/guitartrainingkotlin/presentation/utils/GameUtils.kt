@@ -17,10 +17,19 @@ object GameUtils {
     private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
 
     fun checkIntervalGameAnswer(
-        givenNote: String, givenInterval: String, userAnswer: String, intervalGameMode: Int, context: Context
+        givenNote: String,
+        givenInterval: String,
+        userAnswer: String,
+        intervalGameMode: Int,
+        context: Context
     ): Boolean {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
-        return userAnswer == findIntervalValue(context, givenInterval, noteArray.indexOf(givenNote), intervalGameMode)
+        return userAnswer == findIntervalValue(
+            context,
+            givenInterval,
+            noteArray.indexOf(givenNote),
+            intervalGameMode
+        )
     }
 
     private fun findIntervalValue(
@@ -37,7 +46,11 @@ object GameUtils {
         }
     }
 
-    fun checkReversedIntervalGameAnswer(givenInterval: String, userAnswer: String, context: Context): Boolean? {
+    fun checkReversedIntervalGameAnswer(
+        givenInterval: String,
+        userAnswer: String,
+        context: Context
+    ): Boolean? {
         val intervalArray = context.resources.getStringArray(R.array.list_interval)
         intervalArray.indexOf(givenInterval).let { index ->
             return intervalArray[index + ConstValues.NB_NOTES - (index * 2)] == userAnswer
@@ -97,7 +110,10 @@ object GameUtils {
         }
     }
 
-    fun generateCorrectRandomScale(givenNote: String, context: Context): Pair<MutableList<String>, String> {
+    fun generateCorrectRandomScale(
+        givenNote: String,
+        context: Context
+    ): Pair<MutableList<String>, String> {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
         val indexOfGivenNote = noteArray.indexOf(givenNote)
         val generatedScale = mutableListOf(givenNote)
@@ -112,7 +128,10 @@ object GameUtils {
         return Pair(generatedScale, referenceScale.second)
     }
 
-    fun generateIncorrectRandomScale(givenNote: String, context: Context): Pair<MutableList<String>, String> {
+    fun generateIncorrectRandomScale(
+        givenNote: String,
+        context: Context
+    ): Pair<MutableList<String>, String> {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
         val indexOfGivenNote = noteArray.indexOf(givenNote)
         var generatedScale = mutableListOf(givenNote)

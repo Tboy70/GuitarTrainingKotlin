@@ -67,7 +67,7 @@ class UserProgramDetailsViewModel @ViewModelInject constructor(
                         .collect {
                             finishProgramDeletion.postValue(true)
                         }
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     errorLiveEvent.postValue(e)
                 }
             }

@@ -11,7 +11,6 @@ import thomas.guitartrainingkotlin.domain.interactor.user.RetrievePassword
 import thomas.guitartrainingkotlin.presentation.view.state.user.ForgotPasswordFragmentViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class ForgotPasswordViewModel @ViewModelInject constructor(
@@ -32,7 +31,7 @@ class ForgotPasswordViewModel @ViewModelInject constructor(
                     .collect {
                         emailSentLiveEvent.postValue(true)
                     }
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 errorLiveEvent.postValue(e)
             }
         }

@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.app.Application
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collect

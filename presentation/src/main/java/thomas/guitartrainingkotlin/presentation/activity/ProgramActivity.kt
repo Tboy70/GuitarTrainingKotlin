@@ -3,7 +3,6 @@ package thomas.guitartrainingkotlin.presentation.activity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import thomas.guitartrainingkotlin.R
@@ -59,7 +58,10 @@ class ProgramActivity : BaseActivity() {
             val rightExercise = exercisesOfProgram[rankExercise]
             val bundle = Bundle()
             bundle.putInt(BaseExerciseFragment.RANK_EXERCISE, rankExercise)
-            bundle.putInt(BaseExerciseFragment.DURATION_EXERCISE, rightExercise.getDurationExercise())
+            bundle.putInt(
+                BaseExerciseFragment.DURATION_EXERCISE,
+                rightExercise.getDurationExercise()
+            )
             bundle.putString(BaseExerciseFragment.NAME_PROGRAM, nameProgram)
 
             if (!programStarted) {
@@ -72,11 +74,20 @@ class ProgramActivity : BaseActivity() {
                     programStarted = true
                 }
             } else {
-                val idFragmentToLaunch = ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.getTypeExercise())
-                findNavController(R.id.program_nav_host_fragment).navigate(idFragmentToLaunch, bundle, null)
+                val idFragmentToLaunch =
+                    ExerciseUtils.convertTypeExerciseToIdFragment(rightExercise.getTypeExercise())
+                findNavController(R.id.program_nav_host_fragment).navigate(
+                    idFragmentToLaunch,
+                    bundle,
+                    null
+                )
             }
         } else {
-            findNavController(R.id.program_nav_host_fragment).navigate(R.id.launcher_end_program_fragment, null, null)
+            findNavController(R.id.program_nav_host_fragment).navigate(
+                R.id.launcher_end_program_fragment,
+                null,
+                null
+            )
         }
     }
 

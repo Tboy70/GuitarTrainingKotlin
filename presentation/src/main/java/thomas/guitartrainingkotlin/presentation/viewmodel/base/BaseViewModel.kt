@@ -1,6 +1,5 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.base
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 
 //import io.reactivex.disposables.CompositeDisposable

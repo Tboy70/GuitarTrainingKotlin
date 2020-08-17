@@ -24,9 +24,15 @@ class ErrorRendererComponentImpl @Inject constructor(
             Snackbar.LENGTH_LONG
         ).apply {
             setActionTextColor(Color.WHITE)
-            view.setBackgroundColor(ContextCompat.getColor(baseActivity, android.R.color.holo_red_light))
+            view.setBackgroundColor(
+                ContextCompat.getColor(
+                    baseActivity,
+                    android.R.color.holo_red_light
+                )
+            )
 
-            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            val textView =
+                view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
             textView?.setTextColor(ContextCompat.getColor(baseActivity, android.R.color.white))
             textView?.maxLines = 3
             show()
@@ -34,11 +40,21 @@ class ErrorRendererComponentImpl @Inject constructor(
     }
 
     override fun displayErrorString(error: String) {
-        snackbar = Snackbar.make(baseActivity.findViewById(android.R.id.content), error, Snackbar.LENGTH_LONG).apply {
+        snackbar = Snackbar.make(
+            baseActivity.findViewById(android.R.id.content),
+            error,
+            Snackbar.LENGTH_LONG
+        ).apply {
             setActionTextColor(Color.WHITE)
-            view.setBackgroundColor(ContextCompat.getColor(baseActivity, android.R.color.holo_red_light))
+            view.setBackgroundColor(
+                ContextCompat.getColor(
+                    baseActivity,
+                    android.R.color.holo_red_light
+                )
+            )
 
-            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            val textView =
+                view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
             textView?.setTextColor(ContextCompat.getColor(baseActivity, android.R.color.white))
             textView?.maxLines = 3
             show()
@@ -52,9 +68,15 @@ class ErrorRendererComponentImpl @Inject constructor(
             Snackbar.LENGTH_LONG
         ).apply {
             setActionTextColor(Color.WHITE)
-            view.setBackgroundColor(ContextCompat.getColor(baseActivity, android.R.color.holo_red_light))
+            view.setBackgroundColor(
+                ContextCompat.getColor(
+                    baseActivity,
+                    android.R.color.holo_red_light
+                )
+            )
 
-            val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+            val textView =
+                view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
             textView?.setTextColor(ContextCompat.getColor(baseActivity, android.R.color.white))
             textView?.maxLines = 3
             show()

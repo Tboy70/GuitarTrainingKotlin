@@ -62,7 +62,10 @@ class UserSongUpdateFragment : Fragment(R.layout.fragment_user_song_update) {
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_song_update_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_song_update_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {

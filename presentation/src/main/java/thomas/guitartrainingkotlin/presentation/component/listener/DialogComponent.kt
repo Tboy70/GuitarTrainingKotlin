@@ -21,7 +21,12 @@ interface DialogComponent {
         onNegative: () -> Unit
     )
 
-    fun displaySingleListChoiceDialog(title: Int, items: Int, positiveText: Int, onPositive: (text: String) -> Unit)
+    fun displaySingleListChoiceDialog(
+        title: Int,
+        items: Int,
+        positiveText: Int,
+        onPositive: (text: String) -> Unit
+    )
 
     fun displayCustomViewHelpScale(randomScale: String, positiveText: Int, onPositive: () -> Unit)
 }

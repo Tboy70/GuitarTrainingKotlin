@@ -12,8 +12,6 @@ import thomas.guitartrainingkotlin.domain.interactor.user.CreateNewUser
 import thomas.guitartrainingkotlin.domain.model.User
 import thomas.guitartrainingkotlin.presentation.view.state.user.CreateAccountFragmentViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
-import java.lang.Exception
-import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 class CreateAccountViewModel @ViewModelInject constructor(
@@ -45,7 +43,7 @@ class CreateAccountViewModel @ViewModelInject constructor(
                     .collect {
                         userCreationLiveData.postValue(true)
                     }
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 errorLiveEvent.postValue(e)
             }
         }

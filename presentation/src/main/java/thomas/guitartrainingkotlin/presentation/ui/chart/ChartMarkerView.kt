@@ -15,7 +15,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("ViewConstructor")
-class ChartMarkerView constructor(context: Context, layoutResource: Int, private val referenceTimestamp: Long) :
+class ChartMarkerView constructor(
+    context: Context,
+    layoutResource: Int,
+    private val referenceTimestamp: Long
+) :
     MarkerView(context, layoutResource) {
 
     private val mDataFormat: DateFormat

@@ -2,7 +2,6 @@ package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_user_programs_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.ProgramCreationActivity
-import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
@@ -50,10 +48,6 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
     override fun onResume() {
         super.onResume()
         viewModel.retrieveProgramsListByUserId()
-    }
-
-    private fun initiateToolbar() {
-        (activity as UserPanelActivity).setToolbar(activity?.getString(R.string.user_panel_navigation_drawer_programs))
     }
 
     private fun initiateView() {

@@ -19,7 +19,10 @@ class SongListViewHolder(
 
     private val currentView: View = itemView
 
-    fun bind(songViewDataWrapper: SongViewDataWrapper, onSongSelectedListener: (songId: String) -> Unit) {
+    fun bind(
+        songViewDataWrapper: SongViewDataWrapper,
+        onSongSelectedListener: (songId: String) -> Unit
+    ) {
         view_user_songs_list_item_title.text = songViewDataWrapper.getTitleSong()
         view_user_songs_list_item_artist.text = songViewDataWrapper.getArtistSong()
 
@@ -56,7 +59,11 @@ class SongListViewHolder(
             if (lastPlay.isEmpty()) {
                 context.getString(R.string.never)
             } else {
-                DateTimeUtils.formatDate(DateTimeUtils.FROM_API_FORMAT, DateTimeUtils.WANTED_FORMAT, lastPlay)
+                DateTimeUtils.formatDate(
+                    DateTimeUtils.FROM_API_FORMAT,
+                    DateTimeUtils.WANTED_FORMAT,
+                    lastPlay
+                )
             }.let { infoToDisplay ->
                 view_user_songs_list_item_last_play.text =
                     String.format(

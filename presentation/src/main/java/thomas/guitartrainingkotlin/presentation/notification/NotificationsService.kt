@@ -44,7 +44,8 @@ class NotificationsService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
             .setStyle(inboxStyle)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = NOTIFICATION_CHANNEL_NAME

@@ -20,7 +20,10 @@ class ProgramListViewHolder(
 
     private val currentView: View = itemView
 
-    fun bind(programViewDataWrapper: ProgramViewDataWrapper, onProgramSelectedListener: (programId: String) -> Unit) {
+    fun bind(
+        programViewDataWrapper: ProgramViewDataWrapper,
+        onProgramSelectedListener: (programId: String) -> Unit
+    ) {
 
         view_user_programs_list_item_name.text = programViewDataWrapper.getName()
 
@@ -41,7 +44,8 @@ class ProgramListViewHolder(
                 )
             } else {
                 val hours: Int = totalDurationProgram / DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
-                val minutes: Int = totalDurationProgram % DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
+                val minutes: Int =
+                    totalDurationProgram % DateTimeUtils.SECONDS_IN_ONE_MINUTE.toInt()
                 view_user_programs_list_item_total_duration_exercises.text = String.format(
                     Locale.FRANCE,
                     context.getString(R.string.fragment_user_programs_list_total_duration_exercises_hours_text),

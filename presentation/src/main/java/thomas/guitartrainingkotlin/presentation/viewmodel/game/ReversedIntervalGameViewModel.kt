@@ -8,7 +8,6 @@ import thomas.guitartrainingkotlin.presentation.view.state.game.ReversedInterval
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
-import javax.inject.Inject
 
 class ReversedIntervalGameViewModel @ViewModelInject constructor(
     application: Application

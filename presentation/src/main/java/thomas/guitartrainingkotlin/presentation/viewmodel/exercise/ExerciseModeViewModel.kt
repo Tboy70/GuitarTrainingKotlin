@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import thomas.guitartrainingkotlin.presentation.fragment.exercise.ExerciseModeFragment
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
-import javax.inject.Inject
 
 class ExerciseModeViewModel @ViewModelInject constructor() : ViewModel() {
 

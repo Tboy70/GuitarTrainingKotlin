@@ -8,7 +8,6 @@ import thomas.guitartrainingkotlin.presentation.view.state.game.ScaleGameViewSta
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
-import javax.inject.Inject
 
 class ScaleGameViewModel @ViewModelInject constructor(
     application: Application
@@ -47,7 +46,12 @@ class ScaleGameViewModel @ViewModelInject constructor(
         )
     }
 
-    fun checkAnswers(answersList: List<String>, givenScale: String, givenNote: String, isCorrect: Boolean) {
+    fun checkAnswers(
+        answersList: List<String>,
+        givenScale: String,
+        givenNote: String,
+        isCorrect: Boolean
+    ) {
         answerCheckedLiveEvent2.postValue(
             Pair(
                 GameUtils.checkScaleGameAnswer(

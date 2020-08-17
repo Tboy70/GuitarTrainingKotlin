@@ -37,7 +37,11 @@ class TimerDialogFragment : DialogFragment() {
     private var timeLeftToTheEndOfTimer: Long = 0
     private var timerStatus = TimerStatus.STOPPED
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.timer_dialog_layout, container, false)
     }
 
@@ -52,7 +56,8 @@ class TimerDialogFragment : DialogFragment() {
             timeLeftToTheEndOfTimer = durationExercise
         }
 
-        text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(timeLeftToTheEndOfTimer)
+        text_view_timer.text =
+            DateTimeUtils.convertMillisecondsToTimeFormat(timeLeftToTheEndOfTimer)
 
         dialog?.setCanceledOnTouchOutside(true)
         dialog?.setTitle(dialogTitle)
@@ -65,7 +70,10 @@ class TimerDialogFragment : DialogFragment() {
         try {
             countDownTimer.cancel()
         } catch (e: UninitializedPropertyAccessException) {
-            Log.e(ConstantTags.TIME_DIALOG_FRAGMENT.tag, activity?.getString(R.string.error_count_down_not_initialized))
+            Log.e(
+                ConstantTags.TIME_DIALOG_FRAGMENT.tag,
+                activity?.getString(R.string.error_count_down_not_initialized)
+            )
         }
         timerDialogDismissListener.onDismiss(timeLeftToTheEndOfTimer)
     }
@@ -99,24 +107,29 @@ class TimerDialogFragment : DialogFragment() {
     }
 
     private fun initializeProgressBar() {
-        progress_bar_timer.max = (timeCountInMilliSeconds / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
-        progress_bar_timer.progress = (timeCountInMilliSeconds / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
+        progress_bar_timer.max =
+            (timeCountInMilliSeconds / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
+        progress_bar_timer.progress =
+            (timeCountInMilliSeconds / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
     }
 
     private fun startTimer() {
-        countDownTimer = object : CountDownTimer(timeCountInMilliSeconds, DateTimeUtils.MINUTE_TO_MILLISECONDS) {
-            override fun onTick(millisUntilFinished: Long) {
-                text_view_timer.text = DateTimeUtils.convertMillisecondsToTimeFormat(millisUntilFinished)
-                progress_bar_timer.progress = (millisUntilFinished / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
-                timeLeftToTheEndOfTimer = millisUntilFinished
-            }
+        countDownTimer =
+            object : CountDownTimer(timeCountInMilliSeconds, DateTimeUtils.MINUTE_TO_MILLISECONDS) {
+                override fun onTick(millisUntilFinished: Long) {
+                    text_view_timer.text =
+                        DateTimeUtils.convertMillisecondsToTimeFormat(millisUntilFinished)
+                    progress_bar_timer.progress =
+                        (millisUntilFinished / DateTimeUtils.MINUTE_TO_MILLISECONDS).toInt()
+                    timeLeftToTheEndOfTimer = millisUntilFinished
+                }
 
-            override fun onFinish() {
-                timeLeftToTheEndOfTimer = 0
-                timerStatus = TimerStatus.STOPPED
-                dismiss()
-            }
-        }.start()
+                override fun onFinish() {
+                    timeLeftToTheEndOfTimer = 0
+                    timerStatus = TimerStatus.STOPPED
+                    dismiss()
+                }
+            }.start()
     }
 
     private fun pauseTimer() {

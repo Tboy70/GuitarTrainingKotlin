@@ -74,7 +74,8 @@
     <dimen name="fragment_scale_game_button_margin">3dp</dimen>
     <dimen name="scale_game_answer_edit_text_width">200dp</dimen>
     <dimen name="reversed_interval_edit_text_width">200dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <!-- TO SORT -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>

@@ -20,6 +20,7 @@ import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarCompo
 import thomas.guitartrainingkotlin.presentation.extension.*
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewModel
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -269,7 +270,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         fragment_scale_game_question.text = activity?.getString(
             R.string.scale_game_question,
             givenNote,
-            givenScale.toLowerCase()
+            givenScale.toLowerCase(Locale.ROOT)
         )
     }
 
@@ -282,7 +283,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         fragment_scale_game_question.text = activity?.getString(
             R.string.scale_game_question,
             givenNote,
-            givenScale.toLowerCase()
+            givenScale.toLowerCase(Locale.ROOT)
         )
 
         viewModel.generateRandomScale(givenNote)

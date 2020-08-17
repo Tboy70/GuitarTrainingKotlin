@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity
-import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserSongActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
@@ -49,10 +48,6 @@ class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
     override fun onResume() {
         super.onResume()
         viewModel.retrieveSongListByUserId()
-    }
-
-    private fun initiateToolbar() {
-        (activity as UserPanelActivity).setToolbar((activity as UserPanelActivity).getString(R.string.user_panel_navigation_drawer_songs))
     }
 
     private fun initiateView() {
