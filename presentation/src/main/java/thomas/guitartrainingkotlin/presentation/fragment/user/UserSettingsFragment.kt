@@ -40,7 +40,7 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        initiateToolbar()
+//        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
     }

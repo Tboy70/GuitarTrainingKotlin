@@ -41,7 +41,7 @@ class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        initiateToolbar()
+//        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
     }

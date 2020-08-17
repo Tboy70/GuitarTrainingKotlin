@@ -30,7 +30,7 @@
     <string name="dialog_suppress_account_confirm_content">Es-tu sûr de vouloir supprimer le compte ?</string>
 
     <string name="dialog_logout_title">Déconnexion</string>
-    <string name="dialog_logout_confirm_content">Es-tu sûr de vouloir te déconnecter ?</string>
+    <string name="dialog_logout_confirm_content">Êtes-vous sûr de vouloir vous déconnecter ?</string>
 
     <string name="dialog_create_program_title">Création d\'un programme</string>
     <string name="dialog_create_program_content">Es-tu sûr de vouloir créer ce programme ?</string>

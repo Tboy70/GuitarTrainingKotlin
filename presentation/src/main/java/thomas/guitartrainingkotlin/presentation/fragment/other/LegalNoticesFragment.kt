@@ -13,7 +13,7 @@ class LegalNoticesFragment : Fragment(R.layout.fragment_legal_notices) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initiateToolbar()
+//        initiateToolbar()
     }
 
     private fun initiateToolbar() {

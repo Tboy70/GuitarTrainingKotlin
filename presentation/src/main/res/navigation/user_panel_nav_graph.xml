@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@+id/user_programs_list">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:startDestination="@+id/nav_user_programs_list">
 
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <!-- ++++++++ USER PROGRAMS ACTIONS ++++++++ -->
     <!-- +++++++++++++++++++++++++++++++++++++++ -->
     <fragment
-            android:id="@+id/user_programs_list"
+            android:id="@+id/nav_user_programs_list"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramsListFragment"
             android:label="@string/nav_user_panel_home"
             tools:layout="@layout/fragment_user_programs_list">
         <action
                 android:id="@+id/action_user_programs_list_to_user_songs_list"
-                app:destination="@id/user_songs_list"
-                app:popUpTo="@+id/user_programs_list"
+                app:destination="@id/nav_user_songs_list"
+                app:popUpTo="@+id/nav_user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_user_programs_list_to_action_user_settings"
@@ -29,13 +29,13 @@
     <!-- ++++++++ USER SONGS ACTIONS ++++++++ -->
     <!-- ++++++++++++++++++++++++++++++++++++ -->
     <fragment
-            android:id="@+id/user_songs_list"
+            android:id="@+id/nav_user_songs_list"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.song.UserSongsListFragment"
             tools:layout="@layout/fragment_user_songs_list">
         <action
                 android:id="@+id/action_user_songs_list_to_user_programs_list"
-                app:destination="@id/user_programs_list"
-                app:popUpTo="@id/user_songs_list"
+                app:destination="@id/nav_user_programs_list"
+                app:popUpTo="@id/nav_user_songs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_user_songs_list_to_action_user_settings"
@@ -54,13 +54,13 @@
             tools:layout="@layout/fragment_user_settings">
         <action
                 android:id="@+id/action_action_user_settings_to_user_programs_list"
-                app:destination="@id/user_programs_list"
-                app:popUpTo="@id/user_programs_list"
+                app:destination="@id/nav_user_programs_list"
+                app:popUpTo="@id/nav_user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_action_user_settings_to_user_songs_list"
-                app:destination="@id/user_songs_list"
-                app:popUpTo="@id/user_programs_list"
+                app:destination="@id/nav_user_songs_list"
+                app:popUpTo="@id/nav_user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_action_user_settings_to_action_legal_notices"
@@ -78,13 +78,13 @@
             tools:layout="@layout/fragment_legal_notices">
         <action
                 android:id="@+id/action_action_legal_notices_to_user_programs_list"
-                app:destination="@id/user_programs_list"
-                app:popUpTo="@id/user_programs_list"
+                app:destination="@id/nav_user_programs_list"
+                app:popUpTo="@id/nav_user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_action_legal_notices_to_user_songs_list"
-                app:destination="@id/user_songs_list"
-                app:popUpTo="@id/user_programs_list"
+                app:destination="@id/nav_user_songs_list"
+                app:popUpTo="@id/nav_user_programs_list"
                 app:popUpToInclusive="true"/>
         <action
                 android:id="@+id/action_action_legal_notices_to_action_user_settings"

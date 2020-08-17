@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.fragment_login_home.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.GameActivity
+import thomas.guitartrainingkotlin.presentation.activity.TestActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
@@ -115,7 +116,7 @@ class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
     }
 
     private fun connectSuccess(userId: String?) {
-        val intent = Intent(activity, UserPanelActivity::class.java).apply {
+        val intent = Intent(activity, TestActivity::class.java).apply {
             putExtra(ConstValues.USER_ID, userId)
         }
         startActivity(intent)

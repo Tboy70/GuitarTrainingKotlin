@@ -42,7 +42,7 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
-        initiateToolbar()
+//        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
     }
