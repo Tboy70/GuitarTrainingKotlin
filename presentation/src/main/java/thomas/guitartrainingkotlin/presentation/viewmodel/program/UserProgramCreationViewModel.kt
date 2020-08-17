@@ -6,6 +6,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.base.StateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
 import java.util.*
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 class UserProgramCreationViewModel @ViewModelInject constructor(
     private val createProgram: CreateProgram,

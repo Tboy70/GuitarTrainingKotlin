@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_update.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
@@ -30,6 +31,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramUpd
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update) {
 
     @Inject
@@ -47,7 +49,6 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
     private var programViewDataWrapper: ProgramViewDataWrapper? = null
 
     private var exercisesToBeRemoved: MutableList<Exercise> = ArrayList()
-    private var exercisesIdToBeRemoved: MutableList<String> = ArrayList()
 
     private var navHost: View? = null
 
@@ -86,7 +87,10 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_program_update_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_program_update_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {
@@ -98,6 +102,7 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
                 android.R.string.yes,
                 android.R.string.cancel,
                 onPositive = {
+
                     for (i in 0 until fragment_user_program_update_exercises_list.childCount) {
                         val exerciseName =
                             (((fragment_user_program_update_exercises_list.getChildAt(i) as CustomExerciseView)
@@ -109,8 +114,12 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
                                 .findViewById<EditText>(R.id.view_custom_exercise_duration).text.toString())
 
                         programViewDataWrapper?.getExercises()?.get(i)?.typeExercise =
-                            ExerciseUtils.getTypeExerciseIdByName(exerciseName, activity as UserProgramActivity)
-                        programViewDataWrapper?.getExercises()?.get(i)?.durationExercise = exerciseDurationValue.toInt()
+                            ExerciseUtils.getTypeExerciseIdByName(
+                                exerciseName,
+                                activity as UserProgramActivity
+                            )
+                        programViewDataWrapper?.getExercises()?.get(i)?.durationExercise =
+                            exerciseDurationValue.toInt()
                     }
 
                     programViewDataWrapper?.getExercises()?.removeAll(exercisesToBeRemoved)
@@ -157,16 +166,14 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
 
     private fun initExercisesList(exercises: MutableList<Exercise>) {
         activity?.let { activity ->
-            exercises.forEach {
+            exercises.forEach { exercise ->
                 exercisesUIComponent.createNewExercise(
                     fragment_user_program_update_exercises_list,
-                    it.idExercise,
-                    ExerciseUtils.convertTypeExerciseToName(it.typeExercise, activity),
-                    it.durationExercise.toString(),
-                    onRemoveView = { idExerciseToRemove ->
-                        idExerciseToRemove?.let { id ->
-                            exercisesIdToBeRemoved.add(id)
-                        }
+                    ExerciseUtils.convertTypeExerciseToName(exercise.typeExercise, activity),
+                    exercise.durationExercise.toString(),
+                    onRemoveView = { customView ->
+                        fragment_user_program_update_exercises_list.removeView(customView)
+                        exercisesToBeRemoved.add(exercise)
                     },
                     onExerciseChosen = { buttonTypeExercise ->
                         exercisesArray?.let { exercisesArray ->

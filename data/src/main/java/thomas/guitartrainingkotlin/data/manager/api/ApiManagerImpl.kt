@@ -11,6 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
+import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.SongRemoteEntity
@@ -88,7 +89,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         }
     }
 
-    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String?> {
+    override fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String> {
         return flow {
             emit(apiService.createProgram(programRemoteEntity).getCreatedId())
         }
@@ -116,7 +117,6 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return flow {
             emit(apiService.removeProgram(idProgram))
         }
-
     }
 
     override fun removeExercises(exerciseRemoteEntityListToBeRemoved: List<ExerciseRemoteEntity>): Flow<Unit> {
@@ -144,7 +144,6 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
         return flow {
             emit(apiService.createSong(songRemoteEntity))
         }
-
     }
 
     override fun updateSong(songRemoteEntity: SongRemoteEntity): Flow<Unit> {

@@ -2,7 +2,7 @@ package thomas.guitartrainingkotlin.data.manager.sharedprefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
@@ -15,20 +15,6 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
     private val sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    override fun getUserIdInSharedPrefs(): Flow<String?> = flow {
-        emit(sharedPreferences.getString(CURRENT_USER_ID, null))
-    }
-
-    override fun setUserIdInSharedPrefs(userId: String) {
-        sharedPreferences.edit().putString(CURRENT_USER_ID, userId).apply()
-    }
-
-    override fun deleteUserIdInSharedPrefs(): Flow<Unit> {
-        return flow {
-            emit(sharedPreferences.edit().remove(CURRENT_USER_ID).apply())
-        }
-    }
-
     override fun getInstrumentModeInSharedPrefs(): Flow<Int> =
         flow {
             emit(
@@ -38,7 +24,6 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
                 )
             )
         }
-
 
     override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Flow<Int> {
         var newInstrumentMode = instrumentMode
@@ -63,7 +48,6 @@ class SharedPrefsManagerImpl @Inject constructor(context: Context) : SharedPrefs
     }
 
     companion object {
-        const val CURRENT_USER_ID: String = "CURRENT_USER_ID"
         const val CURRENT_INSTRUMENT_MODE = "CURRENT_INSTRUMENT_MODE"
     }
 }

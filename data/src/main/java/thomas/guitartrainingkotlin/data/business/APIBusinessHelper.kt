@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.data.business
 
-import io.reactivex.Completable
-import io.reactivex.Single
+import android.util.Log
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -9,24 +8,23 @@ import thomas.guitartrainingkotlin.data.entity.*
 import thomas.guitartrainingkotlin.data.entity.db.ExerciseDBEntity
 import thomas.guitartrainingkotlin.data.exception.ProgramNotFoundException
 import thomas.guitartrainingkotlin.data.exception.SongNotFoundException
+import thomas.guitartrainingkotlin.data.exception.UserNotFoundException
 import thomas.guitartrainingkotlin.data.manager.api.ApiManager
 import thomas.guitartrainingkotlin.data.manager.db.DBManager
 import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManager
-import thomas.guitartrainingkotlin.data.mapper.db.ExerciseDBEntityDataMapper
-import thomas.guitartrainingkotlin.data.mapper.db.ProgramDBEntityDataMapper
-import thomas.guitartrainingkotlin.data.mapper.db.ScoreDBEntityDataMapper
-import thomas.guitartrainingkotlin.data.mapper.db.SongDBEntityDataMapper
+import thomas.guitartrainingkotlin.data.mapper.db.*
 import thomas.guitartrainingkotlin.data.mapper.remote.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Singleton
 @FlowPreview
 @ExperimentalCoroutinesApi
-@Singleton
 class APIBusinessHelper @Inject constructor(
     private val dbManager: DBManager,
     private val apiManager: ApiManager,
     private val sharedPrefsManager: SharedPrefsManager,
+    private val userDBEntityDataMapper: UserDBEntityDataMapper,
     private val songDBEntityDataMapper: SongDBEntityDataMapper,
     private val scoreDBEntityDataMapper: ScoreDBEntityDataMapper,
     private val programDBEntityDataMapper: ProgramDBEntityDataMapper,
@@ -39,16 +37,29 @@ class APIBusinessHelper @Inject constructor(
     private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper
 ) {
 
+    fun retrieveUserId(): Flow<String?> {
+        return flowOf(dbManager.retrieveUser()?.userId)
+    }
+
     fun connectUser(userEntity: UserEntity): Flow<UserEntity> {
         return apiManager.connectUser(userRemoteEntityDataMapper.transformFromEntity(userEntity))
             .map {
                 userRemoteEntityDataMapper.transformToEntity(it)
+            }.onEach {
+                dbManager.clearUser()
+                dbManager.insertUser(userDBEntityDataMapper.transformToDB(it))
             }
     }
 
     fun retrieveUserById(userId: String): Flow<UserEntity> {
         return apiManager.retrieveUserById(userId).map {
             userRemoteEntityDataMapper.transformToEntity(it)
+        }.catch {
+            val userFromDB = dbManager.retrieveUser()?.let {
+                userDBEntityDataMapper.transformFromDB(it)
+            } ?: throw UserNotFoundException()
+
+            emitAll(flowOf(userFromDB))
         }
     }
 
@@ -64,6 +75,9 @@ class APIBusinessHelper @Inject constructor(
         return apiManager.suppressAccount(userId)
     }
 
+    /**
+     * onErrorResumeNext is replaced by catch { emitAll() }
+     */
     fun retrieveProgramListByUserId(userId: String): Flow<List<ProgramEntity>> {
         return sharedPrefsManager.getInstrumentModeInSharedPrefs()
             .flatMapConcat {
@@ -89,59 +103,33 @@ class APIBusinessHelper @Inject constructor(
                         dbManager.insertExerciseList(exerciseList)
                     }
                 }.catch {
-                    /** Replace on error resume next ? To check ! */
-                    programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList())
+                    emitAll(flowOf(programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList())))
                 }
             }
-//        apiManager.retrieveProgramsListByUserId(
-//            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-//        ).map {
-//            programRemoteEntityDataMapper.transformToEntity(it)
-//        }.onEach {
-//
-//            dbManager.deleteProgram()
-//            dbManager.deleteExercise()
-//
-//            val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
-//            dbManager.insertProgramList(programDBEntityList)
-//
-//            val exerciseList = mutableListOf<ExerciseDBEntity>()
-//            programDBEntityList.forEach { programDBEntity ->
-//                programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
-//                    exerciseList.add(exerciseDBEntity)
-//                }
-//            }
-//            if (exerciseList.isNotEmpty()) {
-//                dbManager.insertExerciseList(exerciseList)
-//            }
-//        }.catch {
-//            /** Replace on error resume next ? To check ! */
-//            programDBEntityDataMapper.transformFromDB(dbManager.retrieveProgramList())
-//        }
     }
 
     fun retrieveProgramFromId(idProgram: String): Flow<ProgramEntity> {
         return apiManager.retrieveProgramFromId(idProgram).map {
             programRemoteEntityDataMapper.transformToEntity(it)
         }.catch {
-            /** Replace on error resume next ? To check ! */
-            dbManager.retrieveProgramById(idProgram)?.let {
-                Single.just(programDBEntityDataMapper.transformFromDB(it))
-            } ?: Single.error(ProgramNotFoundException())
+            val programFromDB = dbManager.retrieveProgramById(idProgram)?.let {
+                programDBEntityDataMapper.transformFromDB(it)
+            } ?: throw ProgramNotFoundException()
+
+            emitAll(flowOf(programFromDB))
+
         }
     }
 
-    fun createProgram(programEntity: ProgramEntity): Flow<String?> {
+    fun createProgram(programEntity: ProgramEntity): Flow<String> {
         return apiManager.createProgram(
-            programRemoteEntityDataMapper.transformFromEntity(programEntity)
-        ).map { idProgram ->
-            idProgram
-        }.onEach {
-            it?.let {
-                dbManager.insertProgram(programDBEntityDataMapper.transformToDB(programEntity.apply {
-                    this.idProgram = it
-                }))
-            }
+            programRemoteEntityDataMapper.transformFromEntity(
+                programEntity
+            )
+        ).onEach {
+            dbManager.insertProgram(programDBEntityDataMapper.transformToDB(programEntity.apply {
+                this.idProgram = it
+            }))
         }
     }
 
@@ -150,35 +138,71 @@ class APIBusinessHelper @Inject constructor(
             exerciseRemoteEntityDataMapper.transformFromEntity(
                 exerciseEntityList
             )
-        ).onCompletion {
+        ).map {
             dbManager.insertExerciseList(exerciseDBEntityDataMapper.transformToDB(exerciseEntityList))
         }
     }
 
+    /**
+     * TODO : Check if exercises are removed or update in database
+     */
     fun updateProgram(
         programEntity: ProgramEntity,
-        exerciseEntityList: List<ExerciseEntity>
+        exercisesToBeRemoved: List<ExerciseEntity>
     ): Flow<Unit> {
         return apiManager.removeExercises(
             exerciseRemoteEntityDataMapper.transformFromEntity(
-                exerciseEntityList
+                exercisesToBeRemoved
             )
-        ).flatMapConcat {
-            apiManager.updateProgram(
+        ).flatMapMerge {
+            val updateProgramFlow = apiManager.updateProgram(
                 programRemoteEntityDataMapper.transformFromEntity(
                     programEntity
                 )
-            ).onCompletion {
+            ).map {
                 dbManager.updateProgram(programDBEntityDataMapper.transformToDB(programEntity))
             }
-        }.flatMapConcat {
-            apiManager.updateExercise(
+
+            val updateExercisesFlow = apiManager.updateExercise(
                 exerciseRemoteEntityDataMapper.transformFromEntity(
                     programEntity.exerciseEntityList
                 )
             )
+
+            merge(updateProgramFlow, updateExercisesFlow)
         }
     }
+
+//            .flatMapConcat {
+//            apiManager.updateProgram(
+//                programRemoteEntityDataMapper.transformFromEntity(
+//                    programEntity
+//                )
+//            ).onEach {
+//                apiManager.updateExercise(
+//                    exerciseRemoteEntityDataMapper.transformFromEntity(
+//                        programEntity.exerciseEntityList
+//                    )
+//                )
+//            }
+
+//                .map {
+//                dbManager.updateProgram(programDBEntityDataMapper.transformToDB(programEntity))
+//            }.flatMapConcat {
+//                apiManager.updateExercise(
+//                    exerciseRemoteEntityDataMapper.transformFromEntity(
+//                        programEntity.exerciseEntityList
+//                    )
+//                )
+//            }
+//    }
+//            .flatMapMerge {
+//            apiManager.updateExercise(
+//                exerciseRemoteEntityDataMapper.transformFromEntity(
+//                    programEntity.exerciseEntityList
+//                )
+//            )
+//        }
 
     fun removeProgram(idProgram: String): Flow<Unit> {
         return apiManager.removeProgram(idProgram).onCompletion {

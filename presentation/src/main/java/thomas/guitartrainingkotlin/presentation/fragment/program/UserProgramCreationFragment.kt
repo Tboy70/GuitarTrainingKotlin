@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseArray
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_creation.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
@@ -23,7 +26,9 @@ import thomas.guitartrainingkotlin.presentation.view.custom.CustomExerciseView
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserProgramCreationViewModel
 import javax.inject.Inject
 
+@FlowPreview
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_creation) {
 
     @Inject
@@ -58,7 +63,10 @@ class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_crea
 
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
-        activity?.setSupportActionBar(fragment_user_program_creation_toolbar, ActivityExtensions.DISPLAY_UP)
+        activity?.setSupportActionBar(
+            fragment_user_program_creation_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
     }
 
     private fun initiateView() {
@@ -136,8 +144,9 @@ class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_crea
 
     private fun addFieldToCreateExercise() {
         exercisesUIComponent.createNewExercise(
-            fragment_user_program_creation_exercises,
-            onRemoveView = {
+            rootLayout = fragment_user_program_creation_exercises,
+            onRemoveView = { customView ->
+                fragment_user_program_creation_exercises.removeView(customView)
                 enableCreationAddExerciseButton(true)
             },
             onExerciseChosen = { buttonTypeExercise ->

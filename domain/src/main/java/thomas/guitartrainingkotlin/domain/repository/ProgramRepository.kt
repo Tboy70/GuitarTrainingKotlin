@@ -10,7 +10,7 @@ interface ProgramRepository {
 
     fun retrieveProgramById(idProgram: String): Flow<Program>
 
-    fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit?>
+    fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit>
 
     fun updateProgram(program: Program, exercisesToBeRemoved: List<Exercise>): Flow<Unit>
 

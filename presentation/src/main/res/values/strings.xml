@@ -334,6 +334,7 @@
     <string name="error_update_exercise">Erreur pendant la mise à jour des exercices</string>
     <string name="error_remove_exercise">Erreur pendant la suppression des exercices</string>
 
+    <string name="error_user_not_found">Impossible de récupérer l\'utilisateur</string>
     <string name="error_song_not_found">Impossible de récupérer la chanson</string>
     <string name="error_send_feedback_song">Erreur pendant l\'envoi de la note</string>
     <string name="error_creation_song">Erreur pendant la création de la chanson</string>
@@ -430,5 +431,16 @@
     </string>
     <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
     </string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

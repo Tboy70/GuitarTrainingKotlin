@@ -1,11 +1,13 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.base
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+
 //import io.reactivex.disposables.CompositeDisposable
 
 open class BaseViewModel : ViewModel() {
 
-//    protected var compositeDisposable: CompositeDisposable? = CompositeDisposable()
+    //    protected var compositeDisposable: CompositeDisposable? = CompositeDisposable()
 //
 //    override fun onCleared() {
 //        compositeDisposable?.let {
@@ -13,5 +15,6 @@ open class BaseViewModel : ViewModel() {
 //                it.dispose()
 //            }
 //        }
+
 //    }
 }

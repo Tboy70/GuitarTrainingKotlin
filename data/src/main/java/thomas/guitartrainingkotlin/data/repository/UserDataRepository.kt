@@ -4,7 +4,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.data.business.ContentBusinessHelper
@@ -23,29 +22,23 @@ class UserDataRepository @Inject constructor(
     private val apiBusinessHelper: APIBusinessHelper
 ) : UserRepository {
 
-    /**
-     * No need of try / catch anymore !
-     */
-    override fun retrieveUserIdInSharedPrefs(): Flow<String?> {
-        return contentBusinessHelper.getUserIdInSharedPrefs()
+    override fun retrieveInstrumentModeInSharedPrefs(): Flow<Int> {
+        return contentBusinessHelper.retrieveInstrumentModeInSharedPrefs()
     }
 
     override fun setInstrumentModeInSharedPrefs(instrumentMode: Int): Flow<Int> {
         return contentBusinessHelper.setInstrumentModeInSharedPrefs(instrumentMode)
     }
 
-    override fun retrieveInstrumentModeInSharedPrefs(): Flow<Int> {
-        return contentBusinessHelper.retrieveInstrumentModeInSharedPrefs()
+    override fun connectUser(user: User): Flow<User> {
+        return apiBusinessHelper.connectUser(userEntityDataMapper.transformToEntity(user))
+            .map {
+                userEntityDataMapper.transformFromEntity(it)
+            }
     }
 
-    override suspend fun connectUser(user: User): Flow<User> {
-        return apiBusinessHelper.connectUser(userEntityDataMapper.transformToEntity(user)).onEach {
-            it.userId?.let { userId ->
-                contentBusinessHelper.setIdInSharedPrefs(userId)
-            }
-        }.map {
-            userEntityDataMapper.transformFromEntity(it)
-        }
+    override fun retrieveUserId(): Flow<String?> {
+        return apiBusinessHelper.retrieveUserId()
     }
 
     override fun createNewUser(user: User): Flow<Unit> {
@@ -56,11 +49,6 @@ class UserDataRepository @Inject constructor(
     override fun retrieveUserById(userId: String): Flow<User> {
         return apiBusinessHelper.retrieveUserById(userId).map {
             userEntityDataMapper.transformFromEntity(it)
-        }.onCompletion { cause ->
-            if (cause != null) {
-                /** Replace doOnError ?*/
-                contentBusinessHelper.deleteIdInSharedPrefs()
-            }
         }
     }
 
@@ -70,12 +58,14 @@ class UserDataRepository @Inject constructor(
 
 
     override fun logoutUser(): Flow<Unit> {
-        return contentBusinessHelper.deleteIdInSharedPrefs()
+        return contentBusinessHelper.deleteDatabase().map {
+            contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
+        }
     }
 
     override fun suppressAccount(userId: String): Flow<Unit> {
         return apiBusinessHelper.suppressAccount(userId).onEach {
-            contentBusinessHelper.deleteIdInSharedPrefs()
+            contentBusinessHelper.deleteUser()
             contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
         }
     }

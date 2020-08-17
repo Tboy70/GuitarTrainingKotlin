@@ -1,11 +1,12 @@
 package thomas.guitartrainingkotlin.data.manager.db
 
-import thomas.guitartrainingkotlin.data.entity.db.ExerciseDBEntity
-import thomas.guitartrainingkotlin.data.entity.db.ProgramDBEntity
-import thomas.guitartrainingkotlin.data.entity.db.ScoreDBEntity
-import thomas.guitartrainingkotlin.data.entity.db.SongDBEntity
+import thomas.guitartrainingkotlin.data.entity.db.*
 
 interface DBManager {
+
+    fun insertUser(userDBEntity: UserDBEntity)
+    fun retrieveUser() : UserDBEntity?
+    fun clearUser()
 
     fun retrieveProgramList(): List<ProgramDBEntity>
     fun retrieveProgramById(idProgram: String): ProgramDBEntity?
@@ -28,4 +29,6 @@ interface DBManager {
 
     fun retrieveSongScore(idSong: String): List<ScoreDBEntity>
     fun updateSongScore(idSong: String, scoreDBEntityList: List<ScoreDBEntity>)
+
+    fun clearDatabase()
 }

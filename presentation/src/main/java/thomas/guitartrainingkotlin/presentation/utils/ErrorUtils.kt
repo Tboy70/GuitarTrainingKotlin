@@ -5,6 +5,7 @@ import retrofit2.HttpException
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.data.exception.ProgramNotFoundException
 import thomas.guitartrainingkotlin.data.exception.SongNotFoundException
+import thomas.guitartrainingkotlin.data.exception.UserNotFoundException
 import thomas.guitartrainingkotlin.domain.utils.ConstantErrors
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -18,6 +19,7 @@ object ErrorUtils {
             }
             is ConnectException -> return context.getString(R.string.error_connection_problem)
             is UnknownHostException -> return context.getString(R.string.error_server_connection_problem)
+            is UserNotFoundException -> return context.getString(R.string.error_user_not_found)
             is SongNotFoundException -> return context.getString(R.string.error_song_not_found)
             is ProgramNotFoundException -> return context.getString(R.string.error_program_not_found)
             is Exception -> {

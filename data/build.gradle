@@ -47,6 +47,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
+    // Preferences
+    implementation "androidx.preference:preference-ktx:1.1.1"
+
     // OkHttp
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 

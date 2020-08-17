@@ -3,8 +3,9 @@ package thomas.guitartrainingkotlin.data.repository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.mapNotNull
 import thomas.guitartrainingkotlin.data.business.APIBusinessHelper
 import thomas.guitartrainingkotlin.data.mapper.ExerciseEntityDataMapper
 import thomas.guitartrainingkotlin.data.mapper.ProgramEntityDataMapper
@@ -14,9 +15,9 @@ import thomas.guitartrainingkotlin.domain.repository.ProgramRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Singleton
 @FlowPreview
 @ExperimentalCoroutinesApi
-@Singleton
 class ProgramDataRepository @Inject constructor(
     private val apiBusinessHelper: APIBusinessHelper,
     private val programEntityDataMapper: ProgramEntityDataMapper,
@@ -26,7 +27,6 @@ class ProgramDataRepository @Inject constructor(
     override fun retrieveProgramListByUserId(userId: String): Flow<List<Program>> {
         return apiBusinessHelper.retrieveProgramListByUserId(userId).map {
             programEntityDataMapper.transformFromEntity(it)
-
         }
     }
 
@@ -36,35 +36,19 @@ class ProgramDataRepository @Inject constructor(
         }
     }
 
-    override fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit?> {
+    override fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit> {
         return apiBusinessHelper.createProgram(programEntityDataMapper.transformToEntity(program))
-            .map {
-                it?.let {
-                    for (exercise in exercisesList) {
-                        exercise.idProgram = it
-                    }
+            .mapNotNull { idProgram ->
+                for (exercise in exercisesList) {
+                    exercise.idProgram = idProgram
                 }
-            }.onEach {
+            }.flatMapConcat {
                 apiBusinessHelper.createExercise(
                     exerciseEntityDataMapper.transformToEntity(
                         exercisesList
                     )
                 )
             }
-//        return Completable.defer {
-//            apiBusinessHelper.createProgram(programEntityDataMapper.transformToEntity(program))
-//                .map {
-//                    for (exercise in exercisesList) {
-//                        exercise.idProgram = it
-//                    }
-//                }.flatMapCompletable {
-//                apiBusinessHelper.createExercise(
-//                    exerciseEntityDataMapper.transformToEntity(
-//                        exercisesList
-//                    )
-//                )
-//            }
-//        }
     }
 
     override fun updateProgram(

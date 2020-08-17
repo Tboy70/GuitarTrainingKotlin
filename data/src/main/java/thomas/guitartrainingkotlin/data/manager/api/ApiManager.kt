@@ -1,12 +1,9 @@
 package thomas.guitartrainingkotlin.data.manager.api
 
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Call
-import retrofit2.Response
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
+import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.SongRemoteEntity
@@ -31,7 +28,7 @@ interface ApiManager {
 
     fun retrieveProgramFromId(idProgram: String): Flow<ProgramRemoteEntity>
 
-    fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String?>
+    fun createProgram(programRemoteEntity: ProgramRemoteEntity): Flow<String>
 
     fun createExercise(exerciseRemoteEntityList: List<ExerciseRemoteEntity>): Flow<Unit>
 

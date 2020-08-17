@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.fragment.program
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.ProgramCreationActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
@@ -21,6 +23,7 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewData
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramsListViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) {
 

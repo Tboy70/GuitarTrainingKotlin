@@ -18,6 +18,18 @@ class DBManagerImpl @Inject constructor(context: Context) : DBManager {
         FlowManager.init(FlowConfig.Builder(context).build())
     }
 
+    override fun insertUser(userDBEntity: UserDBEntity) {
+        userDBEntity.save()
+    }
+
+    override fun clearUser() {
+        (delete(UserDBEntity::class)).execute()
+    }
+
+    override fun retrieveUser(): UserDBEntity? {
+        return (select from UserDBEntity::class).result
+    }
+
     override fun retrieveProgramList(): List<ProgramDBEntity> {
         return (select from ProgramDBEntity::class).list
     }
@@ -96,5 +108,13 @@ class DBManagerImpl @Inject constructor(context: Context) : DBManager {
 
     override fun deleteSong() {
         (delete(SongDBEntity::class)).execute()
+    }
+
+    override fun clearDatabase() {
+        (delete(UserDBEntity::class)).execute()
+        (delete(ProgramDBEntity::class)).execute()
+        (delete(ExerciseDBEntity::class)).execute()
+        (delete(SongDBEntity::class)).execute()
+        (delete(ScoreDBEntity::class)).execute()
     }
 }

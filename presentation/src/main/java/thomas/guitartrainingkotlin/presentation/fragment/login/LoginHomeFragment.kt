@@ -15,6 +15,7 @@ import thomas.guitartrainingkotlin.presentation.activity.GameActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
+import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.KeyboardUtils
 import thomas.guitartrainingkotlin.presentation.viewmodel.login.LoginHomeViewModel
 import javax.inject.Inject
@@ -53,7 +54,17 @@ class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
             viewModel.saveUserPasswordValue(fragment_login_home_password.getInput())
         })
 
-        // Create account button
+        fragment_login_home_validate_button.setOnClickListener {
+            activity?.let { fragmentActivity ->
+                KeyboardUtils.hideKeyboard(fragmentActivity)
+            }
+
+            viewModel.connectUser(
+                fragment_login_home_username.getInput(),
+                fragment_login_home_password.getInput()
+            )
+        }
+
         fragment_login_home_create_account.setOnClickListener {
             findNavController().navigate(
                 R.id.fragment_create_account,
@@ -74,26 +85,12 @@ class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
             val intent = Intent(activity, GameActivity::class.java)
             startActivity(intent)
         }
-
-        // Validate button
-        fragment_login_home_validate_button.setOnClickListener {
-            activity?.let { fragmentActivity ->
-                KeyboardUtils.hideKeyboard(fragmentActivity)
-            }
-
-            viewModel.connectUser(
-                fragment_login_home_username.getInput(),
-                fragment_login_home_password.getInput()
-            )
-        }
     }
 
     private fun initiateViewModelObservers() {
 
-        viewModel.retrievedUserLiveData.observeSafe(this) {
-            if (it) {
-                connectSuccess()
-            }
+        viewModel.retrievedUserLiveData.observeSafe(this) { userId ->
+            connectSuccess(userId)
         }
 
         viewModel.savedUserPseudoLiveData.observeSafe(this) { retrievedPseudo ->
@@ -117,8 +114,10 @@ class LoginHomeFragment : Fragment(R.layout.fragment_login_home) {
         }
     }
 
-    private fun connectSuccess() {
-        val intent = Intent(activity, UserPanelActivity::class.java)
+    private fun connectSuccess(userId: String?) {
+        val intent = Intent(activity, UserPanelActivity::class.java).apply {
+            putExtra(ConstValues.USER_ID, userId)
+        }
         startActivity(intent)
         activity?.finish()
     }

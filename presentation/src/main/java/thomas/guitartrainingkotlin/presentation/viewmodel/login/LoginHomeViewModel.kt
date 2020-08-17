@@ -23,7 +23,7 @@ class LoginHomeViewModel @ViewModelInject constructor(
     private var userPseudo: String = ""
     private var userPassword: String = ""
 
-    val retrievedUserLiveData = MutableLiveData<Boolean>()
+    val retrievedUserLiveData = MutableLiveData<String?>()
     val savedUserPseudoLiveData = MutableLiveData<String>()
     val savedUserPasswordLiveData = MutableLiveData<String>()
 
@@ -43,7 +43,7 @@ class LoginHomeViewModel @ViewModelInject constructor(
                 connectUser.connectUser(user)
                     .onStart { viewState.update { loading = true } }
                     .onCompletion { viewState.update { loading = false } }
-                    .collect { retrievedUserLiveData.postValue(true) }
+                    .collect { retrievedUserLiveData.postValue(it.userId) }
             } catch (e: Exception) {
                 errorLiveEvent.postValue(e)
             }

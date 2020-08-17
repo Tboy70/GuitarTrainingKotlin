@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="thomas.guitartrainingkotlin">
+        package="thomas.guitartrainingkotlin">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:name="thomas.guitartrainingkotlin.presentation.GuitarTrainingApplication"
+            android:name=".presentation.GuitarTrainingApplication"
             android:allowBackup="false"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -14,52 +14,57 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.StartActivity"
+                android:name=".presentation.activity.StartActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-        <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.LoginActivity"
-                android:windowSoftInputMode="adjustPan"
-                android:screenOrientation="portrait"/>
-        <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.UserPanelActivity"
-                android:screenOrientation="portrait"/>
-        <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity"
-                android:screenOrientation="portrait"/>
-        <activity
-                android:name="thomas.guitartrainingkotlin.presentation.activity.ProgramActivity"
-                android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-            </intent-filter>
-        </activity>
-        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.UserSongActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name="thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".presentation.activity.ProgramCreationActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".presentation.activity.GameActivity"
-                  android:screenOrientation="portrait"/>
+                <action android:name="android.intent.action.MAIN" />
 
-        <!-- NOTIFICATION SERVICE -->
-        <service android:name=".presentation.notification.NotificationsService"
-                 android:exported="false">
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".presentation.activity.LoginActivity"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan" />
+        <activity
+                android:name=".presentation.activity.UserPanelActivity"
+                android:screenOrientation="portrait" />
+        <activity
+                android:name=".presentation.activity.UserProgramActivity"
+                android:screenOrientation="portrait" />
+        <activity
+                android:name=".presentation.activity.ProgramActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".presentation.activity.UserSongActivity"
+                android:screenOrientation="portrait" />
+        <activity
+                android:name=".presentation.activity.SongCreationActivity"
+                android:screenOrientation="portrait" />
+        <activity
+                android:name=".presentation.activity.ProgramCreationActivity"
+                android:screenOrientation="portrait" />
+        <activity
+                android:name=".presentation.activity.GameActivity"
+                android:screenOrientation="portrait" /> <!-- NOTIFICATION SERVICE -->
+        <service
+                android:name=".presentation.notification.NotificationsService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/ic_song"/>
+                android:resource="@drawable/ic_song" />
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="@string/default_notification_channel_id"/>
+                android:value="@string/default_notification_channel_id" />
     </application>
 
 </manifest>

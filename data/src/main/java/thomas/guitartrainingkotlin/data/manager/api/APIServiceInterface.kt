@@ -1,6 +1,5 @@
 package thomas.guitartrainingkotlin.data.manager.api
 
-import io.reactivex.Completable
 import retrofit2.http.*
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
@@ -34,7 +33,7 @@ interface APIServiceInterface {
     suspend fun retrieveProgramFromId(@Path("idProgram") idProgram: String): ProgramRemoteEntity
 
     @POST("program")
-    suspend fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity): ProgramResponseRemoteEntity
+    suspend fun createProgram(@Body programRemoteEntity: ProgramRemoteEntity) : ProgramResponseRemoteEntity
 
     @POST("exercise")
     suspend fun createExercise(@Body exerciseRemoteEntity: List<ExerciseRemoteEntity>)

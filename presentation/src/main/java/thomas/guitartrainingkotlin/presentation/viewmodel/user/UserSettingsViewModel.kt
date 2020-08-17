@@ -35,11 +35,11 @@ class UserSettingsViewModel @ViewModelInject constructor(
     }
 
     fun updateInstrumentMode() {
-        currentInstrumentMode?.let {
+        currentInstrumentMode?.let { instrumentMode ->
 
             viewModelScope.launch {
                 try {
-                    setInstrumentModeInSharedPrefs.setInstrumentModeInSharedPrefs(it)
+                    setInstrumentModeInSharedPrefs.setInstrumentModeInSharedPrefs(instrumentMode)
                         .collect { newInstrumentMode ->
                             currentInstrumentMode = newInstrumentMode
                             retrievedInstrumentModeLiveData.postValue(currentInstrumentMode)

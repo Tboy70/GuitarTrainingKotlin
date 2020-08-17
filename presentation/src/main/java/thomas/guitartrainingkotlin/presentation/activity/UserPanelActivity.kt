@@ -1,6 +1,5 @@
 package thomas.guitartrainingkotlin.presentation.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,8 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar_header.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
+import thomas.guitartrainingkotlin.data.exception.UserNotFoundException
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
@@ -28,11 +28,13 @@ import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class UserPanelActivity : BaseActivity() {
 
     @Inject
     lateinit var errorRendererComponent: ErrorRendererComponent
+
     @Inject
     lateinit var dialogComponent: DialogComponent
 
@@ -48,7 +50,8 @@ class UserPanelActivity : BaseActivity() {
         initiateDrawerMenu()
         initiateViewModelObservers()
 
-        viewModel.retrieveUserId()
+        viewModel.retrieveUserId(intent.extras?.getString(ConstValues.USER_ID, null))
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -141,7 +144,7 @@ class UserPanelActivity : BaseActivity() {
     private fun initiateViewModelObservers() {
 
         viewModel.userNotRetrievedLiveEvent.observeSafe(this) {
-            backToLogin()
+            backToLogin()   // Why ? Better than logoutUser()
         }
 
         viewModel.logoutSucceedLiveEvent.observeSafe(this) {
@@ -162,6 +165,9 @@ class UserPanelActivity : BaseActivity() {
 
         viewModel.errorLiveEvent.observeSafe(this) {
             errorRendererComponent.displayError(it)
+            if (it is UserNotFoundException) {
+                viewModel.logoutUser()
+            }
         }
     }
 
@@ -193,6 +199,7 @@ class UserPanelActivity : BaseActivity() {
         finish()
     }
 
+    // TODO : All the navigation part --> I think it could be done a better way !!!
     /*************** NAVIGATION PART ***************/
 
     private fun getActionForUserProgramsDestination() {

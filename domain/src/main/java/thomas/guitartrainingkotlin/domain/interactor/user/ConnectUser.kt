@@ -8,7 +8,8 @@ import javax.inject.Inject
 class ConnectUser @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend fun connectUser(user: User): Flow<User> {
+
+    fun connectUser(user: User): Flow<User> {
         return userRepository.connectUser(user)
     }
 }

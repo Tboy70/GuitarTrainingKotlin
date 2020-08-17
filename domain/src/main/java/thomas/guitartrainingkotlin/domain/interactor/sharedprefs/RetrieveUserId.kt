@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import thomas.guitartrainingkotlin.domain.repository.UserRepository
 import javax.inject.Inject
 
-class RetrieveUserIdInSharedPrefs @Inject constructor(
+class RetrieveUserId @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    fun retrieveUserIdInSharedPrefs(): Flow<String?> {
-        return userRepository.retrieveUserIdInSharedPrefs()
+    fun retrieveUserId(): Flow<String?> {
+        return userRepository.retrieveUserId()
     }
 }

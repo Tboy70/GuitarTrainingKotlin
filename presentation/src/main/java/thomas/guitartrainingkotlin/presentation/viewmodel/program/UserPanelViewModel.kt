@@ -1,12 +1,11 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.program
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import androidx.preference.PreferenceManager
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import thomas.guitartrainingkotlin.data.manager.sharedprefs.SharedPrefsManagerImpl
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
 import thomas.guitartrainingkotlin.domain.interactor.user.LogoutUser
 import thomas.guitartrainingkotlin.domain.interactor.user.RetrieveUserById
@@ -45,7 +44,7 @@ class UserPanelViewModel @ViewModelInject constructor(
                     .collect {
                         logoutSucceedLiveEvent.postValue(true)
                     }
-            }catch (e : Exception) {
+            } catch (e: Exception) {
                 errorLiveEvent.postValue(e)
             }
         }
@@ -53,15 +52,14 @@ class UserPanelViewModel @ViewModelInject constructor(
 
     fun getUserId() = userId
 
-    fun retrieveUserId() {
-        userId = PreferenceManager.getDefaultSharedPreferences(getApplication())
-            .getString(SharedPrefsManagerImpl.CURRENT_USER_ID, "0")
-
-        userId?.let { userId ->
-            if (userId.isNotEmpty() && userId != "0") {
-                getUserById(userId)
-            } else {
-                userNotRetrievedLiveEvent.postValue(true)
+    fun retrieveUserId(userId: String?) {
+        userId?.let {
+            this.userId = it.also {
+                if (it.isNotEmpty()) {
+                    getUserById(it)
+                } else {
+                    userNotRetrievedLiveEvent.postValue(true)
+                }
             }
         }
     }

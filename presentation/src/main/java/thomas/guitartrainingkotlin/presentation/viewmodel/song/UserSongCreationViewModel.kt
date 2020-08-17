@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveInstrumentModeInSharedPrefs
-import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserIdInSharedPrefs
+import thomas.guitartrainingkotlin.domain.interactor.sharedprefs.RetrieveUserId
 import thomas.guitartrainingkotlin.domain.interactor.song.CreateSong
 import thomas.guitartrainingkotlin.domain.model.Song
 import thomas.guitartrainingkotlin.presentation.view.state.song.UserSongCreationViewState
@@ -18,7 +18,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEve
 @ExperimentalCoroutinesApi
 class UserSongCreationViewModel @ViewModelInject constructor(
     private val createSong: CreateSong,
-    private val retrieveUserIdInSharedPrefs: RetrieveUserIdInSharedPrefs,
+    private val retrieveUserId: RetrieveUserId,
     private val retrieveInstrumentModeInSharedPrefs: RetrieveInstrumentModeInSharedPrefs
 ) : StateViewModel<UserSongCreationViewState>() {
 
@@ -82,7 +82,7 @@ class UserSongCreationViewModel @ViewModelInject constructor(
 
         viewModelScope.launch {
             try {
-                retrieveUserIdInSharedPrefs.retrieveUserIdInSharedPrefs()
+                retrieveUserId.retrieveUserId()
                     .collect {
                         songToCreate.userId = it ?: "0" // Todo : Check that
                     }
