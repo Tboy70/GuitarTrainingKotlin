@@ -42,7 +42,10 @@ class UserPanelActivity : BaseActivity() {
 
         initiateToolbar()
         initiateViewModelObservers()
+    }
 
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         viewModel.retrieveUserId(intent.extras?.getString(ConstValues.USER_ID, null))
     }
 

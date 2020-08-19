@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_program_update"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
             android:layout_width="match_parent"
@@ -47,7 +46,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_user_program_update_toolbar"
                     tool:ignore="Autofill"
-                    tool:text="Mon super programme"/>
+                    tool:text="Mon super programme" />
 
             <EditText
                     android:id="@+id/fragment_user_program_update_description"
@@ -62,7 +61,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_name"
                     tool:ignore="Autofill"
-                    tool:text="Ma super description"/>
+                    tool:text="Ma super description" />
 
             <TextView
                     android:id="@+id/fragment_user_program_update_exercises_title"
@@ -73,13 +72,13 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_description"/>
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_update_description" />
 
             <LinearLayout
                     android:id="@+id/fragment_user_program_update_exercises_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:orientation="vertical" />
 
         </LinearLayout>
     </ScrollView>
@@ -91,6 +90,6 @@
             android:text="@string/generic_button_validate"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

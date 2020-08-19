@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tool="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -25,14 +24,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_very_big"
-                tool:text="Square Hammer"/>
+                tool:text="Square Hammer" />
 
         <TextView
                 android:id="@+id/view_user_songs_list_item_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_default"
-                tool:text="Ghost"/>
+                tool:text="Ghost" />
 
         <TextView
                 android:id="@+id/view_user_songs_list_item_last_play"
@@ -40,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_song_list_last_play"
                 android:textSize="@dimen/text_default"
-                tool:text="Joué la dernière fois : 28/09/2018"/>
+                tool:text="Joué la dernière fois : 28/09/2018" />
 
     </LinearLayout>
 
@@ -61,7 +60,7 @@
                 android:gravity="end"
                 android:text="@string/user_song_list_nb_play"
                 android:textSize="@dimen/text_default"
-                tool:text="Joué : 56 fois"/>
+                tool:text="Joué : 56 fois" />
 
         <TextView
                 android:id="@+id/view_user_songs_list_item_score"
@@ -70,7 +69,7 @@
                 android:gravity="end"
                 android:text="@string/user_song_list_score"
                 android:textSize="@dimen/text_default"
-                tool:text="Note : 4.5"/>
+                tool:text="Note : 4.5" />
 
     </LinearLayout>
 

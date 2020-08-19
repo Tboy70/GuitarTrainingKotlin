@@ -143,9 +143,6 @@ class APIBusinessHelper @Inject constructor(
         }
     }
 
-    /**
-     * TODO : Check if exercises are removed or update in database
-     */
     fun updateProgram(
         programEntity: ProgramEntity,
         exercisesToBeRemoved: List<ExerciseEntity>
@@ -172,37 +169,6 @@ class APIBusinessHelper @Inject constructor(
             merge(updateProgramFlow, updateExercisesFlow)
         }
     }
-
-//            .flatMapConcat {
-//            apiManager.updateProgram(
-//                programRemoteEntityDataMapper.transformFromEntity(
-//                    programEntity
-//                )
-//            ).onEach {
-//                apiManager.updateExercise(
-//                    exerciseRemoteEntityDataMapper.transformFromEntity(
-//                        programEntity.exerciseEntityList
-//                    )
-//                )
-//            }
-
-//                .map {
-//                dbManager.updateProgram(programDBEntityDataMapper.transformToDB(programEntity))
-//            }.flatMapConcat {
-//                apiManager.updateExercise(
-//                    exerciseRemoteEntityDataMapper.transformFromEntity(
-//                        programEntity.exerciseEntityList
-//                    )
-//                )
-//            }
-//    }
-//            .flatMapMerge {
-//            apiManager.updateExercise(
-//                exerciseRemoteEntityDataMapper.transformFromEntity(
-//                    programEntity.exerciseEntityList
-//                )
-//            )
-//        }
 
     fun removeProgram(idProgram: String): Flow<Unit> {
         return apiManager.removeProgram(idProgram).onCompletion {

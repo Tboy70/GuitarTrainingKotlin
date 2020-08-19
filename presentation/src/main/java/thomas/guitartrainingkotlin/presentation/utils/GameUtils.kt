@@ -2,8 +2,8 @@ package thomas.guitartrainingkotlin.presentation.utils
 
 import android.content.Context
 import thomas.guitartrainingkotlin.R
-import java.lang.Math.abs
 import java.util.*
+import kotlin.math.abs
 
 object GameUtils {
 

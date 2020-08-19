@@ -12,7 +12,6 @@ import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseBendSlideViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 @AndroidEntryPoint
@@ -23,7 +22,6 @@ class ExerciseBendSlideFragment : BaseExerciseFragment() {
     private var navHost: View? = null
 
     private val sharedViewModel by viewModels<ProgramSharedViewModel>()
-    private val exerciseBendSlideViewModel by viewModels<ExerciseBendSlideViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

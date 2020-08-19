@@ -56,20 +56,22 @@ class ProgramActivity : BaseActivity() {
         if (rankExercise < exercisesOfProgram.size) {
 
             val rightExercise = exercisesOfProgram[rankExercise]
-            val bundle = Bundle()
-            bundle.putInt(BaseExerciseFragment.RANK_EXERCISE, rankExercise)
-            bundle.putInt(
-                BaseExerciseFragment.DURATION_EXERCISE,
-                rightExercise.getDurationExercise()
-            )
-            bundle.putString(BaseExerciseFragment.NAME_PROGRAM, nameProgram)
+            val bundle = Bundle().apply {
+                putInt(BaseExerciseFragment.RANK_EXERCISE, rankExercise)
+                putInt(
+                    BaseExerciseFragment.DURATION_EXERCISE,
+                    rightExercise.getDurationExercise()
+                )
+                putString(BaseExerciseFragment.NAME_PROGRAM, nameProgram)
+            }
 
             if (!programStarted) {
                 navHost?.findNavController()?.let {
                     val idFragmentToLaunch =
                         ExerciseUtils.convertTypeExerciseToStartIdFragment(rightExercise.getTypeExercise())
-                    val graph = it.navInflater.inflate(R.navigation.program_nav_graph)
-                    graph.startDestination = idFragmentToLaunch
+                    val graph = it.navInflater.inflate(R.navigation.program_nav_graph).apply {
+                        startDestination = idFragmentToLaunch
+                    }
                     it.setGraph(graph, bundle)
                     programStarted = true
                 }

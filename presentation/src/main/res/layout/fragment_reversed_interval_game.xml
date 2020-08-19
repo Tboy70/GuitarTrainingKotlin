@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_reversed_interval_game_list"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/fragment_reversed_interval_game_title"
@@ -25,7 +24,7 @@
             android:text="@string/reversed_interval_game_title"
             app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
             android:id="@+id/fragment_reversed_interval_game_description"
@@ -36,7 +35,7 @@
             android:text="@string/reversed_interval_game_description"
             app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
             android:id="@+id/fragment_reversed_interval_game_question"
@@ -47,7 +46,7 @@
             android:text="@string/reversed_interval_game_question"
             app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_description"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
             android:id="@+id/fragment_reversed_interval_game_answer"
@@ -61,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_question"
-            tools:ignore="Autofill"/>
+            tools:ignore="Autofill" />
 
     <Button
             android:id="@+id/fragment_reversed_interval_game_validate"
@@ -71,6 +70,6 @@
             android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

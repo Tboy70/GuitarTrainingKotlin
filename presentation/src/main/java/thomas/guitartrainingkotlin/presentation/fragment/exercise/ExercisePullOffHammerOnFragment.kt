@@ -12,7 +12,6 @@ import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExercisePullOffHammerOnViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 @AndroidEntryPoint
@@ -22,7 +21,6 @@ class ExercisePullOffHammerOnFragment : BaseExerciseFragment() {
 
     private var navHost: View? = null
 
-    private val exercisePullOffHammerOnViewModel by viewModels<ExercisePullOffHammerOnViewModel>()
     private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.view_user_songs_list_item.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
+import kotlin.math.roundToInt
 
 class SongListViewHolder(
     itemView: View,
@@ -44,7 +45,7 @@ class SongListViewHolder(
             if (it) {
                 context.getString(R.string.const_na)
             } else {
-                (Math.round(averageScoreSong * 100.0) / 100.0).toString()
+                ((averageScoreSong * 100.0).roundToInt() / 100.0).toString()
             }
         }.let { infoToDisplay ->
             view_user_songs_list_item_score.text = String.format(

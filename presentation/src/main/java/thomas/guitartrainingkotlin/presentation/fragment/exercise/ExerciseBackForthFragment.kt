@@ -12,7 +12,6 @@ import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseBackForthViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 @AndroidEntryPoint
@@ -22,7 +21,6 @@ class ExerciseBackForthFragment : BaseExerciseFragment() {
 
     private var navHost: View? = null
 
-    private val exerciseBackForthViewModel by viewModels<ExerciseBackForthViewModel>()
     private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

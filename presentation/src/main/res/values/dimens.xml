@@ -6,11 +6,9 @@
     <dimen name="text_big">15sp</dimen>
     <dimen name="text_very_big">18sp</dimen>
     <dimen name="text_huge">22sp</dimen>
-    <dimen name="text_very_huge">24sp</dimen>
 
     <!-- GENERIC BUTTON SIZE-->
     <dimen name="button_width">250dp</dimen>
-    <dimen name="button_height">45dp</dimen>
 
     <!-- GENERIC SPACE SIZE -->
     <dimen name="space_small">5dp</dimen>
@@ -39,9 +37,6 @@
     <dimen name="timer_height">270dp</dimen>
     <dimen name="button_timer_margin_top">120dp</dimen>
 
-    <!-- DRAWER -->
-    <dimen name="navigation_drawer_header_height">180dp</dimen>
-
     <!-- LOGIN -->
     <dimen name="fragment_login_home_progress_bar">25dp</dimen>
 
@@ -67,7 +62,6 @@
 
     <!-- FORGOT PASSWORD -->
     <dimen name="forgot_password_email_margin_top">25dp</dimen>
-    <dimen name="forgot_password_explanation_margin_top">25dp</dimen>
 
     <!-- GAME -->
     <dimen name="degree_edit_text_width">100dp</dimen>
@@ -80,6 +74,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

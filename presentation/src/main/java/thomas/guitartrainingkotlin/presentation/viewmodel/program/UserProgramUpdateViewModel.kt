@@ -92,7 +92,6 @@ class UserProgramUpdateViewModel @ViewModelInject constructor(
                             updateProgramSuccess.postValue(true)
                         }
                 } catch (e: Exception) {
-                    updateProgramSuccess.postValue(false)
                     errorLiveEvent.postValue(e)
                 }
             }

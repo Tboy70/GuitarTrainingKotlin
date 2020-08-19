@@ -29,9 +29,4 @@ fun View.gone() {
 
 fun EditText.getInput() = text.toString()
 
-fun EditText.isEmpty() = text.isEmpty()
-
 fun EditText.isNotEmpty() = text.isNotEmpty()
-
-val <T> T.exhaustive: T
-    get() = this

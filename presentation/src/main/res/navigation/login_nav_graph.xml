@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         app:startDestination="@+id/fragment_login">
@@ -17,7 +16,7 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/fragment_create_account"/>
+                app:popUpTo="@+id/fragment_create_account" />
 
         <action
                 android:id="@+id/action_forgot_password"
@@ -26,17 +25,17 @@
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"
                 app:popExitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/fragment_forgot_password"/>
+                app:popUpTo="@+id/fragment_forgot_password" />
     </fragment>
 
     <fragment
             android:id="@+id/fragment_create_account"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.login.CreateAccountFragment"
-            tools:layout="@layout/fragment_create_account"/>
+            tools:layout="@layout/fragment_create_account" />
 
     <fragment
             android:id="@+id/fragment_forgot_password"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.login.ForgotPasswordFragment"
-            tools:layout="@layout/fragment_forgot_password"/>
+            tools:layout="@layout/fragment_forgot_password" />
 
 </navigation>

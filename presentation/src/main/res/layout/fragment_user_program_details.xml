@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment_user_program_details_constraint_layout"
@@ -15,7 +14,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_program_details"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_user_program_content_layout"
@@ -38,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:text="Mon super programme"/>
+                tools:text="Mon super programme" />
 
         <TextView
                 android:id="@+id/fragment_user_program_details_description"
@@ -49,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_user_program_details_name"
-                tools:text="Ma super description"/>
+                tools:text="Ma super description" />
 
         <ScrollView
                 android:id="@+id/fragment_user_program_details_exercises_scroll_view"
@@ -65,7 +64,7 @@
                     android:id="@+id/fragment_user_program_details_exercises"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:orientation="vertical" />
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -78,7 +77,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/fragment_user_program_details_start_button"
@@ -87,7 +86,7 @@
             android:text="@string/user_program_details_start"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_update_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/fragment_user_program_details_update_button"
@@ -97,7 +96,7 @@
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_program_details_remove_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
             android:id="@+id/fragment_user_program_details_progress_bar"
@@ -108,6 +107,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

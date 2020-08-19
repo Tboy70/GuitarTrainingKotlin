@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fragment_user_song_details_constraint_layout"
@@ -15,7 +14,7 @@
             app:title="@string/toolbar_title_song_details"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
             android:id="@+id/fragment_user_song_details_name"
@@ -30,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_song_details_toolbar"
-            tools:text="Ma super chanson"/>
+            tools:text="Ma super chanson" />
 
     <TextView
             android:id="@+id/fragment_user_song_details_artist"
@@ -41,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_song_details_name"
-            tools:text="Mon super artiste"/>
+            tools:text="Mon super artiste" />
 
     <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/fragment_user_song_chart"
@@ -54,14 +53,14 @@
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_rate_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_artist"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_artist" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/fragment_user_song_details_guideline_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7"/>
+            app:layout_constraintGuide_percent="0.7" />
 
     <Button
             android:id="@+id/fragment_user_song_details_rate_button"
@@ -73,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_guideline_2"/>
+            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_details_guideline_2" />
 
     <Button
             android:id="@+id/fragment_user_song_details_update_button"
@@ -84,7 +83,7 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_user_song_details_rate_button"
             app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_details_remove_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/fragment_user_song_details_remove_button"
@@ -95,7 +94,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_user_song_details_update_button"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
             android:id="@+id/fragment_user_song_details_progress_bar"
@@ -106,8 +105,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
-            tools:visibility="visible"
-    />
+            tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

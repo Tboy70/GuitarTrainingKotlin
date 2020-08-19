@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:textSize="@dimen/text_very_big"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
             android:id="@+id/view_help_scale_title"
@@ -27,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_help_scale_reminder"
-            tools:text="Gamme pentatonique majeure"/>
+            tools:text="Gamme pentatonique majeure" />
 
     <TextView
             android:id="@+id/view_help_scale_interval"
@@ -38,6 +37,6 @@
             app:layout_constraintTop_toBottomOf="@id/view_help_scale_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="@string/minor_melodic_scale_interval"/>
+            tools:text="@string/minor_melodic_scale_interval" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

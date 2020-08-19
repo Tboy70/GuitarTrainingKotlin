@@ -162,6 +162,10 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
         viewModel.updateProgramSuccess.observeSafe(this) {
             activity?.finish()
         }
+
+        viewModel.errorLiveEvent.observeSafe(this) {
+            errorRendererComponent.displayError(it)
+        }
     }
 
     private fun initExercisesList(exercises: MutableList<Exercise>) {

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -18,6 +19,11 @@ private const val NOTIFICATION_TAG = "FIREBASEOC"
 private const val NOTIFICATION_CHANNEL_NAME = "Message provenant de Firebase"
 
 class NotificationsService : FirebaseMessagingService() {
+
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+        Log.e("TEST", "TODO")
+    }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification?.let { notification ->

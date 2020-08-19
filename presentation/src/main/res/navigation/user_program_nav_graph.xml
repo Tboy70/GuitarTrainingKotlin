@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            app:startDestination="@+id/user_program_details">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:startDestination="@+id/user_program_details">
 
     <fragment
             android:id="@+id/user_program_details"
@@ -11,12 +11,12 @@
             tools:layout="@layout/fragment_user_program_details">
         <action
                 android:id="@+id/action_user_program_update"
-                app:destination="@id/user_program_update"/>
+                app:destination="@id/user_program_update" />
     </fragment>
 
     <fragment
             android:id="@+id/user_program_update"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.program.UserProgramUpdateFragment"
-            tools:layout="@layout/fragment_user_program_update"/>
+            tools:layout="@layout/fragment_user_program_update" />
 
 </navigation>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tool="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="@dimen/padding_start_end"
         android:paddingTop="@dimen/padding_top_bottom"
@@ -17,7 +17,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_very_big"
             app:layout_constraintTop_toTopOf="parent"
-            tool:text="Programme théorique par défaut"/>
+            tool:text="Programme théorique par défaut" />
 
     <TextView
             android:id="@+id/view_user_programs_list_item_nb_exercises"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/view_user_programs_list_item_name"
             android:textSize="@dimen/text_default"
-            tool:text="Nombre d'exercise : 6"/>
+            tool:text="Nombre d'exercise : 6" />
 
     <TextView
             android:id="@+id/view_user_programs_list_item_total_duration_exercises"
@@ -33,6 +33,6 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_default"
             app:layout_constraintTop_toBottomOf="@id/view_user_programs_list_item_nb_exercises"
-            tool:text="Durée totale du programme, 30 minutes"/>
+            tool:text="Durée totale du programme, 30 minutes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

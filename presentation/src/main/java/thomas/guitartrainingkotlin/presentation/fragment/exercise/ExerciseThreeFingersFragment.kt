@@ -12,7 +12,6 @@ import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
 import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.fragment.BaseExerciseFragment
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
-import thomas.guitartrainingkotlin.presentation.viewmodel.exercise.ExerciseThreeFingersViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.shared.ProgramSharedViewModel
 
 @AndroidEntryPoint
@@ -22,7 +21,6 @@ class ExerciseThreeFingersFragment : BaseExerciseFragment() {
 
     private var navHost: View? = null
 
-    private val exerciseThreeFingersViewModel by viewModels<ExerciseThreeFingersViewModel>()
     private val sharedViewModel by viewModels<ProgramSharedViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

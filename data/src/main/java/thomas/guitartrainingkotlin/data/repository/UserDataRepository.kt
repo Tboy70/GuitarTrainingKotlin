@@ -65,8 +65,9 @@ class UserDataRepository @Inject constructor(
 
     override fun suppressAccount(userId: String): Flow<Unit> {
         return apiBusinessHelper.suppressAccount(userId).onEach {
-            contentBusinessHelper.deleteUser()
-            contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
+            contentBusinessHelper.deleteDatabase().map {
+                contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
+            }
         }
     }
 }

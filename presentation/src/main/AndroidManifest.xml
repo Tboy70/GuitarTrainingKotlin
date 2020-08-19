@@ -15,8 +15,7 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".presentation.activity.UserPanelActivity"
-                android:label="@string/title_activity_test"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity
                 android:name=".presentation.activity.StartActivity"
                 android:screenOrientation="portrait">

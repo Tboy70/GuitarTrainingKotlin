@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- APP -->
     <string name="app_name">Guitar Training</string>
@@ -64,7 +64,6 @@
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
-    <string name="nav_user_panel_home">User Panel Home</string>
     <string name="nav_user_program_home">User Program Home</string>
     <string name="nav_user_song_home">User Song Home</string>
 
@@ -105,8 +104,6 @@
     <string name="user_panel_navigation_drawer_settings">Paramètres</string>
     <string name="user_panel_navigation_drawer_logout">Se déconnecter</string>
     <string name="user_panel_navigation_drawer_programs">Mes programmes</string>
-    <string name="user_panel_navigation_drawer_open">Open navigation drawer</string>
-    <string name="user_panel_navigation_drawer_close">Close navigation drawer</string>
     <string name="user_panel_navigation_drawer_legal_notices">Mentions légales</string>
 
     <!-- USER PROGRAM GENERIC -->
@@ -124,7 +121,6 @@
     </string>
 
     <!-- USER PROGRAM DETAILS -->
-    <string name="user_details_program_exercises_text">Exercises</string>
     <string name="user_program_details_start">Démarrer le programme</string>
     <string name="user_program_details_update">Modifier le programme</string>
     <string name="user_program_details_remove">Supprimer le programme</string>
@@ -148,7 +144,7 @@
 
     <!-- USER SONGS LIST -->
     <string name="user_song_list_score">Note : %1$s/5</string>
-    <string name="user_song_list_nb_play">Jouée : %1$d fois</string>
+    <string name="user_song_list_nb_play" tools:ignore="PluralsCandidate">Jouée : %1$d fois</string>
     <string name="user_song_list_last_play">Jouée la dernière fois : %1$s</string>
     <string name="user_song_list_no_program_text">Aucune chanson disponible</string>
 
@@ -431,16 +427,5 @@
     </string>
     <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
     </string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 
 </resources>

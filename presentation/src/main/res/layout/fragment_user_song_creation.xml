@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,7 +13,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:titleTextAppearance="@style/ToolbarTitleText"
             app:title="@string/toolbar_title_song_creation"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/fragment_user_song_creation_title"
@@ -28,7 +27,7 @@
             android:paddingEnd="@dimen/constraint_layout_margin_16"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_user_song_creation_toolbar"/>
+            app:layout_constraintTop_toBottomOf="@id/fragment_user_song_creation_toolbar" />
 
     <ScrollView
             android:layout_width="match_parent"
@@ -54,7 +53,7 @@
                     android:hint="@string/song_title"
                     android:inputType="text"
                     android:maxLines="1"
-                    tools:ignore="Autofill"/>
+                    tools:ignore="Autofill" />
 
             <EditText
                     android:id="@+id/fragment_user_song_creation_artist"
@@ -63,13 +62,13 @@
                     android:hint="@string/song_artist"
                     android:inputType="text"
                     android:maxLines="1"
-                    tools:ignore="Autofill"/>
+                    tools:ignore="Autofill" />
 
             <LinearLayout
                     android:id="@+id/fragment_user_song_creation_exercises"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:orientation="vertical" />
 
         </LinearLayout>
     </ScrollView>
@@ -83,7 +82,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
             android:id="@+id/fragment_user_song_creation_validation"
@@ -93,6 +92,6 @@
             android:text="@string/user_song_creation_button_validate_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

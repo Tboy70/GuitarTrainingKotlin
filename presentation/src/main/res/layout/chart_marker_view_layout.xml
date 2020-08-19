@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="@dimen/ic_chart_marker_width"
-                android:layout_height="@dimen/ic_chart_marker_height"
-                android:background="@drawable/ic_plectrum">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="@dimen/ic_chart_marker_width"
+        android:layout_height="@dimen/ic_chart_marker_height"
+        android:background="@drawable/ic_plectrum">
 
     <TextView
             android:id="@+id/chart_marker_view_content"
@@ -16,6 +16,6 @@
             android:lines="2"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_default"
-            tools:text="4.00/5 le 24/08/2018"/>
+            tools:text="4.00/5 le 24/08/2018" />
 
 </RelativeLayout>

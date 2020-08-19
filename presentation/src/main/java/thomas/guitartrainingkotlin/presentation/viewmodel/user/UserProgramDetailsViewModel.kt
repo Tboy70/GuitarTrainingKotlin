@@ -23,7 +23,6 @@ class UserProgramDetailsViewModel @ViewModelInject constructor(
     override val currentViewState = UserProgramDetailsViewState()
 
     private var idProgram: String? = null
-    private var nameProgram: String? = null
 
     val programRetrievedLiveData = MutableLiveData<ProgramViewDataWrapper>()
     val finishProgramDeletion: MutableLiveData<Boolean> = MutableLiveData()

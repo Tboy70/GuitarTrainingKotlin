@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:title="@string/create_account_title"
                 app:titleTextAppearance="@style/ToolbarTitleText"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/fragment_create_account_title"
@@ -32,7 +32,7 @@
                 android:text="@string/create_account_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_create_account_toolbar"/>
+                app:layout_constraintTop_toBottomOf="@id/fragment_create_account_toolbar" />
 
         <LinearLayout
                 android:id="@+id/fragment_create_account_info_layout"
@@ -54,7 +54,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_title"
-                    tools:ignore="Autofill"/>
+                    tools:ignore="Autofill" />
 
             <EditText
                     android:id="@+id/fragment_create_account_email"
@@ -65,7 +65,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_pseudo"
-                    tools:ignore="Autofill"/>
+                    tools:ignore="Autofill" />
 
             <EditText
                     android:id="@+id/fragment_create_account_password"
@@ -76,7 +76,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_email"
-                    tools:ignore="Autofill"/>
+                    tools:ignore="Autofill" />
 
         </LinearLayout>
 
@@ -89,7 +89,7 @@
                 app:layout_constraintBottom_toTopOf="@id/fragment_create_account_validate"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         <Button
                 android:id="@+id/fragment_create_account_validate"
@@ -101,7 +101,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_info_layout"/>
+                app:layout_constraintTop_toBottomOf="@+id/fragment_create_account_info_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

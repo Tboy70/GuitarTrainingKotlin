@@ -2,8 +2,6 @@ package thomas.guitartrainingkotlin.presentation.ui.chart
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.DisplayMetrics
-import android.view.WindowManager
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -38,28 +36,6 @@ class ChartMarkerView constructor(
             "%.2f".format(e.y),
             getTimeDate(currentTimestamp)
         )
-    }
-
-    fun getXOffset(xpos: Float): Int {
-        // this will center the marker-view horizontally
-        val minOffset = 50
-        if (xpos < minOffset)
-            return 0
-
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val metrics = DisplayMetrics()
-        wm.defaultDisplay.getMetrics(metrics)
-        //For right hand side
-        if (metrics.widthPixels - xpos < minOffset)
-            return -width
-        else if (metrics.widthPixels - xpos < 0)
-            return -width//For left hand side
-        return -(width / 2)
-    }
-
-    fun getYOffset(ypos: Float): Int {
-        // this will cause the marker-view to be above the selected value
-        return -height
     }
 
     private fun getTimeDate(timestamp: Long): String {
