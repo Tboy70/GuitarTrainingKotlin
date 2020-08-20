@@ -11,7 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
-import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.SongRemoteEntity

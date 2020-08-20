@@ -3,7 +3,6 @@ package thomas.guitartrainingkotlin.data.manager.api
 import kotlinx.coroutines.flow.Flow
 import thomas.guitartrainingkotlin.data.entity.remote.exercise.ExerciseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramRemoteEntity
-import thomas.guitartrainingkotlin.data.entity.remote.program.ProgramResponseRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.score.ScoreRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.ScoreFeedbackRemoteEntity
 import thomas.guitartrainingkotlin.data.entity.remote.song.SongRemoteEntity
@@ -14,7 +13,7 @@ interface ApiManager {
     // User
     fun connectUser(userRemoteEntity: UserRemoteEntity): Flow<UserRemoteEntity>
 
-    fun createNewUser(userRemoteEntity: UserRemoteEntity) : Flow<Unit>
+    fun createNewUser(userRemoteEntity: UserRemoteEntity): Flow<Unit>
 
     fun retrieveUserById(userId: String): Flow<UserRemoteEntity>
 
@@ -24,7 +23,10 @@ interface ApiManager {
 
 
     // Program
-    fun retrieveProgramsListByUserId(userId: String, instrumentModeValue: Int): Flow<List<ProgramRemoteEntity>>
+    fun retrieveProgramsListByUserId(
+        userId: String,
+        instrumentModeValue: Int
+    ): Flow<List<ProgramRemoteEntity>>
 
     fun retrieveProgramFromId(idProgram: String): Flow<ProgramRemoteEntity>
 
@@ -42,7 +44,10 @@ interface ApiManager {
 
 
     // Song
-    fun retrieveSongListByUserId(userId: String, instrumentModeValue: Int): Flow<List<SongRemoteEntity>>
+    fun retrieveSongListByUserId(
+        userId: String,
+        instrumentModeValue: Int
+    ): Flow<List<SongRemoteEntity>>
 
     fun retrieveSongFromId(idSong: String): Flow<SongRemoteEntity>
 
@@ -52,7 +57,10 @@ interface ApiManager {
 
     fun removeSong(idSong: String): Flow<Unit>
 
-    fun sendScoreFeedback(scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity, idSong: String): Flow<Unit>
+    fun sendScoreFeedback(
+        scoreFeedbackRemoteEntity: ScoreFeedbackRemoteEntity,
+        idSong: String
+    ): Flow<Unit>
 
     fun retrieveSongScoreHistory(idSong: String): Flow<List<ScoreRemoteEntity>>
 }

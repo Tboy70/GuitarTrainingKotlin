@@ -6,17 +6,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import thomas.guitartrainingkotlin.data.executor.JobExecutor
-import thomas.guitartrainingkotlin.domain.executor.ThreadExecutor
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 object DataModule {
 
-    @Provides
-    @Singleton
-    fun jobExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
+//    @Provides
+//    @Singleton
+//    fun jobExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
 
     @Provides
     @Singleton

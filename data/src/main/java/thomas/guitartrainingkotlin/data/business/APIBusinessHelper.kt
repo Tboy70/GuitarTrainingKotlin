@@ -1,6 +1,5 @@
 package thomas.guitartrainingkotlin.data.business
 
-import android.util.Log
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -83,14 +82,14 @@ class APIBusinessHelper @Inject constructor(
             .flatMapConcat {
                 apiManager.retrieveProgramsListByUserId(
                     userId, it
-                ).map {
-                    programRemoteEntityDataMapper.transformToEntity(it)
-                }.onEach {
+                ).map {programRemoteEntityList ->
+                    programRemoteEntityDataMapper.transformToEntity(programRemoteEntityList)
+                }.onEach {programEntityList ->
 
                     dbManager.deleteProgram()
                     dbManager.deleteExercise()
 
-                    val programDBEntityList = programDBEntityDataMapper.transformToDB(it)
+                    val programDBEntityList = programDBEntityDataMapper.transformToDB(programEntityList)
                     dbManager.insertProgramList(programDBEntityList)
 
                     val exerciseList = mutableListOf<ExerciseDBEntity>()
@@ -171,7 +170,7 @@ class APIBusinessHelper @Inject constructor(
     }
 
     fun removeProgram(idProgram: String): Flow<Unit> {
-        return apiManager.removeProgram(idProgram).onCompletion {
+        return apiManager.removeProgram(idProgram).onEach {
             dbManager.deleteProgramById(idProgram)
         }
     }
@@ -180,58 +179,45 @@ class APIBusinessHelper @Inject constructor(
         return sharedPrefsManager.getInstrumentModeInSharedPrefs().flatMapConcat {
             apiManager.retrieveSongListByUserId(
                 userId, it
-            ).map {
-                songRemoteEntityDataMapper.transformToEntity(it)
-            }.onEach {
-                /** Replace doOnSuccess ? */
+            ).map {songRemoteEntityList ->
+                songRemoteEntityDataMapper.transformToEntity(songRemoteEntityList)
+            }.onEach {songEntityList ->
                 dbManager.deleteSong()
-                dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
+                dbManager.insertSongList(songDBEntityDataMapper.transformToDB(songEntityList))
             }.catch {
-                /** replace onErrorResumeNext ? */
-                songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList())
+                emitAll(flowOf(songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList())))
             }
         }
-//        return apiManager.retrieveSongListByUserId(
-//            userId, sharedPrefsManager.getInstrumentModeInSharedPrefs()
-//        ).map {
-//            songRemoteEntityDataMapper.transformToEntity(it)
-//        }.onEach {
-//            /** Replace doOnSuccess ? */
-//            dbManager.deleteSong()
-//            dbManager.insertSongList(songDBEntityDataMapper.transformToDB(it))
-//        }.catch {
-//            /** replace onErrorResumeNext ? */
-//            songDBEntityDataMapper.transformFromDB(dbManager.retrieveSongList())
-//        }
     }
 
     fun retrieveSongFromId(idSong: String): Flow<SongEntity> {
         return apiManager.retrieveSongFromId(idSong).map {
             songRemoteEntityDataMapper.transformToEntity(it)
         }.catch {
-            /** replace onErrorResumeNext ? */
-            dbManager.retrieveSongById(idSong)?.let {
+            val songRetrievedFromDB = dbManager.retrieveSongById(idSong)?.let {
                 songDBEntityDataMapper.transformFromDB(it)
             } ?: throw SongNotFoundException()
+
+            emitAll(flowOf(songRetrievedFromDB))
         }
     }
 
     fun createSong(songEntity: SongEntity): Flow<Unit> {
         return apiManager.createSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
-            .onCompletion {
+            .onEach {
                 dbManager.insertSong(songDBEntityDataMapper.transformToDB(songEntity))
             }
     }
 
     fun removeSong(idSong: String): Flow<Unit> {
-        return apiManager.removeSong(idSong).onCompletion {
+        return apiManager.removeSong(idSong).onEach {
             dbManager.deleteSongById(idSong)
         }
     }
 
     fun updateSong(songEntity: SongEntity): Flow<Unit> {
         return apiManager.updateSong(songRemoteEntityDataMapper.transformFromEntity(songEntity))
-            .onCompletion {
+            .onEach {
                 dbManager.updateSong(songDBEntityDataMapper.transformToDB(songEntity))
             }
     }
@@ -250,7 +236,15 @@ class APIBusinessHelper @Inject constructor(
         }.onEach {
             dbManager.updateSongScore(idSong, scoreDBEntityDataMapper.transformToDB(it))
         }.catch {
-            scoreDBEntityDataMapper.transformFromDB(dbManager.retrieveSongScore(idSong))
+            emitAll(
+                flowOf(
+                    scoreDBEntityDataMapper.transformFromDB(
+                        dbManager.retrieveSongScore(
+                            idSong
+                        )
+                    )
+                )
+            )
         }
     }
 }

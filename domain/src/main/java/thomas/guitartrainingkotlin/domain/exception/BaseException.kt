@@ -1,24 +1,13 @@
 package thomas.guitartrainingkotlin.domain.exception
 
-open class BaseException : Exception {
+open class BaseException : Exception() {
 
     private val code: Int
 
-    constructor() : super() {
+    init {
         code = CODE_NONE
     }
-
-    constructor(code: Int) : super() {
-        this.code = code
-    }
-
-    constructor(message: String, code: Int) : super(message) {
-        this.code = code
-    }
-
     companion object {
         const val CODE_NONE = 100
-        const val CODE_MODULE_TRACE_WRITE = 101
     }
-
 }
