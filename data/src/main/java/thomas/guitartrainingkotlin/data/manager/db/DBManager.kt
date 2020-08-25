@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.data.manager.db
 
-import thomas.guitartrainingkotlin.data.entity.db.*
+import thomas.guitartrainingkotlin.data.db.entity.*
+
 
 interface DBManager {
 

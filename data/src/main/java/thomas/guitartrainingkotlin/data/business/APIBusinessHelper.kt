@@ -3,8 +3,8 @@ package thomas.guitartrainingkotlin.data.business
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
+import thomas.guitartrainingkotlin.data.db.entity.ExerciseDBEntity
 import thomas.guitartrainingkotlin.data.entity.*
-import thomas.guitartrainingkotlin.data.entity.db.ExerciseDBEntity
 import thomas.guitartrainingkotlin.data.exception.ProgramNotFoundException
 import thomas.guitartrainingkotlin.data.exception.SongNotFoundException
 import thomas.guitartrainingkotlin.data.exception.UserNotFoundException

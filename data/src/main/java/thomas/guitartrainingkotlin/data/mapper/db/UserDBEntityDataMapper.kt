@@ -1,7 +1,7 @@
 package thomas.guitartrainingkotlin.data.mapper.db
 
+import thomas.guitartrainingkotlin.data.db.entity.UserDBEntity
 import thomas.guitartrainingkotlin.data.entity.UserEntity
-import thomas.guitartrainingkotlin.data.entity.db.UserDBEntity
 import thomas.guitartrainingkotlin.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -43,7 +43,7 @@ class UserDBEntityDataMapper @Inject constructor() {
     fun transformToDB(userEntity: UserEntity): UserDBEntity {
         try {
             return UserDBEntity(
-                userId = userEntity.userId,
+                userId = userEntity.userId?:"What", // TODO
                 userPseudo = userEntity.userPseudo,
                 userEmail = userEntity.userEmail
             )

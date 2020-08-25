@@ -1,120 +1,108 @@
 package thomas.guitartrainingkotlin.data.manager.db
 
-import android.content.Context
-import com.raizlabs.android.dbflow.annotation.Database
-import com.raizlabs.android.dbflow.config.FlowConfig
-import com.raizlabs.android.dbflow.config.FlowManager
-import com.raizlabs.android.dbflow.kotlinextensions.*
-import thomas.guitartrainingkotlin.data.entity.db.*
-import thomas.guitartrainingkotlin.data.values.DBValues
+import thomas.guitartrainingkotlin.data.db.dao.*
+import thomas.guitartrainingkotlin.data.db.entity.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Database(version = DBValues.DB_VERSION, name = DBValues.DB_NAME)
 @Singleton
-class DBManagerImpl @Inject constructor(context: Context) : DBManager {
-
-    init {
-        FlowManager.init(FlowConfig.Builder(context).build())
-    }
+class DBManagerImpl @Inject constructor(
+    private val userDao: UserDao,
+    private val programDao: ProgramDao,
+    private val exerciseDao: ExerciseDao,
+    private val songDao: SongDao,
+    private val scoreDao: ScoreDao
+) : DBManager {
 
     override fun insertUser(userDBEntity: UserDBEntity) {
-        userDBEntity.save()
+        userDao.insertUser(userDBEntity)
     }
 
     override fun clearUser() {
-        (delete(UserDBEntity::class)).execute()
+        userDao.clearUser()
     }
 
     override fun retrieveUser(): UserDBEntity? {
-        return (select from UserDBEntity::class).result
+        return userDao.retrieveUser()
     }
 
     override fun retrieveProgramList(): List<ProgramDBEntity> {
-        return (select from ProgramDBEntity::class).list
+        return programDao.retrieveProgramList()
     }
 
     override fun retrieveProgramById(idProgram: String): ProgramDBEntity? {
-        return (select from ProgramDBEntity::class where (ProgramDBEntity_Table.idProgram eq idProgram)).result
+        return programDao.retrieveProgramById(idProgram)
     }
 
     override fun insertProgramList(programDBEntityList: List<ProgramDBEntity>) {
-        programDBEntityList.processInTransaction { programDBEntity, databaseWrapper ->
-            programDBEntity.save(databaseWrapper)
-        }
+        programDao.insertProgramList(programDBEntityList)
     }
 
     override fun insertProgram(programDBEntity: ProgramDBEntity) {
-        programDBEntity.save()
+        programDao.insertProgram(programDBEntity)
     }
 
     override fun updateProgram(programDBEntity: ProgramDBEntity) {
-        programDBEntity.save()
+        programDao.updateProgram(programDBEntity)
     }
 
     override fun deleteProgramById(idProgram: String) {
-        (delete(ProgramDBEntity::class) where (ProgramDBEntity_Table.idProgram eq idProgram)).execute()
+        programDao.deleteProgramById(idProgram)
     }
 
     override fun deleteProgram() {
-        (delete(ProgramDBEntity::class)).execute()
+        programDao.clearProgram()
     }
 
     override fun insertExerciseList(exerciseDBEntityList: List<ExerciseDBEntity>) {
-        exerciseDBEntityList.processInTransaction { exerciseDBEntity, databaseWrapper ->
-            exerciseDBEntity.save(databaseWrapper)
-        }
+        exerciseDao.insertExerciseList(exerciseDBEntityList)
     }
 
     override fun deleteExercise() {
-        (delete(ExerciseDBEntity::class)).execute()
+        exerciseDao.clearExercise()
     }
 
     override fun retrieveSongList(): List<SongDBEntity> {
-        return (select from SongDBEntity::class).list
+        return songDao.retrieveSongList()
     }
 
     override fun retrieveSongById(idSong: String): SongDBEntity? {
-        return (select from SongDBEntity::class where (SongDBEntity_Table.idSong eq idSong)).result
+        return songDao.retrieveSongById(idSong)
     }
 
     override fun retrieveSongScore(idSong: String): List<ScoreDBEntity> {
-        return (select from ScoreDBEntity::class where (ScoreDBEntity_Table.idSong eq idSong)).list
+        return scoreDao.retrieveSongScore(idSong)
     }
 
     override fun updateSongScore(idSong: String, scoreDBEntityList: List<ScoreDBEntity>) {
-        scoreDBEntityList.processInTransaction { scoreDBEntity, databaseWrapper ->
-            scoreDBEntity.save(databaseWrapper)
-        }
+        scoreDao.insertScoreDBEntityList(scoreDBEntityList)
     }
 
     override fun insertSongList(songDBEntityList: List<SongDBEntity>) {
-        songDBEntityList.processInTransaction { songDBEntity, databaseWrapper ->
-            songDBEntity.save(databaseWrapper)
-        }
+        songDao.insertSongList(songDBEntityList)
     }
 
     override fun insertSong(songDBEntity: SongDBEntity) {
-        songDBEntity.save()
+        songDao.insertSong(songDBEntity)
     }
 
     override fun updateSong(songDBEntity: SongDBEntity) {
-        songDBEntity.save()
+        songDao.updateSong(songDBEntity)
     }
 
     override fun deleteSongById(idSong: String) {
-        (delete(SongDBEntity::class) where (SongDBEntity_Table.idSong eq idSong)).execute()
+        songDao.deleteSongById(idSong)
     }
 
     override fun deleteSong() {
-        (delete(SongDBEntity::class)).execute()
+        songDao.clearSong()
     }
 
     override fun clearDatabase() {
-        (delete(UserDBEntity::class)).execute()
-        (delete(ProgramDBEntity::class)).execute()
-        (delete(ExerciseDBEntity::class)).execute()
-        (delete(SongDBEntity::class)).execute()
-        (delete(ScoreDBEntity::class)).execute()
+        userDao.clearUser()
+        programDao.clearProgram()
+        exerciseDao.clearExercise()
+        songDao.clearSong()
+        scoreDao.clearScore()
     }
 }
