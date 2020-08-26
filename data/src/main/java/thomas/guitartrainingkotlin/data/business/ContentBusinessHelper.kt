@@ -13,7 +13,7 @@ class ContentBusinessHelper @Inject constructor(
     private val sharedPrefsManager: SharedPrefsManager
 ) {
 
-    fun deleteDatabase() : Flow<Unit> {
+    suspend fun deleteDatabase() : Flow<Unit> {
         return flowOf(dbManager.clearDatabase())
     }
 

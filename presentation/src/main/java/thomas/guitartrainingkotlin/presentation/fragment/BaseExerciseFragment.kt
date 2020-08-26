@@ -74,20 +74,18 @@ abstract class BaseExerciseFragment : Fragment() {
                         durationExercise * DateTimeUtils.SECONDS_IN_ONE_MINUTE * DateTimeUtils.MINUTE_TO_MILLISECONDS
                 }
 
-                fragmentManager?.let {
-                    TimerDialogFragment.newInstance(
-                        activity.getString(R.string.timer_title),
-                        toBeDisplayedInTimer,
-                        object : OnTimerDialogDismiss {
-                            override fun onDismiss(timeCountInMilliseconds: Long) {
-                                durationLeft = durationComponent.setDurationLeft(
-                                    textViewToUpdate,
-                                    getString(R.string.generic_exercise_duration_left_text),
-                                    timeCountInMilliseconds
-                                )
-                            }
-                        }).show(it, TIMER_DIALOG_FRAGMENT_TAG)
-                }
+                TimerDialogFragment.newInstance(
+                    activity.getString(R.string.timer_title),
+                    toBeDisplayedInTimer,
+                    object : OnTimerDialogDismiss {
+                        override fun onDismiss(timeCountInMilliseconds: Long) {
+                            durationLeft = durationComponent.setDurationLeft(
+                                textViewToUpdate,
+                                getString(R.string.generic_exercise_duration_left_text),
+                                timeCountInMilliseconds
+                            )
+                        }
+                    }).show(parentFragmentManager, TIMER_DIALOG_FRAGMENT_TAG)
             }
         }
     }

@@ -30,8 +30,7 @@ class ProgramDBEntityDataMapper @Inject constructor(
                 idInstrument = programDBEntity.idInstrument,
                 defaultProgram = programDBEntity.defaultProgram,
                 descriptionProgram = programDBEntity.descriptionProgram,
-                exerciseEntityList = programDBEntity.exerciseList?.let { exerciseDBEntityDataMapper.transformFromDB(it) }
-                    ?: emptyList()
+                exerciseEntityList = programDBEntity.exerciseList.let { exerciseDBEntityDataMapper.transformFromDB(it) }
             )
         } catch (e: Exception) {
             throw DataMappingException()

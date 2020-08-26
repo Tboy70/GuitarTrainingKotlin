@@ -1,9 +1,6 @@
 package thomas.guitartrainingkotlin.data.di.module
 
 import android.content.Context
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,47 +14,33 @@ import javax.inject.Singleton
 @Module
 object PersistenceModule {
 
-    lateinit var database: GuitarTrainingDatabase
-
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context)=
-        Room.databaseBuilder(
-            context,
-            GuitarTrainingDatabase::class.java,
-            GuitarTrainingDatabase.DATABASE_NAME
-        )
-            .fallbackToDestructiveMigration()
-            .build()
-
-
-    @Provides
-    @Singleton
-    fun provideUserDao(db: GuitarTrainingDatabase): UserDao {
-        return db.getUserDao()
+    fun provideUserDao(@ApplicationContext appContext: Context): UserDao {
+        return GuitarTrainingDatabase.getInstance(appContext).userDao
     }
-//
-//    @Provides
-//    @Singleton
-//    fun provideProgramDao(db: GuitarTrainingDatabase): ProgramDao {
-//        return db.getProgramDao()
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideExerciseDao(db: GuitarTrainingDatabase): ExerciseDao {
-//        return db.getExerciseDao()
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideSongDao(db: GuitarTrainingDatabase): SongDao {
-//        return db.getSongDao()
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideScoreDao(db: GuitarTrainingDatabase): ScoreDao {
-//        return db.getScoreDao()
-//    }
+
+    @Provides
+    @Singleton
+    fun provideProgramDao(@ApplicationContext appContext: Context): ProgramDao {
+        return GuitarTrainingDatabase.getInstance(appContext).programDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideExerciseDao(@ApplicationContext appContext: Context): ExerciseDao {
+        return GuitarTrainingDatabase.getInstance(appContext).exerciseDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideSongDao(@ApplicationContext appContext: Context): SongDao {
+        return GuitarTrainingDatabase.getInstance(appContext).songDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideScoreDao(@ApplicationContext appContext: Context): ScoreDao {
+        return GuitarTrainingDatabase.getInstance(appContext).scoreDao
+    }
 }

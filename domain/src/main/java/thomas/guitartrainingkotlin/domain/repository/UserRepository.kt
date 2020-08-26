@@ -14,7 +14,7 @@ interface UserRepository {
     // User
     fun connectUser(user: User): Flow<User>
 
-    fun retrieveUserId(): Flow<String?>
+    suspend fun retrieveUserId(): Flow<String?>
 
     fun createNewUser(user: User): Flow<Unit>
 
@@ -22,7 +22,7 @@ interface UserRepository {
 
     fun retrievePassword(emailAddress: String): Flow<Unit>
 
-    fun logoutUser(): Flow<Unit>
+    suspend fun logoutUser(): Flow<Unit>
 
     fun suppressAccount(userId: String): Flow<Unit>
 

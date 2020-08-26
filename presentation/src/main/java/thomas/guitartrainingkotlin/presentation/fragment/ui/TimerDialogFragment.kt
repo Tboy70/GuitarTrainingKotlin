@@ -70,10 +70,12 @@ class TimerDialogFragment : DialogFragment() {
         try {
             countDownTimer.cancel()
         } catch (e: UninitializedPropertyAccessException) {
-            Log.e(
-                ConstantTags.TIME_DIALOG_FRAGMENT.tag,
-                activity?.getString(R.string.error_count_down_not_initialized)
-            )
+            activity?.let {
+                Log.e(
+                    ConstantTags.TIME_DIALOG_FRAGMENT.tag,
+                    it.getString(R.string.error_count_down_not_initialized)
+                )
+            }
         }
         timerDialogDismissListener.onDismiss(timeLeftToTheEndOfTimer)
     }

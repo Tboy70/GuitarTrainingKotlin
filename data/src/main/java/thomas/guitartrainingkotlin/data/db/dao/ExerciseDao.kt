@@ -10,8 +10,8 @@ import thomas.guitartrainingkotlin.data.db.entity.ExerciseDBEntity
 interface ExerciseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertExerciseList(exerciseDBEntityList: List<ExerciseDBEntity>)
+    suspend fun insertExerciseList(exerciseDBEntityList: List<ExerciseDBEntity>)
 
     @Query("DELETE FROM ExerciseDBEntity")
-    fun clearExercise()
+    suspend fun clearExercise()
 }

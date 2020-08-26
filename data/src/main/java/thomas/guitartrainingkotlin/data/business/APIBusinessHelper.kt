@@ -36,7 +36,7 @@ class APIBusinessHelper @Inject constructor(
     private val scoreFeedbackRemoteEntityDataMapper: ScoreFeedbackRemoteEntityDataMapper
 ) {
 
-    fun retrieveUserId(): Flow<String?> {
+    suspend fun retrieveUserId(): Flow<String?> {
         return flowOf(dbManager.retrieveUser()?.userId)
     }
 
@@ -82,19 +82,20 @@ class APIBusinessHelper @Inject constructor(
             .flatMapConcat {
                 apiManager.retrieveProgramsListByUserId(
                     userId, it
-                ).map {programRemoteEntityList ->
+                ).map { programRemoteEntityList ->
                     programRemoteEntityDataMapper.transformToEntity(programRemoteEntityList)
-                }.onEach {programEntityList ->
+                }.onEach { programEntityList ->
 
                     dbManager.deleteProgram()
                     dbManager.deleteExercise()
 
-                    val programDBEntityList = programDBEntityDataMapper.transformToDB(programEntityList)
+                    val programDBEntityList =
+                        programDBEntityDataMapper.transformToDB(programEntityList)
                     dbManager.insertProgramList(programDBEntityList)
 
                     val exerciseList = mutableListOf<ExerciseDBEntity>()
                     programDBEntityList.forEach { programDBEntity ->
-                        programDBEntity.exerciseList?.forEach { exerciseDBEntity ->
+                        programDBEntity.exerciseList.forEach { exerciseDBEntity ->
                             exerciseList.add(exerciseDBEntity)
                         }
                     }
@@ -179,9 +180,9 @@ class APIBusinessHelper @Inject constructor(
         return sharedPrefsManager.getInstrumentModeInSharedPrefs().flatMapConcat {
             apiManager.retrieveSongListByUserId(
                 userId, it
-            ).map {songRemoteEntityList ->
+            ).map { songRemoteEntityList ->
                 songRemoteEntityDataMapper.transformToEntity(songRemoteEntityList)
-            }.onEach {songEntityList ->
+            }.onEach { songEntityList ->
                 dbManager.deleteSong()
                 dbManager.insertSongList(songDBEntityDataMapper.transformToDB(songEntityList))
             }.catch {

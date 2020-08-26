@@ -7,23 +7,23 @@ import thomas.guitartrainingkotlin.data.db.entity.ProgramDBEntity
 interface ProgramDao {
 
     @Query("SELECT * FROM ProgramDBEntity")
-    fun retrieveProgramList(): List<ProgramDBEntity>
+    suspend fun retrieveProgramList(): List<ProgramDBEntity>
 
     @Query("SELECT * FROM ProgramDBEntity WHERE idProgram = :idProgram")
-    fun retrieveProgramById(idProgram: String): ProgramDBEntity?
+    suspend fun retrieveProgramById(idProgram: String): ProgramDBEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProgramList(programDBEntityList: List<ProgramDBEntity>)
+    suspend fun insertProgramList(programDBEntityList: List<ProgramDBEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertProgram(programDBEntity: ProgramDBEntity)
+    suspend fun insertProgram(programDBEntity: ProgramDBEntity)
 
     @Update
-    fun updateProgram(programDBEntity: ProgramDBEntity)
+    suspend fun updateProgram(programDBEntity: ProgramDBEntity)
 
     @Query("DELETE FROM ProgramDBEntity WHERE idProgram = :idProgram")
-    fun deleteProgramById(idProgram: String)
+    suspend fun deleteProgramById(idProgram: String)
 
     @Query("DELETE FROM ProgramDBEntity")
-    fun clearProgram()
+    suspend fun clearProgram()
 }

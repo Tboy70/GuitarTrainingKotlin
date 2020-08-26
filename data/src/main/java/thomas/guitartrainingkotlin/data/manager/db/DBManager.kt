@@ -5,31 +5,31 @@ import thomas.guitartrainingkotlin.data.db.entity.*
 
 interface DBManager {
 
-    fun insertUser(userDBEntity: UserDBEntity)
-    fun retrieveUser() : UserDBEntity?
-    fun clearUser()
+    suspend fun insertUser(userDBEntity: UserDBEntity)
+    suspend fun retrieveUser() : UserDBEntity?
+    suspend fun clearUser()
 
-    fun retrieveProgramList(): List<ProgramDBEntity>
-    fun retrieveProgramById(idProgram: String): ProgramDBEntity?
-    fun insertProgramList(programDBEntityList: List<ProgramDBEntity>)
-    fun insertProgram(programDBEntity: ProgramDBEntity)
-    fun updateProgram(programDBEntity: ProgramDBEntity)
-    fun deleteProgramById(idProgram: String)
-    fun deleteProgram()
+    suspend fun retrieveProgramList(): List<ProgramDBEntity>
+    suspend fun retrieveProgramById(idProgram: String): ProgramDBEntity?
+    suspend fun insertProgramList(programDBEntityList: List<ProgramDBEntity>)
+    suspend fun insertProgram(programDBEntity: ProgramDBEntity)
+    suspend fun updateProgram(programDBEntity: ProgramDBEntity)
+    suspend fun deleteProgramById(idProgram: String)
+    suspend fun deleteProgram()
 
-    fun insertExerciseList(exerciseDBEntityList: List<ExerciseDBEntity>)
-    fun deleteExercise()
+    suspend fun insertExerciseList(exerciseDBEntityList: List<ExerciseDBEntity>)
+    suspend fun deleteExercise()
 
-    fun retrieveSongList(): List<SongDBEntity>
-    fun retrieveSongById(idSong: String): SongDBEntity?
-    fun insertSongList(songDBEntityList: List<SongDBEntity>)
-    fun insertSong(songDBEntity: SongDBEntity)
-    fun updateSong(songDBEntity: SongDBEntity)
-    fun deleteSongById(idSong: String)
-    fun deleteSong()
+    suspend fun retrieveSongList(): List<SongDBEntity>
+    suspend fun retrieveSongById(idSong: String): SongDBEntity?
+    suspend fun insertSongList(songDBEntityList: List<SongDBEntity>)
+    suspend fun insertSong(songDBEntity: SongDBEntity)
+    suspend fun updateSong(songDBEntity: SongDBEntity)
+    suspend fun deleteSongById(idSong: String)
+    suspend fun deleteSong()
 
-    fun retrieveSongScore(idSong: String): List<ScoreDBEntity>
-    fun updateSongScore(idSong: String, scoreDBEntityList: List<ScoreDBEntity>)
+    suspend fun retrieveSongScore(idSong: String): List<ScoreDBEntity>
+    suspend fun updateSongScore(idSong: String, scoreDBEntityList: List<ScoreDBEntity>)
 
-    fun clearDatabase()
+    suspend fun clearDatabase()
 }

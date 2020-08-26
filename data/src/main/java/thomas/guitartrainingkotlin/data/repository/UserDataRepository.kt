@@ -37,7 +37,7 @@ class UserDataRepository @Inject constructor(
             }
     }
 
-    override fun retrieveUserId(): Flow<String?> {
+    override suspend fun retrieveUserId(): Flow<String?> {
         return apiBusinessHelper.retrieveUserId()
     }
 
@@ -57,7 +57,7 @@ class UserDataRepository @Inject constructor(
     }
 
 
-    override fun logoutUser(): Flow<Unit> {
+    override suspend fun logoutUser(): Flow<Unit> {
         return contentBusinessHelper.deleteDatabase().map {
             contentBusinessHelper.deleteInstrumentModeInSharedPrefs()
         }

@@ -32,8 +32,9 @@ object DateTimeUtils {
     }
 
     fun formatDate(baseFormat: String, wantedFormat: String, dateToFormat: String): String {
-        val baseDate = SimpleDateFormat(baseFormat, Locale.FRENCH).parse(dateToFormat)
-        return SimpleDateFormat(wantedFormat, Locale.FRENCH).format(baseDate)
+        return SimpleDateFormat(baseFormat, Locale.FRENCH).parse(dateToFormat)?.let {
+            SimpleDateFormat(wantedFormat, Locale.FRENCH).format(it)
+        } ?: SimpleDateFormat(wantedFormat, Locale.FRENCH).format(Date())
     }
 
 }

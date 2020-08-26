@@ -9,12 +9,12 @@ import thomas.guitartrainingkotlin.data.db.entity.UserDBEntity
 interface UserDao {
 
     @Query("SELECT * FROM UserDBEntity")
-    fun retrieveUser(): UserDBEntity?
+    suspend fun retrieveUser(): UserDBEntity?
 
     @Insert
-    fun insertUser(userDBEntity: UserDBEntity)
+    suspend fun insertUser(userDBEntity: UserDBEntity)
 
     @Query("DELETE FROM UserDBEntity")
-    fun clearUser()
+    suspend fun clearUser()
 
 }

@@ -7,23 +7,23 @@ import thomas.guitartrainingkotlin.data.db.entity.SongDBEntity
 interface SongDao {
 
     @Query("SELECT * FROM SongDBEntity")
-    fun retrieveSongList(): List<SongDBEntity>
+    suspend fun retrieveSongList(): List<SongDBEntity>
 
     @Query("SELECT * FROM SongDBEntity WHERE idSong = :idSong")
-    fun retrieveSongById(idSong: String): SongDBEntity?
+    suspend fun retrieveSongById(idSong: String): SongDBEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSong(songDBEntity: SongDBEntity)
+    suspend fun insertSong(songDBEntity: SongDBEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSongList(songDBEntityList: List<SongDBEntity>)
+    suspend fun insertSongList(songDBEntityList: List<SongDBEntity>)
 
     @Update
-    fun updateSong(songDBEntity: SongDBEntity)
+    suspend fun updateSong(songDBEntity: SongDBEntity)
 
     @Query("DELETE FROM SongDBEntity WHERE idSong = :idSong")
-    fun deleteSongById(idSong: String)
+    suspend fun deleteSongById(idSong: String)
 
     @Query("DELETE FROM SongDBEntity")
-    fun clearSong()
+    suspend fun clearSong()
 }

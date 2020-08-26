@@ -10,11 +10,11 @@ import thomas.guitartrainingkotlin.data.db.entity.ScoreDBEntity
 interface ScoreDao {
 
     @Query("SELECT * FROM ScoreDBEntity WHERE idSong = :idSong")
-    fun retrieveSongScore(idSong: String): List<ScoreDBEntity>
+    suspend fun retrieveSongScore(idSong: String): List<ScoreDBEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertScoreDBEntityList(scoreDBEntityList: List<ScoreDBEntity>)
+    suspend fun insertScoreDBEntityList(scoreDBEntityList: List<ScoreDBEntity>)
 
     @Query("DELETE FROM ScoreDBEntity")
-    fun clearScore()
+    suspend fun clearScore()
 }

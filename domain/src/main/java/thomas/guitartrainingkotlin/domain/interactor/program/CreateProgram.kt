@@ -18,7 +18,7 @@ class CreateProgram @Inject constructor(
     private val programRepository: ProgramRepository
 ) {
 
-    fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit> {
+    suspend fun createProgram(program: Program, exercisesList: List<Exercise>): Flow<Unit> {
         return userRepository.retrieveUserId().map {
             program.userId = it
         }.flatMapMerge {

@@ -54,8 +54,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 
     //Room
-    implementation "androidx.room:room-runtime:2.3.0-alpha02"
-    kapt "androidx.room:room-compiler:2.3.0-alpha02"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 
     implementation 'com.scottyab:aescrypt:0.0.1'
 
