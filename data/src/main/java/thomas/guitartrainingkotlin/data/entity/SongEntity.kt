@@ -10,6 +10,6 @@ data class SongEntity(
     val totalScoreSong: Int = 0,
     val nbPlay: Int = 0,
     val lastPlay: String = "",
-    val userId: String = "",
+    var userId: String = "",
     val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

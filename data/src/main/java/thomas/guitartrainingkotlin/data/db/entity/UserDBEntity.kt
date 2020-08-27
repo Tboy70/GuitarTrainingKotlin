@@ -5,10 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 class UserDBEntity(
-
     @PrimaryKey
-    var userId: String = "",
-    var userPseudo: String = "",
-    var userEmail: String? = ""
-
+    val userId: String,
+    val userPseudo: String = "",
+    val userEmail: String = ""
 )

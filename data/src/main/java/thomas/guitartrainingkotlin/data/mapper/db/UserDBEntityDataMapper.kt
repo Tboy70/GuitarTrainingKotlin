@@ -43,7 +43,7 @@ class UserDBEntityDataMapper @Inject constructor() {
     fun transformToDB(userEntity: UserEntity): UserDBEntity {
         try {
             return UserDBEntity(
-                userId = userEntity.userId?:"What", // TODO
+                userId = userEntity.userId,
                 userPseudo = userEntity.userPseudo,
                 userEmail = userEntity.userEmail
             )

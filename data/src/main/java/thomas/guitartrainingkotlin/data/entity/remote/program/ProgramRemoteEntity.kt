@@ -9,7 +9,7 @@ data class ProgramRemoteEntity(
     @SerializedName("nameProgram") val nameProgram: String = "",
     @SerializedName("descriptionProgram") val descriptionProgram: String = "",
     @SerializedName("defaultProgram") val defaultProgram: Boolean = false,
-    @SerializedName("userId") val userId: String? = "",
+    @SerializedName("userId") val userId: String? = "", // userId can be null if it's default program
     @SerializedName("exercises") val exerciseRemoteEntityList: List<ExerciseRemoteEntity> = emptyList(),
     @SerializedName("idInstrument") val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

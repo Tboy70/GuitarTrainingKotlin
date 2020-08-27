@@ -7,7 +7,7 @@ data class ProgramEntity(
     val nameProgram: String = "",
     val descriptionProgram: String = "",
     val defaultProgram: Boolean = false,
-    val userId: String? = "",
+    var userId: String? = "",   // userId can be null if it's default program
     var exerciseEntityList: List<ExerciseEntity> = emptyList(),
     val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

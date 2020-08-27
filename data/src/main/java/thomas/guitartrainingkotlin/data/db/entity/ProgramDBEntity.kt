@@ -11,11 +11,11 @@ import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 class ProgramDBEntity(
 
     @PrimaryKey
-    var idProgram: String = "",
-    var nameProgram: String = "",
-    var descriptionProgram: String = "",
-    var defaultProgram: Boolean = false,
-    var userId: String? = "",
-    var idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR,
-    var exerciseList: List<ExerciseDBEntity>
+    val idProgram: String = "",
+    val nameProgram: String = "",
+    val descriptionProgram: String = "",
+    val defaultProgram: Boolean = false,
+    val userId: String? = "",   // userId can be null if it's default program
+    val exerciseList: List<ExerciseDBEntity> = emptyList(),
+    val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )
