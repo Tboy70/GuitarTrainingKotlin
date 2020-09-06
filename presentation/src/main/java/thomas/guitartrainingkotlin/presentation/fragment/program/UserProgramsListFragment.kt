@@ -1,14 +1,17 @@
 package thomas.guitartrainingkotlin.presentation.fragment.program
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_programs_list.*
+import kotlinx.android.synthetic.main.view_user_programs_list_item.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.ProgramCreationActivity
@@ -40,24 +43,21 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
             viewModel.setUserId(it.getString(ConstValues.USER_ID))
         }
 
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
 //        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
+        viewModel.retrieveProgramsListByUserId()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.retrieveProgramsListByUserId()
     }
 
     private fun initiateView() {
         fragment_user_programs_list_recycler_view.adapter = userProgramsListAdapter
-        fragment_user_programs_list_recycler_view.addItemDecoration(
-            DividerItemDecoration(
-                activity,
-                LinearLayoutManager.VERTICAL
-            )
-        )
 
         fragment_user_programs_list_swipe_refresh_layout.setOnRefreshListener {
             viewModel.retrieveProgramsListByUserId()
@@ -66,10 +66,19 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
 
         userProgramsListAdapter.onProgramSelectedListener = { programId ->
             activity?.let { activity ->
-                activity.startActivity(
-                    Intent(activity, UserProgramActivity::class.java)
-                        .putExtra(ConstValues.ID_PROGRAM, programId)
+                val intent = Intent(activity, UserProgramActivity::class.java)
+                    .putExtra(ConstValues.ID_PROGRAM, programId)
+                val options = ActivityOptions.makeSceneTransitionAnimation(
+                    activity,
+                    view_user_programs_list_item_container,
+                    "transitionNameA"
                 )
+                activity.startActivity(intent, options.toBundle())
+
+//                activity.startActivity(
+//                    Intent(activity, UserProgramActivity::class.java)
+//                        .putExtra(ConstValues.ID_PROGRAM, programId)
+//                )
             }
         }
 

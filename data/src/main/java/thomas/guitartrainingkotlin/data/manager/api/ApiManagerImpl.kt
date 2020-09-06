@@ -24,7 +24,7 @@ class ApiManagerImpl @Inject constructor() : ApiManager {
     private var apiService: APIServiceInterface
 
     companion object {
-        const val BASE_URL = "http://thomasboy.fr/guitar_api/public/"
+        const val BASE_URL = "http://thomasboy.fr/guitar_api_slim/public/"
     }
 
     init {

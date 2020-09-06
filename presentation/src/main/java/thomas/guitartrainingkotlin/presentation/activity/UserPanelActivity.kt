@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -9,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_user_panel.*
 import kotlinx.android.synthetic.main.app_bar_user_panel.*
@@ -37,6 +39,13 @@ class UserPanelActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
+        // Set up shared element transition and disable overlay so views don't show above system bars
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        window.sharedElementsUseOverlay = false
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
 

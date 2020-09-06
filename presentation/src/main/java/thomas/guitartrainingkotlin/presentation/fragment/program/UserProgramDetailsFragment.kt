@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_program_details.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.Exercise
 import thomas.guitartrainingkotlin.presentation.activity.ProgramActivity
@@ -32,6 +33,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramDetail
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_details) {
 
     @Inject
@@ -41,6 +43,7 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
     lateinit var dialogComponent: DialogComponentImpl
 
     private var navHost: View? = null
+
 
     private val viewModel by viewModels<UserProgramDetailsViewModel>()
 
@@ -67,7 +70,7 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                activity?.finish()
+                activity?.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)
