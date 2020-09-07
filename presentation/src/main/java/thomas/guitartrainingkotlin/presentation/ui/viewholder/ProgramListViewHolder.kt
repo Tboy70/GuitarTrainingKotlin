@@ -22,8 +22,10 @@ class ProgramListViewHolder(
 
     fun bind(
         programViewDataWrapper: ProgramViewDataWrapper,
-        onProgramSelectedListener: (programId: String) -> Unit
+        onProgramSelectedListener: (programId: String, view: View) -> Unit
     ) {
+
+        view_user_programs_list_item_container.transitionName = programViewDataWrapper.getId()
 
         view_user_programs_list_item_name.text = programViewDataWrapper.getName()
 
@@ -55,7 +57,7 @@ class ProgramListViewHolder(
         }
 
         currentView.setOnClickListener {
-            onProgramSelectedListener(programViewDataWrapper.getId())
+            onProgramSelectedListener(programViewDataWrapper.getId(), view_user_programs_list_item_container)
         }
     }
 

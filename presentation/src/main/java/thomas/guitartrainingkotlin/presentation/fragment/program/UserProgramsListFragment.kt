@@ -46,14 +46,13 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
         postponeEnterTransition()
         view.doOnPreDraw { startPostponedEnterTransition() }
 
-//        initiateToolbar()
         initiateView()
         initiateViewModelObservers()
-        viewModel.retrieveProgramsListByUserId()
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.retrieveProgramsListByUserId()
     }
 
     private fun initiateView() {
@@ -64,21 +63,16 @@ class UserProgramsListFragment : Fragment(R.layout.fragment_user_programs_list) 
         }
         fragment_user_programs_list_swipe_refresh_layout.setColorSchemeResources(R.color.colorPrimary)
 
-        userProgramsListAdapter.onProgramSelectedListener = { programId ->
+        userProgramsListAdapter.onProgramSelectedListener = { programId, startView ->
             activity?.let { activity ->
                 val intent = Intent(activity, UserProgramActivity::class.java)
                     .putExtra(ConstValues.ID_PROGRAM, programId)
                 val options = ActivityOptions.makeSceneTransitionAnimation(
                     activity,
-                    view_user_programs_list_item_container,
-                    "transitionNameA"
+                    startView,
+                    programId
                 )
                 activity.startActivity(intent, options.toBundle())
-
-//                activity.startActivity(
-//                    Intent(activity, UserProgramActivity::class.java)
-//                        .putExtra(ConstValues.ID_PROGRAM, programId)
-//                )
             }
         }
 

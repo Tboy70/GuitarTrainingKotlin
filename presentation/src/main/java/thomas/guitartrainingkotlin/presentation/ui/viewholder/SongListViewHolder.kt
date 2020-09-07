@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.view_user_programs_list_item.*
 import kotlinx.android.synthetic.main.view_user_songs_list_item.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.utils.DateTimeUtils
@@ -22,8 +23,11 @@ class SongListViewHolder(
 
     fun bind(
         songViewDataWrapper: SongViewDataWrapper,
-        onSongSelectedListener: (songId: String) -> Unit
+        onSongSelectedListener: (songId: String, view: View) -> Unit
     ) {
+
+        view_user_songs_list_item_container.transitionName = songViewDataWrapper.getId()
+
         view_user_songs_list_item_title.text = songViewDataWrapper.getTitleSong()
         view_user_songs_list_item_artist.text = songViewDataWrapper.getArtistSong()
 
@@ -31,7 +35,7 @@ class SongListViewHolder(
         displayLastPlaySong(songViewDataWrapper)
 
         currentView.setOnClickListener {
-            onSongSelectedListener(songViewDataWrapper.getId())
+            onSongSelectedListener(songViewDataWrapper.getId(), view_user_songs_list_item_container)
         }
     }
 

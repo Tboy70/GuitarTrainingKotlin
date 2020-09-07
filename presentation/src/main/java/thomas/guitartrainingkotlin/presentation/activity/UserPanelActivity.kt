@@ -41,11 +41,9 @@ class UserPanelActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-
-        // Set up shared element transition and disable overlay so views don't show above system bars
         setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
         window.sharedElementsUseOverlay = false
-
+        
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
 

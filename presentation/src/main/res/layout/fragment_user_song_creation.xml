@@ -1,97 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/fragment_user_song_creation_toolbar"
-            style="@style/ToolbarAppTheme"
-            android:theme="@style/ToolbarAppTheme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:titleTextAppearance="@style/ToolbarTitleText"
-            app:title="@string/toolbar_title_song_creation"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/fragment_user_song_creation_toolbar"
+        style="@style/ToolbarAppTheme"
+        android:theme="@style/ToolbarAppTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_title_song_creation"
+        app:titleTextAppearance="@style/ToolbarTitleText" />
 
     <TextView
-            android:id="@+id/fragment_user_song_creation_title"
-            style="@style/GenericTitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
-            android:gravity="center"
-            android:text="@string/user_song_creation_title"
-            android:paddingStart="@dimen/constraint_layout_margin_16"
-            android:paddingEnd="@dimen/constraint_layout_margin_16"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_user_song_creation_toolbar" />
+        android:id="@+id/fragment_user_song_creation_title"
+        style="@style/GenericTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/constraint_layout_margin_16"
+        android:gravity="center"
+        android:text="@string/user_song_creation_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_user_song_creation_toolbar" />
 
     <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/constraint_layout_margin_8"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:paddingStart="@dimen/constraint_layout_margin_16"
-            android:paddingEnd="@dimen/constraint_layout_margin_16"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_creation_validation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_creation_title">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/constraint_layout_margin_8"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:paddingStart="@dimen/constraint_layout_margin_16"
+        android:paddingEnd="@dimen/constraint_layout_margin_16"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_user_song_creation_validation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_user_song_creation_title">
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/fragment_user_song_creation_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:hint="@string/song_title"
+                android:inputType="text"
+                android:maxLines="1"
+                tools:ignore="Autofill" />
 
             <EditText
-                    android:id="@+id/fragment_user_song_creation_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/song_title"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    tools:ignore="Autofill" />
-
-            <EditText
-                    android:id="@+id/fragment_user_song_creation_artist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/song_artist"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    tools:ignore="Autofill" />
+                android:id="@+id/fragment_user_song_creation_artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/song_artist"
+                android:inputType="text"
+                android:maxLines="1"
+                tools:ignore="Autofill" />
 
             <LinearLayout
-                    android:id="@+id/fragment_user_song_creation_exercises"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                android:id="@+id/fragment_user_song_creation_exercises"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
         </LinearLayout>
     </ScrollView>
 
-    <ProgressBar
-            android:id="@+id/fragment_user_song_creation_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
     <Button
-            android:id="@+id/fragment_user_song_creation_validation"
-            style="@style/GenericBigButton"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/user_song_creation_button_validate_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/fragment_user_song_creation_validation"
+        style="@style/GenericBigButton"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:text="@string/user_song_creation_button_validate_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/fragment_user_song_creation_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

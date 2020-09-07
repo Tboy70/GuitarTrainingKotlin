@@ -2,6 +2,7 @@ package thomas.guitartrainingkotlin.presentation.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.scopes.FragmentScoped
@@ -15,7 +16,7 @@ class UserSongsListAdapter @Inject constructor(
     private val context: Context
 ) : RecyclerView.Adapter<SongListViewHolder>() {
 
-    var onSongSelectedListener: (songId: String) -> Unit = {}
+    var onSongSelectedListener: (songId: String, view: View) -> Unit = { _, _ ->  }
 
     private val songList = mutableListOf<SongViewDataWrapper>()
 
