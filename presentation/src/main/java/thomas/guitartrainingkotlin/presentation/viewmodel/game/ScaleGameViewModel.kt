@@ -66,6 +66,7 @@ class ScaleGameViewModel @ViewModelInject constructor(
     }
 
     fun generateCorrectScale(referenceNote: String) {
+        Log.e("TEST", "Besoin d'une gamme correcte --> Jeu Find Scale")
         correctScaleLiveEvent.postValue(
             GameUtils.generateCorrectScale(referenceNote, null, getApplication())
         )
@@ -75,10 +76,10 @@ class ScaleGameViewModel @ViewModelInject constructor(
         val correctOrIncorrectScale = Random().nextInt(2)
         generatedRandomScaleLiveEvent.postValue(
             if (correctOrIncorrectScale == 0) {
-                Log.e("TEST", "On génère une gamme correcte")
+                Log.e("TEST", "Besoin d'une gamme correcte --> Jeu Is Scale Correct ?")
                 GameUtils.generateCorrectScale(referenceNote, scale, getApplication())
             } else {
-                Log.e("TEST", "On génère une gamme INcorrecte")
+                Log.e("TEST", "Besoin d'une gamme INcorrecte --> Jeu Is Scale Correct ?")
                 GameUtils.generateIncorrectScale(referenceNote, scale, getApplication())
             }
         )

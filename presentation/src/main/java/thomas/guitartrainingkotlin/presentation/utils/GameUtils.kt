@@ -119,7 +119,10 @@ object GameUtils {
         val noteArray = context.resources.getStringArray(R.array.list_notes)
         val indexOfGivenNote = noteArray.indexOf(referenceNote)
         val generatedScale = mutableListOf(referenceNote)
-        val scaleToGenerate = getCorrectScale(context, scale)
+        val scaleToGenerate =
+            scale?.let { scaleName ->
+                getCorrectScale(context, scaleName)
+            } ?: getRandomScale(context)
 
         scaleToGenerate.first.forEachIndexed { _, value ->
             generatedScale.add(
@@ -127,7 +130,7 @@ object GameUtils {
             )
         }
 
-        Log.e("TEST", "Gamme générée : " + generatedScale)
+        Log.e("TEST", "Gamme générée : $generatedScale")
         Log.e("TEST", "Gamme générée taille : " + generatedScale.size)
         return Pair(generatedScale, scaleToGenerate.second)
     }
@@ -198,62 +201,62 @@ object GameUtils {
         }
     }
 
+    private fun getRandomScale(context: Context): Pair<List<Int>, String> {
+        val scaleArray = context.resources.getStringArray(R.array.list_scales)
+        return when (Random().nextInt(ConstValues.NB_SCALES)) {
+            0 -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+            1 -> Pair(MINOR_NATURAL_SCALE_INTERVAL, scaleArray[1])
+            2 -> Pair(MINOR_HARMONIC_SCALE_INTERVAL, scaleArray[2])
+            3 -> Pair(MINOR_MELODIC_SCALE_INTERVAL, scaleArray[3])
+            4 -> Pair(PENTATONIC_MAJOR_SCALE_INTERVAL, scaleArray[4])
+            5 -> Pair(PENTATONIC_MINOR_SCALE_INTERVAL, scaleArray[5])
+            6 -> Pair(MAJOR_BLUES_SCALE_INTERVAL, scaleArray[6])
+            7 -> Pair(MINOR_BLUES_SCALE_INTERVAL, scaleArray[7])
+            else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+        }
+    }
+
     /**
      * Returns pair :
      *  -> First : Intervals between each note
      *  -> Second : Scale name
      */
-    private fun getCorrectScale(context: Context, scale: String?): Pair<List<Int>, String> {
+    private fun getCorrectScale(context: Context, scale: String): Pair<List<Int>, String> {
 
-        Log.e("TEST", "Gamme à générer (réellment): $scale")
+        Log.e("TEST", "Nom de la gamme à générer : $scale")
 
         val scaleArray = context.resources.getStringArray(R.array.list_scales)
-
-        if (scale == null) {
-            return when (Random().nextInt(ConstValues.NB_SCALES)) {
-                0 -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
-                1 -> Pair(MINOR_NATURAL_SCALE_INTERVAL, scaleArray[1])
-                2 -> Pair(MINOR_HARMONIC_SCALE_INTERVAL, scaleArray[2])
-                3 -> Pair(MINOR_MELODIC_SCALE_INTERVAL, scaleArray[3])
-                4 -> Pair(PENTATONIC_MAJOR_SCALE_INTERVAL, scaleArray[4])
-                5 -> Pair(PENTATONIC_MINOR_SCALE_INTERVAL, scaleArray[5])
-                6 -> Pair(MAJOR_BLUES_SCALE_INTERVAL, scaleArray[6])
-                7 -> Pair(MINOR_BLUES_SCALE_INTERVAL, scaleArray[7])
-                else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
-            }
-        } else {
-            return when (scale) {
-                context.getString(R.string.tone_major) -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
-                context.getString(R.string.tone_minor_natural) -> Pair(
-                    MINOR_NATURAL_SCALE_INTERVAL,
-                    scaleArray[1]
-                )
-                context.getString(R.string.tone_minor_harmonic) -> Pair(
-                    MINOR_HARMONIC_SCALE_INTERVAL,
-                    scaleArray[2]
-                )
-                context.getString(R.string.tone_minor_melodic) -> Pair(
-                    MINOR_MELODIC_SCALE_INTERVAL,
-                    scaleArray[3]
-                )
-                context.getString(R.string.tone_pentatonic_major) -> Pair(
-                    PENTATONIC_MAJOR_SCALE_INTERVAL,
-                    scaleArray[4]
-                )
-                context.getString(R.string.tone_pentatonic_minor) -> Pair(
-                    PENTATONIC_MINOR_SCALE_INTERVAL,
-                    scaleArray[5]
-                )
-                context.getString(R.string.tone_blues_major) -> Pair(
-                    MAJOR_BLUES_SCALE_INTERVAL,
-                    scaleArray[6]
-                )
-                context.getString(R.string.tone_blues_minor) -> Pair(
-                    MINOR_BLUES_SCALE_INTERVAL,
-                    scaleArray[7]
-                )
-                else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
-            }
+        return when (scale) {
+            context.getString(R.string.tone_major) -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
+            context.getString(R.string.tone_minor_natural) -> Pair(
+                MINOR_NATURAL_SCALE_INTERVAL,
+                scaleArray[1]
+            )
+            context.getString(R.string.tone_minor_harmonic) -> Pair(
+                MINOR_HARMONIC_SCALE_INTERVAL,
+                scaleArray[2]
+            )
+            context.getString(R.string.tone_minor_melodic) -> Pair(
+                MINOR_MELODIC_SCALE_INTERVAL,
+                scaleArray[3]
+            )
+            context.getString(R.string.tone_pentatonic_major) -> Pair(
+                PENTATONIC_MAJOR_SCALE_INTERVAL,
+                scaleArray[4]
+            )
+            context.getString(R.string.tone_pentatonic_minor) -> Pair(
+                PENTATONIC_MINOR_SCALE_INTERVAL,
+                scaleArray[5]
+            )
+            context.getString(R.string.tone_blues_major) -> Pair(
+                MAJOR_BLUES_SCALE_INTERVAL,
+                scaleArray[6]
+            )
+            context.getString(R.string.tone_blues_minor) -> Pair(
+                MINOR_BLUES_SCALE_INTERVAL,
+                scaleArray[7]
+            )
+            else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
         }
     }
 }

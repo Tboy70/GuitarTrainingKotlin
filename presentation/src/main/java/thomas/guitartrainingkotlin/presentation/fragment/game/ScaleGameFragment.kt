@@ -406,6 +406,18 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
             degreeView.text = null
             context?.let { context ->
                 degreeView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+                fourth_degree_label.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        android.R.color.tab_indicator_text
+                    )
+                )
+                third_degree_label.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        android.R.color.tab_indicator_text
+                    )
+                )
             }
         }
         fragment_scale_game_which_scale_answer.text = null
