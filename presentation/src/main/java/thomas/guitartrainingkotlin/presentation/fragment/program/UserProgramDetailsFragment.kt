@@ -142,8 +142,8 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
 
         ConstValues.DEFAULT_PROGRAM.contains(userProgramViewDataWrapper.getId()).let {
             if (it) {
-                fragment_user_program_details_remove_button.visibility = View.GONE
-                fragment_user_program_details_update_button.visibility = View.GONE
+                fragment_user_program_details_remove_button.gone()
+                fragment_user_program_details_update_button.gone()
 
                 val constraintSet = ConstraintSet()
                 constraintSet.clone(fragment_user_program_details_constraint_layout)
@@ -161,8 +161,8 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
                 )
                 constraintSet.applyTo(fragment_user_program_details_constraint_layout)
             } else {
-                fragment_user_program_details_remove_button.visibility = View.VISIBLE
-                fragment_user_program_details_update_button.visibility = View.VISIBLE
+                fragment_user_program_details_remove_button.show()
+                fragment_user_program_details_update_button.show()
             }
         }
 

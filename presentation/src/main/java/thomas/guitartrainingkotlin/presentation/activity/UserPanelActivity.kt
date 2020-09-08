@@ -20,6 +20,7 @@ import thomas.guitartrainingkotlin.data.exception.UserNotFoundException
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.ErrorRendererComponent
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
+import thomas.guitartrainingkotlin.presentation.ui.animation.MaterialMotionAnimation
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.program.UserPanelViewModel
 import javax.inject.Inject
@@ -41,9 +42,8 @@ class UserPanelActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
-        window.sharedElementsUseOverlay = false
-        
+        MaterialMotionAnimation.setExitSharedElementCallback(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_panel)
 

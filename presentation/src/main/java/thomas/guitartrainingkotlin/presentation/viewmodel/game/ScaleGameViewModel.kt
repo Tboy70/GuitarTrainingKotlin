@@ -1,6 +1,7 @@
 package thomas.guitartrainingkotlin.presentation.viewmodel.game
 
 import android.app.Application
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
@@ -15,18 +16,18 @@ class ScaleGameViewModel @ViewModelInject constructor(
 
     override val currentViewState = ScaleGameViewState()
 
-    val randomScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
     val answerCheckedLiveEvent = SingleLiveEvent<List<Boolean>>()
-    val answerCheckedLiveEvent2 = SingleLiveEvent<Pair<List<Boolean>, Boolean>>()
-    val finishRandomLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
+    val gameRandomizedLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
     val correctScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
+    val generatedRandomScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
+    val answerCheckedWithUserChoiceLiveEvent = SingleLiveEvent<Pair<List<Boolean>, Boolean>>()
 
     init {
-        getRandomValue()
+        getRandomGame()
     }
 
-    fun getRandomValue() {
-        finishRandomLiveEvent.postValue(
+    fun getRandomGame() {
+        gameRandomizedLiveEvent.postValue(
             Triple(
                 Random().nextInt(ConstValues.NB_NOTES),
                 Random().nextInt(ConstValues.NB_SCALES),
@@ -35,12 +36,12 @@ class ScaleGameViewModel @ViewModelInject constructor(
         )
     }
 
-    fun checkAnswers(answersList: List<String>, givenScale: String, givenNote: String) {
+    fun checkAnswers(answersList: List<String>, scale: String, referenceNote: String) {
         answerCheckedLiveEvent.postValue(
             GameUtils.checkScaleGameAnswer(
                 answersList,
-                givenScale,
-                givenNote,
+                scale,
+                referenceNote,
                 getApplication()
             )
         )
@@ -48,35 +49,38 @@ class ScaleGameViewModel @ViewModelInject constructor(
 
     fun checkAnswers(
         answersList: List<String>,
-        givenScale: String,
-        givenNote: String,
+        scale: String,
+        note: String,
         isCorrect: Boolean
     ) {
-        answerCheckedLiveEvent2.postValue(
+        answerCheckedWithUserChoiceLiveEvent.postValue(
             Pair(
                 GameUtils.checkScaleGameAnswer(
                     answersList,
-                    givenScale,
-                    givenNote,
+                    scale,
+                    note,
                     getApplication()
                 ), isCorrect
             )
         )
     }
 
-    fun generateCorrectScale(givenNote: String) {
+    fun generateCorrectScale(referenceNote: String) {
         correctScaleLiveEvent.postValue(
-            GameUtils.generateCorrectRandomScale(givenNote, getApplication())
+            GameUtils.generateCorrectScale(referenceNote, null, getApplication())
         )
     }
 
-    fun generateRandomScale(givenNote: String) {
+    fun generateRandomScale(referenceNote: String, scale: String) {
         val correctOrIncorrectScale = Random().nextInt(2)
-        randomScaleLiveEvent.postValue(
-            if (correctOrIncorrectScale == 0)
-                GameUtils.generateCorrectRandomScale(givenNote, getApplication())
-            else
-                GameUtils.generateIncorrectRandomScale(givenNote, getApplication())
+        generatedRandomScaleLiveEvent.postValue(
+            if (correctOrIncorrectScale == 0) {
+                Log.e("TEST", "On génère une gamme correcte")
+                GameUtils.generateCorrectScale(referenceNote, scale, getApplication())
+            } else {
+                Log.e("TEST", "On génère une gamme INcorrecte")
+                GameUtils.generateIncorrectScale(referenceNote, scale, getApplication())
+            }
         )
     }
 }

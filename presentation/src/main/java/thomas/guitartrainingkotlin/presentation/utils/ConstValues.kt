@@ -30,9 +30,9 @@ object ConstValues {
     const val INTERVAL_NORMAL_GAME_MODE = 0
     const val INTERVAL_REVERSED_GAME_MODE = 1
 
-    const val SCALE_GAME_FIND_NOTES_MODE = 0
-    const val SCALE_GAME_CORRECT_SCALE_MODE = 1
-    const val SCALE_GAME_FIND_SCALE_MODE = 2
+    const val SCALE_GAME_FIND_NOTES = 0
+    const val SCALE_GAME_IS_CORRECT_SCALE = 1
+    const val SCALE_GAME_FIND_SCALE = 2
 
     // IDS CONST
     const val USER_ID = "thomas.example.com.guitarTrainingKotlin.baseActivity.USER_ID"

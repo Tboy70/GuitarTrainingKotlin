@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_song_details.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
@@ -26,6 +27,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongDetailsVi
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
 
     @Inject
@@ -62,7 +64,7 @@ class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                activity?.finish()
+                activity?.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -4,21 +4,22 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_songs_list.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.activity.SongCreationActivity
-import thomas.guitartrainingkotlin.presentation.activity.UserProgramActivity
 import thomas.guitartrainingkotlin.presentation.activity.UserSongActivity
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
+import thomas.guitartrainingkotlin.presentation.extension.gone
 import thomas.guitartrainingkotlin.presentation.extension.observeSafe
+import thomas.guitartrainingkotlin.presentation.extension.show
 import thomas.guitartrainingkotlin.presentation.ui.adapter.UserSongsListAdapter
+import thomas.guitartrainingkotlin.presentation.ui.animation.RevealAnimation
 import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWrapper
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongsListViewModel
@@ -79,7 +80,7 @@ class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
         }
 
         fragment_user_songs_floating_action_button.setOnClickListener {
-            startActivity(Intent(activity, SongCreationActivity::class.java))
+            startRevealActivity(it)
         }
     }
 
@@ -101,11 +102,30 @@ class UserSongsListFragment : Fragment(R.layout.fragment_user_songs_list) {
     private fun displayRetrievedSongs(userSongsList: List<SongViewDataWrapper>) {
         userSongsListAdapter.updateSongList(userSongsList)
         if (userSongsList.isEmpty()) {
-            fragment_user_songs_list_no_program_placeholder.visibility = View.VISIBLE
-            fragment_user_songs_list_recycler_view.visibility = View.GONE
+            fragment_user_songs_list_no_program_placeholder.show()
+            fragment_user_songs_list_recycler_view.gone()
         } else {
-            fragment_user_songs_list_no_program_placeholder.visibility = View.GONE
-            fragment_user_songs_list_recycler_view.visibility = View.VISIBLE
+            fragment_user_songs_list_no_program_placeholder.gone()
+            fragment_user_songs_list_recycler_view.show()
+        }
+    }
+
+    private fun startRevealActivity(v: View) {
+        activity?.let {
+            //calculates the center of the View v you are passing
+            val revealX = (v.x + v.width / 2).toInt()
+            val revealY = (v.y + v.height / 2).toInt()
+
+            //create an intent, that launches the second activity and pass the x and y coordinates
+            val intent = Intent(it, SongCreationActivity::class.java)
+            intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_X, revealX)
+            intent.putExtra(RevealAnimation.EXTRA_CIRCULAR_REVEAL_Y, revealY)
+
+            //just start the activity as an shared transition, but set the options bundle to null
+            ActivityCompat.startActivity(it, intent, null)
+
+            //to prevent strange behaviours override the pending transitions
+            it.overridePendingTransition(0, 0)
         }
     }
 }

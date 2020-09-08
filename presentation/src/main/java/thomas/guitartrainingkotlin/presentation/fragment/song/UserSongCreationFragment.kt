@@ -40,7 +40,7 @@ class UserSongCreationFragment : Fragment(R.layout.fragment_user_song_creation) 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                activity?.finish()
+                activity?.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_song_update.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.DialogComponentImpl
 import thomas.guitartrainingkotlin.presentation.component.ErrorRendererComponentImpl
@@ -18,6 +19,7 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongUpdateVie
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class UserSongUpdateFragment : Fragment(R.layout.fragment_user_song_update) {
 
     @Inject

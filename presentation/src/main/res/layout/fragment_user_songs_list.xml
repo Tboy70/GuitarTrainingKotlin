@@ -66,10 +66,10 @@
         android:layout_marginEnd="@dimen/constraint_layout_margin_16"
         android:layout_marginBottom="@dimen/constraint_layout_margin_16"
         android:src="@drawable/ic_add"
-        android:tint="@android:color/white"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="@color/colorPrimaryDark" />
+        app:rippleColor="@color/colorPrimaryDark"
+        app:tint="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

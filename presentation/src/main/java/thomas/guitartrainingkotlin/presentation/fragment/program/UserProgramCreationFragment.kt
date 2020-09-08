@@ -54,7 +54,7 @@ class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_crea
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                activity?.finish()
+                activity?.onBackPressed()
             }
         }
         return super.onOptionsItemSelected(item)

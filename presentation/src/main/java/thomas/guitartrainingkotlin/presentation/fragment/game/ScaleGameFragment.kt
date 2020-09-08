@@ -23,6 +23,12 @@ import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewMode
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * Three scale games possible :
+ * -> Find the scale giving notes
+ * -> Find the note giving scale
+ * -> Is the scale right giving note ?
+ */
 @AndroidEntryPoint
 class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
 
@@ -38,14 +44,24 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         updateConfirmButtonState()
     }
 
-    private var givenNote: String = ""
-    private var givenScale: String = ""
-    private var givenGameMode: Int = 0
+    private var listDegreesViews = mutableListOf<EditText>()
 
-    private var thirdGameCorrectAnswer: String = ""    // TODO : In view model ?
+    private var referenceNote: String = ""
+    private var scale: String = ""
+    private var gameMode: Int = 0
+
+    private var isScaleCorrectAnswer: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        listDegreesViews.addAll(
+            listOf(
+                first_degree_answer, second_degree_answer, third_degree_answer,
+                fourth_degree_answer, fifth_degree_answer, sixth_degree_answer,
+                seventh_degree_answer, eight_degree_answer
+            )
+        )
 
         initiateToolbar()
         initiateViews()
@@ -67,18 +83,14 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
     }
 
     private fun initiateViews() {
-        initAnswersFields(
-            first_degree_answer, second_degree_answer, third_degree_answer,
-            fourth_degree_answer, fifth_degree_answer, sixth_degree_answer,
-            seventh_degree_answer, eight_degree_answer
-        )
+        initDegreesField()
 
         fragment_scale_game_validate.setOnClickListener {
-            if (givenGameMode == ConstValues.SCALE_GAME_FIND_NOTES_MODE) {
-                viewModel.checkAnswers(addAnswersToCheck(), givenScale, givenNote)
-            } else if (givenGameMode == ConstValues.SCALE_GAME_FIND_SCALE_MODE) {
+            if (gameMode == ConstValues.SCALE_GAME_FIND_NOTES) {
+                viewModel.checkAnswers(addAnswersToCheck(), scale, referenceNote)
+            } else if (gameMode == ConstValues.SCALE_GAME_FIND_SCALE) {
                 activity?.let { activity ->
-                    if (fragment_scale_game_which_scale_answer.getInput() == thirdGameCorrectAnswer) {
+                    if (fragment_scale_game_which_scale_answer.getInput() == isScaleCorrectAnswer) {
                         displayCorrectAnswerUI(activity)
                     } else {
                         displayWrongAnswerUI(activity)
@@ -89,7 +101,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
 
         fragment_scale_game_help.setOnClickListener {
             dialogComponent.displayCustomViewHelpScale(
-                givenScale,
+                scale,
                 android.R.string.ok,
                 onPositive = {
                     dialogComponent.dismissDialog()
@@ -98,32 +110,38 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         }
 
         fragment_scale_game_yes_button.setOnClickListener {
-            viewModel.checkAnswers(addAnswersToCheck(), givenScale, givenNote, true)
+            viewModel.checkAnswers(addAnswersToCheck(), scale, referenceNote, true)
         }
 
         fragment_scale_game_no_button.setOnClickListener {
-            viewModel.checkAnswers(addAnswersToCheck(), givenScale, givenNote, false)
+            viewModel.checkAnswers(addAnswersToCheck(), scale, referenceNote, false)
         }
     }
 
     private fun initiateViewModelObservers() {
-        viewModel.finishRandomLiveEvent.observeSafe(this) {
-            givenGameMode = it.third
-            givenNote = this.resources.getStringArray(R.array.list_notes)[it.first]
-            givenScale = this.resources.getStringArray(R.array.list_scales)[it.second]
 
-            displayRequiredDegrees(givenScale)
-            displayValidateButton(givenGameMode)
+        /** The game has been selected.
+         * it.first -> Random from 1 to 12 (which note)
+         * it.second -> Random from 1 to 8 (which scale)
+         * it.third -> Random from 1 to 3 (which game)
+         **/
+        viewModel.gameRandomizedLiveEvent.observeSafe(this) {
+            referenceNote = this.resources.getStringArray(R.array.list_notes)[it.first]
+            scale = this.resources.getStringArray(R.array.list_scales)[it.second]
+            gameMode = it.third
 
-            when (givenGameMode) {
-                ConstValues.SCALE_GAME_FIND_NOTES_MODE -> {
-                    launchFindNotesGameMode(givenNote, givenScale) // User give all the notes
+            displayRequiredDegrees(scale)
+            displayValidateButton(gameMode)
+
+            when (gameMode) {
+                ConstValues.SCALE_GAME_FIND_NOTES -> {
+                    launchGameFindNotes(referenceNote, scale)
                 }
-                ConstValues.SCALE_GAME_CORRECT_SCALE_MODE -> {
-                    launchCorrectScaleGameMode(givenNote, givenScale) // User YES / NO
+                ConstValues.SCALE_GAME_IS_CORRECT_SCALE -> {
+                    launchGameIsScaleCorrect(referenceNote, scale)
                 }
                 else -> {
-                    launchFindScaleGameMode(givenNote)  // User find the right scale
+                    launchGameFindScale(referenceNote)
                 }
             }
         }
@@ -139,18 +157,18 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
             }
         }
 
-        viewModel.answerCheckedLiveEvent2.observeSafe(this) { resultList ->
+        viewModel.answerCheckedWithUserChoiceLiveEvent.observeSafe(this) { pairResultAndUserAnswer ->
             activity?.let { activity ->
-                if (resultList.first.all { it }) {
-                    if (resultList.second) {
+                if (pairResultAndUserAnswer.first.all { it }) {
+                    if (pairResultAndUserAnswer.second) {
                         displayCorrectAnswerUI(activity)
                     } else {
-                        updateWrongAnswerUI(resultList.first)
+                        updateWrongAnswerUI(pairResultAndUserAnswer.first)
                         displayWrongAnswerUI(activity)
                     }
                 } else {
-                    if (resultList.second) {
-                        updateWrongAnswerUI(resultList.first)
+                    if (pairResultAndUserAnswer.second) {
+                        updateWrongAnswerUI(pairResultAndUserAnswer.first)
                         displayWrongAnswerUI(activity)
                     } else {
                         displayCorrectAnswerUI(activity)
@@ -159,35 +177,30 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
             }
         }
 
-        viewModel.randomScaleLiveEvent.observeSafe(this) {
-            displayRequiredDegrees(it.second)
-            first_degree_answer.setText(it.first[0])
-            second_degree_answer.setText(it.first[1])
-            third_degree_answer.setText(it.first[2])
-            fourth_degree_answer.setText(it.first[3])
-            fifth_degree_answer.setText(it.first[4])
-            sixth_degree_answer.setText(it.first[5])
-            if (it.first.size > 6) seventh_degree_answer.setText(it.first[6])
-            if (it.first.size > 7) eight_degree_answer.setText(it.first[7])
+        viewModel.generatedRandomScaleLiveEvent.observeSafe(this) { pairScaleAndName ->
+            fillDegreesValue(pairScaleAndName)
         }
 
-        viewModel.correctScaleLiveEvent.observeSafe(this) {
-            displayRequiredDegrees(it.second)
-            first_degree_answer.setText(it.first[0])
-            second_degree_answer.setText(it.first[1])
-            third_degree_answer.setText(it.first[2])
-            fourth_degree_answer.setText(it.first[3])
-            fifth_degree_answer.setText(it.first[4])
-            sixth_degree_answer.setText(it.first[5])
-            if (it.first.size > 6) seventh_degree_answer.setText(it.first[6])
-            if (it.first.size > 7) eight_degree_answer.setText(it.first[7])
-
-            thirdGameCorrectAnswer = it.second
+        viewModel.correctScaleLiveEvent.observeSafe(this) { pairScaleAndName ->
+            fillDegreesValue(pairScaleAndName)
+            isScaleCorrectAnswer = pairScaleAndName.second
         }
     }
 
-    private fun initAnswersFields(vararg fields: EditText) {
-        fields.forEach { field ->
+    private fun fillDegreesValue(pairScaleAndName: Pair<List<String>, String>) {
+        displayRequiredDegrees(pairScaleAndName.second)
+        first_degree_answer.setText(pairScaleAndName.first[0])
+        second_degree_answer.setText(pairScaleAndName.first[1])
+        third_degree_answer.setText(pairScaleAndName.first[2])
+        fourth_degree_answer.setText(pairScaleAndName.first[3])
+        fifth_degree_answer.setText(pairScaleAndName.first[4])
+        sixth_degree_answer.setText(pairScaleAndName.first[5])
+        if (pairScaleAndName.first.size > 6) seventh_degree_answer.setText(pairScaleAndName.first[6])
+        if (pairScaleAndName.first.size > 7) eight_degree_answer.setText(pairScaleAndName.first[7])
+    }
+
+    private fun initDegreesField() {
+        listDegreesViews.forEach { field ->
             field.addTextChangedListener(textChangedListener)
             field.setOnClickListener {
                 displayAnswerPopUpUI(field, R.array.list_notes)
@@ -195,23 +208,23 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         }
     }
 
-    private fun displayRequiredDegrees(givenScale: String) {
+    private fun displayRequiredDegrees(scale: String) {
         context?.let { context ->
-            if (givenScale == context.getString(R.string.tone_major) ||
-                givenScale == context.getString(R.string.tone_minor_natural) ||
-                givenScale == context.getString(R.string.tone_minor_harmonic) ||
-                givenScale == context.getString(R.string.tone_minor_melodic)
+            if (scale == context.getString(R.string.tone_major) ||
+                scale == context.getString(R.string.tone_minor_natural) ||
+                scale == context.getString(R.string.tone_minor_harmonic) ||
+                scale == context.getString(R.string.tone_minor_melodic)
             ) {
                 seventh_degree_layout.show()
                 eight_degree_layout.show()
             } else {
                 eight_degree_layout.hide()
-                if (givenScale == context.getString(R.string.tone_pentatonic_minor) || givenScale == context.getString(
+                if (scale == context.getString(R.string.tone_pentatonic_minor) || scale == context.getString(
                         R.string.tone_pentatonic_major
                     )
                 ) {
                     seventh_degree_layout.hide()
-                } else if (givenScale == context.getString(R.string.tone_blues_minor)) {
+                } else if (scale == context.getString(R.string.tone_blues_minor)) {
                     fourth_degree_label.setTextColor(
                         ContextCompat.getColor(
                             context,
@@ -219,7 +232,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
                         )
                     )
                     seventh_degree_layout.show()
-                } else if (givenScale == context.getString(R.string.tone_blues_major)) {
+                } else if (scale == context.getString(R.string.tone_blues_major)) {
                     third_degree_label.setTextColor(
                         ContextCompat.getColor(
                             context,
@@ -232,9 +245,9 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         }
     }
 
-    private fun displayValidateButton(givenGameMode: Int) {
-        when (givenGameMode) {
-            ConstValues.SCALE_GAME_FIND_NOTES_MODE -> {
+    private fun displayValidateButton(gameMode: Int) {
+        when (gameMode) {
+            ConstValues.SCALE_GAME_FIND_NOTES -> {
                 fragment_scale_game_help.show()
                 fragment_scale_game_question.show()
                 fragment_scale_game_validate.show()
@@ -242,7 +255,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
                 fragment_scale_game_yes_button.gone()
                 fragment_scale_game_which_scale_answer.gone()
             }
-            ConstValues.SCALE_GAME_CORRECT_SCALE_MODE -> {
+            ConstValues.SCALE_GAME_IS_CORRECT_SCALE -> {
                 fragment_scale_game_help.show()
                 fragment_scale_game_question.show()
                 fragment_scale_game_validate.gone()
@@ -261,36 +274,36 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         }
     }
 
-    private fun launchFindNotesGameMode(givenNote: String, givenScale: String) {
-        disableTouchOnAnswer(false)
+    private fun launchGameFindNotes(referenceNote: String, scale: String) {
+        allowEditingDegreesValues(true)
 
         fragment_scale_game_description.text = activity?.getString(
             R.string.scale_game_first_mode_description
         )
         fragment_scale_game_question.text = activity?.getString(
             R.string.scale_game_question,
-            givenNote,
-            givenScale.toLowerCase(Locale.ROOT)
+            referenceNote,
+            scale.toLowerCase(Locale.ROOT)
         )
     }
 
-    private fun launchCorrectScaleGameMode(givenNote: String, givenScale: String) {
-        disableTouchOnAnswer(true)
+    private fun launchGameIsScaleCorrect(referenceNote: String, scale: String) {
+        allowEditingDegreesValues(false)
 
         fragment_scale_game_description.text = activity?.getString(
             R.string.scale_game_second_mode_description
         )
         fragment_scale_game_question.text = activity?.getString(
             R.string.scale_game_question,
-            givenNote,
-            givenScale.toLowerCase(Locale.ROOT)
+            referenceNote,
+            scale.toLowerCase(Locale.ROOT)
         )
 
-        viewModel.generateRandomScale(givenNote)
+        viewModel.generateRandomScale(referenceNote, scale)
     }
 
-    private fun launchFindScaleGameMode(givenNote: String) {
-        disableTouchOnAnswer(false)
+    private fun launchGameFindScale(referenceNote: String) {
+        allowEditingDegreesValues(false)
 
         fragment_scale_game_description.text = activity?.getString(
             R.string.scale_game_third_mode_description
@@ -300,7 +313,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
             displayAnswerPopUpUI(fragment_scale_game_which_scale_answer, R.array.list_scales)
         }
 
-        viewModel.generateCorrectScale(givenNote)
+        viewModel.generateCorrectScale(referenceNote)
     }
 
     private fun displayAnswerPopUpUI(field: EditText, answersChoiceArray: Int) {
@@ -319,22 +332,23 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
 
     private fun addAnswersToCheck(): List<String> {
         val answersList = mutableListOf<String>()
-        answersList.add(first_degree_answer.getInput())
-        answersList.add(second_degree_answer.getInput())
-        answersList.add(third_degree_answer.getInput())
-        answersList.add(fourth_degree_answer.getInput())
-        answersList.add(fifth_degree_answer.getInput())
-        answersList.add(sixth_degree_answer.getInput())
+        answersList.addAll(
+            listOf(
+                first_degree_answer.getInput(), second_degree_answer.getInput(),
+                third_degree_answer.getInput(), fourth_degree_answer.getInput(),
+                fifth_degree_answer.getInput(), sixth_degree_answer.getInput()
+            )
+        )
 
-        if (givenScale == context?.getString(R.string.tone_minor_natural) ||
-            givenScale == context?.getString(R.string.tone_minor_harmonic) ||
-            givenScale == context?.getString(R.string.tone_minor_melodic) ||
-            givenScale == context?.getString(R.string.tone_major)
+        if (scale == context?.getString(R.string.tone_minor_natural) ||
+            scale == context?.getString(R.string.tone_minor_harmonic) ||
+            scale == context?.getString(R.string.tone_minor_melodic) ||
+            scale == context?.getString(R.string.tone_major)
         ) {
             answersList.add(seventh_degree_answer.getInput())
             answersList.add(eight_degree_answer.getInput())
-        } else if (givenScale == context?.getString(R.string.tone_blues_minor) ||
-            givenScale == context?.getString(R.string.tone_blues_major)
+        } else if (scale == context?.getString(R.string.tone_blues_minor) ||
+            scale == context?.getString(R.string.tone_blues_major)
         ) {
             answersList.add(seventh_degree_answer.getInput())
         }
@@ -361,53 +375,41 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         )
     }
 
-    private fun updateWrongAnswerUI(resultList: List<Boolean>?) {
+    private fun updateWrongAnswerUI(resultList: List<Boolean>) {
         context?.let { context ->
-            resultList?.let { answers ->
-                answers.forEachIndexed { index, rightAnswer ->
-                    getAssociatedEditTextToAnswerIndex(index).setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            if (!rightAnswer) android.R.color.holo_red_dark else android.R.color.holo_green_dark
-                        )
+            resultList.forEachIndexed { index, rightAnswer ->
+                getAssociatedEditTextToAnswerIndex(index).setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (!rightAnswer) android.R.color.holo_red_dark else android.R.color.holo_green_dark
                     )
-                }
+                )
             }
         }
     }
 
-    private fun disableTouchOnAnswer(allowedTouch: Boolean) {
-        first_degree_answer.isFocusableInTouchMode = allowedTouch
-        second_degree_answer.isFocusableInTouchMode = allowedTouch
-        third_degree_answer.isFocusableInTouchMode = allowedTouch
-        fourth_degree_answer.isFocusableInTouchMode = allowedTouch
-        fifth_degree_answer.isFocusableInTouchMode = allowedTouch
-        sixth_degree_answer.isFocusableInTouchMode = allowedTouch
-        seventh_degree_answer.isFocusableInTouchMode = allowedTouch
-        eight_degree_answer.isFocusableInTouchMode = allowedTouch
+    private fun allowEditingDegreesValues(allowedEditing: Boolean) {
+
+        listDegreesViews.forEach { degreeView ->
+            if (!allowedEditing) {
+                degreeView.isFocusableInTouchMode = allowedEditing
+                degreeView.isFocusable = allowedEditing
+            }
+
+            degreeView.isEnabled = allowedEditing
+            degreeView.isCursorVisible = allowedEditing
+        }
     }
 
     private fun resetGame() {
-        first_degree_answer.text = null
-        second_degree_answer.text = null
-        third_degree_answer.text = null
-        fourth_degree_answer.text = null
-        fifth_degree_answer.text = null
-        sixth_degree_answer.text = null
-        seventh_degree_answer.text = null
-        eight_degree_answer.text = null
-        context?.let {
-            first_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            second_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            third_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            fourth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            fifth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            sixth_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            seventh_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
-            eight_degree_answer.setTextColor(ContextCompat.getColor(it, android.R.color.black))
+        listDegreesViews.forEach { degreeView ->
+            degreeView.text = null
+            context?.let { context ->
+                degreeView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+            }
         }
         fragment_scale_game_which_scale_answer.text = null
-        viewModel.getRandomValue()
+        viewModel.getRandomGame()
     }
 
     private fun getAssociatedEditTextToAnswerIndex(answerIndex: Int): EditText {
