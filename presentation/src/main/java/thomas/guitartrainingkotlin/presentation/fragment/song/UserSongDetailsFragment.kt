@@ -26,6 +26,7 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWra
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserSongDetailsViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {

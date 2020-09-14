@@ -1,7 +1,7 @@
 package thomas.guitartrainingkotlin.data.mapper.db
 
+import thomas.guitartrainingkotlin.data.db.entity.UserDBEntity
 import thomas.guitartrainingkotlin.data.entity.UserEntity
-import thomas.guitartrainingkotlin.data.entity.db.UserDBEntity
 import thomas.guitartrainingkotlin.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton

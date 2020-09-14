@@ -7,7 +7,7 @@ import javax.inject.Inject
 class LogoutUser @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    fun logoutUser(): Flow<Unit> {
+    suspend fun logoutUser(): Flow<Unit> {
         return userRepository.logoutUser()
     }
 }

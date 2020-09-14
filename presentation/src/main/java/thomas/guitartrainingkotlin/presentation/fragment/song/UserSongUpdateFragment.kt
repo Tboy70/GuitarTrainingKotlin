@@ -18,6 +18,7 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.SongViewDataWra
 import thomas.guitartrainingkotlin.presentation.viewmodel.song.UserSongUpdateViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class UserSongUpdateFragment : Fragment(R.layout.fragment_user_song_update) {

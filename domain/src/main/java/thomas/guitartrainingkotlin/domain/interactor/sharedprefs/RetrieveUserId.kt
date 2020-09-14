@@ -8,7 +8,7 @@ class RetrieveUserId @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    fun retrieveUserId(): Flow<String?> {
+    suspend fun retrieveUserId(): Flow<String?> {
         return userRepository.retrieveUserId()
     }
 }

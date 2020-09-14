@@ -29,7 +29,6 @@ class CreateAccountViewModel @ViewModelInject constructor(
         }
 
         val user = User(
-            userId = null,
             userPseudo = pseudoUser,
             userEmail = emailUser,
             userPassword = passwordUser

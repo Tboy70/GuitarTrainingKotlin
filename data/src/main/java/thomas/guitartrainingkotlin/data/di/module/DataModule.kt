@@ -12,11 +12,8 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object DataModule {
 
-//    @Provides
-//    @Singleton
-//    fun jobExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
-
     @Provides
     @Singleton
     fun gson(): Gson = GsonBuilder().create()
+
 }

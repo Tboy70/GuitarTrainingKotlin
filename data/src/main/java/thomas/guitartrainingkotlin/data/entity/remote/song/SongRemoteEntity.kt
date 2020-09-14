@@ -11,6 +11,6 @@ data class SongRemoteEntity(
     @SerializedName("totalScoreSong") val totalScoreSong: Int = 0,
     @SerializedName("nbPlay") val nbPlay: Int = 0,
     @SerializedName("lastPlay") val lastPlay: String = "",
-    @SerializedName("userId") val userId: String = "",
+    @SerializedName("userId") var userId: String = "",
     @SerializedName("idInstrument") val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

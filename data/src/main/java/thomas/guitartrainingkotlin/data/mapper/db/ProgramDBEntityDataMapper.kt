@@ -1,7 +1,7 @@
 package thomas.guitartrainingkotlin.data.mapper.db
 
+import thomas.guitartrainingkotlin.data.db.entity.ProgramDBEntity
 import thomas.guitartrainingkotlin.data.entity.ProgramEntity
-import thomas.guitartrainingkotlin.data.entity.db.ProgramDBEntity
 import thomas.guitartrainingkotlin.data.exception.mapper.DataMappingException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,8 +30,7 @@ class ProgramDBEntityDataMapper @Inject constructor(
                 idInstrument = programDBEntity.idInstrument,
                 defaultProgram = programDBEntity.defaultProgram,
                 descriptionProgram = programDBEntity.descriptionProgram,
-                exerciseEntityList = programDBEntity.exerciseList?.let { exerciseDBEntityDataMapper.transformFromDB(it) }
-                    ?: emptyList()
+                exerciseEntityList = programDBEntity.exerciseList.let { exerciseDBEntityDataMapper.transformFromDB(it) }
             )
         } catch (e: Exception) {
             throw DataMappingException()
@@ -55,10 +54,9 @@ class ProgramDBEntityDataMapper @Inject constructor(
                 nameProgram = programEntity.nameProgram,
                 idInstrument = programEntity.idInstrument,
                 defaultProgram = programEntity.defaultProgram,
-                descriptionProgram = programEntity.descriptionProgram
-            ).apply {
+                descriptionProgram = programEntity.descriptionProgram,
                 exerciseList = exerciseDBEntityDataMapper.transformToDB(programEntity.exerciseEntityList)
-            }
+            )
         } catch (e: Exception) {
             throw DataMappingException()
         }

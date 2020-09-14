@@ -32,6 +32,7 @@ import thomas.guitartrainingkotlin.presentation.view.datawrapper.ProgramViewData
 import thomas.guitartrainingkotlin.presentation.viewmodel.user.UserProgramDetailsViewModel
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
 class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_details) {

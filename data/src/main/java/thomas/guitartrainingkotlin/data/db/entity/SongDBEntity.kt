@@ -1,8 +1,12 @@
-package thomas.guitartrainingkotlin.data.entity
+package thomas.guitartrainingkotlin.data.db.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import thomas.guitartrainingkotlin.domain.values.InstrumentModeValues
 
-data class SongEntity(
+@Entity
+class SongDBEntity(
+    @PrimaryKey
     val idSong: String = "",
     val titleSong: String = "",
     val artistSong: String = "",
@@ -10,6 +14,6 @@ data class SongEntity(
     val totalScoreSong: Int = 0,
     val nbPlay: Int = 0,
     val lastPlay: String = "",
-    var userId: String = "",
+    val userId: String = "",
     val idInstrument: Int = InstrumentModeValues.INSTRUMENT_MODE_GUITAR
 )

@@ -53,11 +53,12 @@ dependencies {
     // OkHttp
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 
-    // DBFlow
-    implementation "com.github.Raizlabs.DBFlow:dbflow-core:4.2.4"
-    implementation "com.github.Raizlabs.DBFlow:dbflow:4.2.4"
-    implementation "com.github.Raizlabs.DBFlow:dbflow-kotlinextensions:4.2.4@aar"
-    kapt "com.github.Raizlabs.DBFlow:dbflow-processor:4.2.4"
+    //Room
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
 
     implementation 'com.scottyab:aescrypt:0.0.1'
 

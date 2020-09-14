@@ -138,11 +138,13 @@ class UserSongDetailsViewModel @ViewModelInject constructor(
         val dateFormat = SimpleDateFormat(DateTimeUtils.FROM_API_FORMAT, Locale.FRANCE)
 
         scoreList.forEach { score ->
-            val timestamp = Timestamp(dateFormat.parse(score.dateScore).time).time / 1000
-            if (timestamp < referenceTimestamp) {
-                referenceTimestamp = timestamp
+            dateFormat.parse(score.dateScore)?.let {
+                val timestamp = Timestamp(it.time).time / 1000
+                if (timestamp < referenceTimestamp) {
+                    referenceTimestamp = timestamp
+                }
+                timestampKeyList.put(timestamp, score.valueScore)
             }
-            timestampKeyList.put(timestamp, score.valueScore)
         }
 
         val timestampKeyListMinusReferenceTimestamp = LongSparseArray<Float>()
