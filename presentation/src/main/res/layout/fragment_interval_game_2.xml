@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragment_interval_game_toolbar"
+        style="@style/ToolbarAppTheme"
+        android:theme="@style/ToolbarAppTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_title_interval_game_list"
+        app:titleTextAppearance="@style/ToolbarTitleText" />
+
+    <TextView
+        android:id="@+id/fragment_interval_game_title"
+        style="@style/GenericTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/constraint_layout_margin_16"
+        android:text="@string/interval_game_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_toolbar" />
+
+    <TextView
+        android:id="@+id/fragment_interval_game_description"
+        style="@style/GenericSubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/constraint_layout_margin_16"
+        android:text="@string/interval_game_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_title" />
+
+    <TextView
+        android:id="@+id/fragment_interval_game_question"
+        style="@style/GenericSubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/constraint_layout_margin_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_description"
+        tools:text="@string/interval_game_question" />
+
+    <EditText
+        android:id="@+id/fragment_interval_game_answer"
+        android:layout_width="@dimen/degree_edit_text_width"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:hint="@string/interval_game_hint_answer"
+        android:inputType="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question"
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/fragment_interval_game_validate"
+        style="@style/GenericBigButton"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:enabled="false"
+        android:text="@string/generic_button_validate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

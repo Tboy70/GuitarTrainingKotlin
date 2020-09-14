@@ -65,7 +65,7 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
         fragment_interval_game_answer.setOnClickListener {
             dialogComponent.displaySingleListChoiceDialog(
                 R.string.dialog_game_answer_title,
-                R.array.list_notes,
+                R.array.list_notes_with_alterations,
                 android.R.string.ok,
                 onPositive = { selectedNote ->
                     fragment_interval_game_answer.setText(selectedNote)
@@ -85,7 +85,7 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
 
     private fun initiateViewModelObservers() {
         viewModel.finishRandomLiveEvent.observeSafe(this) {
-            givenNote = this.resources.getStringArray(R.array.list_notes)[it.first]
+            givenNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[it.first]
             givenInterval = this.resources.getStringArray(R.array.list_interval)[it.second]
             gameMode = it.third
 

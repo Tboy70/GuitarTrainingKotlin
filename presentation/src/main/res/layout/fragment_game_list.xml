@@ -1,53 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/fragment_game_list_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:theme="@style/ToolbarAppTheme"
-            app:titleTextAppearance="@style/ToolbarTitleText"
-            app:title="@string/toolbar_title_game_list"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/fragment_game_list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ToolbarAppTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_title_game_list"
+        app:titleTextAppearance="@style/ToolbarTitleText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_game_list_toolbar"
+        app:layout_constraintVertical_chainStyle="spread_inside">
+
+        <Button
+            android:id="@+id/button_game_interval"
+            style="@style/GenericBigButton"
+            android:text="@string/game_list_scale_game"
+            app:layout_constraintBottom_toTopOf="@id/button_game_interval_2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@id/fragment_game_list_toolbar"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-                android:id="@+id/button_game_interval"
-                style="@style/GenericBigButton"
-                android:text="@string/game_list_scale_game"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/button_game_reversed_interval"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/button_game_interval_2"
+            style="@style/GenericBigButton"
+            android:text="@string/game_list_scale_game"
+            app:layout_constraintBottom_toTopOf="@id/button_game_reversed_interval"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_game_interval" />
 
         <Button
-                android:id="@+id/button_game_reversed_interval"
-                style="@style/GenericBigButton"
-                android:text="@string/game_list_reversed_interval_game"
-                app:layout_constraintTop_toBottomOf="@id/button_game_interval"
-                app:layout_constraintBottom_toTopOf="@id/button_game_scale"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/button_game_reversed_interval"
+            style="@style/GenericBigButton"
+            android:text="@string/game_list_reversed_interval_game"
+            app:layout_constraintBottom_toTopOf="@id/button_game_scale"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_game_interval_2" />
 
         <Button
-                android:id="@+id/button_game_scale"
-                style="@style/GenericBigButton"
-                android:text="@string/game_list_interval_game"
-                app:layout_constraintTop_toBottomOf="@id/button_game_reversed_interval"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:id="@+id/button_game_scale"
+            style="@style/GenericBigButton"
+            android:text="@string/game_list_interval_game"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_game_reversed_interval" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

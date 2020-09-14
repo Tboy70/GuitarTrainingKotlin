@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="list_notes">
+    <string-array name="list_notes_without_alteration">
+        <item>@string/note_C</item>
+        <item>@string/note_D</item>
+        <item>@string/note_E</item>
+        <item>@string/note_F</item>
+        <item>@string/note_G</item>
+        <item>@string/note_A</item>
+        <item>@string/note_B</item>
+    </string-array>
+
+    <string-array name="list_notes_with_alterations">
         <item>@string/note_C</item>
         <item>@string/note_C_sharp</item>
         <item>@string/note_D</item>

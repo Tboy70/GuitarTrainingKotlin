@@ -92,7 +92,7 @@ class ExerciseScaleFragment : BaseExerciseFragment() {
 
     private fun initiateViewModelObservers() {
         exerciseScaleViewModel.finishRandomLiveEvent.observeSafe(this) { noteTonePair ->
-            val notesArray = this.resources.getStringArray(R.array.list_notes)
+            val notesArray = this.resources.getStringArray(R.array.list_notes_with_alterations)
             mSelectedItem = notesArray[noteTonePair.first]
             displaySelectedChoice(
                 mSelectedItem,
@@ -113,7 +113,7 @@ class ExerciseScaleFragment : BaseExerciseFragment() {
         when (typeSelection) {
             NOTE_SELECTION -> {
                 title = R.string.exercise_scale_dialog_choice_note_text
-                items = R.array.list_notes
+                items = R.array.list_notes_with_alterations
             }
             SCALE_SELECTION -> {
                 title = R.string.exercise_scale_dialog_choice_mode_text

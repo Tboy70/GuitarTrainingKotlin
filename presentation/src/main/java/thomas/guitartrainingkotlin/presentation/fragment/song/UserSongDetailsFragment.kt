@@ -28,7 +28,6 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-@ExperimentalCoroutinesApi
 class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
 
     @Inject

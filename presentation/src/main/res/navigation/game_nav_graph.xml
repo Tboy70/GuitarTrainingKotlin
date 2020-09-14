@@ -18,6 +18,14 @@
                 app:destination="@id/interval_game" />
 
         <action
+            android:id="@+id/action_game_list_to_interval_game_2"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right"
+            app:destination="@id/interval_game_2" />
+
+        <action
                 android:id="@+id/action_game_list_to_scale_game"
                 app:enterAnim="@anim/enter_right"
                 app:exitAnim="@anim/exit_left"
@@ -38,6 +46,11 @@
             android:id="@+id/interval_game"
             android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragment"
             tools:layout="@layout/fragment_interval_game" />
+
+    <fragment
+        android:id="@+id/interval_game_2"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragmentREfactor"
+        tools:layout="@layout/fragment_interval_game_2" />
 
     <fragment
             android:id="@+id/scale_game"

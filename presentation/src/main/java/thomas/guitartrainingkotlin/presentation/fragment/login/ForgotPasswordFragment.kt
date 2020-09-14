@@ -23,7 +23,6 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-@ExperimentalCoroutinesApi
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
 
     @Inject

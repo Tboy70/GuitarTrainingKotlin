@@ -24,7 +24,7 @@ object GameUtils {
         intervalGameMode: Int,
         context: Context
     ): Boolean {
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
         return userAnswer == findIntervalValue(
             context,
             givenInterval,
@@ -36,7 +36,7 @@ object GameUtils {
     private fun findIntervalValue(
         context: Context, givenInterval: String, indexOfGivenNote: Int, intervalGameMode: Int
     ): String? {
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
         val intervalArray = context.resources.getStringArray(R.array.list_interval)
 
         intervalArray.indexOf(givenInterval).let { index ->
@@ -63,7 +63,7 @@ object GameUtils {
     ): List<Boolean> {
         val resultList = mutableListOf<Boolean>()
 
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
         val indexOfGivenNote = noteArray.indexOf(referenceNote)
 
         val expectedResultList = mutableListOf(referenceNote)
@@ -116,7 +116,7 @@ object GameUtils {
         scale: String?,
         context: Context
     ): Pair<MutableList<String>, String> {
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
         val indexOfGivenNote = noteArray.indexOf(referenceNote)
         val generatedScale = mutableListOf(referenceNote)
         val scaleToGenerate =
@@ -140,7 +140,7 @@ object GameUtils {
         scale: String,
         context: Context
     ): Pair<MutableList<String>, String> {
-        val noteArray = context.resources.getStringArray(R.array.list_notes)
+        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
         val indexOfGivenNote = noteArray.indexOf(givenNote)
         var generatedScale = mutableListOf(givenNote)
         val scaleToGenerate = getRandomScale(context, scale)

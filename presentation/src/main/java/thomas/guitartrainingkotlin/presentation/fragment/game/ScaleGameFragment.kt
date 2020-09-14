@@ -126,7 +126,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
          * it.third -> Random from 1 to 3 (which game)
          **/
         viewModel.gameRandomizedLiveEvent.observeSafe(this) {
-            referenceNote = this.resources.getStringArray(R.array.list_notes)[it.first]
+            referenceNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[it.first]
             scale = this.resources.getStringArray(R.array.list_scales)[it.second]
             gameMode = it.third
 
@@ -203,7 +203,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         listDegreesViews.forEach { field ->
             field.addTextChangedListener(textChangedListener)
             field.setOnClickListener {
-                displayAnswerPopUpUI(field, R.array.list_notes)
+                displayAnswerPopUpUI(field, R.array.list_notes_with_alterations)
             }
         }
     }
