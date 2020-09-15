@@ -22,7 +22,7 @@ class IntervalGameViewModel2 @ViewModelInject constructor(
     }
 
     private fun getRandomValues() {
-        val randomGame = Random.nextInt(0, 1)
+        val randomGame = Random.nextInt(0, 2)
         if (randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL || randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
             val beginNote = Random.nextInt(ConstValues.NB_NOTES)
             val interval = Random.nextInt(ConstValues.NB_INTERVAL)
