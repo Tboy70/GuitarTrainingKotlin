@@ -7,9 +7,11 @@ object ConstValues {
     const val CONST_DEFAULT_TIMESTAMP = 1000000000000
 
     // MUSIC CONST
-    const val NB_NOTES = 12
+    const val NB_NOTES = 17
+    const val NB_NOTES_MIXING_SAME_NOTE = 12
+    const val NB_NOTES_WITHOUT_ALTERATION = 7
     const val NB_SCALES = 8
-    const val NB_INTERVAL = 13
+    const val NB_INTERVAL = 14
 
     // PROGRAM CONST
     private const val DEFAULT_PROGRAM_THEORETICAL_GUITAR = "1"

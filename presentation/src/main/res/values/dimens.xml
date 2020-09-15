@@ -23,6 +23,7 @@
 
     <!-- GENERIC MARGIN -->
     <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_big">30dp</dimen>
 
     <!-- GENERIC CONSTRAINT LAYOUT MARGIN-->

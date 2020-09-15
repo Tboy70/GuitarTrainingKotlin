@@ -3,6 +3,7 @@ package thomas.guitartrainingkotlin.presentation.utils
 import android.content.Context
 import android.util.Log
 import thomas.guitartrainingkotlin.R
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel2
 import java.util.*
 import kotlin.math.abs
 
@@ -16,6 +17,54 @@ object GameUtils {
     private val PENTATONIC_MINOR_SCALE_INTERVAL = listOf(3, 5, 7, 10, 12)
     private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
     private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
+
+    private val NB_TONS_WITHOUT_ALTERATION = listOf(2, 2, 1, 2, 2, 2, 1)
+
+    //    private val NB_TONS_WITH_ALTERATION = listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+    private val NB_TONS_WITH_ALTERATION =
+        listOf(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+
+    // Map --> index to list(NbNoteToPass, NbTons)
+    private val INTERVAL_TO_TONS = mapOf(
+        0 to listOf(1, 0.5),
+        1 to listOf(1, 1),
+        2 to listOf(2, 1.5),
+        3 to listOf(2, 2),
+        4 to listOf(3, 2.5),
+        5 to listOf(3, 3),
+        6 to listOf(4, 3),
+        7 to listOf(4, 3.5),
+        8 to listOf(4, 4),
+        9 to listOf(5, 4),
+        10 to listOf(5, 4.5),
+        11 to listOf(6, 5),
+        12 to listOf(6, 5.5),
+        13 to listOf(7, 6)
+    )
+
+    // Map --> To handle same note from the array-list (example : D# / Eb)
+    private val NOTE_WITH_ALTERATION_MAP_INDEX = mapOf(
+        0 to 0,
+        1 to 1,
+        2 to 1,
+        3 to 2,
+        4 to 3,
+        5 to 3,
+        6 to 4,
+        7 to 5,
+        8 to 6,
+        9 to 6,
+        10 to 7,
+        11 to 8,
+        12 to 8,
+        13 to 9,
+        14 to 10,
+        15 to 10,
+        16 to 11
+    )
+
+    private const val FLAT_SYMBOL = "b"
+    private const val SHARP_SYMBOL = "#"
 
     fun checkIntervalGameAnswer(
         givenNote: String,
@@ -258,5 +307,128 @@ object GameUtils {
             )
             else -> Pair(MAJOR_SCALE_INTERVAL, scaleArray[0])
         }
+    }
+
+
+    /**************************************************************************/
+    /************************* REFACTOR INTERVAL GAME *************************/
+    /**************************************************************************/
+
+    fun computeRightAnswerNote(context: Context, randomGame: Int, startNote: Int, interval: Int): String {
+        if (randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {   // L'interval de X est ...
+
+            val intervalValue = context.resources.getStringArray(R.array.list_interval)[interval]
+            val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
+
+            // Compute the note to reach (without take account of the alterations)
+            val noteToReach = computeNoteToReach(context, startNoteValue, intervalValue)
+
+            // Compute the number of tones between two notes (taking account of the alterations).
+            val tonesBetweenStartAndEndNote = computeTonesBetweenTwoNotes(context, startNoteValue, noteToReach)
+
+            val intervalIndex = context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+
+            // Compute the exact number of tones for the given interval.
+            val exactTonesForInterval = INTERVAL_TO_TONS[intervalIndex]?.get(1).toString().toFloat()
+
+            return computeRightNote(noteToReach, tonesBetweenStartAndEndNote, exactTonesForInterval)
+
+        } else { // randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED
+            return "TODO"
+        }
+    }
+
+    fun computeRightInterval(context: Context, beginNote: Int, endNote: Int) {
+        TODO("Not yet implemented")
+    }
+
+    /**
+     * Compute the note to reach, given the begin note and the interval
+     * Computation without alteration !
+     */
+    private fun computeNoteToReach(
+        context: Context,
+        startNoteValue: String,
+        intervalValue: String
+    ): String {
+
+        val startNoteIndexWithoutAlteration = context.resources.getStringArray(R.array.list_notes_without_alteration)
+            .indexOf(startNoteValue.substring(0, 1))
+
+        val intervalIndex = context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+
+        val nbNotesToPassGivenInterval = INTERVAL_TO_TONS[intervalIndex]?.get(0).toString().toInt()
+
+        val endNoteIndex =
+            (startNoteIndexWithoutAlteration + nbNotesToPassGivenInterval) % ConstValues.NB_NOTES_WITHOUT_ALTERATION
+
+        return context.resources.getStringArray(R.array.list_notes_without_alteration)[endNoteIndex]
+    }
+
+    /**
+     * Compute the number of tones between two notes.
+     */
+    private fun computeTonesBetweenTwoNotes(
+        context: Context,
+        startNoteValue: String,
+        endNoteValue: String
+    ): Double {
+
+        val startNoteIndexWithAlteration = context.resources.getStringArray(R.array.list_notes_with_alterations)
+            .indexOf(startNoteValue)
+
+        val endNoteIndexWithAlteration = context.resources.getStringArray(R.array.list_notes_with_alterations)
+            .indexOf(endNoteValue)
+
+        // To take account the note which are the same. Example -> C# / Db
+        val rightStartNoteIndexWithAlteration = NOTE_WITH_ALTERATION_MAP_INDEX[startNoteIndexWithAlteration]
+        val rightEndNoteIndexWithAlteration = NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
+
+        var tonsBetweenNotes = 0.0
+
+        rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
+            rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
+                var diff = abs(startNoteIndex - endNoteIndex)
+
+                if (startNoteIndex > endNoteIndex) {
+                    diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
+                }
+
+                for (i in 0 until diff) {
+                    val rightValue =
+                        NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % ConstValues.NB_NOTES_MIXING_SAME_NOTE]
+                    tonsBetweenNotes += NB_TONS_WITH_ALTERATION[rightValue!!]
+                }
+            }
+        }
+
+        return tonsBetweenNotes
+    }
+
+    /**
+     * Compute the right answer.
+     */
+    private fun computeRightNote(
+        noteToReach: String,
+        tonesBetweenStartAndEndNote: Double,
+        exactTonesForInterval: Float
+    ): String {
+
+        var goodAnswer = noteToReach
+
+        // Difference of tones between what we computed and what we are expecting
+        val toneDifference = exactTonesForInterval - tonesBetweenStartAndEndNote
+
+        val semiToneDifference = abs(toneDifference / 0.5).toInt()
+
+        for (i in 0 until semiToneDifference) {
+            if (toneDifference < 0) {
+                goodAnswer += FLAT_SYMBOL
+            } else if (toneDifference > 0) {
+                goodAnswer += SHARP_SYMBOL
+            }
+        }
+
+        return goodAnswer
     }
 }

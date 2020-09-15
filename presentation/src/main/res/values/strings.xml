@@ -61,6 +61,7 @@
     <string name="generic_button_no">Non</string>
     <string name="generic_button_yes">Oui</string>
     <string name="generic_button_validate">Valider</string>
+    <string name="generic_button_delete">Effacer</string>
 
     <!-- NAVIGATION -->
     <string name="nav_login_home">Login Home</string>
@@ -301,6 +302,10 @@
         ? A toi de jouer !
     </string>
 
+    <!-- Refactor interval game -->
+    <string name="interval_game_find_note_given_interval_question">%1$s de %2$s est …</string>
+    <string name="interval_game_find_note_given_interval_reversed_question">%1$s est %2$s de …</string>
+    <string name="interval_game_find_interval_given_notes">Quelle est l\'interval entre %1$s et %2$s ?</string>
 
     <!-- ======================================================================================= -->
     <!-- ====================================== ERRORS ========================================= -->
@@ -355,17 +360,26 @@
 
     <!-- Notes -->
     <string name="note_C">C</string>
-    <string name="note_C_sharp">C# / Db</string>
+    <string name="note_C_sharp">C#</string>
+    <string name="note_D_flat">Db</string>
     <string name="note_D">D</string>
-    <string name="note_D_sharp">D# / Eb</string>
+    <string name="note_D_sharp">D#</string>
+    <string name="note_E_flat">Eb</string>
     <string name="note_E">E</string>
     <string name="note_F">F</string>
-    <string name="note_F_sharp">F# / Gb</string>
+    <string name="note_F_sharp">F#</string>
+    <string name="note_G_flat">Gb</string>
     <string name="note_G">G</string>
-    <string name="note_G_sharp">G# / Ab</string>
+    <string name="note_G_sharp">G#</string>
+    <string name="note_A_flat">Ab</string>
     <string name="note_A">A</string>
-    <string name="note_A_sharp">A# / Bb</string>
+    <string name="note_A_sharp">A#</string>
+    <string name="note_B_flat">Bb</string>
     <string name="note_B">B</string>
+
+    <!-- Symbol -->
+    <string name="flat_symbol">b</string>
+    <string name="sharp_symbol">#</string>
 
     <!-- Tones -->
     <string name="tone_major">Majeure</string>
@@ -397,15 +411,16 @@
     <string name="eight_degree">VIII</string>
 
     <!-- Interval -->
-    <string name="interval_first">la tonique</string>
     <string name="interval_second_minor">la seconde mineure</string>
     <string name="interval_second_major">la seconde majeure</string>
     <string name="interval_third_minor">la tierce mineure</string>
-    <string name="interval_third_major">la tierce majeure / la quarte diminuée</string>
-    <string name="interval_fourth">la quarte</string>
-    <string name="interval_augmented_fourth">la quarte augmentée / la quinte diminuée</string>
+    <string name="interval_third_major">la tierce majeure</string>
+    <string name="interval_fourth">la quarte juste</string>
+    <string name="interval_augmented_fourth">la quarte augmentée</string>
+    <string name="interval_diminished_fifth">la quinte diminuée</string>
     <string name="interval_fifth">la quinte juste</string>
-    <string name="interval_augmented_fifth">la quinte augmentée / la sixte mineure</string>
+    <string name="interval_augmented_fifth">la quinte augmentée</string>
+    <string name="interval_diminished_sixth">la sixte mineure</string>
     <string name="interval_sixth_major">la sixte majeure</string>
     <string name="interval_sixth_minor">la septième mineure</string>
     <string name="interval_seventh">la septième majeure</string>

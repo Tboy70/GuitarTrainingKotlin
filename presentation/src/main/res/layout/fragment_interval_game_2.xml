@@ -62,14 +62,119 @@
         app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question"
         tools:ignore="Autofill" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_interval_game_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_answer"
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_C"
+            style="@style/GameButton"
+            android:text="@string/note_C"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_D"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_D"
+            style="@style/GameButton"
+            android:text="@string/note_D"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_E"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_C"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_E"
+            style="@style/GameButton"
+            android:text="@string/note_E"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_F"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_D"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_F"
+            style="@style/GameButton"
+            android:text="@string/note_F"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_G"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_E"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_G"
+            style="@style/GameButton"
+            android:text="@string/note_G"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_F"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_A"
+            style="@style/GameButton"
+            android:text="@string/note_A"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_B"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_C" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_B"
+            style="@style/GameButton"
+            android:text="@string/note_B"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_sharp"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_A"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_D" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_sharp"
+            style="@style/GameButton"
+            android:text="@string/sharp_symbol"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_flat"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_B"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_E" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_interval_game_keyboard_flat"
+            style="@style/GameButton"
+            android:text="@string/flat_symbol"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_sharp"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_F" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <Button
         android:id="@+id/fragment_interval_game_validate"
-        style="@style/GenericBigButton"
+        style="@style/GenericLittleButton"
+        android:layout_marginStart="@dimen/margin_6"
+        android:layout_marginEnd="@dimen/margin_6"
         android:layout_marginBottom="@dimen/constraint_layout_margin_8"
         android:enabled="false"
         android:text="@string/generic_button_validate"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_delete_answer"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/fragment_interval_game_delete_answer"
+        style="@style/GenericLittleButton"
+        android:layout_marginStart="@dimen/margin_6"
+        android:layout_marginEnd="@dimen/margin_6"
+        android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+        android:text="@string/generic_button_delete"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/fragment_interval_game_validate"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

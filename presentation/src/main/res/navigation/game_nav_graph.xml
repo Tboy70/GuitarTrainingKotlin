@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/interval_game_2"
-        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragmentREfactor"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragmentRefactor"
         tools:layout="@layout/fragment_interval_game_2" />
 
     <fragment
