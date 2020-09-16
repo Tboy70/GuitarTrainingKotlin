@@ -314,7 +314,7 @@ object GameUtils {
     /************************* REFACTOR INTERVAL GAME *************************/
     /**************************************************************************/
 
-    fun computeRightAnswerNote(
+    fun computeCorrectNote(
         context: Context,
         gameMode: Int,
         startNote: Int,
@@ -333,26 +333,14 @@ object GameUtils {
         }
 
         // Compute the note to reach (without take account of the alterations)
-        val noteToReach = computeNoteToReach(context, gameMode, startNoteValue, intervalValue)
-
-        // Compute the number of tones between two notes (taking account of the alterations).
-        val tonesBetweenStartAndEndNote =
-            if (gameMode == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {   // L'interval de X est ...
-                computeTonesBetweenTwoNotes(context, gameMode, startNoteValue, noteToReach)
-            } else { // randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED
-                computeTonesBetweenTwoNotes2(context, startNoteValue, noteToReach)
-            }
-
-        return computeRightNote(
-            gameMode,
-            noteToReach,
-            tonesBetweenStartAndEndNote,
-            exactTonesForInterval
-        )
-    }
-
-    fun computeRightInterval(context: Context, beginNote: Int, endNote: Int) {
-        TODO("Not yet implemented")
+        return computeNoteToReach(context, gameMode, startNoteValue, intervalValue).let { noteToReach ->
+            computeCorrectAnswerNote(
+                gameMode,
+                noteToReach,
+                computeTonesBetweenTwoNotes(context, gameMode, startNoteValue, noteToReach),
+                exactTonesForInterval
+            )
+        }
     }
 
     /**
@@ -408,20 +396,21 @@ object GameUtils {
         val rightEndNoteIndexWithAlteration =
             NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
 
-        Log.e("TEST", "rightStartNoteIndexWithAlteration " + rightStartNoteIndexWithAlteration)
-        Log.e("TEST", "rightEndNoteIndexWithAlteration " + rightEndNoteIndexWithAlteration)
-
         var tonsBetweenNotes = 0.0
 
         rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
             rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
-                var diff = abs(startNoteIndex - endNoteIndex)
+                var diff: Int
 
-                if (startNoteIndex > endNoteIndex && randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-                    diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
+                if (randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                    diff = abs(startNoteIndex - endNoteIndex)
+                    if (startNoteIndex > endNoteIndex) {
+                        diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
+                    }
+                } else {
+                    diff =
+                        abs((ConstValues.NB_NOTES_MIXING_SAME_NOTE + startNoteIndex - endNoteIndex) % ConstValues.NB_NOTES_MIXING_SAME_NOTE)
                 }
-
-                Log.e("TEST", "Diff " + diff)
 
                 for (i in 0 until diff) {
                     val rightValue =
@@ -431,69 +420,13 @@ object GameUtils {
             }
         }
 
-        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
-
         return tonsBetweenNotes
     }
 
     /**
-     * Compute the number of tones between two notes.
+     * Compute the correct answer.
      */
-    private fun computeTonesBetweenTwoNotes2(
-        context: Context,
-        startNoteValue: String,
-        endNoteValue: String
-    ): Double {
-
-        val startNoteIndexWithAlteration =
-            context.resources.getStringArray(R.array.list_notes_with_alterations)
-                .indexOf(startNoteValue)
-
-        val endNoteIndexWithAlteration =
-            context.resources.getStringArray(R.array.list_notes_with_alterations)
-                .indexOf(endNoteValue)
-
-        // To take account the note which are the same. Example -> C# / Db
-        val rightStartNoteIndexWithAlteration =
-            NOTE_WITH_ALTERATION_MAP_INDEX[startNoteIndexWithAlteration]
-        val rightEndNoteIndexWithAlteration =
-            NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
-
-        Log.e("TEST", "rightStartNoteIndexWithAlteration " + rightStartNoteIndexWithAlteration)
-        Log.e("TEST", "rightEndNoteIndexWithAlteration " + rightEndNoteIndexWithAlteration)
-
-        var tonsBetweenNotes = 0.0
-
-        rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
-            rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
-                val diff =
-                    abs((ConstValues.NB_NOTES_MIXING_SAME_NOTE + startNoteIndex - endNoteIndex) % ConstValues.NB_NOTES_MIXING_SAME_NOTE)
-
-//                Log.e("TEST", "Diff " + diff)
-
-//                if (startNoteIndex > endNoteIndex && randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-//                    diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
-//                }
-
-                Log.e("TEST", "Diff " + diff)
-
-                for (i in 0 until diff) {
-                    val rightValue =
-                        NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % ConstValues.NB_NOTES_MIXING_SAME_NOTE]
-                    tonsBetweenNotes += NB_TONS_WITH_ALTERATION[rightValue!!]
-                }
-            }
-        }
-
-//        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
-
-        return tonsBetweenNotes
-    }
-
-    /**
-     * Compute the right answer.
-     */
-    private fun computeRightNote(
+    private fun computeCorrectAnswerNote(
         gameMode: Int,
         noteToReach: String,
         tonesBetweenStartAndEndNote: Double,
@@ -522,8 +455,11 @@ object GameUtils {
                 }
             }
         }
-        Log.e("TEST", "goodAnswer " + goodAnswer)
 
         return goodAnswer
+    }
+
+    fun computeRightInterval(context: Context, beginNote: Int, endNote: Int) {
+        TODO("Not yet implemented")
     }
 }

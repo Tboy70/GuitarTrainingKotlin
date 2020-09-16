@@ -22,7 +22,7 @@ class IntervalGameViewModel2 @ViewModelInject constructor(
     }
 
     private fun getRandomValues() {
-        val randomGame = Random.nextInt(0, 1)
+        val randomGame = Random.nextInt(0, 2)
         if (randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL || randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
             val startNote = Random.nextInt(ConstValues.NB_NOTES)
             val interval = Random.nextInt(ConstValues.NB_INTERVAL)
@@ -55,7 +55,7 @@ class IntervalGameViewModel2 @ViewModelInject constructor(
 
     private fun computeAnswers(randomGame: Int, startNote: Int, secondValue: Int) {
         if (randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL || randomGame == GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
-            GameUtils.computeRightAnswerNote(getApplication(), randomGame, startNote, secondValue)
+            GameUtils.computeCorrectNote(getApplication(), randomGame, startNote, secondValue)
         } else { // randomGame == GAME_FIND_INTERVAL_GIVEN_NOTES
             GameUtils.computeRightInterval(getApplication(), startNote, secondValue)
         }
