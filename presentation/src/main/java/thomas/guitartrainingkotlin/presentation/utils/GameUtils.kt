@@ -351,18 +351,18 @@ object GameUtils {
 
             // Compute the number of tones between two notes (taking account of the alterations).
             val tonesBetweenStartAndEndNote =
-                computeTonesBetweenTwoNotes(context, randomGame, startNoteValue, noteToReach)
+                computeTonesBetweenTwoNotes2(context, startNoteValue, noteToReach)
 
-            val intervalIndex =
-                context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
-
-            // Compute the exact number of tones for the given interval.
-            val exactTonesForInterval = INTERVAL_TO_TONS[intervalIndex]?.get(1).toString().toFloat()
+//            val intervalIndex =
+//                context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+//
+//            // Compute the exact number of tones for the given interval.
+//            val exactTonesForInterval = INTERVAL_TO_TONS[intervalIndex]?.get(1).toString().toFloat()
 
             Log.e("TEST", "note to Reach : $noteToReach")
             Log.e("TEST", "tonesBetweenStartAndEndNote : $tonesBetweenStartAndEndNote")
 
-            return computeRightNote(noteToReach, tonesBetweenStartAndEndNote, exactTonesForInterval)
+            return "TODO"
 
         }
     }
@@ -424,8 +424,8 @@ object GameUtils {
         val rightEndNoteIndexWithAlteration =
             NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
 
-        Log.e("TEST", "rightStartNoteIndexWithAlteration " + rightStartNoteIndexWithAlteration)
-        Log.e("TEST", "rightEndNoteIndexWithAlteration " + rightEndNoteIndexWithAlteration)
+//        Log.e("TEST", "rightStartNoteIndexWithAlteration " + rightStartNoteIndexWithAlteration)
+//        Log.e("TEST", "rightEndNoteIndexWithAlteration " + rightEndNoteIndexWithAlteration)
 
         var tonsBetweenNotes = 0.0
 
@@ -433,13 +433,13 @@ object GameUtils {
             rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
                 var diff = abs(startNoteIndex - endNoteIndex)
 
-                Log.e("TEST", "Diff " + diff)
+//                Log.e("TEST", "Diff " + diff)
 
                 if (startNoteIndex > endNoteIndex && randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
                     diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
                 }
 
-                Log.e("TEST", "Diff " + diff)
+//                Log.e("TEST", "Diff " + diff)
 
                 for (i in 0 until diff) {
                     val rightValue =
@@ -449,7 +449,7 @@ object GameUtils {
             }
         }
 
-        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
+//        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
 
         return tonsBetweenNotes
     }
@@ -484,12 +484,11 @@ object GameUtils {
 
         rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
             rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
-                var diff = abs(startNoteIndex - endNoteIndex)
+                val diff = abs((startNoteIndex - endNoteIndex) % ConstValues.NB_NOTES_MIXING_SAME_NOTE)
 
-                Log.e("TEST", "Diff " + diff)
+//                Log.e("TEST", "Diff " + diff)
 
-//                if (startNoteIndex > endNoteIndex) {
-//                    Log.e("TEST", "Supp ")
+//                if (startNoteIndex > endNoteIndex && randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
 //                    diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
 //                }
 
@@ -503,7 +502,7 @@ object GameUtils {
             }
         }
 
-        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
+//        Log.e("TEST", "tonsBetweenNotes " + tonsBetweenNotes)
 
         return tonsBetweenNotes
     }
