@@ -15,7 +15,7 @@ import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 @Config(sdk = [Build.VERSION_CODES.P])
 class GameUnitTest {
 
-    lateinit var instrumentationContext: Context
+    private lateinit var instrumentationContext: Context
 
     @Before
     fun setup() {

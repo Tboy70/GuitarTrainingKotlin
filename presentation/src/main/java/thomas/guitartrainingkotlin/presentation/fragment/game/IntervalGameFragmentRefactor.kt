@@ -55,18 +55,20 @@ class IntervalGameFragmentRefactor : Fragment(R.layout.fragment_interval_game_2)
 
     @SuppressLint("DefaultLocale")
     private fun initViewModelObservers() {
-        viewModel.randomizedGameLiveEvent.observeSafe(this) { values -> // game, beginNote, {interval or endNote}
+        viewModel.randomizedGameLiveEvent.observeSafe(this) { values -> // Pair(gameMode, Triple(startNote, interval, endNote))
 
             givenBeginNote =
-                this.resources.getStringArray(R.array.list_notes_with_alterations)[values.second]
+                this.resources.getStringArray(R.array.list_notes_with_alterations)[values.second.first]
 
             when (values.first) {
                 IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL -> {
                     fragment_interval_game_keyboard.show()
                     fragment_interval_game_validate.show()
+                    fragment_interval_game_answer.show()
                     fragment_interval_game_delete_answer.show()
+                    interval_answer_layout.gone()
 
-                    givenInterval = this.resources.getStringArray(R.array.list_interval)[values.third]
+                    givenInterval = this.resources.getStringArray(R.array.list_interval)[values.second.second]
 
                     fragment_interval_game_question.text = getString(
                         R.string.interval_game_find_note_given_interval_question,
@@ -77,9 +79,11 @@ class IntervalGameFragmentRefactor : Fragment(R.layout.fragment_interval_game_2)
                 IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED -> {
                     fragment_interval_game_keyboard.show()
                     fragment_interval_game_validate.show()
+                    fragment_interval_game_answer.show()
                     fragment_interval_game_delete_answer.show()
+                    interval_answer_layout.gone()
 
-                    givenInterval = this.resources.getStringArray(R.array.list_interval)[values.third]
+                    givenInterval = this.resources.getStringArray(R.array.list_interval)[values.second.second]
 
                     fragment_interval_game_question.text = getString(
                         R.string.interval_game_find_note_given_interval_reversed_question,
@@ -90,9 +94,11 @@ class IntervalGameFragmentRefactor : Fragment(R.layout.fragment_interval_game_2)
                 IntervalGameViewModel2.GAME_FIND_INTERVAL_GIVEN_NOTES -> {
                     fragment_interval_game_keyboard.gone()
                     fragment_interval_game_validate.gone()
+                    fragment_interval_game_answer.gone()
                     fragment_interval_game_delete_answer.gone()
+                    interval_answer_layout.show()
 
-                    givenEndNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[values.third]
+                    givenEndNote = values.second.third
 
                     fragment_interval_game_question.text = getString(
                         R.string.interval_game_find_interval_given_notes,

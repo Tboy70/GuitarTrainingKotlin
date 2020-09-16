@@ -459,7 +459,7 @@ object GameUtils {
         return goodAnswer
     }
 
-    fun computeRightInterval(context: Context, beginNote: Int, endNote: Int) {
-        TODO("Not yet implemented")
+    fun computeRightInterval(context: Context, gameMode: Int, startMode: Int, interval: Int): String {
+        return computeCorrectNote(context, gameMode, startMode, interval)
     }
 }
