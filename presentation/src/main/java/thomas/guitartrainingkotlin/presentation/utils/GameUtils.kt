@@ -328,6 +328,10 @@ object GameUtils {
 
         val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
 
+        if (intervalValue == context.resources.getString(R.string.interval_octave)) {
+            return startNoteValue
+        }
+
         // Compute the note to reach (without take account of the alterations)
         val noteToReach = computeNoteToReach(context, gameMode, startNoteValue, intervalValue)
 
