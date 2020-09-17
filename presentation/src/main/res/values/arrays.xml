@@ -62,10 +62,10 @@
         <item>@string/interval_diminished_fifth</item>
         <item>@string/interval_fifth</item>
         <item>@string/interval_augmented_fifth</item>
-        <item>@string/interval_diminished_sixth</item>
-        <item>@string/interval_sixth_major</item>
         <item>@string/interval_sixth_minor</item>
-        <item>@string/interval_seventh</item>
+        <item>@string/interval_sixth_major</item>
+        <item>@string/interval_seventh_minor</item>
+        <item>@string/interval_seventh_major</item>
         <item>@string/interval_octave</item>
     </string-array>
 

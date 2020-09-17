@@ -27,7 +27,6 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
     private var startNote: String = ""
     private var endNote: String = ""
     private var interval: String = ""
-
     private var correctAnswer: String = ""
     private var allSuggestedIntervalAnswers = mutableListOf<String>()
 
@@ -121,6 +120,7 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
                     correctAnswer = this.resources.getStringArray(R.array.list_interval)[values.second.second]
                     endNote = values.second.third
 
+                    // TODO : Maybe it's not a good practice --> See later
                     allSuggestedIntervalAnswers = viewModel.computeFalseAnswers(correctAnswer)
                     allSuggestedIntervalAnswers.add(correctAnswer)
 
@@ -173,7 +173,6 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
                     true
                 )
                 viewModel.getRandomValues()
-
             } else {
                 snackbarComponent.displaySnackbar(
                     activity.findViewById(android.R.id.content),
@@ -182,6 +181,7 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
                     false
                 )
             }
+            allSuggestedIntervalAnswers.clear()
         }
     }
 

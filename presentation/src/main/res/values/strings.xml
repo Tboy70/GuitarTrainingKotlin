@@ -420,10 +420,10 @@
     <string name="interval_diminished_fifth">la quinte diminuée</string>
     <string name="interval_fifth">la quinte juste</string>
     <string name="interval_augmented_fifth">la quinte augmentée</string>
-    <string name="interval_diminished_sixth">la sixte mineure</string>
+    <string name="interval_sixth_minor">la sixte mineure</string>
     <string name="interval_sixth_major">la sixte majeure</string>
-    <string name="interval_sixth_minor">la septième mineure</string>
-    <string name="interval_seventh">la septième majeure</string>
+    <string name="interval_seventh_minor">la septième mineure</string>
+    <string name="interval_seventh_major">la septième majeure</string>
     <string name="interval_octave">l\'octave</string>
 
     <!-- Scale interval -->

@@ -18,9 +18,6 @@ object GameUtils {
     private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
     private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
 
-    private val NB_TONS_WITHOUT_ALTERATION = listOf(2, 2, 1, 2, 2, 2, 1)
-
-    //    private val NB_TONS_WITH_ALTERATION = listOf(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
     private val NB_TONS_WITH_ALTERATION =
         listOf(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
 
@@ -65,36 +62,6 @@ object GameUtils {
 
     private const val FLAT_SYMBOL = "b"
     private const val SHARP_SYMBOL = "#"
-
-    fun checkIntervalGameAnswer(
-        givenNote: String,
-        givenInterval: String,
-        userAnswer: String,
-        intervalGameMode: Int,
-        context: Context
-    ): Boolean {
-        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
-        return userAnswer == findIntervalValue(
-            context,
-            givenInterval,
-            noteArray.indexOf(givenNote),
-            intervalGameMode
-        )
-    }
-
-    private fun findIntervalValue(
-        context: Context, givenInterval: String, indexOfGivenNote: Int, intervalGameMode: Int
-    ): String? {
-        val noteArray = context.resources.getStringArray(R.array.list_notes_with_alterations)
-        val intervalArray = context.resources.getStringArray(R.array.list_interval)
-
-        intervalArray.indexOf(givenInterval).let { index ->
-            return if (intervalGameMode == ConstValues.INTERVAL_NORMAL_GAME_MODE)
-                noteArray[(indexOfGivenNote + index) % ConstValues.NB_NOTES]
-            else
-                noteArray[abs((ConstValues.NB_NOTES + (indexOfGivenNote - index)) % ConstValues.NB_NOTES)]
-        }
-    }
 
     fun checkReversedIntervalGameAnswer(
         givenInterval: String,
@@ -465,5 +432,13 @@ object GameUtils {
 
     fun computeFalseAnswers(context: Context, interval: Int): String {
         return context.resources.getStringArray(R.array.list_interval)[interval]
+    }
+
+    /***********************************************************************************/
+    /************************* REFACTOR REVERSED INTERVAL GAME *************************/
+    /***********************************************************************************/
+
+    fun computeReversedInterval(randomInterval: Int): Int? {
+        TODO("Not yet implemented")
     }
 }

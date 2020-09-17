@@ -23,7 +23,6 @@ class IntervalGameViewModel @ViewModelInject constructor(
 
     fun getRandomValues() {
         val gameMode = Random.nextInt(0, 3)
-
         val startNote = Random.nextInt(ConstValues.NB_NOTES)
         val interval = Random.nextInt(ConstValues.NB_INTERVAL)
         val correctAnswer = computeAnswers(gameMode, startNote, interval)
@@ -33,9 +32,10 @@ class IntervalGameViewModel @ViewModelInject constructor(
     fun computeFalseAnswers(correctAnswer: String): MutableList<String> {
         val falseAnswers = mutableListOf<String>()
         for (i in 0 until 3) {
-            val interval = Random.nextInt(ConstValues.NB_INTERVAL)
+            var interval = Random.nextInt(ConstValues.NB_INTERVAL)
             var newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
             while (newAnswer == correctAnswer || falseAnswers.contains(newAnswer)) {
+                interval = Random.nextInt(ConstValues.NB_INTERVAL)
                 newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
             }
 
@@ -59,7 +59,6 @@ class IntervalGameViewModel @ViewModelInject constructor(
     }
 
     companion object {
-
         const val GAME_FIND_NOTE_GIVEN_INTERVAL = 0 // L'interval de X est ...
         const val GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED = 1 // X est l'interval de ...
         const val GAME_FIND_INTERVAL_GIVEN_NOTES = 2 // Quelle est l'interval entre X et Y ?

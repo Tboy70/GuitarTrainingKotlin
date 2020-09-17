@@ -23,7 +23,11 @@ class ReversedIntervalGameViewModel @ViewModelInject constructor(
     }
 
     fun getRandomValue() {
-        finishRandomLiveEvent.postValue(Random().nextInt(ConstValues.NB_INTERVAL))
+        val randomInterval = Random().nextInt(ConstValues.NB_INTERVAL)
+
+        finishRandomLiveEvent.postValue(
+            GameUtils.computeReversedInterval(randomInterval)
+        )
     }
 
     fun checkAnswer(givenInterval: String, answer: String) {
