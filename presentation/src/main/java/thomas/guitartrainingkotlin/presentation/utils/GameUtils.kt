@@ -289,10 +289,7 @@ object GameUtils {
         startNote: Int,
         interval: Int
     ): String {
-        Log.e("TEST", "interval : " + interval)
         val intervalValue = context.resources.getStringArray(R.array.list_interval)[interval]
-        Log.e("TEST", "intervalValue : " + intervalValue)
-
         val intervalIndex = context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
 
         // Compute the exact number of tones for the given interval.
@@ -301,15 +298,13 @@ object GameUtils {
         val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
 
         if (intervalValue == context.resources.getString(R.string.interval_octave) ||
-            intervalValue == context.resources.getString(R.string.interval_unisson)) {
+            intervalValue == context.resources.getString(R.string.interval_unisson)
+        ) {
             return startNoteValue
         }
 
         // Compute the note to reach (without take account of the alterations)
         return computeNoteToReach(context, gameMode, startNoteValue, intervalValue).let { noteToReach ->
-
-            Log.e("TEST", "StartNoteVAlue : " + startNoteValue)
-            Log.e("TEST", "noteToReach : " + noteToReach)
             computeCorrectAnswerNote(
                 gameMode,
                 noteToReach,
@@ -377,10 +372,7 @@ object GameUtils {
         rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
             rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
 
-                Log.e("TEST", "rightStartNoteIndexWithAlteration " + rightStartNoteIndexWithAlteration)
-                Log.e("TEST", "rightEndNoteIndexWithAlteration " + rightEndNoteIndexWithAlteration)
-
-                var diff = 0
+                var diff: Int
 
                 if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
                     diff = abs(startNoteIndex - endNoteIndex)
@@ -392,7 +384,6 @@ object GameUtils {
                         abs((ConstValues.NB_NOTES_MIXING_SAME_NOTE + startNoteIndex - endNoteIndex) % ConstValues.NB_NOTES_MIXING_SAME_NOTE)
                 }
 
-                Log.e("TEST", "diff " + diff)
                 for (i in 0 until diff) {
                     val rightValue =
                         NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % ConstValues.NB_NOTES_MIXING_SAME_NOTE]
@@ -413,9 +404,6 @@ object GameUtils {
         tonesBetweenStartAndEndNote: Double,
         exactTonesForInterval: Float
     ): String {
-
-        Log.e("TEST", "tonesBetweenStartAndEndNote " + tonesBetweenStartAndEndNote)
-        Log.e("TEST", "exactTonesForInterval " + exactTonesForInterval)
 
         var goodAnswer = noteToReach
 
@@ -440,7 +428,6 @@ object GameUtils {
             }
         }
 
-        Log.e("TEST", "Good answer " + goodAnswer)
         return goodAnswer
     }
 
@@ -456,7 +443,11 @@ object GameUtils {
     /************************* REFACTOR REVERSED INTERVAL GAME *************************/
     /***********************************************************************************/
 
-    fun computeReversedInterval(randomInterval: Int): Int? {
-        TODO("Not yet implemented")
+    fun computeReversedInterval(context: Context, beginIntervalIndex: Int): Pair<String, String> {
+        val beginIntervalValue = context.resources.getStringArray(R.array.list_interval)[beginIntervalIndex]
+        val reversedIntervalIndex = beginIntervalIndex + ConstValues.NB_INTERVAL - (beginIntervalIndex * 2) - 1
+        val reversedIntervalValue = context.resources.getStringArray(R.array.list_interval)[reversedIntervalIndex]
+
+        return Pair(beginIntervalValue, reversedIntervalValue)
     }
 }

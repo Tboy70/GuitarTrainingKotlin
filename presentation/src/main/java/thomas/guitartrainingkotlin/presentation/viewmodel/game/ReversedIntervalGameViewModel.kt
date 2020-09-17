@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import thomas.guitartrainingkotlin.presentation.view.state.game.ReversedIntervalGameViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import java.util.*
+import kotlin.random.Random
 
 class ReversedIntervalGameViewModel @ViewModelInject constructor(
     application: Application
@@ -15,28 +15,33 @@ class ReversedIntervalGameViewModel @ViewModelInject constructor(
 
     override val currentViewState = ReversedIntervalGameViewState()
 
-    val answerCheckedLiveEvent = SingleLiveEvent<Boolean>()
-    val finishRandomLiveEvent = SingleLiveEvent<Int>()
+    val finishRandomLiveEvent = SingleLiveEvent<Pair<String, String>>()
 
     init {
         getRandomValue()
     }
 
     fun getRandomValue() {
-        val randomInterval = Random().nextInt(ConstValues.NB_INTERVAL)
+        val randomInterval = Random.nextInt(ConstValues.NB_INTERVAL)
 
         finishRandomLiveEvent.postValue(
-            GameUtils.computeReversedInterval(randomInterval)
+            GameUtils.computeReversedInterval(getApplication(), randomInterval)
         )
     }
 
-    fun checkAnswer(givenInterval: String, answer: String) {
-        answerCheckedLiveEvent.postValue(
-            GameUtils.checkReversedIntervalGameAnswer(
-                givenInterval,
-                answer,
-                getApplication()
-            )
-        )
+    fun computeFalseAnswers(correctAnswer: String): MutableList<String> {
+        val falseAnswers = mutableListOf<String>()
+        for (i in 0 until 3) {
+            var interval = Random.nextInt(ConstValues.NB_INTERVAL)
+            var newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
+            while (newAnswer == correctAnswer || falseAnswers.contains(newAnswer)) {
+                interval = Random.nextInt(ConstValues.NB_INTERVAL)
+                newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
+            }
+
+            falseAnswers.add(newAnswer)
+        }
+
+        return falseAnswers
     }
 }

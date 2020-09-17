@@ -1,7 +1,6 @@
 package thomas.guitartrainingkotlin.presentation.fragment.game
 
 import android.os.Bundle
-import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -13,7 +12,9 @@ import kotlinx.android.synthetic.main.fragment_reversed_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
-import thomas.guitartrainingkotlin.presentation.extension.*
+import thomas.guitartrainingkotlin.presentation.extension.ActivityExtensions
+import thomas.guitartrainingkotlin.presentation.extension.observeSafe
+import thomas.guitartrainingkotlin.presentation.extension.setSupportActionBar
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ReversedIntervalGameViewModel
 import javax.inject.Inject
 
@@ -26,19 +27,15 @@ class ReversedIntervalGameFragment : Fragment(R.layout.fragment_reversed_interva
     @Inject
     lateinit var snackbarComponent: SnackbarComponent
 
-    private var givenInterval: String = ""
+    private var correctAnswer: String = ""
+    private var allSuggestedIntervalAnswers = mutableListOf<String>()
 
     private val viewModel by viewModels<ReversedIntervalGameViewModel>()
-
-    private val textChangedListener: TextWatcher = textChangedListener {
-        updateConfirmButtonState()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initiateToolbar()
-        initiateViews()
         initiateViewModelObservers()
     }
 
@@ -59,59 +56,69 @@ class ReversedIntervalGameFragment : Fragment(R.layout.fragment_reversed_interva
         )
     }
 
-    private fun initiateViews() {
-        fragment_reversed_interval_game_answer.addTextChangedListener(textChangedListener)
-        fragment_reversed_interval_game_answer.setOnClickListener {
-            dialogComponent.displaySingleListChoiceDialog(
-                R.string.dialog_game_answer_title,
-                R.array.list_interval,
-                android.R.string.ok,
-                onPositive = { selectedNote ->
-                    fragment_reversed_interval_game_answer.setText(selectedNote)
-                }
-            )
-        }
-
-        fragment_reversed_interval_game_validate.setOnClickListener {
-            viewModel.checkAnswer(givenInterval, fragment_reversed_interval_game_answer.getInput())
-        }
-    }
-
     private fun initiateViewModelObservers() {
         viewModel.finishRandomLiveEvent.observeSafe(this) {
-            givenInterval = this.resources.getStringArray(R.array.list_interval)[it]
+            correctAnswer = it.second
+
+            // TODO : Maybe it's not a good practice --> See later
+            allSuggestedIntervalAnswers = viewModel.computeFalseAnswers(correctAnswer)
+            allSuggestedIntervalAnswers.add(correctAnswer)
+
+            fillAnswerButtons(allSuggestedIntervalAnswers.toList().shuffled())
 
             fragment_reversed_interval_game_question.text = activity?.getString(
                 R.string.reversed_interval_game_question,
-                givenInterval
+                it.first
             )
         }
+    }
 
-        viewModel.answerCheckedLiveEvent.observeSafe(this) { rightAnswer ->
-            activity?.let { activity ->
-                if (rightAnswer) {
-                    snackbarComponent.displaySnackbar(
-                        activity.findViewById(android.R.id.content),
-                        getString(R.string.game_right_answer),
-                        Snackbar.LENGTH_SHORT,
-                        true
-                    )
-                    fragment_reversed_interval_game_answer.text = null
-                    viewModel.getRandomValue()
-                } else {
-                    snackbarComponent.displaySnackbar(
-                        activity.findViewById(android.R.id.content),
-                        getString(R.string.game_wrong_answer),
-                        Snackbar.LENGTH_SHORT,
-                        false
-                    )
-                }
+    private fun fillAnswerButtons(answersList: List<String>) {
+        reversed_interval_answer_1.apply {
+            text = answersList[0]
+            setOnClickListener {
+                checkIntervalAnswer(text.toString())
+            }
+        }
+        reversed_interval_answer_2.apply {
+            text = answersList[1]
+            setOnClickListener {
+                checkIntervalAnswer(text.toString())
+            }
+        }
+        reversed_interval_answer_3.apply {
+            text = answersList[2]
+            setOnClickListener {
+                checkIntervalAnswer(text.toString())
+            }
+        }
+        reversed_interval_answer_4.apply {
+            text = answersList[3]
+            setOnClickListener {
+                checkIntervalAnswer(text.toString())
             }
         }
     }
 
-    private fun updateConfirmButtonState() {
-        fragment_reversed_interval_game_validate.isEnabled =
-            fragment_reversed_interval_game_answer.isNotEmpty()
+    private fun checkIntervalAnswer(chosenInterval: String) {
+        activity?.let { activity ->
+            if (chosenInterval == correctAnswer) {
+                snackbarComponent.displaySnackbar(
+                    activity.findViewById(android.R.id.content),
+                    getString(R.string.game_right_answer),
+                    Snackbar.LENGTH_SHORT,
+                    true
+                )
+                viewModel.getRandomValue()
+            } else {
+                snackbarComponent.displaySnackbar(
+                    activity.findViewById(android.R.id.content),
+                    getString(R.string.game_wrong_answer),
+                    Snackbar.LENGTH_SHORT,
+                    false
+                )
+            }
+            allSuggestedIntervalAnswers.clear()
+        }
     }
 }

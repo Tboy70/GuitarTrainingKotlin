@@ -25,6 +25,10 @@ class GameUnitTest {
     @Test
     fun intervalGameTest() {
 
+        /**
+         * L'interval de X est ...
+         */
+
         // Unisson
         assertEquals("C", GameUtils.computeCorrectNote(instrumentationContext, 0, 0, 0))   // C
         assertEquals("C#", GameUtils.computeCorrectNote(instrumentationContext, 0, 1, 0))  // C#
@@ -328,10 +332,10 @@ class GameUnitTest {
         assertEquals("A#", GameUtils.computeCorrectNote(instrumentationContext, 0, 14, 15)) // A#
         assertEquals("Bb", GameUtils.computeCorrectNote(instrumentationContext, 0, 15, 15)) // Bb
         assertEquals("B", GameUtils.computeCorrectNote(instrumentationContext, 0, 16, 15))  // B
-    }
 
-    @Test
-    fun reversedIntervalGameTest() {
+        /**
+         * X est l'interval de ...
+         */
 
         // Unisson
         assertEquals("C", GameUtils.computeCorrectNote(instrumentationContext, 1, 0, 0))   // C
@@ -638,4 +642,118 @@ class GameUnitTest {
         assertEquals("B", GameUtils.computeCorrectNote(instrumentationContext, 1, 16, 15))  // B
     }
 
+    @Test
+    fun reversedIntervalGameTest() {
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_unisson),
+                instrumentationContext.resources.getString(R.string.interval_octave)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 0)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_second_minor),
+                instrumentationContext.resources.getString(R.string.interval_seventh_major)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 1)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_second_major),
+                instrumentationContext.resources.getString(R.string.interval_seventh_minor)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 2)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_third_minor),
+                instrumentationContext.resources.getString(R.string.interval_sixth_major)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 3)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_third_major),
+                instrumentationContext.resources.getString(R.string.interval_sixth_minor)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 4)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_diminished_fourth),
+                instrumentationContext.resources.getString(R.string.interval_augmented_fifth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 5)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_fourth),
+                instrumentationContext.resources.getString(R.string.interval_fifth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 6)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_augmented_fourth),
+                instrumentationContext.resources.getString(R.string.interval_diminished_fifth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 7)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_diminished_fifth),
+                instrumentationContext.resources.getString(R.string.interval_augmented_fourth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 8)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_fifth),
+                instrumentationContext.resources.getString(R.string.interval_fourth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 9)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_augmented_fifth),
+                instrumentationContext.resources.getString(R.string.interval_diminished_fourth)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 10)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_sixth_minor),
+                instrumentationContext.resources.getString(R.string.interval_third_major)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 11)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_sixth_major),
+                instrumentationContext.resources.getString(R.string.interval_third_minor)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 12)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_seventh_minor),
+                instrumentationContext.resources.getString(R.string.interval_second_major)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 13)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_seventh_major),
+                instrumentationContext.resources.getString(R.string.interval_second_minor)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 14)
+        )
+
+        assertEquals(
+            Pair(
+                instrumentationContext.resources.getString(R.string.interval_octave),
+                instrumentationContext.resources.getString(R.string.interval_unisson)
+            ), GameUtils.computeReversedInterval(instrumentationContext, 15)
+        )
+    }
 }

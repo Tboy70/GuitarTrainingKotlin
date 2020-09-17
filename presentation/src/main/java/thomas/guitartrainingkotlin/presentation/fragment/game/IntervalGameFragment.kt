@@ -3,13 +3,16 @@ package thomas.guitartrainingkotlin.presentation.fragment.game
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextWatcher
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_interval_game.*
+import kotlinx.android.synthetic.main.fragment_reversed_interval_game.*
 import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
@@ -37,10 +40,28 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initiateToolbar()
         initView()
         initViewModelObservers()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().popBackStack()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initiateToolbar() {
+        setHasOptionsMenu(true)
+        activity?.setSupportActionBar(
+            fragment_reversed_interval_game_toolbar,
+            ActivityExtensions.DISPLAY_UP
+        )
+    }
+    
     private fun initView() {
         initKeyboardAnswer()
 

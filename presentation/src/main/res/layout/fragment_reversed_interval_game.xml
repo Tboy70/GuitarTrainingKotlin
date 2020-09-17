@@ -48,28 +48,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-            android:id="@+id/fragment_reversed_interval_game_answer"
-            android:layout_width="@dimen/reversed_interval_edit_text_width"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:gravity="center"
-            android:hint="@string/reversed_interval_game_hint_answer"
-            android:inputType="none"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_question"
-            tools:ignore="Autofill" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_reversed_interval_game_answers_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/margin_6"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_reversed_interval_game_question">
 
-    <Button
-            android:id="@+id/fragment_reversed_interval_game_validate"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_button_validate"
-            android:enabled="false"
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reversed_interval_answer_1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toTopOf="@id/reversed_interval_answer_3"
+            app:layout_constraintEnd_toStartOf="@id/reversed_interval_answer_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reversed_interval_answer_2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toTopOf="@id/reversed_interval_answer_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/reversed_interval_answer_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reversed_interval_answer_3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/reversed_interval_answer_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reversed_interval_answer_1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reversed_interval_answer_4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/reversed_interval_answer_3"
+            app:layout_constraintTop_toBottomOf="@id/reversed_interval_answer_2"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
