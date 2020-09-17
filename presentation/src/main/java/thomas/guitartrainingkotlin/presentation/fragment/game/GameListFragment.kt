@@ -50,13 +50,6 @@ class GameListFragment : Fragment(R.layout.fragment_game_list) {
             }
         }
 
-        button_game_interval_2.setOnClickListener {
-            navHost?.let { view ->
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_game_list_to_interval_game_2, null, null)
-            }
-        }
-
         button_game_scale.setOnClickListener {
             navHost?.let { view ->
                 Navigation.findNavController(view)

@@ -1,54 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/fragment_interval_game_toolbar"
-            style="@style/ToolbarAppTheme"
-            android:theme="@style/ToolbarAppTheme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:titleTextAppearance="@style/ToolbarTitleText"
-            app:title="@string/toolbar_title_interval_game_list"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/fragment_interval_game_toolbar"
+        style="@style/ToolbarAppTheme"
+        android:theme="@style/ToolbarAppTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_title_interval_game_list"
+        app:titleTextAppearance="@style/ToolbarTitleText" />
 
     <TextView
-            android:id="@+id/fragment_interval_game_title"
-            style="@style/GenericTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/constraint_layout_margin_16"
-            android:text="@string/interval_game_title"
-            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_toolbar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/fragment_interval_game_title"
+        style="@style/GenericTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/constraint_layout_margin_16"
+        android:text="@string/interval_game_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_toolbar" />
 
     <TextView
-            android:id="@+id/fragment_interval_game_description"
-            style="@style/GenericSubTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/constraint_layout_margin_16"
-            android:text="@string/interval_game_description"
-            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/fragment_interval_game_description"
+        style="@style/GenericSubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/constraint_layout_margin_16"
+        android:text="@string/interval_game_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_title" />
 
     <TextView
-            android:id="@+id/fragment_interval_game_question"
-            style="@style/GenericSubTitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/constraint_layout_margin_16"
-            android:text="@string/interval_game_question"
-            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/fragment_interval_game_question"
+        style="@style/GenericSubTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/constraint_layout_margin_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_description"
+        tools:text="@string/interval_game_question" />
 
-    <EditText
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_interval_game_find_note_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question">
+
+        <EditText
             android:id="@+id/fragment_interval_game_answer"
             android:layout_width="@dimen/degree_edit_text_width"
             android:layout_height="wrap_content"
@@ -59,17 +66,178 @@
             android:inputType="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="Autofill" />
 
-    <Button
-            android:id="@+id/fragment_interval_game_validate"
-            style="@style/GenericBigButton"
-            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
-            android:text="@string/generic_button_validate"
-            android:enabled="false"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_interval_game_keyboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_answer"
+            tools:visibility="visible">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_C"
+                style="@style/GameButton"
+                android:text="@string/note_C"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_D"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_D"
+                style="@style/GameButton"
+                android:text="@string/note_D"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_E"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_C"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_E"
+                style="@style/GameButton"
+                android:text="@string/note_E"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_F"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_D"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_F"
+                style="@style/GameButton"
+                android:text="@string/note_F"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_G"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_E"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_G"
+                style="@style/GameButton"
+                android:text="@string/note_G"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_F"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_A"
+                style="@style/GameButton"
+                android:text="@string/note_A"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_B"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_C" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_B"
+                style="@style/GameButton"
+                android:text="@string/note_B"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_sharp"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_A"
+                app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_D" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_sharp"
+                style="@style/GameButton"
+                android:text="@string/sharp_symbol"
+                app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_keyboard_flat"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_B"
+                app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_E" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_interval_game_keyboard_flat"
+                style="@style/GameButton"
+                android:text="@string/flat_symbol"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/fragment_interval_game_keyboard_sharp"
+                app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_keyboard_F" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/fragment_interval_game_validate"
+            style="@style/GenericLittleButton"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_6"
+            android:layout_marginEnd="@dimen/margin_6"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:enabled="false"
+            android:text="@string/generic_button_validate"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_delete_answer"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/fragment_interval_game_delete_answer"
+            style="@style/GenericLittleButton"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/margin_6"
+            android:layout_marginEnd="@dimen/margin_6"
+            android:layout_marginBottom="@dimen/constraint_layout_margin_8"
+            android:text="@string/generic_button_delete"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/fragment_interval_game_validate"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_interval_game_find_interval_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/interval_answer_1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="Answer 1"
+                app:layout_constraintBottom_toTopOf="@id/interval_answer_3"
+                app:layout_constraintEnd_toStartOf="@id/interval_answer_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/interval_answer_2"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="Answer2"
+                app:layout_constraintBottom_toTopOf="@id/interval_answer_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/interval_answer_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/interval_answer_3"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="Answer3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/interval_answer_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/interval_answer_1"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/interval_answer_4"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:text="Answer 4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/interval_answer_3"
+                app:layout_constraintTop_toBottomOf="@id/interval_answer_2"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

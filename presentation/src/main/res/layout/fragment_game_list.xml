@@ -26,19 +26,10 @@
             android:id="@+id/button_game_interval"
             style="@style/GenericBigButton"
             android:text="@string/game_list_scale_game"
-            app:layout_constraintBottom_toTopOf="@id/button_game_interval_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_game_interval_2"
-            style="@style/GenericBigButton"
-            android:text="@string/game_list_scale_game"
             app:layout_constraintBottom_toTopOf="@id/button_game_reversed_interval"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_game_interval" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/button_game_reversed_interval"
@@ -47,7 +38,7 @@
             app:layout_constraintBottom_toTopOf="@id/button_game_scale"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_game_interval_2" />
+            app:layout_constraintTop_toBottomOf="@id/button_game_interval" />
 
         <Button
             android:id="@+id/button_game_scale"

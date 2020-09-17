@@ -7,7 +7,7 @@ import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import thomas.guitartrainingkotlin.presentation.view.state.game.IntervalGameViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import java.util.*
+import kotlin.random.Random
 
 class IntervalGameViewModel @ViewModelInject constructor(
     application: Application
@@ -15,32 +15,53 @@ class IntervalGameViewModel @ViewModelInject constructor(
 
     override val currentViewState = IntervalGameViewState()
 
-    val answerCheckedLiveEvent = SingleLiveEvent<Boolean>()
-    val finishRandomLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
+    val gameReadyLiveEvent = SingleLiveEvent<Pair<Int, Triple<Int, Int, String>>>()
 
     init {
-        getRandomValue()
+        getRandomValues()
     }
 
-    fun getRandomValue() {
-        finishRandomLiveEvent.postValue(
-            Triple(
-                Random().nextInt(ConstValues.NB_NOTES),
-                Random().nextInt(ConstValues.NB_INTERVAL),
-                Random().nextInt(ConstValues.INTERVAL_GAME_MODE)
-            )
-        )
+    fun getRandomValues() {
+        val gameMode = Random.nextInt(0, 3)
+
+        val startNote = Random.nextInt(ConstValues.NB_NOTES)
+        val interval = Random.nextInt(ConstValues.NB_INTERVAL)
+        val correctAnswer = computeAnswers(gameMode, startNote, interval)
+        gameReadyLiveEvent.postValue(Pair(gameMode, Triple(startNote, interval, correctAnswer)))
     }
 
-    fun checkAnswer(givenNote: String, givenInterval: String, gameMode: Int, userAnswer: String) {
-        answerCheckedLiveEvent.postValue(
-            GameUtils.checkIntervalGameAnswer(
-                givenNote,
-                givenInterval,
-                userAnswer,
-                gameMode,
-                getApplication()
+    fun computeFalseAnswers(correctAnswer: String): MutableList<String> {
+        val falseAnswers = mutableListOf<String>()
+        for (i in 0 until 3) {
+            val interval = Random.nextInt(ConstValues.NB_INTERVAL)
+            var newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
+            while (newAnswer == correctAnswer || falseAnswers.contains(newAnswer)) {
+                newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
+            }
+
+            falseAnswers.add(newAnswer)
+        }
+
+        return falseAnswers
+    }
+
+    private fun computeAnswers(gameMode: Int, startNote: Int, secondValue: Int): String {
+        return if (gameMode == GAME_FIND_NOTE_GIVEN_INTERVAL || gameMode == GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
+            GameUtils.computeCorrectNote(getApplication(), gameMode, startNote, secondValue)
+        } else { // randomGame == GAME_FIND_INTERVAL_GIVEN_NOTES
+            GameUtils.computeRightInterval(
+                getApplication(),
+                GAME_FIND_NOTE_GIVEN_INTERVAL,
+                startNote,
+                secondValue
             )
-        )
+        }
+    }
+
+    companion object {
+
+        const val GAME_FIND_NOTE_GIVEN_INTERVAL = 0 // L'interval de X est ...
+        const val GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED = 1 // X est l'interval de ...
+        const val GAME_FIND_INTERVAL_GIVEN_NOTES = 2 // Quelle est l'interval entre X et Y ?
     }
 }

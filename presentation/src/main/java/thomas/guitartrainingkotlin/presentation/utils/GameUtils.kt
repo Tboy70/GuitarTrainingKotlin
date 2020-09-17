@@ -3,7 +3,7 @@ package thomas.guitartrainingkotlin.presentation.utils
 import android.content.Context
 import android.util.Log
 import thomas.guitartrainingkotlin.R
-import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel2
+import thomas.guitartrainingkotlin.presentation.viewmodel.game.IntervalGameViewModel
 import java.util.*
 import kotlin.math.abs
 
@@ -363,7 +363,7 @@ object GameUtils {
 
         val nbNotesToPassGivenInterval = INTERVAL_TO_TONS[intervalIndex]?.get(0).toString().toInt()
 
-        val endNoteIndex = if (randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+        val endNoteIndex = if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
             abs(ConstValues.NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration + nbNotesToPassGivenInterval)) % ConstValues.NB_NOTES_WITHOUT_ALTERATION
         } else {
             abs(ConstValues.NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration - nbNotesToPassGivenInterval)) % ConstValues.NB_NOTES_WITHOUT_ALTERATION
@@ -402,7 +402,7 @@ object GameUtils {
             rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
                 var diff: Int
 
-                if (randomGame == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
                     diff = abs(startNoteIndex - endNoteIndex)
                     if (startNoteIndex > endNoteIndex) {
                         diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
@@ -442,15 +442,15 @@ object GameUtils {
 
         for (i in 0 until semiToneDifference) {
             if (toneDifference < 0) {
-                if (gameMode == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
                     goodAnswer += FLAT_SYMBOL
-                } else if (gameMode == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
+                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
                     goodAnswer += SHARP_SYMBOL
                 }
             } else if (toneDifference > 0) {
-                if (gameMode == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
                     goodAnswer += SHARP_SYMBOL
-                } else if (gameMode == IntervalGameViewModel2.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
+                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
                     goodAnswer += FLAT_SYMBOL
                 }
             }
@@ -461,5 +461,9 @@ object GameUtils {
 
     fun computeRightInterval(context: Context, gameMode: Int, startMode: Int, interval: Int): String {
         return computeCorrectNote(context, gameMode, startMode, interval)
+    }
+
+    fun computeFalseAnswers(context: Context, interval: Int): String {
+        return context.resources.getStringArray(R.array.list_interval)[interval]
     }
 }

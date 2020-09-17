@@ -1,65 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        app:startDestination="@+id/game_list_fragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/game_list_fragment">
 
     <fragment
-            android:id="@+id/game_list_fragment"
-            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.GameListFragment"
-            tools:layout="@layout/fragment_game_list">
+        android:id="@+id/game_list_fragment"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.GameListFragment"
+        tools:layout="@layout/fragment_game_list">
 
         <action
-                android:id="@+id/action_game_list_to_interval_game"
-                app:enterAnim="@anim/enter_right"
-                app:exitAnim="@anim/exit_left"
-                app:popEnterAnim="@anim/enter_left"
-                app:popExitAnim="@anim/exit_right"
-                app:destination="@id/interval_game" />
-
-        <action
-            android:id="@+id/action_game_list_to_interval_game_2"
+            android:id="@+id/action_game_list_to_interval_game"
+            app:destination="@id/interval_game"
             app:enterAnim="@anim/enter_right"
             app:exitAnim="@anim/exit_left"
             app:popEnterAnim="@anim/enter_left"
-            app:popExitAnim="@anim/exit_right"
-            app:destination="@id/interval_game_2" />
+            app:popExitAnim="@anim/exit_right" />
 
         <action
-                android:id="@+id/action_game_list_to_scale_game"
-                app:enterAnim="@anim/enter_right"
-                app:exitAnim="@anim/exit_left"
-                app:popEnterAnim="@anim/enter_left"
-                app:popExitAnim="@anim/exit_right"
-                app:destination="@id/scale_game" />
+            android:id="@+id/action_game_list_to_scale_game"
+            app:destination="@id/scale_game"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right" />
 
         <action
-                android:id="@+id/action_game_list_to_reversed_interval_game"
-                app:enterAnim="@anim/enter_right"
-                app:exitAnim="@anim/exit_left"
-                app:popEnterAnim="@anim/enter_left"
-                app:popExitAnim="@anim/exit_right"
-                app:destination="@id/reversed_interval_game" />
+            android:id="@+id/action_game_list_to_reversed_interval_game"
+            app:destination="@id/reversed_interval_game"
+            app:enterAnim="@anim/enter_right"
+            app:exitAnim="@anim/exit_left"
+            app:popEnterAnim="@anim/enter_left"
+            app:popExitAnim="@anim/exit_right" />
     </fragment>
 
     <fragment
-            android:id="@+id/interval_game"
-            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragment"
-            tools:layout="@layout/fragment_interval_game" />
+        android:id="@+id/interval_game"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragment"
+        tools:layout="@layout/fragment_interval_game" />
 
     <fragment
-        android:id="@+id/interval_game_2"
-        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.IntervalGameFragmentRefactor"
-        tools:layout="@layout/fragment_interval_game_2" />
+        android:id="@+id/scale_game"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ScaleGameFragment"
+        tools:layout="@layout/fragment_scale_game" />
 
     <fragment
-            android:id="@+id/scale_game"
-            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ScaleGameFragment"
-            tools:layout="@layout/fragment_scale_game" />
-
-    <fragment
-            android:id="@+id/reversed_interval_game"
-            android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ReversedIntervalGameFragment"
-            tools:layout="@layout/fragment_reversed_interval_game" />
+        android:id="@+id/reversed_interval_game"
+        android:name="thomas.guitartrainingkotlin.presentation.fragment.game.ReversedIntervalGameFragment"
+        tools:layout="@layout/fragment_reversed_interval_game" />
 
 </navigation>
