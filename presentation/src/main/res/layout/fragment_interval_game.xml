@@ -163,7 +163,6 @@
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
             android:enabled="false"
             android:text="@string/generic_button_validate"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fragment_interval_game_delete_answer"
             app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +176,6 @@
             android:layout_marginEnd="@dimen/margin_6"
             android:layout_marginBottom="@dimen/constraint_layout_margin_8"
             android:text="@string/generic_button_delete"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/fragment_interval_game_validate"
@@ -185,59 +183,55 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragment_interval_game_find_interval_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="5dp"
-            android:visibility="visible"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_interval_game_find_interval_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="@dimen/margin_6"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/interval_answer_1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toTopOf="@id/interval_answer_3"
+            app:layout_constraintEnd_toStartOf="@id/interval_answer_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/interval_answer_2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toTopOf="@id/interval_answer_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/interval_answer_1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/interval_answer_3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_interval_game_question">
+            app:layout_constraintEnd_toStartOf="@id/interval_answer_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/interval_answer_1"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/interval_answer_1"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:text="Answer 1"
-                app:layout_constraintBottom_toTopOf="@id/interval_answer_3"
-                app:layout_constraintEnd_toStartOf="@id/interval_answer_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/interval_answer_2"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:text="Answer2"
-                app:layout_constraintBottom_toTopOf="@id/interval_answer_4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/interval_answer_1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/interval_answer_3"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:text="Answer3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/interval_answer_4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/interval_answer_1"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/interval_answer_4"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:text="Answer 4"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/interval_answer_3"
-                app:layout_constraintTop_toBottomOf="@id/interval_answer_2"
-                app:layout_constraintVertical_chainStyle="packed" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/interval_answer_4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_width_100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/interval_answer_3"
+            app:layout_constraintTop_toBottomOf="@id/interval_answer_2"
+            app:layout_constraintVertical_chainStyle="packed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

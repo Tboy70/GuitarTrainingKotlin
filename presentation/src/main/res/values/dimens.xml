@@ -9,6 +9,7 @@
 
     <!-- GENERIC BUTTON SIZE-->
     <dimen name="button_width">250dp</dimen>
+    <dimen name="button_width_100">100dp</dimen>
 
     <!-- GENERIC SPACE SIZE -->
     <dimen name="space_small">5dp</dimen>
