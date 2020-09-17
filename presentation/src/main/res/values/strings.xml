@@ -411,10 +411,12 @@
     <string name="eight_degree">VIII</string>
 
     <!-- Interval -->
+    <string name="interval_unisson">l\'unisson</string>
     <string name="interval_second_minor">la seconde mineure</string>
     <string name="interval_second_major">la seconde majeure</string>
     <string name="interval_third_minor">la tierce mineure</string>
     <string name="interval_third_major">la tierce majeure</string>
+    <string name="interval_diminished_fourth">la quarte diminuée</string>
     <string name="interval_fourth">la quarte juste</string>
     <string name="interval_augmented_fourth">la quarte augmentée</string>
     <string name="interval_diminished_fifth">la quinte diminuée</string>

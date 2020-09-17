@@ -53,10 +53,12 @@
     </string-array>
 
     <string-array name="list_interval">
+        <item>@string/interval_unisson</item>
         <item>@string/interval_second_minor</item>
         <item>@string/interval_second_major</item>
         <item>@string/interval_third_minor</item>
         <item>@string/interval_third_major</item>
+        <item>@string/interval_diminished_fourth</item>
         <item>@string/interval_fourth</item>
         <item>@string/interval_augmented_fourth</item>
         <item>@string/interval_diminished_fifth</item>

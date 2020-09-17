@@ -47,7 +47,7 @@ class IntervalGameViewModel @ViewModelInject constructor(
 
     private fun computeAnswers(gameMode: Int, startNote: Int, secondValue: Int): String {
         return if (gameMode == GAME_FIND_NOTE_GIVEN_INTERVAL || gameMode == GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
-            GameUtils.computeCorrectNote(getApplication(), gameMode, startNote, secondValue)
+            GameUtils.computeCorrectNote(getApplication(), gameMode, 1, 14)
         } else { // randomGame == GAME_FIND_INTERVAL_GIVEN_NOTES
             GameUtils.computeRightInterval(
                 getApplication(),
