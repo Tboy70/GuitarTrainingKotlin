@@ -8,10 +8,7 @@ object ConstValues {
 
     // MUSIC CONST
     const val NB_NOTES = 17
-    const val NB_NOTES_MIXING_SAME_NOTE = 12
-    const val NB_NOTES_WITHOUT_ALTERATION = 7
     const val NB_SCALES = 8
-    const val NB_INTERVAL = 16
 
     // PROGRAM CONST
     private const val DEFAULT_PROGRAM_THEORETICAL_GUITAR = "1"
@@ -24,17 +21,6 @@ object ConstValues {
         DEFAULT_PROGRAM_THEORETICAL_BASS,
         DEFAULT_PROGRAM_PRACTICAL_BASS
     )
-
-    // GAMES CONST
-    const val SCALE_GAME_MODE = 3
-    const val INTERVAL_GAME_MODE = 2
-
-    const val INTERVAL_NORMAL_GAME_MODE = 0
-    const val INTERVAL_REVERSED_GAME_MODE = 1
-
-    const val SCALE_GAME_FIND_NOTES = 0
-    const val SCALE_GAME_IS_CORRECT_SCALE = 1
-    const val SCALE_GAME_FIND_SCALE = 2
 
     // IDS CONST
     const val USER_ID = "thomas.example.com.guitarTrainingKotlin.baseActivity.USER_ID"

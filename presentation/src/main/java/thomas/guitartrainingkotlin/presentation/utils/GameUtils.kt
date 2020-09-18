@@ -9,6 +9,30 @@ import kotlin.math.abs
 
 object GameUtils {
 
+    private const val FLAT_SYMBOL = "b"
+    private const val SHARP_SYMBOL = "#"
+    private const val NB_NOTES_MIXING_SAME_NOTE = 12
+    private const val NB_NOTES_WITHOUT_ALTERATION = 7
+
+    private val NB_TONS_WITH_ALTERATION = listOf(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+
+    // Map --> index to list(NbNoteToPass, NbTons)
+    private val INTERVAL_TO_TONS = mapOf(
+        0 to listOf(0, 0), 1 to listOf(1, 0.5), 2 to listOf(1, 1), 3 to listOf(2, 1.5),
+        4 to listOf(2, 2), 5 to listOf(3, 2), 6 to listOf(3, 2.5), 7 to listOf(3, 3), 8 to listOf(4, 3),
+        9 to listOf(4, 3.5), 10 to listOf(4, 4), 11 to listOf(5, 4), 12 to listOf(5, 4.5), 13 to listOf(6, 5),
+        14 to listOf(6, 5.5), 15 to listOf(7, 0)
+    )
+
+    // Map --> To handle same note from the array-list (example : D# / Eb)
+    private val NOTE_WITH_ALTERATION_MAP_INDEX = mapOf(
+        0 to 0, 1 to 1, 2 to 1, 3 to 2, 4 to 3, 5 to 3, 6 to 4, 7 to 5, 8 to 6, 9 to 6, 10 to 7, 11 to 8, 12 to 8,
+        13 to 9, 14 to 10, 15 to 10, 16 to 11
+    )
+
+    /**
+     * Scales with tons between each note and the first (tonic)
+     */
     private val MAJOR_SCALE_INTERVAL = listOf(2, 4, 5, 7, 9, 11, 12)
     private val MINOR_NATURAL_SCALE_INTERVAL = listOf(2, 3, 5, 7, 8, 10, 12)
     private val MINOR_MELODIC_SCALE_INTERVAL = listOf(2, 3, 5, 7, 9, 11, 12)
@@ -18,63 +42,185 @@ object GameUtils {
     private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
     private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
 
-    private val NB_TONS_WITH_ALTERATION =
-        listOf(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+    private val PENTATONIC_MAJOR_SCALE_NB_NOTE = listOf(0, 1, 2, 4, 5, 7)
 
-    // Map --> index to list(NbNoteToPass, NbTons)
-    private val INTERVAL_TO_TONS = mapOf(
-        0 to listOf(0, 0),
-        1 to listOf(1, 0.5),
-        2 to listOf(1, 1),
-        3 to listOf(2, 1.5),
-        4 to listOf(2, 2),
-        5 to listOf(3, 2),
-        6 to listOf(3, 2.5),
-        7 to listOf(3, 3),
-        8 to listOf(4, 3),
-        9 to listOf(4, 3.5),
-        10 to listOf(4, 4),
-        11 to listOf(5, 4),
-        12 to listOf(5, 4.5),
-        13 to listOf(6, 5),
-        14 to listOf(6, 5.5),
-        15 to listOf(7, 0)
-    )
+    const val NB_INTERVAL = 16
+    const val NB_INTERVAL_GAMES = 3
 
-    // Map --> To handle same note from the array-list (example : D# / Eb)
-    private val NOTE_WITH_ALTERATION_MAP_INDEX = mapOf(
-        0 to 0,
-        1 to 1,
-        2 to 1,
-        3 to 2,
-        4 to 3,
-        5 to 3,
-        6 to 4,
-        7 to 5,
-        8 to 6,
-        9 to 6,
-        10 to 7,
-        11 to 8,
-        12 to 8,
-        13 to 9,
-        14 to 10,
-        15 to 10,
-        16 to 11
-    )
 
-    private const val FLAT_SYMBOL = "b"
-    private const val SHARP_SYMBOL = "#"
+    /******************************************************************/
+    /*************************  INTERVAL GAME *************************/
+    /******************************************************************/
 
-    fun checkReversedIntervalGameAnswer(
-        givenInterval: String,
-        userAnswer: String,
-        context: Context
-    ): Boolean? {
-        val intervalArray = context.resources.getStringArray(R.array.list_interval)
-        intervalArray.indexOf(givenInterval).let { index ->
-            return intervalArray[index + ConstValues.NB_NOTES - (index * 2)] == userAnswer
+    fun computeCorrectNote(
+        context: Context,
+        gameMode: Int,
+        startNote: Int,
+        interval: Int
+    ): String {
+        val intervalValue = context.resources.getStringArray(R.array.list_interval)[interval]
+        val intervalIndex = context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+
+        // Compute the exact number of tones for the given interval.
+        val exactTonesForInterval = INTERVAL_TO_TONS[intervalIndex]?.get(1).toString().toFloat()
+
+        val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
+
+        if (intervalValue == context.resources.getString(R.string.interval_octave) ||
+            intervalValue == context.resources.getString(R.string.interval_unison)
+        ) {
+            return startNoteValue
+        }
+
+        // Compute the note to reach (without take account of the alterations)
+        return computeNoteToReach(context, gameMode, startNoteValue, intervalValue).let { noteToReach ->
+            computeCorrectAnswerNote(
+                gameMode,
+                noteToReach,
+                computeTonesBetweenTwoNotes(context, gameMode, startNoteValue, noteToReach),
+                exactTonesForInterval
+            )
         }
     }
+
+    /**
+     * Compute the note to reach, given the begin note and the interval
+     * Computation without alteration !
+     */
+    private fun computeNoteToReach(
+        context: Context,
+        randomGame: Int,
+        startNoteValue: String,
+        intervalValue: String
+    ): String {
+
+        val startNoteIndexWithoutAlteration =
+            context.resources.getStringArray(R.array.list_notes_without_alteration)
+                .indexOf(startNoteValue.substring(0, 1))
+
+        val intervalIndex =
+            context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+
+        val nbNotesToPassGivenInterval = INTERVAL_TO_TONS[intervalIndex]?.get(0).toString().toInt()
+
+        val endNoteIndex = if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+            abs(NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration + nbNotesToPassGivenInterval)) % NB_NOTES_WITHOUT_ALTERATION
+        } else {
+            abs(NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration - nbNotesToPassGivenInterval)) % NB_NOTES_WITHOUT_ALTERATION
+        }
+
+        return context.resources.getStringArray(R.array.list_notes_without_alteration)[endNoteIndex]
+    }
+
+    /**
+     * Compute the number of tones between two notes.
+     */
+    private fun computeTonesBetweenTwoNotes(
+        context: Context,
+        randomGame: Int,
+        startNoteValue: String,
+        endNoteValue: String
+    ): Double {
+
+        val startNoteIndexWithAlteration =
+            context.resources.getStringArray(R.array.list_notes_with_alterations)
+                .indexOf(startNoteValue)
+
+        val endNoteIndexWithAlteration =
+            context.resources.getStringArray(R.array.list_notes_with_alterations)
+                .indexOf(endNoteValue)
+
+        // To take account the note which are the same. Example -> C# / Db
+        val rightStartNoteIndexWithAlteration =
+            NOTE_WITH_ALTERATION_MAP_INDEX[startNoteIndexWithAlteration]
+        val rightEndNoteIndexWithAlteration =
+            NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
+
+        var tonsBetweenNotes = 0.0
+
+        rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
+            rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
+
+                var diff: Int
+
+                if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                    diff = abs(startNoteIndex - endNoteIndex)
+                    if (startNoteIndex > endNoteIndex) {
+                        diff = NB_NOTES_MIXING_SAME_NOTE - diff
+                    }
+                } else {
+                    diff =
+                        abs((NB_NOTES_MIXING_SAME_NOTE + startNoteIndex - endNoteIndex) % NB_NOTES_MIXING_SAME_NOTE)
+                }
+
+                for (i in 0 until diff) {
+                    val rightValue =
+                        NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % NB_NOTES_MIXING_SAME_NOTE]
+                    tonsBetweenNotes += NB_TONS_WITH_ALTERATION[rightValue!!]
+                }
+            }
+        }
+
+        return tonsBetweenNotes
+    }
+
+    /**
+     * Compute the correct answer.
+     */
+    private fun computeCorrectAnswerNote(
+        gameMode: Int,
+        noteToReach: String,
+        tonesBetweenStartAndEndNote: Double,
+        exactTonesForInterval: Float
+    ): String {
+
+        var goodAnswer = noteToReach
+
+        // Difference of tones between what we computed and what we are expecting
+        val toneDifference = exactTonesForInterval - tonesBetweenStartAndEndNote
+
+        val semiToneDifference = abs(toneDifference / 0.5).toInt()
+
+        for (i in 0 until semiToneDifference) {
+            if (toneDifference < 0) {
+                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                    goodAnswer += FLAT_SYMBOL
+                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
+                    goodAnswer += SHARP_SYMBOL
+                }
+            } else if (toneDifference > 0) {
+                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
+                    goodAnswer += SHARP_SYMBOL
+                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
+                    goodAnswer += FLAT_SYMBOL
+                }
+            }
+        }
+
+        return goodAnswer
+    }
+
+    fun computeRightInterval(context: Context, gameMode: Int, startNote: Int, interval: Int): String {
+        return computeCorrectNote(context, gameMode, startNote, interval)
+    }
+
+    fun computeFalseAnswers(context: Context, interval: Int): String {
+        return context.resources.getStringArray(R.array.list_interval)[interval]
+    }
+
+    /**************************************************************************/
+    /************************* REVERSED INTERVAL GAME *************************/
+    /**************************************************************************/
+
+    fun computeReversedInterval(context: Context, beginIntervalIndex: Int): Pair<String, String> {
+        val beginIntervalValue = context.resources.getStringArray(R.array.list_interval)[beginIntervalIndex]
+        val reversedIntervalIndex =
+            beginIntervalIndex + (NB_INTERVAL - 1) - (beginIntervalIndex * 2)   // -1 cause interval start from 0 ?
+        val reversedIntervalValue = context.resources.getStringArray(R.array.list_interval)[reversedIntervalIndex]
+
+        return Pair(beginIntervalValue, reversedIntervalValue)
+    }
+
 
     fun checkScaleGameAnswer(
         answersList: List<String>, scale: String, referenceNote: String, context: Context
@@ -278,176 +424,71 @@ object GameUtils {
         }
     }
 
+    /********************************************************************************/
+    /************************* REFACTOR SCALE INTERVAL GAME *************************/
+    /********************************************************************************/
 
-    /**************************************************************************/
-    /************************* REFACTOR INTERVAL GAME *************************/
-    /**************************************************************************/
+    fun computeCorrectScale(context: Context, startNote: Int, scale: Int): MutableList<String> {
 
-    fun computeCorrectNote(
-        context: Context,
-        gameMode: Int,
-        startNote: Int,
-        interval: Int
-    ): String {
-        val intervalValue = context.resources.getStringArray(R.array.list_interval)[interval]
-        val intervalIndex = context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+        // Map index to equal notes --> C# / Db for example
+        val mapNoteIndexToEqualNotes = mapOf(
+            0 to listOf(0),
+            1 to listOf(1, 2),
+            2 to listOf(3),
+            3 to listOf(4, 5),
+            4 to listOf(6),
+            5 to listOf(7),
+            6 to listOf(8, 9),
+            7 to listOf(10),
+            8 to listOf(11, 12),
+            9 to listOf(13),
+            10 to listOf(14, 15),
+            11 to listOf(16),
+        )
 
-        // Compute the exact number of tones for the given interval.
-        val exactTonesForInterval = INTERVAL_TO_TONS[intervalIndex]?.get(1).toString().toFloat()
-
+        val scaleValue = context.resources.getStringArray(R.array.list_scales)[scale]
         val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
 
-        if (intervalValue == context.resources.getString(R.string.interval_octave) ||
-            intervalValue == context.resources.getString(R.string.interval_unisson)
-        ) {
-            return startNoteValue
-        }
+        val scaleTones = getCorrectScaleListTones(context, scaleValue)
+        val scaleStartIndex = context.resources.getStringArray(R.array.list_notes_with_alterations).indexOf(startNoteValue)
 
-        // Compute the note to reach (without take account of the alterations)
-        return computeNoteToReach(context, gameMode, startNoteValue, intervalValue).let { noteToReach ->
-            computeCorrectAnswerNote(
-                gameMode,
-                noteToReach,
-                computeTonesBetweenTwoNotes(context, gameMode, startNoteValue, noteToReach),
-                exactTonesForInterval
-            )
-        }
-    }
+        return mutableListOf<String>().apply {
 
-    /**
-     * Compute the note to reach, given the begin note and the interval
-     * Computation without alteration !
-     */
-    private fun computeNoteToReach(
-        context: Context,
-        randomGame: Int,
-        startNoteValue: String,
-        intervalValue: String
-    ): String {
+            // We add the first element --> Tonic
+            add(startNoteValue)
 
-        val startNoteIndexWithoutAlteration =
-            context.resources.getStringArray(R.array.list_notes_without_alteration)
-                .indexOf(startNoteValue.substring(0, 1))
+            val rightIndexWithoutDoubleNote = mapNoteIndexToEqualNotes.entries.find { map ->
+                map.value.contains(scaleStartIndex)
+            }?.key ?: 0
 
-        val intervalIndex =
-            context.resources.getStringArray(R.array.list_interval).indexOf(intervalValue)
+            for (tone in scaleTones - 1) {
+                val newElement = (rightIndexWithoutDoubleNote + tone) % NB_NOTES_MIXING_SAME_NOTE
 
-        val nbNotesToPassGivenInterval = INTERVAL_TO_TONS[intervalIndex]?.get(0).toString().toInt()
-
-        val endNoteIndex = if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-            abs(ConstValues.NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration + nbNotesToPassGivenInterval)) % ConstValues.NB_NOTES_WITHOUT_ALTERATION
-        } else {
-            abs(ConstValues.NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration - nbNotesToPassGivenInterval)) % ConstValues.NB_NOTES_WITHOUT_ALTERATION
-        }
-
-        return context.resources.getStringArray(R.array.list_notes_without_alteration)[endNoteIndex]
-    }
-
-    /**
-     * Compute the number of tones between two notes.
-     */
-    private fun computeTonesBetweenTwoNotes(
-        context: Context,
-        randomGame: Int,
-        startNoteValue: String,
-        endNoteValue: String
-    ): Double {
-
-        val startNoteIndexWithAlteration =
-            context.resources.getStringArray(R.array.list_notes_with_alterations)
-                .indexOf(startNoteValue)
-
-        val endNoteIndexWithAlteration =
-            context.resources.getStringArray(R.array.list_notes_with_alterations)
-                .indexOf(endNoteValue)
-
-        // To take account the note which are the same. Example -> C# / Db
-        val rightStartNoteIndexWithAlteration =
-            NOTE_WITH_ALTERATION_MAP_INDEX[startNoteIndexWithAlteration]
-        val rightEndNoteIndexWithAlteration =
-            NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
-
-        var tonsBetweenNotes = 0.0
-
-        rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
-            rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
-
-                var diff: Int
-
-                if (randomGame == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-                    diff = abs(startNoteIndex - endNoteIndex)
-                    if (startNoteIndex > endNoteIndex) {
-                        diff = ConstValues.NB_NOTES_MIXING_SAME_NOTE - diff
+                val correctNote = mapNoteIndexToEqualNotes[newElement]?.let {
+                    if (it.size > 1 && startNoteValue.contains(FLAT_SYMBOL)) {
+                        it[1]   // We take the equivalent flat note
+                    } else {
+                        it[0] // We take the equivalent sharp note or the just note
                     }
-                } else {
-                    diff =
-                        abs((ConstValues.NB_NOTES_MIXING_SAME_NOTE + startNoteIndex - endNoteIndex) % ConstValues.NB_NOTES_MIXING_SAME_NOTE)
-                }
+                } ?: 0
 
-                for (i in 0 until diff) {
-                    val rightValue =
-                        NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % ConstValues.NB_NOTES_MIXING_SAME_NOTE]
-                    tonsBetweenNotes += NB_TONS_WITH_ALTERATION[rightValue!!]
-                }
+                add(context.resources.getStringArray(R.array.list_notes_with_alterations)[correctNote])
             }
         }
-
-        return tonsBetweenNotes
     }
 
-    /**
-     * Compute the correct answer.
-     */
-    private fun computeCorrectAnswerNote(
-        gameMode: Int,
-        noteToReach: String,
-        tonesBetweenStartAndEndNote: Double,
-        exactTonesForInterval: Float
-    ): String {
+    private fun getCorrectScaleListTones(context: Context, scale: String): List<Int> {
 
-        var goodAnswer = noteToReach
-
-        // Difference of tones between what we computed and what we are expecting
-        val toneDifference = exactTonesForInterval - tonesBetweenStartAndEndNote
-
-        val semiToneDifference = abs(toneDifference / 0.5).toInt()
-
-        for (i in 0 until semiToneDifference) {
-            if (toneDifference < 0) {
-                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-                    goodAnswer += FLAT_SYMBOL
-                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
-                    goodAnswer += SHARP_SYMBOL
-                }
-            } else if (toneDifference > 0) {
-                if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL) {
-                    goodAnswer += SHARP_SYMBOL
-                } else if (gameMode == IntervalGameViewModel.GAME_FIND_NOTE_GIVEN_INTERVAL_REVERSED) {
-                    goodAnswer += FLAT_SYMBOL
-                }
-            }
+        return when (scale) {
+            context.getString(R.string.tone_major) -> MAJOR_SCALE_INTERVAL
+            context.getString(R.string.tone_minor_natural) -> MINOR_NATURAL_SCALE_INTERVAL
+            context.getString(R.string.tone_minor_harmonic) -> MINOR_HARMONIC_SCALE_INTERVAL
+            context.getString(R.string.tone_minor_melodic) -> MINOR_MELODIC_SCALE_INTERVAL
+            context.getString(R.string.tone_pentatonic_major) -> PENTATONIC_MAJOR_SCALE_INTERVAL
+            context.getString(R.string.tone_pentatonic_minor) -> PENTATONIC_MINOR_SCALE_INTERVAL
+            context.getString(R.string.tone_blues_major) -> MAJOR_BLUES_SCALE_INTERVAL
+            context.getString(R.string.tone_blues_minor) -> MINOR_BLUES_SCALE_INTERVAL
+            else -> MAJOR_SCALE_INTERVAL
         }
-
-        return goodAnswer
-    }
-
-    fun computeRightInterval(context: Context, gameMode: Int, startNote: Int, interval: Int): String {
-        return computeCorrectNote(context, gameMode, startNote, interval)
-    }
-
-    fun computeFalseAnswers(context: Context, interval: Int): String {
-        return context.resources.getStringArray(R.array.list_interval)[interval]
-    }
-
-    /***********************************************************************************/
-    /************************* REFACTOR REVERSED INTERVAL GAME *************************/
-    /***********************************************************************************/
-
-    fun computeReversedInterval(context: Context, beginIntervalIndex: Int): Pair<String, String> {
-        val beginIntervalValue = context.resources.getStringArray(R.array.list_interval)[beginIntervalIndex]
-        val reversedIntervalIndex = beginIntervalIndex + ConstValues.NB_INTERVAL - (beginIntervalIndex * 2) - 1
-        val reversedIntervalValue = context.resources.getStringArray(R.array.list_interval)[reversedIntervalIndex]
-
-        return Pair(beginIntervalValue, reversedIntervalValue)
     }
 }

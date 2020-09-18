@@ -22,9 +22,9 @@ class IntervalGameViewModel @ViewModelInject constructor(
     }
 
     fun getRandomValues() {
-        val gameMode = Random.nextInt(0, 3)
+        val gameMode = Random.nextInt(GameUtils.NB_INTERVAL_GAMES)
         val startNote = Random.nextInt(ConstValues.NB_NOTES)
-        val interval = Random.nextInt(ConstValues.NB_INTERVAL)
+        val interval = Random.nextInt(GameUtils.NB_INTERVAL)
         val correctAnswer = computeAnswers(gameMode, startNote, interval)
         gameReadyLiveEvent.postValue(Pair(gameMode, Triple(startNote, interval, correctAnswer)))
     }
@@ -32,10 +32,10 @@ class IntervalGameViewModel @ViewModelInject constructor(
     fun computeFalseAnswers(correctAnswer: String): MutableList<String> {
         val falseAnswers = mutableListOf<String>()
         for (i in 0 until 3) {
-            var interval = Random.nextInt(ConstValues.NB_INTERVAL)
+            var interval = Random.nextInt(GameUtils.NB_INTERVAL)
             var newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
             while (newAnswer == correctAnswer || falseAnswers.contains(newAnswer)) {
-                interval = Random.nextInt(ConstValues.NB_INTERVAL)
+                interval = Random.nextInt(GameUtils.NB_INTERVAL)
                 newAnswer = GameUtils.computeFalseAnswers(getApplication(), interval)
             }
 

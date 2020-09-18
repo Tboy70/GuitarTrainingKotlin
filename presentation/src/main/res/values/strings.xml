@@ -255,16 +255,6 @@
     <string name="exercise_three_fingers_title_text">Jeu avec trois doigts main droite</string>
     <string name="exercise_three_fingers_description_text">Joue avec l\'annulaire en plus à la main droite !</string>
 
-    <!-- ===================================================================================== -->
-    <!-- ======================================= MISC ======================================== -->
-    <!-- ===================================================================================== -->
-
-    <!-- Legal notices -->
-    <string name="legal_notices_title">Mentions légales</string>
-    <string name="legal_notices_used_libs">Librairies utilisées :</string>
-    <string name="legal_notices_thanks">Remerciements :</string>
-
-
     <!-- ====================================================================================== -->
     <!-- ====================================== GAMES ========================================= -->
     <!-- ====================================================================================== -->
@@ -285,22 +275,11 @@
     <string name="reversed_interval_game_title">Donner l\'intervalle renversé</string>
     <string name="game_list_reversed_interval_game">Renversement d\'intervalle</string>
     <string name="reversed_interval_game_question">L\'intervalle renversé de %s est :</string>
-    <string name="interval_game_description">Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la
-        question …
-    </string>
-    <string name="scale_game_first_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Retrouve les
-        notes de la
-        gamme demandée …
-    </string>
-    <string name="scale_game_second_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Est-ce la bonne
-        gamme ?
-    </string>
-    <string name="scale_game_third_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Quelle est cette
-        gamme ?
-    </string>
-    <string name="reversed_interval_game_description">Il existe pour chaque intervalle son renversement. Les connais-tu
-        ? A toi de jouer !
-    </string>
+    <string name="interval_game_description">Connais-tu bien tes intervalles ? Oui ? Vérifions ça ! Réponds à la question … </string>
+    <string name="scale_game_first_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Retrouve les notes de la gamme demandée … </string>
+    <string name="scale_game_second_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Est-ce la bonne gamme ?</string>
+    <string name="scale_game_third_mode_description">Connais-tu bien tes gammes ? Oui ? Vérifions ça ! Quelle est cette  gamme ?</string>
+    <string name="reversed_interval_game_description">Il existe pour chaque intervalle son renversement. Les connais-tu ? A toi de jouer !</string>
 
     <!-- Refactor interval game -->
     <string name="interval_game_find_note_given_interval_question">%1$s de %2$s est …</string>
@@ -350,6 +329,7 @@
     <!-- ======================================================================================= -->
     <!-- ===================================== SUCCESS ========================================= -->
     <!-- ======================================================================================= -->
+
     <string name="success_create_account">Compte créé avec succès ! Tu peux d\'ores et déjà l\'utiliser.</string>
     <string name="success_forgot_password_email_sent">Un mail contenant le mot de passe vient de t\'être envoyé
     </string>
@@ -359,23 +339,41 @@
     <!-- ======================================================================================= -->
 
     <!-- Notes -->
+    <string name="note_C_flat_flat">Cbb</string>
+    <string name="note_C_flat">Cb</string>
     <string name="note_C">C</string>
     <string name="note_C_sharp">C#</string>
+    <string name="note_C_sharp_sharp">C##</string>
+    <string name="note_D_flat_flat">Dbb</string>
     <string name="note_D_flat">Db</string>
     <string name="note_D">D</string>
     <string name="note_D_sharp">D#</string>
+    <string name="note_D_sharp_sharp">D##</string>
+    <string name="note_E_flat_flat">Ebb</string>
     <string name="note_E_flat">Eb</string>
     <string name="note_E">E</string>
+    <string name="note_E_sharp">E#</string>
+    <string name="note_E_sharp_sharp">E##</string>
+    <string name="note_F_flat_flat">Fbb</string>
+    <string name="note_F_flat">Fb</string>
     <string name="note_F">F</string>
     <string name="note_F_sharp">F#</string>
+    <string name="note_F_sharp_sharp">F##</string>
+    <string name="note_G_flat_flat">Gbb</string>
     <string name="note_G_flat">Gb</string>
     <string name="note_G">G</string>
     <string name="note_G_sharp">G#</string>
+    <string name="note_G_sharp_sharp">G##</string>
+    <string name="note_A_flat_flat">Abb</string>
     <string name="note_A_flat">Ab</string>
     <string name="note_A">A</string>
     <string name="note_A_sharp">A#</string>
+    <string name="note_A_sharp_sharp">A##</string>
+    <string name="note_B_flat_flat">Bbb</string>
     <string name="note_B_flat">Bb</string>
     <string name="note_B">B</string>
+    <string name="note_B_sharp">B#</string>
+    <string name="note_B_sharp_sharp">B##</string>
 
     <!-- Symbol -->
     <string name="flat_symbol">b</string>
@@ -410,8 +408,8 @@
     <string name="seventh_degree">VII</string>
     <string name="eight_degree">VIII</string>
 
-    <!-- Interval -->
-    <string name="interval_unisson">l\'unisson</string>
+    <!-- Intervals -->
+    <string name="interval_unison">l\'unisson</string>
     <string name="interval_second_minor">la seconde mineure</string>
     <string name="interval_second_major">la seconde majeure</string>
     <string name="interval_third_minor">la tierce mineure</string>
@@ -444,5 +442,14 @@
     </string>
     <string name="minor_blues_scale_interval">1.5T ; 1T ; 0.5T ; 0.5T ; 1.5T ; 1T \n\n Blues note = Quinte diminuée
     </string>
+
+    <!-- ===================================================================================== -->
+    <!-- ======================================= MISC ======================================== -->
+    <!-- ===================================================================================== -->
+
+    <!-- Legal notices -->
+    <string name="legal_notices_title">Mentions légales</string>
+    <string name="legal_notices_used_libs">Librairies utilisées :</string>
+    <string name="legal_notices_thanks">Remerciements :</string>
 
 </resources>

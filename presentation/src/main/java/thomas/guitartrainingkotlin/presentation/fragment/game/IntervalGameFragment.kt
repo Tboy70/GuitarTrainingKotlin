@@ -57,7 +57,7 @@ class IntervalGameFragment : Fragment(R.layout.fragment_interval_game) {
     private fun initiateToolbar() {
         setHasOptionsMenu(true)
         activity?.setSupportActionBar(
-            fragment_reversed_interval_game_toolbar,
+            fragment_interval_game_toolbar,
             ActivityExtensions.DISPLAY_UP
         )
     }

@@ -58,8 +58,8 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_suppress_account_title,
                 R.string.dialog_suppress_account_confirm_content,
-                android.R.string.yes,
-                android.R.string.no,
+                android.R.string.ok,
+                android.R.string.cancel,
                 onPositive = {
                     viewModel.suppressAccount()
                 },

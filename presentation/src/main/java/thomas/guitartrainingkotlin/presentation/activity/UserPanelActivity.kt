@@ -142,8 +142,8 @@ class UserPanelActivity : BaseActivity() {
         dialogComponent.displayDualChoiceDialog(
             R.string.dialog_logout_title,
             R.string.dialog_logout_confirm_content,
-            android.R.string.yes,
-            android.R.string.no,
+            android.R.string.ok,
+            android.R.string.cancel,
             onPositive = { viewModel.logoutUser() },
             onNegative = {}
         )

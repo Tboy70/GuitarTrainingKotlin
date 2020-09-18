@@ -75,7 +75,7 @@ class UserSongUpdateFragment : Fragment(R.layout.fragment_user_song_update) {
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_update_song_title,
                 R.string.dialog_update_song_confirm_content,
-                android.R.string.yes,
+                android.R.string.ok,
                 android.R.string.cancel,
                 onPositive = {
                     viewModel.checkInformationAndValidateUpdate(

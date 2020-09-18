@@ -95,8 +95,8 @@ abstract class BaseExerciseFragment : Fragment() {
             dialogComponent.displayDualChoiceDialog(
                 R.string.confirm_next_exercise_title,
                 R.string.confirm_next_exercise_content,
-                android.R.string.yes,
-                android.R.string.no,
+                android.R.string.ok,
+                android.R.string.cancel,
                 onPositive = {
                     if (activity is ProgramActivity && rankExercise != ConstValues.CONST_ERROR) {
                         (activity as ProgramActivity).startExercise(rankExercise + 1, nameProgram)

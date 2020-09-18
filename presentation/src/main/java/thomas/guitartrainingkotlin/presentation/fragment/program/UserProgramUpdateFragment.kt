@@ -99,7 +99,7 @@ class UserProgramUpdateFragment : Fragment(R.layout.fragment_user_program_update
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_update_program_title,
                 R.string.dialog_update_program_confirm_content,
-                android.R.string.yes,
+                android.R.string.ok,
                 android.R.string.cancel,
                 onPositive = {
 

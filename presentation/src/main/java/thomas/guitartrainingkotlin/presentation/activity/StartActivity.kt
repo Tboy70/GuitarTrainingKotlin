@@ -3,7 +3,6 @@ package thomas.guitartrainingkotlin.presentation.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import thomas.guitartrainingkotlin.R

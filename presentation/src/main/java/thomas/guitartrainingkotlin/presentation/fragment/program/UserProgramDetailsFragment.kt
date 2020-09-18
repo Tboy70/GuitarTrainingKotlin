@@ -104,7 +104,7 @@ class UserProgramDetailsFragment : Fragment(R.layout.fragment_user_program_detai
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_remove_program_title,
                 R.string.dialog_remove_program_confirm_content,
-                android.R.string.yes,
+                android.R.string.ok,
                 android.R.string.cancel,
                 onPositive = {
                     viewModel.removeProgram()

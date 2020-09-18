@@ -31,6 +31,44 @@
         <item>@string/note_B</item>
     </string-array>
 
+    <string-array name="list_all_notes_with_alterations">
+        <item>@string/note_C_flat_flat</item>
+        <item>@string/note_C_flat</item>
+        <item>@string/note_C</item>
+        <item>@string/note_C_sharp</item>
+        <item>@string/note_C_sharp_sharp</item>
+        <item>@string/note_D_flat_flat</item>
+        <item>@string/note_D_flat</item>
+        <item>@string/note_D</item>
+        <item>@string/note_D_sharp</item>
+        <item>@string/note_D_sharp_sharp</item>
+        <item>@string/note_E_flat_flat</item>
+        <item>@string/note_E_flat</item>
+        <item>@string/note_E</item>
+        <item>@string/note_E_sharp</item>
+        <item>@string/note_E_sharp_sharp</item>
+        <item>@string/note_F_flat_flat</item>
+        <item>@string/note_F_flat</item>
+        <item>@string/note_F</item>
+        <item>@string/note_F_sharp</item>
+        <item>@string/note_F_sharp_sharp</item>
+        <item>@string/note_G_flat_flat</item>
+        <item>@string/note_G_flat</item>
+        <item>@string/note_G</item>
+        <item>@string/note_G_sharp</item>
+        <item>@string/note_G_sharp_sharp</item>
+        <item>@string/note_A_flat_flat</item>
+        <item>@string/note_A_flat</item>
+        <item>@string/note_A</item>
+        <item>@string/note_A_sharp</item>
+        <item>@string/note_A_sharp_sharp</item>
+        <item>@string/note_B_flat_flat</item>
+        <item>@string/note_B_flat</item>
+        <item>@string/note_B</item>
+        <item>@string/note_B_sharp</item>
+        <item>@string/note_B_sharp_sharp</item>
+    </string-array>
+
     <string-array name="list_scales">
         <item>@string/tone_major</item>
         <item>@string/tone_minor_natural</item>
@@ -53,7 +91,7 @@
     </string-array>
 
     <string-array name="list_interval">
-        <item>@string/interval_unisson</item>
+        <item>@string/interval_unison</item>
         <item>@string/interval_second_minor</item>
         <item>@string/interval_second_major</item>
         <item>@string/interval_third_minor</item>

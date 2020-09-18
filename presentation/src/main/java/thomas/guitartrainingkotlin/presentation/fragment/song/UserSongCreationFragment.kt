@@ -59,8 +59,8 @@ class UserSongCreationFragment : Fragment(R.layout.fragment_user_song_creation) 
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_creation_song_title,
                 R.string.dialog_creation_song_content,
-                android.R.string.yes,
-                android.R.string.no,
+                android.R.string.ok,
+                android.R.string.cancel,
                 onPositive = {
                     viewModel.checkInformationAndValidateCreation(
                         fragment_user_song_creation_name.text.toString(),

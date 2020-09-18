@@ -18,7 +18,6 @@ import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.presentation.component.listener.DialogComponent
 import thomas.guitartrainingkotlin.presentation.component.listener.SnackbarComponent
 import thomas.guitartrainingkotlin.presentation.extension.*
-import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.viewmodel.game.ScaleGameViewModel
 import java.util.*
 import javax.inject.Inject
@@ -86,9 +85,9 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         initDegreesField()
 
         fragment_scale_game_validate.setOnClickListener {
-            if (gameMode == ConstValues.SCALE_GAME_FIND_NOTES) {
+            if (gameMode == ScaleGameViewModel.SCALE_GAME_FIND_NOTES) {
                 viewModel.checkAnswers(addAnswersToCheck(), scale, referenceNote)
-            } else if (gameMode == ConstValues.SCALE_GAME_FIND_SCALE) {
+            } else if (gameMode == ScaleGameViewModel.SCALE_GAME_FIND_SCALE) {
                 activity?.let { activity ->
                     if (fragment_scale_game_which_scale_answer.getInput() == isScaleCorrectAnswer) {
                         displayCorrectAnswerUI(activity)
@@ -125,25 +124,45 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
          * it.second -> Random from 1 to 8 (which scale)
          * it.third -> Random from 1 to 3 (which game)
          **/
-        viewModel.gameRandomizedLiveEvent.observeSafe(this) {
-            referenceNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[it.first]
-            scale = this.resources.getStringArray(R.array.list_scales)[it.second]
-            gameMode = it.third
+        viewModel.gameModeLiveEvent.observeSafe(this) { values -> // Triple(note : Int, scale : Int, gameMode : Int)
+
+            referenceNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[values.first]
+            scale = this.resources.getStringArray(R.array.list_scales)[values.second]
+            gameMode = values.third
 
             displayRequiredDegrees(scale)
             displayValidateButton(gameMode)
 
-            when (gameMode) {
-                ConstValues.SCALE_GAME_FIND_NOTES -> {
+            when (values.third) {
+                ScaleGameViewModel.SCALE_GAME_FIND_NOTES -> {
                     launchGameFindNotes(referenceNote, scale)
                 }
-                ConstValues.SCALE_GAME_IS_CORRECT_SCALE -> {
+                ScaleGameViewModel.SCALE_GAME_IS_CORRECT_SCALE -> {
                     launchGameIsScaleCorrect(referenceNote, scale)
                 }
                 else -> {
                     launchGameFindScale(referenceNote)
                 }
             }
+
+//            referenceNote = this.resources.getStringArray(R.array.list_notes_with_alterations)[it.first]
+//            scale = this.resources.getStringArray(R.array.list_scales)[it.second]
+//            gameMode = it.third
+//
+//            displayRequiredDegrees(scale)
+//            displayValidateButton(gameMode)
+//
+//            when (gameMode) {
+//                ConstValues.SCALE_GAME_FIND_NOTES -> {
+//                    launchGameFindNotes(referenceNote, scale)
+//                }
+//                ConstValues.SCALE_GAME_IS_CORRECT_SCALE -> {
+//                    launchGameIsScaleCorrect(referenceNote, scale)
+//                }
+//                else -> {
+//                    launchGameFindScale(referenceNote)
+//                }
+//            }
         }
 
         viewModel.answerCheckedLiveEvent.observeSafe(this) { resultList ->
@@ -203,7 +222,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
         listDegreesViews.forEach { field ->
             field.addTextChangedListener(textChangedListener)
             field.setOnClickListener {
-                displayAnswerPopUpUI(field, R.array.list_notes_with_alterations)
+                displayAnswerPopUpUI(field, R.array.list_all_notes_with_alterations)
             }
         }
     }
@@ -247,7 +266,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
 
     private fun displayValidateButton(gameMode: Int) {
         when (gameMode) {
-            ConstValues.SCALE_GAME_FIND_NOTES -> {
+            ScaleGameViewModel.SCALE_GAME_FIND_NOTES -> {
                 fragment_scale_game_help.show()
                 fragment_scale_game_question.show()
                 fragment_scale_game_validate.show()
@@ -255,7 +274,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
                 fragment_scale_game_yes_button.gone()
                 fragment_scale_game_which_scale_answer.gone()
             }
-            ConstValues.SCALE_GAME_IS_CORRECT_SCALE -> {
+            ScaleGameViewModel.SCALE_GAME_IS_CORRECT_SCALE -> {
                 fragment_scale_game_help.show()
                 fragment_scale_game_question.show()
                 fragment_scale_game_validate.gone()
@@ -421,7 +440,7 @@ class ScaleGameFragment : Fragment(R.layout.fragment_scale_game) {
             }
         }
         fragment_scale_game_which_scale_answer.text = null
-        viewModel.getRandomGame()
+        viewModel.getScaleGameMode()
     }
 
     private fun getAssociatedEditTextToAnswerIndex(answerIndex: Int): EditText {

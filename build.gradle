@@ -7,6 +7,9 @@ buildscript {
     ext.room_version = '2.3.0-alpha02'
 
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         google()
         jcenter()
     }
@@ -15,6 +18,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath 'com.google.gms:google-services:4.3.3'
+        classpath "com.autonomousapps:dependency-analysis-gradle-plugin:0.59.0"
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -36,3 +40,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply plugin: "com.autonomousapps.dependency-analysis"

@@ -646,7 +646,7 @@ class GameUnitTest {
     fun reversedIntervalGameTest() {
         assertEquals(
             Pair(
-                instrumentationContext.resources.getString(R.string.interval_unisson),
+                instrumentationContext.resources.getString(R.string.interval_unison),
                 instrumentationContext.resources.getString(R.string.interval_octave)
             ), GameUtils.computeReversedInterval(instrumentationContext, 0)
         )
@@ -752,8 +752,151 @@ class GameUnitTest {
         assertEquals(
             Pair(
                 instrumentationContext.resources.getString(R.string.interval_octave),
-                instrumentationContext.resources.getString(R.string.interval_unisson)
+                instrumentationContext.resources.getString(R.string.interval_unison)
             ), GameUtils.computeReversedInterval(instrumentationContext, 15)
         )
     }
+
+    @Test
+    fun scaleGameTest() {
+
+        // Major pentatonic scale
+        assertEquals(
+            listOf("C", "D", "E", "G", "A", "C"), GameUtils.computeCorrectScale(instrumentationContext, 0, 4)
+        ) // C
+        assertEquals(
+            listOf("C#", "D#", "F", "G#", "A#", "C#"),
+            GameUtils.computeCorrectScale(instrumentationContext, 1, 4)
+        ) //   C#
+        assertEquals(
+            listOf("Db", "Eb", "F", "Ab", "Bb", "Db"),
+            GameUtils.computeCorrectScale(instrumentationContext, 2, 4)
+        ) //   Db
+        assertEquals(
+            listOf("D", "E", "F#", "A", "B", "D"),
+            GameUtils.computeCorrectScale(instrumentationContext, 3, 4)
+        )// D
+        assertEquals(
+            listOf("D#", "F", "G", "A#", "C", "D#"),
+            GameUtils.computeCorrectScale(instrumentationContext, 4, 4)
+        )// D#
+        assertEquals(
+            listOf("Eb", "F", "G", "Bb", "C", "Eb"),
+            GameUtils.computeCorrectScale(instrumentationContext, 5, 4)
+        )// Eb
+        assertEquals(
+            listOf("E", "F#", "G#", "B", "C#", "E"),
+            GameUtils.computeCorrectScale(instrumentationContext, 6, 4)
+        )// E
+        assertEquals(
+            listOf("F", "G", "A", "C", "D", "F"),
+            GameUtils.computeCorrectScale(instrumentationContext, 7, 4)
+        )// F
+        assertEquals(
+            listOf("F#", "G#", "A#", "C#", "D#", "F#"),
+            GameUtils.computeCorrectScale(instrumentationContext, 8, 4)
+        )// F#
+        assertEquals(
+            listOf("Gb", "Ab", "Bb", "Db", "Eb", "Gb"),
+            GameUtils.computeCorrectScale(instrumentationContext, 9, 4)
+        )// Gb
+        assertEquals(
+            listOf("G", "A", "B", "D", "E", "G"),
+            GameUtils.computeCorrectScale(instrumentationContext, 10, 4)
+        )// G
+        assertEquals(
+            listOf("G#", "A#", "C", "D#", "F", "G#"),
+            GameUtils.computeCorrectScale(instrumentationContext, 11, 4)
+        )// G#
+        assertEquals(
+            listOf("Ab", "Bb", "C", "Eb", "F", "Ab"),
+            GameUtils.computeCorrectScale(instrumentationContext, 12, 4)
+        )// Ab
+        assertEquals(
+            listOf("A", "B", "C#", "E", "F#", "A"),
+            GameUtils.computeCorrectScale(instrumentationContext, 13, 4)
+        )// A
+        assertEquals(
+            listOf("A#", "C", "D", "F", "G", "A#"),
+            GameUtils.computeCorrectScale(instrumentationContext, 14, 4)
+        )// A#
+        assertEquals(
+            listOf("Bb", "C", "D", "F", "G", "Bb"),
+            GameUtils.computeCorrectScale(instrumentationContext, 15, 4)
+        )// Bb
+        assertEquals(
+            listOf("B", "C#", "D#", "F#", "G#", "B"),
+            GameUtils.computeCorrectScale(instrumentationContext, 16, 4)
+        )// B
+
+        // Minor pentatonic scale
+        assertEquals(
+            listOf("", "", "", "", "", ""), GameUtils.computeCorrectScale(instrumentationContext, 0, 5)
+        ) // C
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 1, 5)
+        ) //   C#
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 2, 5)
+        ) //   Db
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 3, 5)
+        )// D
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 4, 5)
+        )// D#
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 5, 5)
+        )// Eb
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 6, 5)
+        )// E
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 7, 5)
+        )// F
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 8, 5)
+        )// F#
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 9, 5)
+        )// Gb
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 10, 5)
+        )// G
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 11, 5)
+        )// G#
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 12, 5)
+        )// Ab
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 13, 5)
+        )// A
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 14, 5)
+        )// A#
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 15, 5)
+        )// Bb
+        assertEquals(
+            listOf("", "", "", "", "", ""),
+            GameUtils.computeCorrectScale(instrumentationContext, 16, 5)
+        )// B
+    }
+
 }

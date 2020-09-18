@@ -92,8 +92,8 @@ class UserProgramCreationFragment : Fragment(R.layout.fragment_user_program_crea
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_create_program_title,
                 R.string.dialog_create_program_content,
-                android.R.string.yes,
-                android.R.string.no,
+                android.R.string.ok,
+                android.R.string.cancel,
                 onPositive = {
                     viewModel.checkInformationAndValidateCreation(
                         fragment_user_program_creation_name.text.toString(),

@@ -8,7 +8,7 @@ import thomas.guitartrainingkotlin.presentation.utils.GameUtils
 import thomas.guitartrainingkotlin.presentation.view.state.game.ScaleGameViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
-import java.util.*
+import kotlin.random.Random
 
 class ScaleGameViewModel @ViewModelInject constructor(
     application: Application
@@ -17,21 +17,27 @@ class ScaleGameViewModel @ViewModelInject constructor(
     override val currentViewState = ScaleGameViewState()
 
     val answerCheckedLiveEvent = SingleLiveEvent<List<Boolean>>()
-    val gameRandomizedLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
+    val gameModeLiveEvent = SingleLiveEvent<Triple<Int, Int, Int>>()
     val correctScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
     val generatedRandomScaleLiveEvent = SingleLiveEvent<Pair<List<String>, String>>()
     val answerCheckedWithUserChoiceLiveEvent = SingleLiveEvent<Pair<List<Boolean>, Boolean>>()
 
     init {
-        getRandomGame()
+        getScaleGameMode()
     }
 
-    fun getRandomGame() {
-        gameRandomizedLiveEvent.postValue(
+    fun getScaleGameMode() {
+
+        val startNote = Random.nextInt(ConstValues.NB_NOTES)
+        val scale = 4
+
+        GameUtils.computeCorrectScale(getApplication(), startNote, scale)
+
+        gameModeLiveEvent.postValue(
             Triple(
-                Random().nextInt(ConstValues.NB_NOTES),
-                Random().nextInt(ConstValues.NB_SCALES),
-                Random().nextInt(ConstValues.SCALE_GAME_MODE)
+                startNote,
+                scale,
+                Random.nextInt(0, 1)
             )
         )
     }
@@ -73,7 +79,7 @@ class ScaleGameViewModel @ViewModelInject constructor(
     }
 
     fun generateRandomScale(referenceNote: String, scale: String) {
-        val correctOrIncorrectScale = Random().nextInt(2)
+        val correctOrIncorrectScale = Random.nextInt(2)
         generatedRandomScaleLiveEvent.postValue(
             if (correctOrIncorrectScale == 0) {
                 Log.e("TEST", "Besoin d'une gamme correcte --> Jeu Is Scale Correct ?")
@@ -83,5 +89,12 @@ class ScaleGameViewModel @ViewModelInject constructor(
                 GameUtils.generateIncorrectScale(referenceNote, scale, getApplication())
             }
         )
+    }
+
+    companion object {
+        const val NB_SCALE_GAMES = 3
+        const val SCALE_GAME_FIND_NOTES = 0
+        const val SCALE_GAME_IS_CORRECT_SCALE = 1
+        const val SCALE_GAME_FIND_SCALE = 2
     }
 }

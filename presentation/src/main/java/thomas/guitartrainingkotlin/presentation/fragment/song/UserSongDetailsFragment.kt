@@ -94,7 +94,7 @@ class UserSongDetailsFragment : Fragment(R.layout.fragment_user_song_details) {
             dialogComponent.displayDualChoiceDialog(
                 R.string.dialog_remove_song_title,
                 R.string.dialog_remove_song_confirm_content,
-                android.R.string.yes,
+                android.R.string.ok,
                 android.R.string.cancel,
                 onPositive = {
                     viewModel.removeSong()
