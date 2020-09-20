@@ -30,6 +30,34 @@ object GameUtils {
         13 to 9, 14 to 10, 15 to 10, 16 to 11
     )
 
+    private val NB_NOTE_TO_NB_SEMITONE = mapOf(
+        2 to listOf(0.5, 1),
+        3 to listOf(1.5, 2),
+        4 to listOf(2, 2.5, 3),
+        5 to listOf(3, 3.5, 4),
+        6 to listOf(4, 4.5),
+        7 to listOf(5, 5.5),
+        8 to listOf(6),
+    )
+
+    // Map index to equal notes --> C# / Db for example
+    val NOTE_INDEX_TO_EQUAL_NOTES = mapOf(
+        0 to listOf(0), // C
+        1 to listOf(1, 2), // C# / Db
+        2 to listOf(3), // D
+        3 to listOf(4, 5), // D# / Eb
+        4 to listOf(6), // E
+        5 to listOf(7), // F
+        6 to listOf(8, 9), // F# / Gb
+        7 to listOf(10), // G
+        8 to listOf(11, 12), // G# / Ab
+        9 to listOf(13), // A
+        10 to listOf(14, 15), // A# / Bb
+        11 to listOf(16), // B
+    )
+
+    private val TONE_INDEX_MINOR_PENTATONIC = listOf(0, 1, 1, 0, 0)
+
     /**
      * Scales with tons between each note and the first (tonic)
      */
@@ -42,7 +70,7 @@ object GameUtils {
     private val MAJOR_BLUES_SCALE_INTERVAL = listOf(2, 3, 4, 7, 9, 12)
     private val MINOR_BLUES_SCALE_INTERVAL = listOf(3, 5, 6, 7, 10, 12)
 
-    private val PENTATONIC_MAJOR_SCALE_NB_NOTE = listOf(0, 1, 2, 4, 5, 7)
+    private val PENTATONIC_MINOR_SCALE_NB_NOTE = listOf(3, 4, 5, 7, 8)
 
     const val NB_INTERVAL = 16
     const val NB_INTERVAL_GAMES = 3
@@ -430,51 +458,135 @@ object GameUtils {
 
     fun computeCorrectScale(context: Context, startNote: Int, scale: Int): MutableList<String> {
 
-        // Map index to equal notes --> C# / Db for example
-        val mapNoteIndexToEqualNotes = mapOf(
-            0 to listOf(0),
-            1 to listOf(1, 2),
-            2 to listOf(3),
-            3 to listOf(4, 5),
-            4 to listOf(6),
-            5 to listOf(7),
-            6 to listOf(8, 9),
-            7 to listOf(10),
-            8 to listOf(11, 12),
-            9 to listOf(13),
-            10 to listOf(14, 15),
-            11 to listOf(16),
-        )
-
         val scaleValue = context.resources.getStringArray(R.array.list_scales)[scale]
+        Log.e("TEST", "Scale value : " + scale)
+
         val startNoteValue = context.resources.getStringArray(R.array.list_notes_with_alterations)[startNote]
 
-        val scaleTones = getCorrectScaleListTones(context, scaleValue)
-        val scaleStartIndex = context.resources.getStringArray(R.array.list_notes_with_alterations).indexOf(startNoteValue)
+//        val scaleTones = getCorrectScaleListTones(context, scaleValue)
+        val scaleTones = PENTATONIC_MINOR_SCALE_NB_NOTE
+        val scaleStartIndex =
+            context.resources.getStringArray(R.array.list_notes_with_alterations).indexOf(startNoteValue)
 
         return mutableListOf<String>().apply {
 
             // We add the first element --> Tonic
             add(startNoteValue)
+            Log.e("TEST", "startNoteValue : " + startNoteValue)
 
-            val rightIndexWithoutDoubleNote = mapNoteIndexToEqualNotes.entries.find { map ->
+            val rightIndexWithoutDoubleNote = NOTE_INDEX_TO_EQUAL_NOTES.entries.find { map ->
                 map.value.contains(scaleStartIndex)
             }?.key ?: 0
 
-            for (tone in scaleTones - 1) {
-                val newElement = (rightIndexWithoutDoubleNote + tone) % NB_NOTES_MIXING_SAME_NOTE
+            for (i in scaleTones.indices) {
 
-                val correctNote = mapNoteIndexToEqualNotes[newElement]?.let {
-                    if (it.size > 1 && startNoteValue.contains(FLAT_SYMBOL)) {
-                        it[1]   // We take the equivalent flat note
-                    } else {
-                        it[0] // We take the equivalent sharp note or the just note
-                    }
-                } ?: 0
+                val noteToReach = computeNoteToReachFromTonic(context, startNoteValue, scaleTones[i])
+                val tonesBetweenNote =
+                    computeTonesBetweenNoteTest(context, startNoteValue, noteToReach, scaleTones[i], i)
+                Log.e("TEST", "Note to reach : " + noteToReach)
+                Log.e("TEST", "Tone between : " + tonesBetweenNote)
 
-                add(context.resources.getStringArray(R.array.list_notes_with_alterations)[correctNote])
+//                val newElement = (rightIndexWithoutDoubleNote + tone) % NB_NOTES_MIXING_SAME_NOTE
+//
+//                val correctNote = mapNoteIndexToEqualNotes[newElement]?.let {
+//
+//                    if (it.size == 1) {
+//                        it[0]
+//                    } else {
+//                        if (scaleValue == context.resources.getString(R.string.tone_pentatonic_major)) {
+//                            if (startNoteValue.contains(FLAT_SYMBOL)) {
+//                                it[1]   // We take the equivalent flat note
+//                            } else {
+//                                it[0] // We take the equivalent sharp note or the just note
+//                            }
+//                        } else if (scaleValue == context.resources.getString(R.string.tone_pentatonic_minor)) {
+//                            if (startNoteValue.contains(FLAT_SYMBOL)) {
+//                                it[1]   // We take the equivalent sharp note
+//                            } else if (startNoteValue.contains(SHARP_SYMBOL)) {
+//                                it[0] // We take the equivalent flat note or the just note
+//                            } else {
+//                                it[1]
+//                            }
+//                        }
+//                        else {
+//                            it[0]
+//                        }
+//                    }
+//                } ?: 0
+//
+//                add(context.resources.getStringArray(R.array.list_notes_with_alterations)[correctNote])
             }
         }
+    }
+
+    private fun computeTonesBetweenNoteTest(
+        context: Context,
+        startNoteValue: String,
+        noteToReach: String,
+        tone: Int,
+        counter: Int
+    ): Int {
+
+        val indexOfStartNote =
+            context.resources.getStringArray(R.array.list_all_notes_with_alterations).indexOf(startNoteValue)
+        val indexOfNoteToReach =
+            context.resources.getStringArray(R.array.list_all_notes_with_alterations).indexOf(noteToReach)
+
+        NOTE_INDEX_TO_EQUAL_NOTES[tone]?.get(TONE_INDEX_MINOR_PENTATONIC[counter])
+
+        NOTE_INDEX_TO_EQUAL_NOTES.entries.find { map ->
+            map.value.contains(indexOfNoteToReach)
+        }?.key
+
+        return abs(indexOfNoteToReach - indexOfStartNote)
+
+    }
+
+    private fun computeNoteToReachFromTonic(context: Context, startNoteValue: String, nbTone: Int): String {
+        val startNoteIndexWithoutAlteration = context.resources.getStringArray(R.array.list_notes_without_alteration)
+            .indexOf(startNoteValue.substring(0, 1))
+
+        Log.e("TEST", "Nb tone : " + nbTone)
+        val noteToReachIndex =
+            abs(NB_NOTES_WITHOUT_ALTERATION + (startNoteIndexWithoutAlteration + nbTone - 1)) % NB_NOTES_WITHOUT_ALTERATION
+
+        return context.resources.getStringArray(R.array.list_notes_without_alteration)[noteToReachIndex]
+    }
+
+    private fun computeTonesBetweenNote(context: Context, startNoteValue: String, noteToReach: String): Double {
+        val startNoteIndexWithAlteration =
+            context.resources.getStringArray(R.array.list_notes_with_alterations)
+                .indexOf(startNoteValue)
+
+        val endNoteIndexWithAlteration =
+            context.resources.getStringArray(R.array.list_notes_with_alterations)
+                .indexOf(noteToReach)
+
+        // To take account the note which are the same. Example -> C# / Db
+        val rightStartNoteIndexWithAlteration =
+            NOTE_WITH_ALTERATION_MAP_INDEX[startNoteIndexWithAlteration]
+        val rightEndNoteIndexWithAlteration =
+            NOTE_WITH_ALTERATION_MAP_INDEX[endNoteIndexWithAlteration]
+
+        var tonsBetweenNotes = 0.0
+
+        rightStartNoteIndexWithAlteration?.let { startNoteIndex ->
+            rightEndNoteIndexWithAlteration?.let { endNoteIndex ->
+
+                var diff = abs(startNoteIndex - endNoteIndex)
+                if (startNoteIndex > endNoteIndex) {
+                    diff = NB_NOTES_MIXING_SAME_NOTE - diff
+                }
+
+                for (i in 0 until diff) {
+                    val rightValue =
+                        NOTE_WITH_ALTERATION_MAP_INDEX[(startNoteIndexWithAlteration + i) % NB_NOTES_MIXING_SAME_NOTE]
+                    tonsBetweenNotes += NB_TONS_WITH_ALTERATION[rightValue!!]
+                }
+            }
+        }
+
+        return tonsBetweenNotes
     }
 
     private fun getCorrectScaleListTones(context: Context, scale: String): List<Int> {

@@ -3,8 +3,8 @@ package thomas.guitartrainingkotlin.presentation.viewmodel.game
 import android.app.Application
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import thomas.guitartrainingkotlin.presentation.utils.ConstValues
 import thomas.guitartrainingkotlin.presentation.utils.GameUtils
+import thomas.guitartrainingkotlin.presentation.utils.GameUtils2
 import thomas.guitartrainingkotlin.presentation.view.state.game.ScaleGameViewState
 import thomas.guitartrainingkotlin.presentation.viewmodel.base.AndroidStateViewModel
 import thomas.guitartrainingkotlin.presentation.viewmodel.livedata.SingleLiveEvent
@@ -28,15 +28,17 @@ class ScaleGameViewModel @ViewModelInject constructor(
 
     fun getScaleGameMode() {
 
-        val startNote = Random.nextInt(ConstValues.NB_NOTES)
-        val scale = 4
+//        val startNote = Random.nextInt(ConstValues.NB_NOTES)
+        val startNoteIndex = 2
+        val scaleIndex = 5
 
-        GameUtils.computeCorrectScale(getApplication(), startNote, scale)
+        val test = GameUtils2.computeCorrectScale(getApplication(), startNoteIndex, scaleIndex)
+        Log.e("TEST", "result : " + test)
 
         gameModeLiveEvent.postValue(
             Triple(
-                startNote,
-                scale,
+                startNoteIndex,
+                scaleIndex,
                 Random.nextInt(0, 1)
             )
         )
