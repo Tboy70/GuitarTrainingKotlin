@@ -906,151 +906,150 @@ class GameUnitTest {
             GameUtils2.computeCorrectScale(instrumentationContext, 16, 1)
         )// B
 
-        // TODO
         /**********************************/
         /****** MINOR HARMONIC SCALE ******/
         /**********************************/
 
-//        assertEquals(
-//            listOf("C", "", "", "", "", "", "", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 2)
-//        ) // C
-//        assertEquals(
-//            listOf("C#", "", "", "", "", "", "", "C#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 1, 2)
-//        ) //   C#
-//        assertEquals(
-//            listOf("Db", "", "", "", "", "", "", "Db"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 2, 2)
-//        ) //   Db
-//        assertEquals(
-//            listOf("D", "", "", "", "", "", "", "D"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 3, 2)
-//        )// D
-//        assertEquals(
-//            listOf("D#", "", "", "", "", "", "", "D#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 4, 2)
-//        )// D#
-//        assertEquals(
-//            listOf("Eb", "", "", "", "", "", "", "Eb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 5, 2)
-//        )// Eb
-//        assertEquals(
-//            listOf("E", "", "", "", "", "", "", "E"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 6, 2)
-//        )// E
-//        assertEquals(
-//            listOf("F", "", "", "", "", "", "", "F"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 7, 2)
-//        )// F
-//        assertEquals(
-//            listOf("F#", "", "", "", "", "", "", "F#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 8, 2)
-//        )// F#
-//        assertEquals(
-//            listOf("Gb", "", "", "", "", "", "", "Gb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 9, 2)
-//        )// Gb
-//        assertEquals(
-//            listOf("G", "", "", "", "", "", "", "G"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 10, 2)
-//        )// G
-//        assertEquals(
-//            listOf("G#", "", "", "", "", "", "", "G#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 11, 2)
-//        )// G#
-//        assertEquals(
-//            listOf("Ab", "", "", "", "", "", "", "Ab"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 12, 2)
-//        )// Ab
-//        assertEquals(
-//            listOf("A", "", "", "", "", "", "", "A"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 13, 2)
-//        )// A
-//        assertEquals(
-//            listOf("A#", "", "", "", "", "", "", "A#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 14, 2)
-//        )// A#
-//        assertEquals(
-//            listOf("Bb", "", "", "", "", "", "", "Bb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 15, 2)
-//        )// Bb
-//        assertEquals(
-//            listOf("B", "", "", "", "", "", "", "B"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 16, 2)
-//        )// B
+        assertEquals(
+            listOf("C", "D", "Eb", "F", "G", "Ab", "B", "C"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 0, 2)
+        ) // C
+        assertEquals(
+            listOf("C#", "D#", "E", "F#", "G#", "A", "B#", "C#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 1, 2)
+        ) //   C#
+        assertEquals(
+            listOf("Db", "Eb", "Fb", "Gb", "Ab", "Bbb", "C", "Db"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 2, 2)
+        ) //   Db
+        assertEquals(
+            listOf("D", "E", "F", "G", "A", "Bb", "C#", "D"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 3, 2)
+        )// D
+        assertEquals(
+            listOf("D#", "E#", "F#", "G#", "A#", "B", "C##", "D#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 4, 2)
+        )// D#
+        assertEquals(
+            listOf("Eb", "F", "Gb", "Ab", "Bb", "Cb", "D", "Eb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 5, 2)
+        )// Eb
+        assertEquals(
+            listOf("E", "F#", "G", "A", "B", "C", "D#", "E"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 6, 2)
+        )// E
+        assertEquals(
+            listOf("F", "G", "Ab", "Bb", "C", "Db", "E", "F"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 7, 2)
+        )// F
+        assertEquals(
+            listOf("F#", "G#", "A", "B", "C#", "D", "E#", "F#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 8, 2)
+        )// F#
+        assertEquals(
+            listOf("Gb", "Ab", "Bbb", "Cb", "Db", "Ebb", "F", "Gb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 9, 2)
+        )// Gb
+        assertEquals(
+            listOf("G", "A", "Bb", "C", "D", "Eb", "F#", "G"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 10, 2)
+        )// G
+        assertEquals(
+            listOf("G#", "A#", "B", "C#", "D#", "E", "F##", "G#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 11, 2)
+        )// G#
+        assertEquals(
+            listOf("Ab", "Bb", "Cb", "Db", "Eb", "Fb", "G", "Ab"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 12, 2)
+        )// Ab
+        assertEquals(
+            listOf("A", "B", "C", "D", "E", "F", "G#", "A"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 13, 2)
+        )// A
+        assertEquals(
+            listOf("A#", "B#", "C#", "D#", "E#", "F#", "G##", "A#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 14, 2)
+        )// A#
+        assertEquals(
+            listOf("Bb", "C", "Db", "Eb", "F", "Gb", "A", "Bb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 15, 2)
+        )// Bb
+        assertEquals(
+            listOf("B", "C#", "D", "E", "F#", "G", "A#", "B"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 16, 2)
+        )// B
 
-        // TODO
         /*********************************/
         /****** MINOR MELODIC SCALE ******/
         /*********************************/
 
-//        assertEquals(
-//            listOf("C", "", "", "", "", "", "", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 3)
-//        ) // C
-//        assertEquals(
-//            listOf("C#", "", "", "", "", "", "", "C#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 1, 3)
-//        ) //   C#
-//        assertEquals(
-//            listOf("Db", "", "", "", "", "", "", "Db"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 2, 3)
-//        ) //   Db
-//        assertEquals(
-//            listOf("D", "", "", "", "", "", "", "D"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 3, 3)
-//        )// D
-//        assertEquals(
-//            listOf("D#", "", "", "", "", "", "", "D#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 4, 3)
-//        )// D#
-//        assertEquals(
-//            listOf("Eb", "", "", "", "", "", "", "Eb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 5, 3)
-//        )// Eb
-//        assertEquals(
-//            listOf("E", "", "", "", "", "", "", "E"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 6, 3)
-//        )// E
-//        assertEquals(
-//            listOf("F", "", "", "", "", "", "", "F"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 7, 3)
-//        )// F
-//        assertEquals(
-//            listOf("F#", "", "", "", "", "", "", "F#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 8, 3)
-//        )// F#
-//        assertEquals(
-//            listOf("Gb", "", "", "", "", "", "", "Gb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 9, 3)
-//        )// Gb
-//        assertEquals(
-//            listOf("G", "", "", "", "", "", "", "G"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 10, 3)
-//        )// G
-//        assertEquals(
-//            listOf("G#", "", "", "", "", "", "", "G#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 11, 3)
-//        )// G#
-//        assertEquals(
-//            listOf("Ab", "", "", "", "", "", "", "Ab"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 12, 3)
-//        )// Ab
-//        assertEquals(
-//            listOf("A", "", "", "", "", "", "", "A"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 13, 3)
-//        )// A
-//        assertEquals(
-//            listOf("A#", "", "", "", "", "", "", "A#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 14, 3)
-//        )// A#
-//        assertEquals(
-//            listOf("Bb", "", "", "", "", "", "", "Bb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 15, 3)
-//        )// Bb
-//        assertEquals(
-//            listOf("B", "", "", "", "", "", "", "B"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 16, 3)
-//        )// B
+        assertEquals(
+            listOf("C", "D", "Eb", "F", "G", "A", "B", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 3)
+        ) // C
+        assertEquals(
+            listOf("C#", "D#", "E", "F#", "G#", "A#", "B#", "C#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 1, 3)
+        ) //   C#
+        assertEquals(
+            listOf("Db", "Eb", "Fb", "Gb", "Ab", "Bb", "C", "Db"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 2, 3)
+        ) //   Db
+        assertEquals(
+            listOf("D", "E", "F", "G", "A", "B", "C#", "D"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 3, 3)
+        )// D
+        assertEquals(
+            listOf("D#", "E#", "F#", "G#", "A#", "B#", "C##", "D#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 4, 3)
+        )// D#
+        assertEquals(
+            listOf("Eb", "F", "Gb", "Ab", "Bb", "C", "D", "Eb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 5, 3)
+        )// Eb
+        assertEquals(
+            listOf("E", "F#", "G", "A", "B", "C#", "D#", "E"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 6, 3)
+        )// E
+        assertEquals(
+            listOf("F", "G", "Ab", "Bb", "C", "D", "E", "F"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 7, 3)
+        )// F
+        assertEquals(
+            listOf("F#", "G#", "A", "B", "C#", "D#", "E#", "F#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 8, 3)
+        )// F#
+        assertEquals(
+            listOf("Gb", "Ab", "Bbb", "Cb", "Db", "Eb", "F", "Gb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 9, 3)
+        )// Gb
+        assertEquals(
+            listOf("G", "A", "Bb", "C", "D", "E", "F#", "G"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 10, 3)
+        )// G
+        assertEquals(
+            listOf("G#", "A#", "B", "C#", "D#", "E#", "F##", "G#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 11, 3)
+        )// G#
+        assertEquals(
+            listOf("Ab", "Bb", "Cb", "Db", "Eb", "F", "G", "Ab"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 12, 3)
+        )// Ab
+        assertEquals(
+            listOf("A", "B", "C", "D", "E", "F#", "G#", "A"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 13, 3)
+        )// A
+        assertEquals(
+            listOf("A#", "B#", "C#", "D#", "E#", "F##", "G##", "A#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 14, 3)
+        )// A#
+        assertEquals(
+            listOf("Bb", "C", "Db", "Eb", "F", "G", "A", "Bb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 15, 3)
+        )// Bb
+        assertEquals(
+            listOf("B", "C#", "D", "E", "F#", "G#", "A#", "B"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 16, 3)
+        )// B
 
         /************************************/
         /****** MAJOR PENTATONIC SCALE ******/
@@ -1196,80 +1195,78 @@ class GameUnitTest {
             GameUtils2.computeCorrectScale(instrumentationContext, 16, 5)
         )// B
 
-        // TODO
         /*******************************/
         /****** MAJOR BLUES SCALE ******/
         /*******************************/
 
-//        assertEquals(
-//            listOf("C", "", "", "", "", "", "", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 6)
-//        ) // C
-//        assertEquals(
-//            listOf("C#", "", "", "", "", "", "", "C#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 1, 6)
-//        ) //   C#
-//        assertEquals(
-//            listOf("Db", "", "", "", "", "", "", "Db"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 2, 6)
-//        ) //   Db
-//        assertEquals(
-//            listOf("D", "", "", "", "", "", "", "D"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 3, 6)
-//        )// D
-//        assertEquals(
-//            listOf("D#", "", "", "", "", "", "", "D#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 4, 6)
-//        )// D#
-//        assertEquals(
-//            listOf("Eb", "", "", "", "", "", "", "Eb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 5, 6)
-//        )// Eb
-//        assertEquals(
-//            listOf("E", "", "", "", "", "", "", "E"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 6, 6)
-//        )// E
-//        assertEquals(
-//            listOf("F", "", "", "", "", "", "", "F"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 7, 6)
-//        )// F
-//        assertEquals(
-//            listOf("F#", "", "", "", "", "", "", "F#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 8, 6)
-//        )// F#
-//        assertEquals(
-//            listOf("Gb", "", "", "", "", "", "", "Gb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 9, 6)
-//        )// Gb
-//        assertEquals(
-//            listOf("G", "", "", "", "", "", "", "G"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 10, 6)
-//        )// G
-//        assertEquals(
-//            listOf("G#", "", "", "", "", "", "", "G#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 11, 6)
-//        )// G#
-//        assertEquals(
-//            listOf("Ab", "", "", "", "", "", "", "Ab"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 12, 6)
-//        )// Ab
-//        assertEquals(
-//            listOf("A", "", "", "", "", "", "", "A"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 13, 6)
-//        )// A
-//        assertEquals(
-//            listOf("A#", "", "", "", "", "", "", "A#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 14, 6)
-//        )// A#
-//        assertEquals(
-//            listOf("Bb", "", "", "", "", "", "", "Bb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 15, 6)
-//        )// Bb
-//        assertEquals(
-//            listOf("B", "", "", "", "", "", "", "B"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 16, 6)
-//        )// B
+        assertEquals(
+            listOf("C", "D", "Eb", "E", "G", "A", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 6)
+        ) // C
+        assertEquals(
+            listOf("C#", "D#", "E", "E#", "G#", "A#", "C#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 1, 6)
+        ) //   C#
+        assertEquals(
+            listOf("Db", "Eb", "Fb", "F", "Ab", "Bb", "Db"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 2, 6)
+        ) //   Db
+        assertEquals(
+            listOf("D", "E", "F", "F#", "A", "B", "D"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 3, 6)
+        )// D
+        assertEquals(
+            listOf("D#", "E#", "F#", "F##", "A#", "B#", "D#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 4, 6)
+        )// D#
+        assertEquals(
+            listOf("Eb", "F", "Gb", "G", "Bb", "C", "Eb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 5, 6)
+        )// Eb
+        assertEquals(
+            listOf("E", "F#", "G", "G#", "B", "C#", "E"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 6, 6)
+        )// E
+        assertEquals(
+            listOf("F", "G", "Ab", "A", "C", "D", "F"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 7, 6)
+        )// F
+        assertEquals(
+            listOf("F#", "G#", "A", "A#", "C#", "D#", "F#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 8, 6)
+        )// F#
+        assertEquals(
+            listOf("Gb", "Ab", "Bbb", "Bb", "Db", "Eb", "Gb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 9, 6)
+        )// Gb
+        assertEquals(
+            listOf("G", "A", "Bb", "B", "D", "E", "G"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 10, 6)
+        )// G
+        assertEquals(
+            listOf("G#", "A#", "B", "B#", "D#", "E#", "G#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 11, 6)
+        )// G#
+        assertEquals(
+            listOf("Ab", "Bb", "Cb", "C", "Eb", "F", "Ab"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 12, 6)
+        )// Ab
+        assertEquals(
+            listOf("A", "B", "C", "C#", "E", "F#", "A"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 13, 6)
+        )// A
+        assertEquals(
+            listOf("A#", "B#", "C#", "C##", "E#", "F##", "A#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 14, 6)
+        )// A#
+        assertEquals(
+            listOf("Bb", "C", "Db", "D", "F", "G", "Bb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 15, 6)
+        )// Bb
+        assertEquals(
+            listOf("B", "C#", "D", "D#", "F#", "G#", "B"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 16, 6)
+        )// B
 
-        // TODO
         /*******************************/
         /****** MINOR BLUES SCALE ******/
         /*******************************/
@@ -1277,69 +1274,69 @@ class GameUnitTest {
         assertEquals(
             listOf("C", "Eb", "F", "F#", "G", "Bb", "C"), GameUtils2.computeCorrectScale(instrumentationContext, 0, 7)
         ) // C
-//        assertEquals(
-//            listOf("C#", "", "", "", "", "", "", "C#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 1, 7)
-//        ) //   C#
-//        assertEquals(
-//            listOf("Db", "", "", "", "", "", "", "Db"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 2, 7)
-//        ) //   Db
-//        assertEquals(
-//            listOf("D", "", "", "", "", "", "", "D"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 3, 7)
-//        )// D
-//        assertEquals(
-//            listOf("D#", "", "", "", "", "", "", "D#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 4, 7)
-//        )// D#
-//        assertEquals(
-//            listOf("Eb", "", "", "", "", "", "", "Eb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 5, 7)
-//        )// Eb
-//        assertEquals(
-//            listOf("E", "", "", "", "", "", "", "E"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 6, 7)
-//        )// E
-//        assertEquals(
-//            listOf("F", "", "", "", "", "", "", "F"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 7, 7)
-//        )// F
-//        assertEquals(
-//            listOf("F#", "", "", "", "", "", "", "F#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 8, 7)
-//        )// F#
-//        assertEquals(
-//            listOf("Gb", "", "", "", "", "", "", "Gb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 9, 7)
-//        )// Gb
-//        assertEquals(
-//            listOf("G", "", "", "", "", "", "", "G"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 10, 7)
-//        )// G
-//        assertEquals(
-//            listOf("G#", "", "", "", "", "", "", "G#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 11, 7)
-//        )// G#
-//        assertEquals(
-//            listOf("Ab", "", "", "", "", "", "", "Ab"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 12, 7)
-//        )// Ab
-//        assertEquals(
-//            listOf("A", "", "", "", "", "", "", "A"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 13, 7)
-//        )// A
-//        assertEquals(
-//            listOf("A#", "", "", "", "", "", "", "A#"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 14, 7)
-//        )// A#
-//        assertEquals(
-//            listOf("Bb", "", "", "", "", "", "", "Bb"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 15, 7)
-//        )// Bb
-//        assertEquals(
-//            listOf("B", "", "", "", "", "", "", "B"),
-//            GameUtils2.computeCorrectScale(instrumentationContext, 16, 7)
-//        )// B
+        assertEquals(
+            listOf("C#", "E", "F#", "F##", "G#", "B", "C#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 1, 7)
+        ) //   C#
+        assertEquals(
+            listOf("Db", "Fb", "Gb", "G", "Ab", "Cb", "Db"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 2, 7)
+        ) //   Db
+        assertEquals(
+            listOf("D", "F", "G", "G#", "A", "C", "D"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 3, 7)
+        )// D
+        assertEquals(
+            listOf("D#", "F#", "G#", "G##", "A#", "C#", "D#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 4, 7)
+        )// D#
+        assertEquals(
+            listOf("Eb", "Gb", "Ab", "A", "Bb", "Db", "Eb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 5, 7)
+        )// Eb
+        assertEquals(
+            listOf("E", "G", "A", "A#", "B", "D", "E"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 6, 7)
+        )// E
+        assertEquals(
+            listOf("F", "Ab", "Bb", "B", "C", "Eb", "F"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 7, 7)
+        )// F
+        assertEquals(
+            listOf("F#", "A", "B", "B#", "C#", "E", "F#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 8, 7)
+        )// F#
+        assertEquals(
+            listOf("Gb", "Bbb", "Cb", "C", "Db", "Fb", "Gb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 9, 7)
+        )// Gb
+        assertEquals(
+            listOf("G", "Bb", "C", "C#", "D", "F", "G"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 10, 7)
+        )// G
+        assertEquals(
+            listOf("G#", "B", "C#", "C##", "D#", "F#", "G#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 11, 7)
+        )// G#
+        assertEquals(
+            listOf("Ab", "Cb", "Db", "D", "Eb", "Gb", "Ab"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 12, 7)
+        )// Ab
+        assertEquals(
+            listOf("A", "C", "D", "D#", "E", "G", "A"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 13, 7)
+        )// A
+        assertEquals(
+            listOf("A#", "C#", "D#", "D##", "E#", "G#", "A#"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 14, 7)
+        )// A#
+        assertEquals(
+            listOf("Bb", "Db", "Eb", "E", "F", "Ab", "Bb"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 15, 7)
+        )// Bb
+        assertEquals(
+            listOf("B", "D", "E", "E#", "F#", "A", "B"),
+            GameUtils2.computeCorrectScale(instrumentationContext, 16, 7)
+        )// B
     }
 }
