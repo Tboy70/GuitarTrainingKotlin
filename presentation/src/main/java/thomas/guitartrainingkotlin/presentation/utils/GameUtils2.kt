@@ -5,11 +5,11 @@ import thomas.guitartrainingkotlin.R
 import thomas.guitartrainingkotlin.domain.model.game.Note
 import thomas.guitartrainingkotlin.domain.model.game.Scale
 import kotlin.math.abs
+import kotlin.random.Random
 
 object GameUtils2 {
 
-    private val startNote = Note()
-
+    private const val NB_ALL_NOTES = 35
     private const val FLAT_SYMBOL = "b"
     private const val SHARP_SYMBOL = "#"
     private const val SEMITONE_VALUE = 0.5
@@ -64,22 +64,25 @@ object GameUtils2 {
     private val MAJOR_BLUES_SCALE_NB_NOTE = listOf(2, 3, 3, 5, 6)
     private val MINOR_BLUES_SCALE_NB_NOTE = listOf(3, 4, 4, 5, 7)
 
-    fun computeCorrectScale(context: Context, startNoteIndex: Int, scaleIndex: Int): MutableList<String> {
+    fun computeCorrectScale(context: Context, startNoteIndex: Int, scaleIndex: Int): Scale {
 
         listScale = context.resources.getStringArray(R.array.list_scales)
         listNoteWithAlteration = context.resources.getStringArray(R.array.list_notes_with_alterations)
 
-        this.startNote.apply {
+        val startNote = Note().apply {
             noteIndex = startNoteIndex
             noteValue = listNoteWithAlteration[startNoteIndex]
         }
 
         // Get correct info about the scale
         val scaleValue = listScale[scaleIndex]
-        val scale = getCorrectScaleInfo(context, scaleValue)
+        val scale = getCorrectScaleInfo(context, scaleValue).apply {
+            this.name = scaleValue
+            this.tonicNote = startNote
+        }
 
         // Return the correct scale
-        return mutableListOf<String>().apply {
+        scale.notes = mutableListOf<String>().apply {
 
             // We add the first element --> Tonic
             add(startNote.noteValue)
@@ -122,6 +125,8 @@ object GameUtils2 {
             // We add the first element --> Octave (= tonic)
             add(startNote.noteValue)
         }
+
+        return scale
     }
 
     /**
@@ -261,6 +266,23 @@ object GameUtils2 {
                     intervalsQualities = MAJOR_SCALE_INTERVALS_QUALITIES_INDEX
                 }
             }
+        }
+    }
+
+    fun alteredScale(context: Context, correctScale: Scale): Scale {
+        val shouldBeAltered = Math.random() < 0.5
+        return if (shouldBeAltered) {
+            val alterationPlace = Random.nextInt(1, correctScale.notes.size - 2)
+            val randomNote = Random.nextInt(NB_ALL_NOTES)
+
+            return correctScale.copy().apply {
+                notes = correctScale.notes.toMutableList().apply {
+                    this[alterationPlace] =
+                        context.resources.getStringArray(R.array.list_all_notes_with_alterations)[randomNote]
+                }
+            }
+        } else {
+            correctScale
         }
     }
 }

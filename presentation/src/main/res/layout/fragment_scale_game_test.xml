@@ -109,7 +109,6 @@
                 android:id="@+id/fragment_scale_game_validate"
                 style="@style/GenericBigButton"
                 android:text="@string/generic_button_validate"
-                android:enabled="false"
                 android:layout_marginBottom="@dimen/constraint_layout_margin_8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
